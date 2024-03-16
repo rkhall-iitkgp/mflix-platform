@@ -66,7 +66,7 @@ export function Login(props: PaperProps) {
             }}>
                 <TextInput
                     required
-                    label="Email"
+                    label="Email address"
                     placeholder="Enter Your email address"
                     value={form.values.email}
                     onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
@@ -78,7 +78,10 @@ export function Login(props: PaperProps) {
                         input: {
                             background: 'transparent',
                             color: 'white',
-                            borderColor: 'purple',
+                            borderColor: '#9341D0',
+                        },
+                        wrapper: {
+                            marginTop: '0.5rem', // Adjust the padding as needed
                         },
                     }}
                 />
@@ -96,17 +99,22 @@ export function Login(props: PaperProps) {
                         input: {
                             background: 'transparent',
                             color: 'white',
-                            borderColor: 'purple',
+                            borderColor: '#9341D0',
+                        },
+                        wrapper: {
+                            marginTop: '0.5rem', // Adjust the padding as needed
                         },
                     }}
                 />
                 {/* <a href="">Forget Password?</a> */}
-                <Button style={{ width: '60%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem' }} >Log In</Button>
-                <Divider label="Or continue with Google" labelPosition="center" my="lg" style={{ color: 'white' }} />
-                <GoogleButton radius="xl">Google</GoogleButton>
-                {/* <Group grow mb="md" mt="md"> */}
-                {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
-                {/* </Group> */}
+                <Button style={{ width: '60%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem', marginTop: '1rem' }} >Log In</Button>
+                <Divider label="Or continue with Google" labelPosition="center" my="lg" style={{ color: 'white', width: '80%' }} styles={{
+
+                    label: {
+                        color: 'white',
+                    },
+                }} />
+                <GoogleButton radius="xl" size='lg' style={{ marginBottom: '1rem' }}>Google</GoogleButton>
             </Box>
         </Flex>
         // <Paper radius="md" p="xl" withBorder {...props}>

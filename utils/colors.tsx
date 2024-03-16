@@ -14,9 +14,7 @@ const themeOptions = {
         l: '2rem',
         xl: '3rem',
         xxl: '4rem',
+    },
 
-    }
-
-}
-
+};
 export default themeOptions;

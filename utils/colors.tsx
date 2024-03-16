@@ -15,6 +15,6 @@ const themeOptions = {
         xl: '3rem',
         xxl: '4rem',
     },
-
 };
+
 export default themeOptions;

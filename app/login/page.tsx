@@ -54,7 +54,7 @@ export function Login(props: PaperProps) {
                 align="center" gap={{ sm: 'lg' }}>
                 <Text size="1.1rem" c={'white'}  >Don't have an account?
                 </Text>
-                <a href="" style={{ color: '#9441D0' }}>Sign in</a>
+                <a href="/register" style={{ color: '#9441D0' }}>Sign in</a>
             </Flex>
             <Box style={{
                 display: 'flex',

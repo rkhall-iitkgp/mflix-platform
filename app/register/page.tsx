@@ -36,6 +36,7 @@ export function Register(props: PaperProps) {
         validate: {
             email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
             password: (val) => (val.length <= 6 ? 'Password should include at least 6 characters' : null),
+            name:(val)=> (val.length <= 1) ?  "name should be" : null,
         },
     });
 
@@ -65,10 +66,11 @@ export function Register(props: PaperProps) {
                 flexDirection: 'column',
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
-                border: '1px solid #ccc', width: '45rem', height: '90%', borderRadius: '15px',
+                border: '1px solid #ccc', width: '45rem', height: '85%', borderRadius: '15px',
                 backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '0.5rem'
             }}>
             {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
+            
                <div style={{marginTop:"2rem",width:"75%",display:"flex", justifyContent:"space-evenly", alignItems:"center"}}> <TextInput
                     required
                     label="Name"
@@ -188,8 +190,8 @@ export function Register(props: PaperProps) {
                 <h6 style={{height:"0px", paddingRight:"15px"  }}>Or continue with Google</h6>
                 <GoogleButton radius="xl">Google</GoogleButton>
                 </div>
-            {/* </form> */}
-              
+           
+            
             </Box>
         </Flex>
      

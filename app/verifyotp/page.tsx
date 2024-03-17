@@ -66,7 +66,7 @@ export function Otp(props: PaperProps) {
                 align="center" gap={{ sm: 'lg' }}>
                 <Text size="1rem" c={'white'}  >An OTP has been sent to your email
                 </Text>
-                <Text size="0.7rem">Resend OTP in {resendTime} seconds</Text>
+                <Text size="0.7rem" style={{color: '#9441D0'}}>Resend OTP in {resendTime} seconds</Text>
                 {/* <a href="/login" style={{ color: '#9441D0' }}>Log In</a> */}
             </Flex>
             <Box style={{

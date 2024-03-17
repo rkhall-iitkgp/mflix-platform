@@ -8,7 +8,7 @@ const data = [
   {
     title: 'INFO',
     links: [
-      { label: 'Catalog',  div: '#' },
+      { label: 'Catalog',  link: '#' },
       { label: 'About us', link: '#' },
       { label: 'For customers', link: '#' },
       { label: 'Contacts', link: '#' },
@@ -73,7 +73,7 @@ export default function FooterLinks() {
         <Text c="#fff" opacity="40%" size="sm">
           Privacy
         </Text>
-        {/* <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">
+        <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">
           <ActionIcon size="lg" color="gray" variant="subtle">
             <IconBrandTwitter style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
           </ActionIcon>
@@ -83,7 +83,7 @@ export default function FooterLinks() {
           <ActionIcon size="lg" color="gray" variant="subtle">
             <IconBrandInstagram style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
           </ActionIcon>
-        </Group> */}
+        </Group>
       </Container>
     </footer>
   );

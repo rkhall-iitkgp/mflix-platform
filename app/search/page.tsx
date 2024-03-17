@@ -1,7 +1,47 @@
-import MovieCard from '../../components/MovieCard/MovieCard';
+import MovieCard from '../../components/MovieDetails/MovieCard';
+import MovieBanner from '@/components/MovieDetails/MovieBanner';
+import themeOptions from '@/utils/colors';
+import { Grid, Group, Button, Image, Stack, Text, Paper, GridCol } from '@mantine/core';
 
 export default function Search() {
     return (
-        <MovieCard></MovieCard>
+        <Stack bg="black" pl={75} pr={75}>
+            <div>Filters stuf yeeeeeeeeeeeeeeee!!!</div>
+
+            {/* top results part, neds more work */}
+            <Stack>
+                <Text fz={themeOptions.fontSize.l}>Tope results for : Name</Text>
+                {/* <Stack justify="space-evenly">
+                    <Group justify="space-between">
+                        <MovieBanner />
+                        <MovieBanner />
+                    </Group>
+                    <Group justify="space-between">
+                        <MovieBanner />
+                        <MovieBanner />
+                    </Group>
+                </Stack> */}
+                <Group justify="space-between">
+                    <MovieBanner />
+                    <MovieBanner />
+                    <MovieBanner />
+                    <MovieBanner />
+                </Group>
+            </Stack>
+
+            {/* more results part */}
+            <Stack>
+                <Text fz={themeOptions.fontSize.l}>More Results</Text>
+                <Group>
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                </Group>
+            </Stack>
+        </Stack>
     );
 }

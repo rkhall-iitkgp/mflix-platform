@@ -9,7 +9,7 @@ export default function Search() {
             <div>
                 <Image
                   src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-                  height={390}
+                  height={380}
                   alt="Norway"
                 />
             </div>
@@ -19,11 +19,13 @@ export default function Search() {
             <Text fz={themeOptions.fontSize.s} fw={500}>Movie Name</Text>
 
             <Group justify="space-between">
-                <Group>
+                <Group justify="space-around">
                     <Image
                       src={ImdbImg}
                       component={NextImage}
                       alt="imdb"
+                      height={20}
+                      unoptimized
                     />
                     <Text fz={themeOptions.fontSize.xs}>8.6/10</Text>
                 </Group>

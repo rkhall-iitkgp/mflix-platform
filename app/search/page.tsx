@@ -1,7 +1,7 @@
 import MovieCard from '../../components/MovieDetails/MovieCard';
 import MovieBanner from '@/components/MovieDetails/MovieBanner';
 import themeOptions from '@/utils/colors';
-import { Grid, Group, Button, Image, Stack, Text, Paper, GridCol } from '@mantine/core';
+import { Group, Button, Image, Stack, Text, Paper } from '@mantine/core';
 
 export default function Search() {
     return (

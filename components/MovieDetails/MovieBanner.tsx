@@ -58,7 +58,7 @@ export default function MovieBanner() {
                             <Text ta="center">{e}</Text>
                         </Paper>)}
                     </Group>
-                    <Group mt={7}>
+                    <Group mt={7} justify="space-between">
                         <Group gap={6} justify="space-around">
                             <Image
                               src={ImdbImg}

@@ -10,9 +10,10 @@ import Imdb from "@/assets/images/imdb.png"
 import Tomato from "@/assets/images/tomato.png"
 import Heart from "@/assets/images/heart.svg"
 export default function Home() {
-    const sectionRef = useRef(null);
+    const scrollRef = useRef(null);
     const handleScroll = () => {
-        sectionRef.current.scrollBy({
+        console.log("scrolling")
+        scrollRef.current.scrollBy({
             top: 0,
             left: 300, // Adjust this value based on the width of each item
             behavior: 'smooth',
@@ -21,7 +22,7 @@ export default function Home() {
     return (
         <>
             {/* Backgroung Image */}
-            <div className='h-screen w-screen absolute -z-30 overflow-hidden'>
+            <div className='h-screen w-full absolute -z-30 overflow-hidden'>
                 <div className='bg-top h-screen w-screen -z-10'></div>
                 <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className='bg-home opacity-25 -z-20' />
             </div>
@@ -80,10 +81,10 @@ export default function Home() {
 
                 </div>
             </div>
-            <div>
-                <section className='pl-40 mr-40 pr-20 md:py-20 overflow-hidden relative' ref={sectionRef}>
-                    <h1 className='text-4xl mb-10'>Trending</h1>
-                    <div className='flex w-max'>
+            <section className='pl-40 pr-20 md:py-20 relative w-[calc(100vw-50px)]'>
+                <h1 className='text-4xl mb-10'>Trending</h1>
+                <div ref={scrollRef} className='w-full overflow-hidden'>
+                    <div className='flex w-max relative'>
                         <div className='mr-10 w-64 h-auto overflow-hidden'>
                             <div className=' flex justify-end items-end flex-row absolute w-60 mt-4 '>
                                 <Image src={Heart} width={30} height={30} alt='fav' className='self-end bg-[#F3F4F6] left-48 border-2 p-1 rounded-full' />
@@ -235,8 +236,8 @@ export default function Home() {
                         </div>
                     </div>
                     <Image src={rArrow} alt='slider' width={30} height={40} className='absolute right-0 top-1/2 transform -translate-y-1/2 cursor-pointer' onClick={handleScroll}/>
-                </section>
-            </div>
+                </div>
+            </section>
         </>
     )
 }

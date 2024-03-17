@@ -54,7 +54,7 @@ export function Login(props: PaperProps) {
                 align="center" gap={{ sm: 'lg' }}>
                 <Text size="1.1rem" c={'white'}  >Don't have an account?
                 </Text>
-                <a href="/register" style={{ color: '#9441D0' }}>Sign in</a>
+                <a href="/register" style={{ color: '#9441D0' }}>Sign up</a>
             </Flex>
             <Box style={{
                 display: 'flex',
@@ -62,7 +62,7 @@ export function Login(props: PaperProps) {
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
                 border: '1px solid #ccc', width: '30rem', height: '30rem', borderRadius: '15px',
-                backdropFilter: 'blur(20px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '1.6rem'
+                backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '1.6rem'
             }}>
                 <TextInput
                     required

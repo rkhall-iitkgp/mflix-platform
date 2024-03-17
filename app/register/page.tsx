@@ -1,5 +1,6 @@
 "use client"
 
+
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import {
@@ -65,8 +66,9 @@ export function Register(props: PaperProps) {
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
                 border: '1px solid #ccc', width: '45rem', height: '90%', borderRadius: '15px',
-                backdropFilter: 'blur(20px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '1.6rem'
+                backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '0.5rem'
             }}>
+            {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
                <div style={{marginTop:"2rem",width:"75%",display:"flex", justifyContent:"space-evenly", alignItems:"center"}}> <TextInput
                     required
                     label="Name"
@@ -161,9 +163,9 @@ export function Register(props: PaperProps) {
                     required
                     label="Confirm Password"
                     placeholder="Confirm Your Password"
-                    value={form.values.password}
-                    onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
-                    error={form.errors.password && 'Password should include at least 6 characters'}
+                    value={form.values.confPassword}
+                    onChange={(event) => form.setFieldValue('confPassword', event.currentTarget.value)}
+                    error={form.errors.confPassword && 'Password does not match'}
                     radius="md"
                     size="lg"
                     style={{ width: '70%', color: 'white', marginTop:'0.5rem' }}
@@ -175,13 +177,19 @@ export function Register(props: PaperProps) {
                         },
                     }}
                 />
-                {/* <a href="">Forget Password?</a> */}
-                <Button style={{ marginTop:'1rem', width: '60%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem' }} >Log In</Button>
-                <Divider label="Or continue with Google" labelPosition="center" my="lg" style={{ color: 'white' }} />
+               
+                {/* <Text style={{position:"absolute", paddingTop:"10rem"}} size="1rem" c={'white'} >Create new account</Text> */}
+                
+               <Anchor style={{ textDecoration:"none", marginTop:'0rem', marginLeft:"22%", width: '50%', height: '3rem'}}href="/verifyotp">
+                <Button style={{ marginTop:'1rem', width: '50%', height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem' }} >Sign Up</Button></Anchor>
+               
+                <div style={{display:"flex", flexDirection:"row", justifyContent:"center", paddingBottom:"1.5%", paddingTop:"20px"}}>
+                {/* <Divider label="Or continue with Google" labelPosition="center" my="lg" /> */}
+                <h6 style={{height:"0px", paddingRight:"15px"  }}>Or continue with Google</h6>
                 <GoogleButton radius="xl">Google</GoogleButton>
-                {/* <Group grow mb="md" mt="md"> */}
-                {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
-                {/* </Group> */}
+                </div>
+            {/* </form> */}
+              
             </Box>
         </Flex>
      

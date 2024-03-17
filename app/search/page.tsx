@@ -32,7 +32,8 @@ export default function Search() {
             {/* more results part */}
             <Stack>
                 <Text fz={themeOptions.fontSize.l}>More Results</Text>
-                <Group>
+                <Group justify="space-between">
+                    <MovieCard />
                     <MovieCard />
                     <MovieCard />
                     <MovieCard />

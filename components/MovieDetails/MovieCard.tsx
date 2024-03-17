@@ -2,15 +2,17 @@ import { Card, Image, Text, Group } from '@mantine/core';
 import NextImage from 'next/image';
 import themeOptions from '@/utils/colors';
 import ImdbImg from '@/assets/icons/imdb.png';
+import Sample2 from '@/assets/sample2.jpeg';
 
 export default function Search() {
     return (
-        <Card p={0} w={250} radius={0}>
+        <Card p={0} w={250} radius={0} bg="black">
             <div>
                 <Image
-                  src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
+                  src={Sample2}
+                  component={NextImage}
+                  alt="sample"
                   height={380}
-                  alt="Norway"
                 />
             </div>
 

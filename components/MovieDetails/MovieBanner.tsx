@@ -7,6 +7,7 @@ import NextImage from 'next/image';
 import ImdbImg from '@/assets/icons/imdb.png';
 import TomatoImg from '@/assets/icons/tomato.png';
 import themeOptions from '@/utils/colors';
+import Sample from '@/assets/sample.png';
 
 export default function MovieBanner() {
     const genres = ['Mystery', 'Action', 'Thriller'];
@@ -35,9 +36,10 @@ export default function MovieBanner() {
             <Group align="center">
                 <div style={{ width: '107px' }}>
                     <Image
-                      src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
+                      src={Sample}
+                      component={NextImage}
+                      alt="sample"
                       height={158}
-                      alt="Norway"
                     />
                 </div>
                 <Stack ml="lg" gap="xs" mr="lg">

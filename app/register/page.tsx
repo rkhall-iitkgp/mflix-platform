@@ -3,6 +3,7 @@
 
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
+import Link from 'next/link';
 import {
     TextInput,
     PasswordInput,
@@ -106,17 +107,18 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
             
             <form onSubmit={form.onSubmit((values) => {console.log(values) })} style={{
                     width: '100%', display: 'flex', flexDirection: 'column',
-                    justifyContent: 'space-around',
+                    
                     alignItems: 'center',
                 }}>
-               <div style={{marginTop:"2rem",width:"75%",display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
+               <div style={{marginTop:"1rem",width:"75%",display:"flex", 
+             justifyContent:"space-evenly", alignItems:"center"}}>
                 <TextInput
                     required
                     label="Name"
                     placeholder="Enter Your Name"
                     value={form.values.name}
                     onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
-                    error={form.errors.name && 'Required'}
+                    // error={form.errors.name && 'Required'}
                     radius="md"
                     size="lg"
                     style={{ width: '45%', color: 'white' }}
@@ -127,16 +129,17 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                /> <div>{form.errors.name ? form.errors.name : ''  }</div>
+                /> <p style={{position:"absolute", 
+                marginTop:"16%", left:"17%", color:"red"}}>
+                    {form.errors.name}</p>
                  <TextInput
                     required
                     label="Email Id"
                     placeholder="Enter Your Email Id"
                     value={form.values.email}
-                    onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-                    error={form.errors.email && 'Required'}
-                    // {...form.getInputProps('name')}
                     radius="md"
+                    onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+                    // error={form.errors.email && 'Required'}                                             
                     size="lg"
                     style={{ width: '45%', color: 'white' }}
                     styles={{
@@ -146,16 +149,20 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                /><div style={{width:"100%", }}>{form.errors.email ? form.errors.email : ''  }</div>
+                /><p style={{position:"absolute", 
+                marginTop:"16%", left:"52%", color:"red"}}>
+                    {form.errors.email}</p>
                 </div>
-                <div style={{marginTop:"0.5rem",width:"75%", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
+                <div style={{marginTop:"0.5rem",
+                paddingTop:"0.5rem",
+                width:"75%", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
                     <TextInput
                     required
                     label="Date of Birth"
                     placeholder="Enter Your Date of Birth"
                     value={form.values.dob}
                     onChange={(event) => form.setFieldValue('dob', event.currentTarget.value)}
-                    error={form.errors.dob && 'Required'}
+                    // error={form.errors.dob && 'Required'}
                     radius="md"
                     size="lg"
                     style={{ width: '45%', color: 'white' }}
@@ -166,14 +173,16 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                /><div>{form.errors.dob ? form.errors.dob : ''  }</div>
+                /><p style={{position:"absolute", 
+                marginTop:"16%", left:"17%", color:"red"}}>
+                    {form.errors.dob}</p>
                 <TextInput
                     required
                     label="Mobile Number"
                     placeholder="Enter Your Mobile No."
                     value={form.values.phone}
                     onChange={(event) => form.setFieldValue('phone', event.currentTarget.value)}
-                    error={form.errors.phone && 'Invalid Mobile No.'}
+                    // error={form.errors.phone && 'Invalid Mobile No.'}
                     radius="md"
                     size="lg"
                     style={{ width: '45%', color: 'white' }}
@@ -184,7 +193,9 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                /><div>{form.errors.phone ? form.errors.phone : ''  }</div>
+                /><p style={{position:"absolute", 
+                marginTop:"16%", left:"52%", color:"red"}}>
+                    {form.errors.phone}</p>
                 </div>
                 <PasswordInput
                     required
@@ -192,10 +203,10 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     placeholder="Enter Your password"
                     value={form.values.password}
                     onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
-                    error={form.errors.password && 'Password should include at least 6 characters'}
+                    // error={form.errors.password && 'Password should include at least 6 characters'}
                     radius="md"
                     size="lg"
-                    style={{ width: '70%', color: 'white', marginTop:'0.5rem' }}
+                    style={{ width: '70%', color: 'white', marginTop:'0.5rem', paddingTop:"0.5rem" }}
                     styles={{
                         input: {
                             background: 'transparent',
@@ -203,17 +214,19 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                /><div>{form.errors.password ? form.errors.password : ''  }</div>
+                /><p style={{position:"absolute", 
+                marginTop:"39%", left:"17%", color:"red"}}>
+                    {form.errors.password}</p>
                 <PasswordInput
                     required
                     label="Confirm Password"
                     placeholder="Confirm Your Password"
                     value={form.values.confPassword}
                     onChange={(event) => form.setFieldValue('confPassword', event.currentTarget.value)}
-                    error={form.errors.confPassword && 'Password does not match'}
+                    // error={form.errors.confPassword && 'Password does not match'}
                     radius="md"
                     size="lg"
-                    style={{ width: '70%', color: 'white', marginTop:'0.5rem' }}
+                    style={{ width: '70%', color: 'white', marginTop:'0.5rem', paddingTop:"0.5rem" }}
                     styles={{
                         input: {
                             background: 'transparent',
@@ -221,17 +234,25 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                /><div>{form.errors.confPassword ? form.errors.confPassword : ''  }</div>
+                /><p style={{position:"absolute", 
+                marginTop:"52%", left:"17%", color:"red"}}>
+                    {form.errors.confPassword}</p>
                
                 {/* <Text style={{position:"absolute", paddingTop:"10rem"}} size="1rem" c={'white'} >Create new account</Text> */}
                 
-               {/* <Anchor style={{ textDecoration:"none", marginTop:'0rem', marginLeft:"22%", width: '50%', height: '3rem'}}href="/verifyotp"> */}
-                <Button type='submit' style={{ marginTop:'1rem', width: '50%', height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem' }} >Sign Up</Button>
-                {/* </Anchor> */}
-               
-                <div style={{display:"flex", flexDirection:"row", justifyContent:"center", paddingBottom:"1.5%", paddingTop:"20px"}}>
+               <Anchor type="submit" style={{ textDecoration:"none", marginTop:'1rem', marginLeft:"22%", width: '50%', height: '3rem'}}
+               href="/verifyotp">
+               {/* {/* <Link style={{ textDecoration:"none", marginTop:'0rem', marginLeft:"35%", width: '70%', height: '3rem'}}href="/verifyotp">  */}
+               <Button onClick={()=>{console.log("clicked")}} 
+                 type='submit' style={{ marginTop:'1rem', width: '50%', 
+                 height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem' }} >Sign Up
+         </Button>
+                 {/* </Link> */}
+                </Anchor>
+                <div style={{display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"space-between", paddingBottom:"1%", paddingTop:"20px"}}>
                 {/* <Divider label="Or continue with Google" labelPosition="center" my="lg" /> */}
-                <h6 style={{height:"0px", paddingRight:"15px"  }}>Or continue with Google</h6>
+                <h5 style={{height:"0px", paddingRight:"15px", top:"50%", left:"28%"  }}>Or continue with Google</h5>
+              
                 <GoogleButton radius="xl">Google</GoogleButton>
                 </div>
                 

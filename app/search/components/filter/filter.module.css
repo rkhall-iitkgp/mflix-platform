@@ -6,13 +6,18 @@
   letter-spacing: 0em;
   text-align: left;
   color: #9441d0;
-  background-color: black;
+  background-color: #140320;
   padding: 8px;
+}
+.gridItem {
+  width: calc(25% - 10px); /* Adjust width as needed */
+  margin-right: 20px; /* Adjust margin between columns */
+  float: left; /* Float the columns left to ensure they appear in a row */
 }
 .header {
   height: rem(84px);
   margin-bottom: rem(120px);
-  background-color: black;
+  background-color: #140320;
   /* border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4)); */
 }
 
@@ -20,8 +25,8 @@
   height: rem(84px);
   display: flex;
   align-items: center;
-  padding-left: 80px;
-  margin-bottom: 30px;
+  padding-left: 40px;
+  /* margin-bottom: 20px; */
   /* justify-content: space-between; */
 }
 

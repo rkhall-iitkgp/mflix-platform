@@ -34,7 +34,7 @@ export function Register(props: PaperProps) {
         },
 
         validate: {
-            name: (val) => (!val.length ? 'Required' : null),
+            name: (val) => (!val ? 'Required' : null),
             dob: (val) =>(!val ? 'Required' : null),
             phone:(val) => (val.length < 10 ? 'Invalid Phone No.': null),
             email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
@@ -109,7 +109,8 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     justifyContent: 'space-around',
                     alignItems: 'center',
                 }}>
-               <div style={{marginTop:"2rem",width:"75%",display:"flex", justifyContent:"space-evenly", alignItems:"center"}}> <TextInput
+               <div style={{marginTop:"2rem",width:"75%",display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
+                <TextInput
                     required
                     label="Name"
                     placeholder="Enter Your Name"
@@ -126,7 +127,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                /> 
+                /> <div>{form.errors.name ? form.errors.name : ''  }</div>
                  <TextInput
                     required
                     label="Email Id"
@@ -145,8 +146,10 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                /></div>
-                <div style={{marginTop:"0.5rem",width:"75%", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}><TextInput
+                /><div style={{width:"100%", }}>{form.errors.email ? form.errors.email : ''  }</div>
+                </div>
+                <div style={{marginTop:"0.5rem",width:"75%", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
+                    <TextInput
                     required
                     label="Date of Birth"
                     placeholder="Enter Your Date of Birth"
@@ -163,7 +166,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                />
+                /><div>{form.errors.dob ? form.errors.dob : ''  }</div>
                 <TextInput
                     required
                     label="Mobile Number"
@@ -181,7 +184,8 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                /></div>
+                /><div>{form.errors.phone ? form.errors.phone : ''  }</div>
+                </div>
                 <PasswordInput
                     required
                     label="Password"
@@ -199,7 +203,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                />
+                /><div>{form.errors.password ? form.errors.password : ''  }</div>
                 <PasswordInput
                     required
                     label="Confirm Password"
@@ -217,12 +221,12 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                />
+                /><div>{form.errors.confPassword ? form.errors.confPassword : ''  }</div>
                
                 {/* <Text style={{position:"absolute", paddingTop:"10rem"}} size="1rem" c={'white'} >Create new account</Text> */}
                 
                {/* <Anchor style={{ textDecoration:"none", marginTop:'0rem', marginLeft:"22%", width: '50%', height: '3rem'}}href="/verifyotp"> */}
-                <Button style={{ marginTop:'1rem', width: '50%', height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem' }} >Sign Up</Button>
+                <Button type='submit' style={{ marginTop:'1rem', width: '50%', height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem' }} >Sign Up</Button>
                 {/* </Anchor> */}
                
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"center", paddingBottom:"1.5%", paddingTop:"20px"}}>

@@ -30,7 +30,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
       height: 'fit-content',
       marginBottom: '120px',
       backgroundColor: '#140320',
-      padding: "10px 10px"
+      padding: "30px 10px"
     },
 
 
@@ -43,6 +43,21 @@ const useStyles = createStyles((theme, _params, getRef) => {
       cursor: "pointer"
 
     },
+    outer: {
+      height: 'fit-content',
+      display: 'flex',
+      alignItems: 'center',
+      paddingLeft: '40px',
+      // marginBottom: '20px',
+      cursor: "pointer",
+      transform: "translateY(0)", // Move down to its original position
+      transition: "transform 0.8s ease-out",
+
+    },
+    body: {
+      display: "flex",
+      flexDirection: "column"
+    }
 
 
 
@@ -61,24 +76,26 @@ export function Filter() {
 
   return (
     <header className={classes.header}>
-      <div onClick={handleToggle} className={classes.inner}>
-        <Image src={FilterIcon} alt='' />
-        <div className={classes.filter}>Filter</div>
-      </div>
-      {isToggled && <div className={classes.inner}>
-        <Grid w={"100%"} justify="flexStart" align="stretch" overflow="hidden">
-          {Object.keys(Data).map((key, index) => ( // Iterate over the keys of Data
-            <Grid.Col key={index} span={3} >
-              <TypeButton value={key} data={Data[key as keyof typeof Data]} />
+      <div className={classes.body}>
+        <div onClick={handleToggle} className={classes.inner}>
+          <Image src={FilterIcon} alt='' />
+          <div className={classes.filter}>Filter</div>
+        </div>
+        {isToggled && <div className={classes.outer}>
+          <Grid w={"100%"} justify="flexStart" align="stretch" overflow="hidden">
+            {Object.keys(Data).map((key, index) => ( // Iterate over the keys of Data
+              <Grid.Col key={index} span={3} >
+                <TypeButton value={key} data={Data[key as keyof typeof Data]} />
+              </Grid.Col>
+            ))}
+            <Grid.Col span={3}>
+              <YearButton />
             </Grid.Col>
-          ))}
-          <Grid.Col span={3}>
-            <YearButton />
-          </Grid.Col>
-        </Grid>
+          </Grid>
+        </div>
+        }
 
       </div>
-      }
 
     </header>
   );

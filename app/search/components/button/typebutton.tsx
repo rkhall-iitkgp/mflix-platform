@@ -55,11 +55,13 @@ const useStyles = createStyles((theme, _params, getRef) => {
         },
         visible: {
             opacity: "1",
-            transition: "opacity 0.3s ease-out", /* Adjust timing and easing as needed */
+            transform: "translateY(0)", // Move down to its original position
+            transition: "opacity 0.3s ease-out, transform 0.3s ease-out", /* Adjust timing and easing as needed */
         },
         hidden: {
             opacity: "0",
-            transition: "opacity 0.3s ease-out", /* Adjust timing and easing as needed */
+            transform: "translateY(-10px)", // Move up slightly when hidden
+            transition: "opacity 0.3s ease-out, transform 0.3s ease-out", /* Adjust timing and easing as needed */
             pointerEvents: "none" /* Prevent interaction while hidden */
         }
     };
@@ -73,7 +75,7 @@ export function TypeButton({ value, data }: { value: string, data: string[] }) {
     useEffect(() => {
         const timer = setTimeout(() => {
             setVisible(true);
-        }, 300); // Delay in milliseconds
+        }, 50); // Delay in milliseconds
         return () => clearTimeout(timer); // Clear timeout on component unmount
     }, [opened]);
     const items = data.map((item) => (

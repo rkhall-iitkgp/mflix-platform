@@ -1,14 +1,14 @@
 "use client"
 
-import { Text, Container, ActionIcon, Group, rem } from '@mantine/core';
+import { Text, Container, ActionIcon, Group, rem, } from '@mantine/core';
 import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
-import classes from './FooterLinks.module.css';
+import themeOptions from '@/utils/colors';
 
 const data = [
   {
     title: 'INFO',
     links: [
-      { label: 'Catalog',  link: '#' },
+      { label: 'Catalog', link: '#' },
       { label: 'About us', link: '#' },
       { label: 'For customers', link: '#' },
       { label: 'Contacts', link: '#' },
@@ -39,8 +39,11 @@ export default function FooterLinks() {
     const links = group.links.map((link, index) => (
       <Text<'a'>
         key={index}
-        className={classes.link}
         component="a"
+        style={{display:"block", color:"#fff", opacity:"80%",
+        fontSize:"var(--mantine-font-size-sm)",
+        paddingTop:"3px", paddingBottom:"3px", transition:"0.8s",
+        marginInline:"100px"}}
         href={link.link}
         onClick={(event) => event.preventDefault()}
       >
@@ -49,31 +52,54 @@ export default function FooterLinks() {
     ));
 
     return (
-      <div className={classes.wrapper} key={group.title}>
-        <Text className={classes.title}>{group.title}</Text>
+      <div style={{ width: "rem(160px" }}>
+        <Text style={{
+          fontSize: "var(--mantine-font-size-lg)",
+          fontWeight: "700", fontFamily: "sans-serif", marginBottom: "calc(var(--mantine-spacing-xs) / 2);",
+          color: "#fff", opacity: "40%", marginInline:"100px"
+        }}>{group.title}</Text>
         {links}
       </div>
     );
   });
 
   return (
-    <footer className={classes.footer}>
-      <Container className={classes.inner}>
-        <div className={classes.logo}>
-          <Text className={classes.description}>
-            Logo
-          </Text>
+    <footer style={{
+      marginTop: "rem(50px)", width: "100%",
+      paddingTop: "calc(var(--mantine-spacing-xl) * 2)",
+      paddingBottom: "calc(var(--mantine-spacing-xl) * 2)",
+      backgroundColor: "light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6))",
+      borderTop: "rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5))"
+    }}>
+      <div style={{display:"flex", justifyContent:"space-between"}}>
+        <Container style={{ marginLeft: "0px", display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <Text c={themeOptions.color.button} style={{
+              fontSize: "50px", fontWeight: "500",
+              marginLeft: "30px", lineHeight: "61px", letterSpacing: "0em",
+              textAlign: "left"
+            }}>
+              Logo
+            </Text>
+          </div>
+        </Container>
+        <div style={{ marginLeft: "0px", display: "flex", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", flexWrap: "wrap" }}>{groups}</div>
         </div>
-        <div className={classes.groups}>{groups}</div>
-      </Container>
-      <Container className={classes.afterFooter}>
+      </div>
+      <div style={{
+        marginLeft: "0px", display: "flex", justifyContent: "space-between",
+        alignItems: "center", marginTop: "var(--mantine-spacing-xl)",
+        paddingTop: "var(--mantine-spacing-xl)", paddingInline:"30px",
+        borderTop: "rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4))"
+      }}>
         <Text c="#fff" opacity="40%" size="sm">
           © 2023 - Copyright
         </Text>
         <Text c="#fff" opacity="40%" size="sm">
           Privacy
         </Text>
-        <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">
+        <Group gap={0} justify="flex-end" wrap="nowrap">
           <ActionIcon size="lg" color="gray" variant="subtle">
             <IconBrandTwitter style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
           </ActionIcon>
@@ -84,7 +110,7 @@ export default function FooterLinks() {
             <IconBrandInstagram style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
           </ActionIcon>
         </Group>
-      </Container>
+      </div>
     </footer>
   );
 }

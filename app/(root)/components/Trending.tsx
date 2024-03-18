@@ -58,7 +58,7 @@ export default function Trending() {
     useEffect(() => {
         const handleScroll = () => {
             // Check if the container is scrolled horizontally
-            if (scrollRef.current.scrollLeft > 100) {
+            if (scrollRef.current.scrollLeft > 0) {
                 setShowFirstArrow(true);
             } else {
                 setShowFirstArrow(false);
@@ -79,7 +79,7 @@ export default function Trending() {
         setVis(true);
         scrollRef.current.scrollBy({
             top: 0,
-            left: 300, // Adjust this value based on the width of each item
+            left: 220, // Adjust this value based on the width of each item
             behavior: 'smooth',
         });
     };
@@ -88,19 +88,21 @@ export default function Trending() {
         console.log("scrolling")
         scrollRef.current.scrollBy({
             top: 0,
-            left: -300, // Adjust this value based on the width of each item
+            left: -220, // Adjust this value based on the width of each item
             behavior: 'smooth',
         });
     };
 
-    const {classes, cx} = useStyles()
+    const { classes, cx } = useStyles()
 
     return (
         <section className={classes.sectionStyles}>
-            <h1 className={classes.titleStyles}>Trending</h1>
-            <Image src={Trend} alt='icon' className={classes.iconStyles} />
+            <div className={classes.trendStyles}>
+                <h1 className={classes.titleStyles}>Trending</h1>
+                <Image src={Trend} alt='icon' className={classes.iconStyles}/>
+            </div>
             <div ref={scrollRef} className={classes.containerStyles}>
-                <div className={classes.random}>
+                <div className={classes.movieDiv}>
                     <MovieCard />
                     <MovieCard />
                     <MovieCard />
@@ -110,16 +112,16 @@ export default function Trending() {
                     <MovieCard />
                     <MovieCard />
                 </div>
-                {showLeftArrow && (
+                
                     <Image
                         src={rArrow}
                         alt='slider'
-                        className={cx(classes.arrowStyles, classes.leftArrow, {opacity: showLeftArrow ? 1 : 0})}
+                        className={cx(classes.arrowStyles, classes.leftArrow, {[classes.opacity]: showLeftArrow === true })}
                         width={30}
                         height={40}
                         onClick={handleScrollLeft}
                     />
-                )}
+                
                 <Image
                     src={rArrow}
                     alt='slider'
@@ -134,8 +136,10 @@ export default function Trending() {
 }
 
 const useStyles = createStyles(() => ({
+    opacity: {
+        opacity: 1
+    },
     sectionStyles: {
-        paddingLeft: '80px',
         paddingTop: '80px', // You may adjust the padding as needed
         paddingBottom: '80px',
         position: 'relative',
@@ -143,17 +147,16 @@ const useStyles = createStyles(() => ({
     },
 
     titleStyles: {
-        fontSize: '2.25rem',
-        marginBottom: '10rem',
-        lineHeight: "2.5rem",
+        fontSize: '3rem',
+        lineHeight: "5.5rem",
         display: 'inline',
-        marginRight: "2.5rem"
+        zIndex:5,
+        // marginRight: "2.5rem"
     },
 
     iconStyles: {
-        marginLeft: '2rem',
-        paddingBottom: '2rem',
-        display: 'inline',
+        // marginLeft: '1rem',
+      width:'70px',
     },
 
     containerStyles: {
@@ -162,27 +165,37 @@ const useStyles = createStyles(() => ({
     },
 
     arrowStyles: {
-        backgroundColor: '#1a202c',
-        boxShadow: '-12px 20px 222px 200px #1a202c',
+        backgroundColor: '#000',
+        boxShadow: '-12px 20px 222px 180px #000',
         position: 'absolute',
-        top: '50%',
+        top: '55%',
         transform: 'translateY(-50%)',
         cursor: 'pointer',
+        zIndex:2,
+        // filter: 'drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.3))',
     },
 
-    random: {
+    movieDiv: {
         display: 'flex',
         position: 'relative',
-        width: 'max-content'
+        width: 'max-content',
+        paddingLeft:'5rem'
     },
 
     leftArrow: {
         left: '40px',
         transform: 'translateY(-50%) rotate(180deg)',
-        transition: 'opacity 5s'
+        transition: 'opacity .15s',
+        opacity: 0
     },
 
     rightArrow: {
         right: '10px'
-    }
-}))
+    },
+    trendStyles:{
+        width:'25rem',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+    },
+}));

@@ -20,46 +20,42 @@ export default function HeroSection() {
 
                 <div className='w-[70%] mr-40 overflow-hidden'>
                     <p className='mb-3 text-lg'>Recent Searches:</p>
-                    <div className="bg-[#D9D9D926] border-solid border-[#FFFFFF] rounded-lg shadow-md p-4 flex flex-row justify-between w-half">
-
-                        <img src="" alt="poster" />
-                        <div className='flex flex-col'>
-                            <h2 className="text-xl font-thin mb">{"movie.title"}</h2>
-                            <div className="text-white-900 font-thin">{"movie.genre"}</div>
-                            <span className="text-gray-500 mr-2 inline">Year</span>
+                    <div className='border-solid border-[#FFFFFF] rounded-lg border overflow-hidden'>
+                        <div className="bg-[#D9D9D926] shadow-md p-4 flex flex-row justify-between w-half border-solid border-[#FFFFFF] border-y">
+                            <img src="" alt="poster" />
+                            <div className='flex flex-col'>
+                                <h2 className="text-xl font-thin mb">{"movie.title"}</h2>
+                                <div className="text-white-900 font-thin">{"movie.genre"}</div>
+                                <span className="text-gray-500 mr-2 inline">Year</span>
+                            </div>
                         </div>
-
-                    </div>
-                    <div className="bg-[#D9D9D926] border-solid border-[#FFFFFF] rounded-lg shadow-md p-4 flex flex-row justify-between w-half">
-
-                        <img src="" alt="poster" />
-                        <div className='flex flex-col'>
-                            <h2 className="text-xl font-thin mb">{"movie.title"}</h2>
-                            <div className="text-white-900 font-thin">{"movie.genre"}</div>
-                            <span className="text-gray-500 mr-2 inline">Year</span>
+                        <div className="bg-[#D9D9D926] shadow-md p-4 flex flex-row justify-between w-half border-solid border-[#FFFFFF] border-y">
+                            <img src="" alt="poster" />
+                            <div className='flex flex-col'>
+                                <h2 className="text-xl font-thin mb">{"movie.title"}</h2>
+                                <div className="text-white-900 font-thin">{"movie.genre"}</div>
+                                <span className="text-gray-500 mr-2 inline">Year</span>
+                            </div>
                         </div>
-
-                    </div>
-                    <div className="bg-[#D9D9D926] border-solid border-[#FFFFFF] rounded-lg shadow-md p-4 flex flex-row justify-between w-half">
-
-                        <img src="" alt="poster" />
-                        <div className='flex flex-col'>
-                            <h2 className="text-xl font-thin mb">{"movie.title"}</h2>
-                            <div className="text-white-900 font-thin">{"movie.genre"}</div>
-                            <span className="text-gray-500 mr-2 inline">Year</span>
+                        <div className="bg-[#D9D9D926] shadow-md p-4 flex flex-row justify-between w-half border-solid border-[#FFFFFF] border-y">
+                            <img src="" alt="poster" />
+                            <div className='flex flex-col'>
+                                <h2 className="text-xl font-thin mb">{"movie.title"}</h2>
+                                <div className="text-white-900 font-thin">{"movie.genre"}</div>
+                                <span className="text-gray-500 mr-2 inline">Year</span>
+                            </div>
                         </div>
-
-                    </div>
-                    <div className="bg-[#D9D9D926] border-solid border-[#FFFFFF] rounded-lg shadow-md p-4 flex flex-row justify-between w-half">
-
-                        <img src="" alt="poster" />
-                        <div className='flex flex-col'>
-                            <h2 className="text-xl font-thin mb">{"movie.title"}</h2>
-                            <div className="text-white-900 font-thin">{"movie.genre"}</div>
-                            <span className="text-gray-500 mr-2 inline">Year</span>
+                        <div className="bg-[#D9D9D926] shadow-md p-4 flex flex-row justify-between w-half border-solid border-[#FFFFFF] border-y">
+                            <img src="" alt="poster" />
+                            <div className='flex flex-col'>
+                                <h2 className="text-xl font-thin mb">{"movie.title"}</h2>
+                                <div className="text-white-900 font-thin">{"movie.genre"}</div>
+                                <span className="text-gray-500 mr-2 inline">Year</span>
+                            </div>
                         </div>
-
+                      
                     </div>
+
                 </div>
             </div>
         </>

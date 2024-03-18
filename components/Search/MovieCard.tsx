@@ -1,26 +1,30 @@
-import { Card, Image, Text, Group } from '@mantine/core';
+import { Card, Image, Text, Group, AspectRatio } from '@mantine/core';
 import NextImage from 'next/image';
 import themeOptions from '@/utils/colors';
+import TomatoImg from '@/assets/icons/tomato.png';
 import ImdbImg from '@/assets/icons/imdb.png';
 import Sample2 from '@/assets/sample2.jpeg';
 
 export default function Search() {
     return (
-        <Card p={0} w={250} radius={0} bg="black">
-            <div>
+        <Card p={0} radius={0} bg="transparent" w="19rem" maw="20rem" c={themeOptions.color.normalTextColor}>
+            <AspectRatio ratio={320 / 500}>
                 <Image
                   src={Sample2}
                   component={NextImage}
                   alt="sample"
-                  height={380}
                 />
-            </div>
+            </AspectRatio>
 
-            <Text fz={themeOptions.fontSize.xs} c={themeOptions.color.insideTextColor} mb="xs">USA, 2016 - Current</Text>
+            <Text fz={themeOptions.fontSize.xs} c={themeOptions.color.insideTextColor} mt="xs" mb="xs">
+                USA, 2016 - Current
+            </Text>
 
-            <Text fz={themeOptions.fontSize.s} fw={500}>Movie Name</Text>
+            <Text fz={themeOptions.fontSize.s} fw={500}>
+                Movie Name
+            </Text>
 
-            <Group justify="space-between">
+            <Group justify="space-between" mt="xs" mb="xs">
                 <Group justify="space-around">
                     <Image
                       src={ImdbImg}
@@ -32,7 +36,13 @@ export default function Search() {
                     <Text fz={themeOptions.fontSize.xs}>8.6/10</Text>
                 </Group>
                 <Group>
-                    <Text fz={themeOptions.fontSize.xs}>Tomato</Text>
+                    <Image
+                      src={TomatoImg}
+                      component={NextImage}
+                      alt="imdb"
+                      height={20}
+                      unoptimized
+                    />
                     <Text fz={themeOptions.fontSize.xs}>97%</Text>
                 </Group>
             </Group>

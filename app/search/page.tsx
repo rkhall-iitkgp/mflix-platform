@@ -1,38 +1,43 @@
-import MovieCard from '../../components/MovieDetails/MovieCard';
-import MovieBanner from '@/components/MovieDetails/MovieBanner';
+import { Group, Button, Stack, Text } from '@mantine/core';
+import MovieCard from '../../components/Search/MovieCard';
+import MovieBanner from '@/components/Search/MovieBanner';
+import Filter from '@/components/Search/Filter';
 import themeOptions from '@/utils/colors';
-import { Group, Button, Image, Stack, Text, Paper } from '@mantine/core';
 
 export default function Search() {
     return (
-        <Stack bg="black" pl={75} pr={75}>
-            <div>Filters stuf yeeeeeeeeeeeeeeee!!!</div>
-
-            {/* top results part, neds more work */}
+        <Stack c={themeOptions.color.normalTextColor} bg={themeOptions.color.background} style={{ paddingLeft: '4rem', paddingRight: '4rem' }}>
+            <Filter />
+            {/* top results part, needs more work */}
             <Stack>
-                <Text fz={themeOptions.fontSize.l}>Tope results for : Name</Text>
-                {/* <Stack justify="space-evenly">
-                    <Group justify="space-between">
+                <Text fw={600} fz={themeOptions.fontSize.l}>
+                    Top results for : {' '}
+                    <Text span inherit c={themeOptions.color.textColorNormal}>Name</Text>
+                </Text>
+                <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
+                    <Group style={{ rowGap: '30px' }} grow gap="5rem" preventGrowOverflow={false}>
                         <MovieBanner />
                         <MovieBanner />
                     </Group>
-                    <Group justify="space-between">
+                    <Group style={{ rowGap: '30px' }} grow gap="5rem" preventGrowOverflow={false}>
                         <MovieBanner />
                         <MovieBanner />
                     </Group>
-                </Stack> */}
-                <Group justify="space-between">
-                    <MovieBanner />
-                    <MovieBanner />
-                    <MovieBanner />
-                    <MovieBanner />
-                </Group>
+                </Stack>
             </Stack>
 
             {/* more results part */}
             <Stack>
-                <Text fz={themeOptions.fontSize.l}>More Results</Text>
-                <Group justify="space-between">
+                <Text fw={500} fz={themeOptions.fontSize.l}>More Results</Text>
+                <Group
+                  justify="flex-start"
+                  style={{
+                      rowGap: themeOptions.fontSize.xl,
+                  }}
+                  gap={50}
+                  grow
+                  preventGrowOverflow={false}
+                >
                     <MovieCard />
                     <MovieCard />
                     <MovieCard />
@@ -42,6 +47,74 @@ export default function Search() {
                     <MovieCard />
                     <MovieCard />
                 </Group>
+                {/* <Group
+                  justify="space-between"
+                  style={{
+                      rowGap: themeOptions.fontSize.xl,
+                  }}
+                  grow
+                  gap="xl"
+                  preventGrowOverflow={false}
+                >
+                    <Group
+                      justify="space-between"
+                      style={{
+                          rowGap: themeOptions.fontSize.xl,
+                      }}
+                      grow
+                      gap="xl"
+                      preventGrowOverflow={false}
+                    >
+                        <MovieCard />
+                        <MovieCard />
+                    </Group>
+                    <Group
+                      justify="space-between"
+                      style={{
+                          rowGap: themeOptions.fontSize.xl,
+                      }}
+                      grow
+                      gap="xl"
+                      preventGrowOverflow={false}
+                    >
+                        <MovieCard />
+                        <MovieCard />
+                    </Group>
+                </Group>
+                <Group
+                  justify="space-between"
+                  style={{
+                      rowGap: themeOptions.fontSize.xl,
+                  }}
+                  grow
+                  gap="xl"
+                  preventGrowOverflow={false}
+                >
+                    <Group
+                      justify="space-between"
+                      style={{
+                          rowGap: themeOptions.fontSize.xl,
+                      }}
+                      grow
+                      gap="xl"
+                      preventGrowOverflow={false}
+                    >
+                        <MovieCard />
+                        <MovieCard />
+                    </Group>
+                    <Group
+                      justify="space-between"
+                      style={{
+                          rowGap: themeOptions.fontSize.xl,
+                      }}
+                      grow
+                      gap="xl"
+                      preventGrowOverflow={false}
+                    >
+                        <MovieCard />
+                        <MovieCard />
+                    </Group>
+                </Group> */}
             </Stack>
         </Stack>
     );

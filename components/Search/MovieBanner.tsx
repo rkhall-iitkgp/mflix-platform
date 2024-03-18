@@ -1,4 +1,4 @@
-import { Group, Button, Image, Stack, Text, Paper } from '@mantine/core';
+import { Group, Button, Image, Stack, Text, Paper, Flex } from '@mantine/core';
 import { GrLocation } from 'react-icons/gr';
 import { IoIosArrowForward } from 'react-icons/io';
 import { FaRegHourglass } from 'react-icons/fa6';
@@ -13,52 +13,44 @@ export default function MovieBanner() {
     const genres = ['Mystery', 'Action', 'Thriller'];
     return (
         <Stack
-          style={{
-            maxWidth: '600px',
-          }}
           styles={{
-            root: {
-                borderImageSource: 'linear-gradient(166.93deg, #B586D8 3.24%, rgba(143, 72, 196, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(112, 17, 182, 0.09) 67.95%)',
-                borderImageSlice: '1',
-                borderImageWidth: '1',
-                borderImageOutset: '0',
-                borderRadius: '20px',
-                background: 'linear-gradient(0deg, rgba(112, 17, 182, 0.15), rgba(112, 17, 182, 0.15)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
-            },
+              root: {
+                  minWidth: '600px',
+                  borderRadius: '20px',
+                  background: 'linear-gradient(0deg, rgba(112, 17, 182, 0.05), rgba(112, 17, 182, 0.05)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
+              },
           }}
-          justify="space-between"
           pt="md"
-          pb="xs"
           pl={themeOptions.fontSize.l}
           pr={themeOptions.fontSize.l}
           gap={0}
         >
-            <Group align="center">
-                <div style={{ width: '107px' }}>
+            <Flex>
+                <div>
                     <Image
                       src={Sample}
                       component={NextImage}
                       alt="sample"
-                      height={158}
+                      h={160}
                     />
                 </div>
                 <Stack ml="lg" gap="xs" mr="lg">
                     <Text fz={themeOptions.fontSize.l}>Movie Name</Text>
                     <Group gap={themeOptions.fontSize.xs}>
                         {genres.map((e, i) =>
-                        <Paper
-                          key={i}
-                          bg={themeOptions.color.smallBox}
-                          fz={themeOptions.fontSize.s}
-                          w={116}
-                          pt={5}
-                          pb={5}
-                          radius={13}
-                        >
-                            <Text ta="center">{e}</Text>
-                        </Paper>)}
+                            <Paper
+                              key={i}
+                              bg={themeOptions.color.button}
+                              fz={themeOptions.fontSize.s}
+                              w={116}
+                              pt={5}
+                              pb={5}
+                              radius={13}
+                            >
+                                <Text ta="center">{e}</Text>
+                            </Paper>)}
                     </Group>
-                    <Group mt={7} justify="space-between">
+                    <Group mt={7} justify="space-between" gap={themeOptions.fontSize.l} style={{ rowGap: '10px' }} grow preventGrowOverflow={false}>
                         <Group gap={6} justify="space-around">
                             <Image
                               src={ImdbImg}
@@ -73,7 +65,7 @@ export default function MovieBanner() {
                             <Image
                               src={TomatoImg}
                               component={NextImage}
-                              alt="imdb"
+                              alt="tomato"
                               height={20}
                               unoptimized
                             />
@@ -87,14 +79,23 @@ export default function MovieBanner() {
                             <PiCalendar />
                             <Text fz={themeOptions.fontSize.xs}>2024</Text>
                         </Group>
-                    </Group>
-                    <Group gap={6} justify="space-around" style={{ maxWidth: 'max-content' }}>
-                        <GrLocation />
-                        <Text fz={themeOptions.fontSize.xs}>Country</Text>
+                        <Group gap={6} justify="space-around">
+                            <GrLocation />
+                            <Text fz={themeOptions.fontSize.xs}>Country</Text>
+                        </Group>
                     </Group>
                 </Stack>
-            </Group>
-            <Text ta="right" w="100%">
+            </Flex>
+            <Text
+              ta="right"
+              w="100%"
+              styles={{
+                  root: {
+                      position: 'relative',
+                      top: '-1rem',
+                  },
+              }}
+            >
                 <Button
                   fz={themeOptions.fontSize.s}
                   c={themeOptions.color.textColorNormal}

@@ -21,7 +21,7 @@ import { GoogleButton } from '../login/GoogleButton';
 // import { TwitterButton } from './TwitterButton';
 
 export function Register(props: PaperProps) {
-    const [type, toggle] = useToggle(['login', 'register'])
+    // const [type, toggle] = useToggle(['login', 'register'])
     const form = useForm({
         initialValues: {
             name:'',
@@ -39,7 +39,7 @@ export function Register(props: PaperProps) {
             phone:(val) => (val.length < 10 ? 'Invalid Phone No.': null),
             email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
             password: (val) => (val.length <= 6 ? 'Password should include at least 6 characters' : null),
-            confPassword: (val) =>(val ? 'Password does not match' : null),
+            confPassword: (val, values) =>(val != values.password ? 'Password does not match' : null),
            
         },
     });
@@ -104,7 +104,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
             }}>
             {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
             
-            <form onSubmit={form.onSubmit(() => {console.log("submit") })} style={{
+            <form onSubmit={form.onSubmit((values) => {console.log(values) })} style={{
                     width: '100%', display: 'flex', flexDirection: 'column',
                     justifyContent: 'space-around',
                     alignItems: 'center',
@@ -132,9 +132,9 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     label="Email Id"
                     placeholder="Enter Your Email Id"
                     value={form.values.email}
-                    // onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+                    onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
                     error={form.errors.email && 'Required'}
-                    {...form.getInputProps('name')}
+                    // {...form.getInputProps('name')}
                     radius="md"
                     size="lg"
                     style={{ width: '45%', color: 'white' }}

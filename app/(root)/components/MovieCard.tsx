@@ -1,9 +1,11 @@
 import Image from 'next/image';
 import Heart from '@/assets/images/heart.svg';
+import favHeart from '@/assets/images/fav-heart.svg';
 import Poster from '@/assets/images/poster.jpeg';
 import Imdb from '@/assets/images/imdb.png';
 import Tomato from '@/assets/images/tomato.png';
 import { createStyles } from '@mantine/styles';
+import { useState } from 'react';
 
 
 const useStyles = createStyles(() => ({
@@ -25,17 +27,20 @@ const useStyles = createStyles(() => ({
     },
 
     heartImageStyles: {
+        fill: 'red',
         alignSelf: 'flex-end',
         backgroundColor: '#F3F4F6',
+        padding: '0.2rem',
         left: '40px',
         border: '2px solid',
-        padding: '1px',
         borderRadius: '50%',
+        zIndex: 1,
+        cursor: 'pointer',
     },
 
     posterStyles: {
         width: '20.75rem',
-        transform:'rotate(180deg)'
+        transform: 'rotate(180deg)'
     },
 
     countryStyles: {
@@ -49,7 +54,7 @@ const useStyles = createStyles(() => ({
         fontSize: '1.125rem',
         fontWeight: 'bold',
         marginTop: '0.0625rem',
-        marginBottom:'0rem'
+        marginBottom: '0rem'
     },
 
     ratingContainerStyles: {
@@ -90,11 +95,13 @@ const useStyles = createStyles(() => ({
 }))
 
 export default function MovieCard() {
-    const { classes } = useStyles()
+    const { classes } = useStyles();
+    const [favourite, setFavourite] = useState(true);
+
     return (
         <div className={classes.containerStyles}>
-            <div className={classes.heartContainerStyles}>
-                <Image src={Heart} width={30} height={30} alt='fav' className={classes.heartImageStyles} />
+            <div className={classes.heartContainerStyles} >
+                <Image src={favourite ? Heart : favHeart} width={35} height={35} alt='fav' className={classes.heartImageStyles} onClick={() => setFavourite(!favourite)} />
             </div>
             <Image src={Poster} alt='poster' width={220} height={310} className={classes.posterStyles} />
             <span className={classes.countryStyles}>USA, 2016- Current</span>

@@ -112,16 +112,16 @@ export default function Trending() {
                     <MovieCard />
                     <MovieCard />
                 </div>
-                {showLeftArrow && (
+                
                     <Image
                         src={rArrow}
                         alt='slider'
-                        className={cx(classes.arrowStyles, classes.leftArrow, { opacity: showLeftArrow ? 1 : 0 })}
+                        className={cx(classes.arrowStyles, classes.leftArrow, {[classes.opacity]: showLeftArrow === true })}
                         width={30}
                         height={40}
                         onClick={handleScrollLeft}
                     />
-                )}
+                
                 <Image
                     src={rArrow}
                     alt='slider'
@@ -136,6 +136,9 @@ export default function Trending() {
 }
 
 const useStyles = createStyles(() => ({
+    opacity: {
+        opacity: 1
+    },
     sectionStyles: {
         paddingTop: '80px', // You may adjust the padding as needed
         paddingBottom: '80px',
@@ -147,7 +150,7 @@ const useStyles = createStyles(() => ({
         fontSize: '3rem',
         lineHeight: "5.5rem",
         display: 'inline',
-        zIndex:12,
+        zIndex:5,
         // marginRight: "2.5rem"
     },
 
@@ -168,6 +171,7 @@ const useStyles = createStyles(() => ({
         top: '55%',
         transform: 'translateY(-50%)',
         cursor: 'pointer',
+        zIndex:2,
         // filter: 'drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.3))',
     },
 
@@ -181,7 +185,8 @@ const useStyles = createStyles(() => ({
     leftArrow: {
         left: '40px',
         transform: 'translateY(-50%) rotate(180deg)',
-        transition: 'opacity 5s'
+        transition: 'opacity .15s',
+        opacity: 0
     },
 
     rightArrow: {

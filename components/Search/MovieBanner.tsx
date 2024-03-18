@@ -79,7 +79,7 @@ export default function MovieBanner() {
                             <PiCalendar />
                             <Text fz={themeOptions.fontSize.xs}>2024</Text>
                         </Group>
-                        <Group gap={6} justify="space-around">
+                        <Group gap={6} justify="space-around" style={{ maxWidth: 'max-content' }}>
                             <GrLocation />
                             <Text fz={themeOptions.fontSize.xs}>Country</Text>
                         </Group>

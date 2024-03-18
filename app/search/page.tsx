@@ -1,4 +1,4 @@
-import { Group, Button, Stack, Text } from '@mantine/core';
+import { Group, Stack, Text } from '@mantine/core';
 import MovieCard from '../../components/Search/MovieCard';
 import MovieBanner from '@/components/Search/MovieBanner';
 import Filter from '@/components/Search/Filter';

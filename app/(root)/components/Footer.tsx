@@ -15,7 +15,6 @@ const styles = createStyles(() => ({
         '&:hover': {
             color: 'gray',
         }
-
     },
     infoStylesRoot: {
         width: '100%',
@@ -36,6 +35,7 @@ const styles = createStyles(() => ({
         color: 'rgb(75 85 99)',
         display: 'block',
         marginBottom: '0.5rem',
+        textDecoration: 'none',
         '&:hover': {
             color: 'gray',
         }
@@ -43,6 +43,8 @@ const styles = createStyles(() => ({
     ulStyle: {
         listStyleType: 'none',
         marginTop: '0.5rem',
+        paddingLeft: '0',
+        textDecoration: 'none',
     },
 
     contactStylesRoot: {
@@ -61,6 +63,7 @@ const styles = createStyles(() => ({
         color: 'rgb(75 85 99)',
         display: 'block',
         marginBottom: '0.5rem',
+        textDecoration: 'none',
         '&:hover': {
             color: 'gray',
         }
@@ -85,6 +88,8 @@ const styles = createStyles(() => ({
             fontSize: '0.875rem',
             lineHeight: '1.25rem',
             marginBottom: 12,
+            marginTop: 0,
+            textDecoration: 'none'
         },
         findUsStylesLink: {
             display: 'inline-flex',
@@ -180,7 +185,7 @@ function Footer() {
                 </div>
                 <div className={classes.contactStylesRoot}>
                     <h4 className={classes.contactStylesTitle}>CONTACT US</h4>
-                    <ul className="classes.list-none mt-2">
+                    <ul className={classes.ulStyle}>
                         <li>
                             <Link href="#"
                                 className={classes.contactStylesLink}

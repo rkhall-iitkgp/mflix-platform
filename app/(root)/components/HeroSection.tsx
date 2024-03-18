@@ -65,11 +65,11 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        gap: '2rem'
     },
     leftSection: {
         paddingLeft: '10rem',
-        marginRight: '10rem',
         paddingRight: '5rem',
         paddingTop: '5rem',
         paddingBottom: '5rem',
@@ -79,10 +79,11 @@ const useStyles = createStyles(() => ({
     heading: {
         fontSize: '3rem',
         margin: '0.5rem',
-        textWrap: 'wrap'
+        textWrap: 'wrap',
+        width: '100%',
     },
     rightSection: {
-        width: '70%',
+        width: '100%',
         marginRight: '10rem',
         overflow: 'hidden'
     },
@@ -92,11 +93,14 @@ const useStyles = createStyles(() => ({
         lineHeight: '1.75rem'
     },
     movies: {
+        display: 'flex',
+        flexDirection: 'column',
         borderStyle: 'solid',
         borderWidth: '1px',
         borderColor: '#FFFFFF',
         borderRadius: '0.5rem',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        gap: '1px'
     },
     movieCard: {
         backgroundColor: '#D9D9D926',
@@ -108,19 +112,23 @@ const useStyles = createStyles(() => ({
         width: '100%',
         borderStyle: 'solid',
         borderColor: '#FFFFFF',
-        borderTopWidth: '1px',
-        borderBottomWidth: '1px',
-        height: '7rem'
+        // borderTopWidth: '1px',
+        borderWidth: '0px',
+        borderBottomWidth: '0px',
+        height: '7rem',
     },
     cardDescription: {
         paddingLeft: '1rem',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        justifyContent: 'center'
     },
     movieTitle: {
         fontSize: '1.25rem',
         lineHeight: '1.75rem',
         fontWeight: 100,
+        marginTop: 0,
+        marginBottom: 0
     },
     movieGenre: {
         fontWeight: 100

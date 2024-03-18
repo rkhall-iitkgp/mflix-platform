@@ -5,15 +5,21 @@ import MicIcon from '@/assets/icons/mic.svg'
 import Image from 'next/image'
 
 export default function SearchBar() {
+    const [input, setInput] = React.useState('' as string)
     return (
         <div style={styles.container}>
-            <Image src={SearchIcon} alt="search" style={styles.icon} />
+            <label htmlFor="search" style={styles.searchLabel}>
+                <Image src={SearchIcon} alt="search" style={styles.icon} />
+            </label>
             <input
+                id='search'
                 type="text"
                 placeholder="Search..."
                 style={styles.input}
+                value={input as string}
+                onChange={(e) => setInput(e.target.value)}
             />
-            <Image src={XMarkIcon} alt="X" style={styles.icon} />
+            {input && <Image src={XMarkIcon} alt="X" style={styles.icon} onClick={() => setInput('')} />}
             <Image src={MicIcon} alt="Mic" style={styles.mic} />
         </div>
     )
@@ -51,5 +57,10 @@ const styles = {
         backgroundColor: '#7011B6',
         padding: '0.125rem',
         borderRadius: '50%'
+    },
+    searchLabel: {
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
     }
 }

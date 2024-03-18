@@ -50,12 +50,12 @@ export function Login(props: PaperProps) {
             justifyContent: 'space-around',
             alignItems: 'center',
         },
+        ButtonStyles: {
+            width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'normal', marginTop: '1.5rem'
+        },
         ErrorStyles: {
             color: 'red', fontSize: '0.9rem', marginTop: '5px', minHeight: '1.2rem', width: '70%',
         },
-        ButtonStyles: {
-            width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'normal', marginTop: '1.5rem'
-        }
 
 
     }));
@@ -160,7 +160,9 @@ export function Login(props: PaperProps) {
                     <Box style={{ display: 'flex', flexDirection: 'row-reverse', width: '70%' }}>
                         <a href="" style={{ color: 'white', fontSize: '0.8rem', fontWeight: 'normal', padding: '0.2rem' }} >Forget Password?</a>
                     </Box>
-                    <Button className={classes.ButtonStyles} style={{ width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'normal', marginTop: '1.5rem' }}
+                    <Button
+                        // className={classes.ButtonStyles}
+                        style={{ width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'n]=ormal', marginTop: '1.5rem' }}
                         type="submit" radius="xl" >Log In</Button>
 
                     <Divider label="Or " labelPosition="center" my="lg" style={{ color: 'white', width: '80%' }} styles={{

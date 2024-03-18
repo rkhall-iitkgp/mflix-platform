@@ -2,58 +2,58 @@ import SearchBar from '@/components/SearchBar'
 import Image from 'next/image'
 import React from 'react'
 import BgImage from '@/assets/images/bg-home.jpeg'
+import { createStyles } from '@mantine/styles'
 
 export default function HeroSection() {
+    const {classes} = useStyles()
     return (
         <>
-            <div className='h-screen w-full absolute -z-30 overflow-hidden'>
-                <div className='bg-top h-screen w-screen -z-10'></div>
-                <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className='bg-home opacity-25 -z-20' />
+            <div className={classes.bgContainer}>
+                <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className={classes.bgImage} />
             </div>
-            <div className="pt-24 hero flex justify-evenly items-center w-37.5 overflow-hidden">
-                <div className="pl-40 mr-40 pr-20 md:py-20 flex flex-col ">
-                    <h1 className='text-[3rem] text-wrap m-2'>Cool Animated Text</h1>
+            <div className={classes.hero}>
+                <div className={classes.leftSection}>
+                    <h1 className={classes.heading}>Cool Animated Text</h1>
                     <SearchBar />
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
                 </div>
 
 
-                <div className='w-[70%] mr-40 overflow-hidden'>
-                    <p className='mb-3 text-lg'>Recent Searches:</p>
-                    <div className='border-solid border-[#FFFFFF] rounded-lg border overflow-hidden'>
-                        <div className="bg-[#D9D9D926] shadow-md p-4 flex flex-row justify-between w-half border-solid border-[#FFFFFF] border-y">
-                            <img src="" alt="poster" />
-                            <div className='flex flex-col'>
-                                <h2 className="text-xl font-thin mb">{"movie.title"}</h2>
-                                <div className="text-white-900 font-thin">{"movie.genre"}</div>
-                                <span className="text-gray-500 mr-2 inline">Year</span>
+                <div className={classes.rightSection}>
+                    <p className={classes.p}>Recent Searches:</p>
+                    <div className={classes.movies}>
+                        <div className={classes.movieCard}>
+                            <Image src="" alt="poster" />
+                            <div className={classes.cardDescription}>
+                                <h2 className={classes.movieTitle}>{"movie.title"}</h2>
+                                <div className={classes.movieGenre}>{"movie.genre"}</div>
+                                <span className={classes.movieYear}>Year</span>
                             </div>
                         </div>
-                        <div className="bg-[#D9D9D926] shadow-md p-4 flex flex-row justify-between w-half border-solid border-[#FFFFFF] border-y">
-                            <img src="" alt="poster" />
-                            <div className='flex flex-col'>
-                                <h2 className="text-xl font-thin mb">{"movie.title"}</h2>
-                                <div className="text-white-900 font-thin">{"movie.genre"}</div>
-                                <span className="text-gray-500 mr-2 inline">Year</span>
+                        <div className={classes.movieCard}>
+                            <Image src="" alt="poster" />
+                            <div className={classes.cardDescription}>
+                                <h2 className={classes.movieTitle}>{"movie.title"}</h2>
+                                <div className={classes.movieGenre}>{"movie.genre"}</div>
+                                <span className={classes.movieYear}>Year</span>
                             </div>
                         </div>
-                        <div className="bg-[#D9D9D926] shadow-md p-4 flex flex-row justify-between w-half border-solid border-[#FFFFFF] border-y">
-                            <img src="" alt="poster" />
-                            <div className='flex flex-col'>
-                                <h2 className="text-xl font-thin mb">{"movie.title"}</h2>
-                                <div className="text-white-900 font-thin">{"movie.genre"}</div>
-                                <span className="text-gray-500 mr-2 inline">Year</span>
+                        <div className={classes.movieCard}>
+                            <Image src="" alt="poster" />
+                            <div className={classes.cardDescription}>
+                                <h2 className={classes.movieTitle}>{"movie.title"}</h2>
+                                <div className={classes.movieGenre}>{"movie.genre"}</div>
+                                <span className={classes.movieYear}>Year</span>
                             </div>
                         </div>
-                        <div className="bg-[#D9D9D926] shadow-md p-4 flex flex-row justify-between w-half border-solid border-[#FFFFFF] border-y">
-                            <img src="" alt="poster" />
-                            <div className='flex flex-col'>
-                                <h2 className="text-xl font-thin mb">{"movie.title"}</h2>
-                                <div className="text-white-900 font-thin">{"movie.genre"}</div>
-                                <span className="text-gray-500 mr-2 inline">Year</span>
+                        <div className={classes.movieCard}>
+                            <Image src="" alt="poster" />
+                            <div className={classes.cardDescription}>
+                                <h2 className={classes.movieTitle}>{"movie.title"}</h2>
+                                <div className={classes.movieGenre}>{"movie.genre"}</div>
+                                <span className={classes.movieYear}>Year</span>
                             </div>
                         </div>
-                      
                     </div>
 
                 </div>
@@ -61,3 +61,85 @@ export default function HeroSection() {
         </>
     )
 }
+
+const useStyles = createStyles(() => ({
+    bgContainer: {
+        position: 'absolute',
+        width: '100%',
+        height: '100vh',
+        zIndex: -30,
+        overflow: 'hidden'
+    },
+    bgImage: {
+        opacity: 0.25,
+        zIndex: -20
+    },
+    hero: {
+        paddingTop: '6rem',
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        overflow: 'hidden'
+    },
+    leftSection: {
+        paddingLeft: '10rem',
+        marginRight: '10rem',
+        paddingRight: '5rem',
+        paddingTop: '5rem',
+        paddingBottom: '5rem',
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    heading: {
+        fontSize: '3rem',
+        margin: '0.5rem',
+        textWrap: 'wrap'
+    },
+    rightSection: {
+        width: '70%',
+        marginRight: '10rem',
+        overflow: 'hidden'
+    },
+    p: {
+        marginBottom: '0.75rem',
+        fontSize: '1.125rem',
+        lineHeight: '1.75rem'
+    },
+    movies: {
+        borderStyle: 'solid',
+        borderWidth: '1px',
+        borderColor: '#FFFFFF',
+        borderRadius: '0.5rem',
+        overflow: 'hidden'
+    },
+    movieCard: {
+        backgroundColor: '#D9D9D926',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        padding: '1rem',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        borderStyle: 'solid',
+        borderColor: '#FFFFFF',
+        borderTopWidth: '1px',
+        borderBottomWidth: '1px'
+    },
+    cardDescription: {
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    movieTitle: {
+        fontSize: '1.25rem',
+        lineHeight: '1.75rem',
+        fontWeight: 100,
+    },
+    movieGenre: {
+        fontWeight: 100
+    },
+    movieYear: {
+        color: 'rgb(107, 114, 128)',
+        marginRight: '0.5rem',
+        display: 'inline'
+    }
+}))

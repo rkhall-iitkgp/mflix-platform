@@ -1,31 +1,72 @@
+'use client'
+
+import Link from 'next/link'
 import React from 'react'
+import { createStyles } from "@mantine/styles";
 
 export default function Navbar() {
+    const {classes} = useStyles()
     return (
-        <nav className="text-white flex justify-between items-center p-4 absolute w-full px-4 sm:px-10">
+        <nav className={classes.container}>
             {/* Logo */}
-            <div className="flex items-center p-4">
-                <img src="/logo.svg" alt="Logo" className="h-8 ml-0 sm:ml-4" />
+            <div className={classes.logoDiv}>
+                <img src="/logo.svg" alt="Logo" className={classes.logo} />
             </div>
 
-            {/* Links */}
-            <ul className="flex space-x-4 p-4">
+            {/* Links CSSPropertyRule*/}
+            <ul className={classes.links}>
                 <li>
-                    <a href="#" className="hover:text-gray-400 px-4 sm:px-8">
+                    <Link href="#" className={classes.link}>
                         Movies
-                    </a>
+                    </Link>
                 </li>
                 <li>
-                    <a href="#" className="hover:text-gray-400 px-4 sm:px-8">
+                    <Link href="#" className={classes.link}>
                         Shows
-                    </a>
+                    </Link>
                 </li>
                 <li>
-                    <a href="#" className="hover:text-gray-400 px-4 sm:px-8">
+                    <Link href="#" className={classes.link}>
                         Drama
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </nav>
     )
 }
+
+const useStyles = createStyles(() => ({
+    container : {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '1rem',
+        position: 'absolute',
+        width: '100%',
+        color: "white"
+    },
+    logo: {
+        height: '2rem',
+        marginLeft: '1rem'
+    },
+    logoDiv: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: '1rem'
+    },
+    links: {
+        display: 'flex',
+        padding: '1rem',
+        marginLeft: '1rem',
+        marginRight: '1rem',
+
+    },
+    link: {
+        padding: '1rem',
+        marginLeft: '1rem',
+        marginRight: '1rem',
+        '&:hover': {
+            color: 'rgb(156, 163, 175)'
+        }
+    }
+}))

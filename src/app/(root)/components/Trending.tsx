@@ -3,6 +3,7 @@ import { useRef, useState, CSSProperties, useEffect } from 'react';
 import MovieCard from '@/app/(root)/components/MovieCard';
 import rArrow from '@/assets/icons/rarrow.svg';
 import Trend from '@/assets/icons/trends.svg';
+import { createStyles } from '@mantine/styles';
 // export default function Trending() {
 //     const scrollRef = useRef(null);
 //     const handleScrollRight = () => {
@@ -50,7 +51,7 @@ import Trend from '@/assets/icons/trends.svg';
 
 export default function Trending() {
     const scrollRef = useRef(null);
-    const [showFirstArrow, setShowFirstArrow] = useState(false);
+    const [showLeftArrow, setShowFirstArrow] = useState(false);
     const [vis, setVis] = useState(false);
     useEffect(() => {
         const handleScroll = () => {
@@ -90,55 +91,14 @@ export default function Trending() {
         });
     };
 
-    const sectionStyles = {
+    const {classes, cx} = useStyles()
 
-        paddingLeft: '80px',
-        paddingTop: '80px', // You may adjust the padding as needed
-        paddingBottom: '80px',
-        position: 'relative',
-        width: 'calc(100vw - 20px)',
-    };
-
-    const titleStyles = {
-        fontSize: '2.25rem',
-        marginBottom: '40px',
-        lineHeight: "2.5rem",
-        display: 'inline',
-        marginRight: "10px"
-    };
-
-    const iconStyles = {
-        marginLeft: '8px',
-        paddingBottom: '8px',
-        display: 'inline',
-    };
-
-    const containerStyles = {
-        width: '100%',
-        overflow: 'hidden',
-    };
-
-
-    const arrowStyles: CSSProperties = {
-        backgroundColor: '#1a202c',
-        boxShadow: '-12px 20px 222px 200px #1a202c',
-        position: 'absolute',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        cursor: 'pointer',
-    };
-
-    const random: CSSProperties = {
-        display: 'flex',
-        position: 'relative',
-        width: 'max-content'
-    };
     return (
-        <section className='pl-20  md:py-20 relative w-[calc(100vw-20px)]'>
-            <h1 style={titleStyles}>Trending</h1>
-            <Image src={Trend} alt='icon' style={iconStyles} />
-            <div ref={scrollRef} style={containerStyles}>
-                <div style={random}>
+        <section className={classes.sectionStyles}>
+            <h1 className={classes.titleStyles}>Trending</h1>
+            <Image src={Trend} alt='icon' className={classes.iconStyles} />
+            <div ref={scrollRef} className={classes.containerStyles}>
+                <div className={classes.random}>
                     <MovieCard />
                     <MovieCard />
                     <MovieCard />
@@ -148,11 +108,11 @@ export default function Trending() {
                     <MovieCard />
                     <MovieCard />
                 </div>
-                {showFirstArrow && (
+                {showLeftArrow && (
                     <Image
                         src={rArrow}
                         alt='slider'
-                        style={{ ...arrowStyles, left: '40px', transform: 'translateY(-50%) rotate(180deg)', transition: 'opacity 5s',opacity: showFirstArrow ? 1 : 0 }}
+                        className={cx(classes.arrowStyles, classes.leftArrow, {opacity: showLeftArrow ? 1 : 0})}
                         width={30}
                         height={40}
                         onClick={handleScrollLeft}
@@ -161,7 +121,7 @@ export default function Trending() {
                 <Image
                     src={rArrow}
                     alt='slider'
-                    style={{ ...arrowStyles, right: '10px' }}
+                    className={cx(classes.arrowStyles, classes.rightArrow)}
                     width={30}
                     height={40}
                     onClick={handleScrollRight}
@@ -170,3 +130,57 @@ export default function Trending() {
         </section>
     );
 }
+
+const useStyles = createStyles(() => ({
+    sectionStyles: {
+        paddingLeft: '80px',
+        paddingTop: '80px', // You may adjust the padding as needed
+        paddingBottom: '80px',
+        position: 'relative',
+        width: 'calc(100vw - 20px)',
+    },
+
+    titleStyles: {
+        fontSize: '2.25rem',
+        marginBottom: '10rem',
+        lineHeight: "2.5rem",
+        display: 'inline',
+        marginRight: "2.5rem"
+    },
+
+    iconStyles: {
+        marginLeft: '2rem',
+        paddingBottom: '2rem',
+        display: 'inline',
+    },
+
+    containerStyles: {
+        width: '100%',
+        overflow: 'hidden',
+    },
+
+    arrowStyles: {
+        backgroundColor: '#1a202c',
+        boxShadow: '-12px 20px 222px 200px #1a202c',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        cursor: 'pointer',
+    },
+
+    random: {
+        display: 'flex',
+        position: 'relative',
+        width: 'max-content'
+    },
+
+    leftArrow: {
+        left: '40px',
+        transform: 'translateY(-50%) rotate(180deg)',
+        transition: 'opacity 5s'
+    },
+
+    rightArrow: {
+        right: '10px'
+    }
+}))

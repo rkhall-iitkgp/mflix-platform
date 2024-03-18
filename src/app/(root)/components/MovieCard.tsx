@@ -1,93 +1,115 @@
-import  Image from 'next/image';
+import Image from 'next/image';
 import Heart from '@/assets/images/heart.svg';
 import Poster from '@/assets/images/poster.jpeg';
 import Imdb from '@/assets/images/imdb.png';
 import Tomato from '@/assets/images/tomato.png';
+import { createStyles } from '@mantine/styles';
 
-const containerStyles = {
-  marginRight: '40px',
-  width: '250px',
-  height: '480px',
-  overflow: 'hidden',
-};
 
-const heartContainerStyles = {
-  display: 'flex',
-  justifyContent: 'flex-end',
-  alignItems: 'flex-end',
-  flexDirection: 'row',
-  position: 'absolute',
-  width: '15rem',
-  marginTop: '0.75rem',
-};
+const useStyles = createStyles(() => ({
+    containerStyles: {
+        marginRight: '40px',
+        width: '250px',
+        height: '480px',
+        overflow: 'hidden',
+    },
 
-const heartImageStyles = {
-  alignSelf: 'flex-end',
-  backgroundColor: '#F3F4F6',
-  left: '48px',
-  border: '2px solid',
-  padding: '1px',
-  borderRadius: '50%',
-};
+    heartContainerStyles: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        flexDirection: 'row',
+        position: 'absolute',
+        width: '15rem',
+        marginTop: '0.75rem',
+    },
 
-const posterStyles = {
-  width: '20.75rem',
-};
+    heartImageStyles: {
+        alignSelf: 'flex-end',
+        backgroundColor: '#F3F4F6',
+        left: '48px',
+        border: '2px solid',
+        padding: '1px',
+        borderRadius: '50%',
+    },
 
-const countryStyles = {
-  color: '#9CA3AF',
-  fontWeight: 'bold',
-  marginTop: '0.0625rem',
-};
+    posterStyles: {
+        width: '20.75rem',
+    },
 
-const titleStyles = {
-  color: '#000',
-  fontSize: '1.125rem',
-  fontWeight: 'bold',
-  marginTop: '0.0625rem',
-};
+    countryStyles: {
+        color: '#9CA3AF',
+        fontWeight: 'bold',
+        marginTop: '0.0625rem',
+    },
 
-const ratingContainerStyles = {
-  textAlign: 'left',
-  display: 'flex',
-  justifyContent: 'space-between',
-};
+    titleStyles: {
+        color: '#000',
+        fontSize: '1.125rem',
+        fontWeight: 'bold',
+        marginTop: '0.0625rem',
+    },
 
-const ratingItemStyles = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginTop: '0.0625rem',
-};
+    ratingContainerStyles: {
+        textAlign: 'left',
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
 
-const genreStyles = {
-  marginTop: '0.0625rem',
-  color: '#9CA3AF',
-  fontWeight: 'bold',
-};
+    ratingItemStyles: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '0.0625rem',
+    },
+
+    genreStyles: {
+        marginTop: '0.0625rem',
+        color: '#9CA3AF',
+        fontWeight: 'bold',
+    },
+
+    img: {
+        display: 'inline'
+    },
+
+    rating: {
+        marginLeft: '0.5rem',
+        marginBottom: '0'
+    },
+
+    tomatoScore: {
+        marginBottom: '0'
+    },
+
+    tomatoImg: {
+        marginRight: '0.5rem'
+    }
+}))
 
 export default function MovieCard() {
-  return (
-    <div style={containerStyles}>
-      <div style={heartContainerStyles}>
-        <Image src={Heart} width={30} height={30} alt='fav' style={heartImageStyles} />
-      </div>
-      <Image src={Poster} alt='poster' width={250} height={370} style={posterStyles} />
-      <span style={countryStyles}>USA, 2016- Current</span>
-      <h3 style={titleStyles}>Movie Title</h3>
-      <div style={ratingContainerStyles}>
-        <div style={ratingItemStyles}>
-          <Image src={Imdb} width={35} height={17} alt='imdb' style={{ display: 'inline' }} />
-          <span style={{ marginLeft: '0.5rem', marginBottom: '0' }}>8.6/10</span>
-        </div>
-        <div style={ratingItemStyles}>
-          <Image src={Tomato} alt='tomato' height={17} width={16} style={{ marginRight: '0.5rem' }} />
-          <span style={{ marginBottom: '0' }}>96%</span>
-        </div>
-      </div>
-      <div style={genreStyles}>
-        <span>Action, Adventure / Horror</span>
-      </div>
-    </div>
-  );
+    const { classes } = useStyles()
+    return (
+        <div className={classes.containerStyles}>
+            <div className={classes.heartContainerStyles}>
+                <Image src={Heart} width={30} height={30} alt='fav' className={classes.heartImageStyles} />
+            </div>
+            <Image src={Poster} alt='poster' width={250} height={370} className={classes.posterStyles} />
+            <span className={classes.countryStyles}>USA, 2016- Current</span>
+            <h3 className={classes.titleStyles}>Movie Title</h3>
+            <div className={classes.ratingContainerStyles}>
+                <div className={classes.ratingItemStyles}>
+                    <Image src={Imdb} width={35} height={17} alt='imdb' className={classes.img} />
+                    <span className={classes.rating}>8.6/10</span>
+                </div>
+                <div className={classes.ratingItemStyles}>
+                    <Image src={Tomato} alt='tomato' height={17} width={16} className={classes.tomatoImg} />
+                    <span className={classes.tomatoScore}>96%</span>
+                </div>
+            </div >
+            <div className={classes.genreStyles}>
+                <span>Action, Adventure / Horror</span>
+            </div>
+        </div >
+    );
 }

@@ -6,15 +6,49 @@ import Image from 'next/image'
 
 export default function SearchBar() {
     return (
-        <div className="flex items-center rounded-md overflow-hidden bg-gray-100 px-4 py-2 my-5">
-            <Image src={SearchIcon} alt="search" className="h-6 w-6 text-gray-400 mr-2" />
+        <div style={styles.container}>
+            <Image src={SearchIcon} alt="search" style={styles.icon} />
             <input
                 type="text"
                 placeholder="Search..."
-                className="w-full bg-transparent focus:outline-none text-gray-700"
+                style={styles.input}
             />
-            <Image src={XMarkIcon} alt="X" className="h-6 w-6 text-gray-400 mr-2" />
-            <Image src={MicIcon} alt="Mic" className="h-6 w-6 text-gray-400 mr-2 bg-[#7011B6] p-0.5 rounded-full" />
+            <Image src={XMarkIcon} alt="X" style={styles.icon} />
+            <Image src={MicIcon} alt="Mic" style={styles.mic} />
         </div>
     )
+}
+
+const styles = {
+    container: {
+        display: 'flex',
+        alignItems: 'center',
+        borderRadius: '0.375rem',
+        overflow: 'hidden',
+        backgroundColor: 'rgb(243, 244, 246)',
+        padding: '0.5rem 1rem',
+        marginTop: '2rem',
+        marginBottom: '2rem'
+    },
+    input: {
+        backgroundColor: 'transparent',
+        outline: 'none',
+        color: 'rgb(55, 65, 81)',
+        width: '100%'
+    },
+    icon: {
+        width: '1.5rem',
+        height: '1.5rem',
+        color: 'rgb(156, 163, 175)',
+        marginRight: '0.5rem'
+    },
+    mic: {
+        width: '1.5rem',
+        height: '1.5rem',
+        color: 'rgb(156, 163, 175)',
+        marginRight: '0.5rem',
+        backgroundColor: '#7011B6',
+        padding: '0.125rem',
+        borderRadius: '50%'
+    }
 }

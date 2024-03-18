@@ -21,6 +21,7 @@ import {
 } from '@mantine/core';
 import { GoogleButton } from './GoogleButton';
 import themeOption from '../../assets/themes/colors'
+import { createStyles } from '@mantine/styles'
 
 export function Login(props: PaperProps) {
     const [type, toggle] = useToggle(['login', 'register'])
@@ -34,12 +35,24 @@ export function Login(props: PaperProps) {
 
         validate: {
             email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-            password: (val) => (val.length <= 6 ? 'Password should include at least 6 characters' : null),
+            password: (val) => (val.length <= 8 ? 'Password should include at least 8 characters' : null),
         },
     });
 
+
+    const styles = createStyles(() => ({
+        btnHover: {
+            '&:hover': {
+                backgroundColor: 'rgb(148, 65, 108)',
+            },
+        },
+    }));
+    const { classes } = styles();
+
+    // <Button style={{ width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'normal', marginTop: '1.5rem' }} type="submit" radius="xl" >Log In</Button>
+
     return (
-        <Flex
+        <Box
 
             style={{
                 fontFamily: 'Poppins, cursive', // Applying Poppins font
@@ -47,12 +60,13 @@ export function Login(props: PaperProps) {
                 backgroundSize: '100% 100%',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
-            }}
-            h='100vh'
-            justify="center"
-            align="center"
-            direction="column"
-            wrap="wrap" >
+                height: '100vh',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textWrap: 'wrap',
+            }}>
             <Text size="2.5rem" c={'white'} p={'1rem'}>Login your account</Text>
             <Flex direction="row" justify="centre"
                 align="center" gap={{ sm: 'lg' }}>
@@ -65,7 +79,10 @@ export function Login(props: PaperProps) {
                 flexDirection: 'column',
                 justifyContent: 'space-around',
                 alignItems: 'center',
-                border: '1px solid #ccc', maxWidth: '30rem', width: '90vw', height: '30rem', borderRadius: '15px',
+                paddingTop: '3rem',
+                paddingBottom: '3rem',
+
+                border: '1px solid #ccc', maxWidth: '30rem', width: '90vw', minHeight: '20rem', borderRadius: '15px',
                 backdropFilter: 'blur(20px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '1.6rem'
             }}>
                 <form onSubmit={form.onSubmit(() => { })} style={{
@@ -79,7 +96,7 @@ export function Login(props: PaperProps) {
                         placeholder="Enter Your email address"
                         value={form.values.email}
                         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-                        error={form.errors.email && 'Invalid email'}
+                        // error={form.errors.email && 'Invalid email'}
                         radius="md"
                         size="lg"
                         style={{ width: '70%', color: 'white' }}
@@ -102,16 +119,19 @@ export function Login(props: PaperProps) {
                             }
                         }}
                     />
+                    <div style={{ color: 'red', fontSize: '0.9rem', marginTop: '5px', minHeight: '1.2rem', width: '70%' }}>
+                        {form.errors.email ? form.errors.email : ''}
+                    </div>
                     <PasswordInput
                         required
                         label="Password"
                         placeholder="Enter Your password"
                         value={form.values.password}
                         onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
-                        error={form.errors.password && 'Password should include at least 6 characters'}
+                        // error={form.errors.password && 'Password should include at least 8 characters'}
                         radius="md"
                         size="lg"
-                        style={{ width: '70%', color: 'white', marginTop: '1.5rem' }}
+                        style={{ width: '70%', color: 'white', marginTop: '0rem' }}
                         styles={{
                             input: {
                                 background: 'transparent',
@@ -131,10 +151,16 @@ export function Login(props: PaperProps) {
                             }
                         }}
                     />
+                    <div style={{
+                        color: 'red', fontSize: '0.9rem', marginTop: '5px', minHeight: '1.2rem', width: '70%'
+                    }}>
+                        {form.errors.password ? form.errors.password : ''}
+                    </div>
                     <Box style={{ display: 'flex', flexDirection: 'row-reverse', width: '70%' }}>
                         <a href="" style={{ color: 'white', fontSize: '0.8rem', fontWeight: 'normal', padding: '0.2rem' }} >Forget Password?</a>
                     </Box>
-                    <Button style={{ width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'normal', marginTop: '1.5rem' }} type="submit" radius="xl" >Log In</Button>
+                    <Button style={{ width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'normal', marginTop: '1.5rem' }} className={classes.btnHover} type="submit" radius="xl" >Log In</Button>
+
                     <Divider label="Or " labelPosition="center" my="lg" style={{ color: 'white', width: '80%' }} styles={{
 
                         label: {
@@ -147,7 +173,7 @@ export function Login(props: PaperProps) {
                     </Box>
                 </form>
             </Box>
-        </Flex>
+        </Box>
     );
 }
 

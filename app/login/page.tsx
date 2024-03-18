@@ -64,6 +64,7 @@ export function Login(props: PaperProps) {
                 border: '1px solid #ccc', width: '30rem', height: '30rem', borderRadius: '15px',
                 backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '1.6rem'
             }}>
+                
                 <TextInput
                     required
                     label="Email"
@@ -107,6 +108,7 @@ export function Login(props: PaperProps) {
                 {/* <Group grow mb="md" mt="md"> */}
                 {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
                 {/* </Group> */}
+               
             </Box>
         </Flex>
         // <Paper radius="md" p="xl" withBorder {...props}>

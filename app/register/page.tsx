@@ -34,9 +34,13 @@ export function Register(props: PaperProps) {
         },
 
         validate: {
+            name: (val) => (!val.length ? 'Required' : null),
+            dob: (val) =>(!val ? 'Required' : null),
+            phone:(val) => (val.length < 10 ? 'Invalid Phone No.': null),
             email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
             password: (val) => (val.length <= 6 ? 'Password should include at least 6 characters' : null),
-            name:(val)=> (val.length <= 1) ?  "name should be" : null,
+            confPassword: (val) =>(val ? 'Password does not match' : null),
+           
         },
     });
 
@@ -100,7 +104,11 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
             }}>
             {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
             
-
+            <form onSubmit={form.onSubmit(() => {console.log("submit") })} style={{
+                    width: '100%', display: 'flex', flexDirection: 'column',
+                    justifyContent: 'space-around',
+                    alignItems: 'center',
+                }}>
                <div style={{marginTop:"2rem",width:"75%",display:"flex", justifyContent:"space-evenly", alignItems:"center"}}> <TextInput
                     required
                     label="Name"
@@ -118,14 +126,15 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                             borderColor: 'purple',
                         },
                     }}
-                />
+                /> 
                  <TextInput
                     required
                     label="Email Id"
                     placeholder="Enter Your Email Id"
                     value={form.values.email}
-                    onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+                    // onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
                     error={form.errors.email && 'Required'}
+                    {...form.getInputProps('name')}
                     radius="md"
                     size="lg"
                     style={{ width: '45%', color: 'white' }}
@@ -212,15 +221,17 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                
                 {/* <Text style={{position:"absolute", paddingTop:"10rem"}} size="1rem" c={'white'} >Create new account</Text> */}
                 
-               <Anchor style={{ textDecoration:"none", marginTop:'0rem', marginLeft:"22%", width: '50%', height: '3rem'}}href="/verifyotp">
-                <Button style={{ marginTop:'1rem', width: '50%', height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem' }} >Sign Up</Button></Anchor>
+               {/* <Anchor style={{ textDecoration:"none", marginTop:'0rem', marginLeft:"22%", width: '50%', height: '3rem'}}href="/verifyotp"> */}
+                <Button style={{ marginTop:'1rem', width: '50%', height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem' }} >Sign Up</Button>
+                {/* </Anchor> */}
                
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"center", paddingBottom:"1.5%", paddingTop:"20px"}}>
                 {/* <Divider label="Or continue with Google" labelPosition="center" my="lg" /> */}
                 <h6 style={{height:"0px", paddingRight:"15px"  }}>Or continue with Google</h6>
                 <GoogleButton radius="xl">Google</GoogleButton>
                 </div>
-          
+                
+          </form>
             
             </Box>
            

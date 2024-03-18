@@ -7,7 +7,7 @@ import Sample2 from '@/assets/sample2.jpeg';
 
 export default function Search() {
     return (
-        <Card p={0} radius={0} bg="transparent" w="19rem" maw="20rem" c={themeOptions.color.normalTextColor}>
+        <Card p={0} radius={0} bg="transparent" w={250} maw="20rem" c={themeOptions.color.normalTextColor}>
             <AspectRatio ratio={320 / 500}>
                 <Image
                   src={Sample2}

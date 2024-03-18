@@ -1,13 +1,11 @@
 import { Group, Stack, Text } from '@mantine/core';
 import MovieCard from '../../components/Search/MovieCard';
 import MovieBanner from '@/components/Search/MovieBanner';
-import Filter from '@/components/Search/Filter';
 import themeOptions from '@/utils/colors';
 
 export default function Search() {
     return (
         <Stack c={themeOptions.color.normalTextColor} bg={themeOptions.color.background} style={{ paddingLeft: '4rem', paddingRight: '4rem' }}>
-            <Filter />
             {/* top results part, needs more work */}
             <Stack>
                 <Text fw={600} fz={themeOptions.fontSize.l}>
@@ -47,74 +45,6 @@ export default function Search() {
                     <MovieCard />
                     <MovieCard />
                 </Group>
-                {/* <Group
-                  justify="space-between"
-                  style={{
-                      rowGap: themeOptions.fontSize.xl,
-                  }}
-                  grow
-                  gap="xl"
-                  preventGrowOverflow={false}
-                >
-                    <Group
-                      justify="space-between"
-                      style={{
-                          rowGap: themeOptions.fontSize.xl,
-                      }}
-                      grow
-                      gap="xl"
-                      preventGrowOverflow={false}
-                    >
-                        <MovieCard />
-                        <MovieCard />
-                    </Group>
-                    <Group
-                      justify="space-between"
-                      style={{
-                          rowGap: themeOptions.fontSize.xl,
-                      }}
-                      grow
-                      gap="xl"
-                      preventGrowOverflow={false}
-                    >
-                        <MovieCard />
-                        <MovieCard />
-                    </Group>
-                </Group>
-                <Group
-                  justify="space-between"
-                  style={{
-                      rowGap: themeOptions.fontSize.xl,
-                  }}
-                  grow
-                  gap="xl"
-                  preventGrowOverflow={false}
-                >
-                    <Group
-                      justify="space-between"
-                      style={{
-                          rowGap: themeOptions.fontSize.xl,
-                      }}
-                      grow
-                      gap="xl"
-                      preventGrowOverflow={false}
-                    >
-                        <MovieCard />
-                        <MovieCard />
-                    </Group>
-                    <Group
-                      justify="space-between"
-                      style={{
-                          rowGap: themeOptions.fontSize.xl,
-                      }}
-                      grow
-                      gap="xl"
-                      preventGrowOverflow={false}
-                    >
-                        <MovieCard />
-                        <MovieCard />
-                    </Group>
-                </Group> */}
             </Stack>
         </Stack>
     );

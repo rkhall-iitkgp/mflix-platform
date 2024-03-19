@@ -5,8 +5,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { rem } from '@mantine/core';
 import { createStyles } from '@mantine/styles';
-import { IconEdit, IconCheck } from '@tabler/icons-react';
-import avatarLogo from '@/assets/icons/profile.svg'
+// import { IconEdit, IconCheck } from '@tabler/icons-react';
+import avatarLogo1 from '@/assets/icons/profile1.svg'
+import avatarLogo2 from '@/assets/icons/profile2.svg'
+import avatarLogo3 from '@/assets/icons/profile3.svg'
+import addMoreLogo from '@/assets/icons/add-more.svg'
 
 import themeOptions from '@/assets/themes/colors';
 
@@ -19,39 +22,46 @@ const headingFZ = themeOptions.fontSize.l;
 // const avatarLogo = '../../../assets/images/profileLogo.png';
 // const avatarLogo = './profileLogo.png';
 
-
-const initialProfiles = [
+interface Profile {
+    id: number;
+    caption: string;
+    link: string;
+    image: string;
+}
+const initialProfiles: Profile[] = [
     {
         id: 1,
         caption: 'Profile1',
         link: '/',
-        image: '/path/to/profile1-image.jpg'
+        image: avatarLogo1,
     },
     {
         id: 2,
         caption: 'Profile2',
         link: '/',
-        image: '/path/to/profile2-image.jpg'
+        image: avatarLogo2,
     },
     {
         id: 3,
-        caption: 'Kids',
+        caption: 'Profile3',
         link: '/',
-        image: '/path/to/kids-image.jpg'
+        image: avatarLogo3,
     }
 ];
 
 const useStyles = createStyles(() => ({
 
-    outerStyle: {
-        position: 'absolute',
-        top: '60%',
-        left: '50%',
-        transform: 'translate(-50%, -80%)',
-        // border:'solid black',
-        // width: '60%',
-        minWidth: 'calc(60% - 40px)',
-    },
+    // outerStyle: {
+    //     position: 'absolute',
+    //     top: '60%',
+    //     left: '50%',
+    //     transform: 'translate(-50%, -80%)',
+    //     // border:'solid black',
+    //     // width: '60%',
+    //     minWidth: 'calc(60% - 40px)',
+    // },
+
+    
 
 
     containerStyle: {
@@ -63,7 +73,7 @@ const useStyles = createStyles(() => ({
 
     headingStyle: {
         padding: '2vw',
-        fontSize: headingFZ,
+        fontSize: '5vw',
         fontWeight: 'bold',
         textAlign: 'center',
 
@@ -98,14 +108,14 @@ const useStyles = createStyles(() => ({
     avatarStyle: {
         // backgroundColor: '#140320', // Purple color
         // background: 'transparent !important',
-        width: '13vw', // Increase size
-        height: '13vw', // Increase size
+        width: '10vw', // Increase size
+        height: '10vw', // Increase size
         marginBottom: '1rem',
         color: 'blue',
         transition: 'border-color 0.3s', // Add transition for smooth effect
         border: '2px solid transparent', // Initially transparent outline
         ':hover': {
-            border: 'white  solid',
+            // border: 'white  solid',
             opacity: 0.5,
             // boxShadow: '0 0 20vh rgba(0, 0, 0, 0.5)',
         },
@@ -129,90 +139,156 @@ const useStyles = createStyles(() => ({
     }
 }))
 
-
-
-
 function SelectProfile() {
-    const [profiles, setProfiles] = useState(initialProfiles);
-    const [editingId, setEditingId] = useState(null);
-    const [editedCaption, setEditedCaption] = useState('');
+    const [profiles, setProfiles] = useState<Profile[]>(initialProfiles);
+    const { classes } = useStyles();
+    const profilesPerRow = 5; // Number of profiles to display in a row
 
-    // Function to handle editing mode
-    const handleEditClick = (id: any, caption: any) => {
-        setEditingId(id);
-        setEditedCaption(caption);
+    // Function to handle adding a new profile
+    const handleAddProfile = () => {
+        const newProfileId = profiles.length + 1;
+        const newProfile: Profile = {
+            id: newProfileId,
+            caption: `Profile${newProfileId}`,
+            link: '/',
+            image: avatarLogo1
+        };
+        setProfiles([...profiles, newProfile]);
     };
 
-    // Function to handle saving edited caption
-    const handleSaveClick = (id: any) => {
-        const updatedProfiles = profiles.map(profile =>
-            profile.id === id ? { ...profile, caption: editedCaption } : profile
-        );
-        setProfiles(updatedProfiles);
-        setEditingId(null);
-    };
-
-    const {classes} = useStyles()
-    return (
-        <div style={{ backgroundColor: '#140320', minHeight: '100vh', color: 'white' }}>
-
-
-            <div className={classes.outerStyle}>
-
-
-                <div className={classes.headingStyle}>
-                    Who's watching?
-                </div>
-
-
-                <div className={classes.containerStyle}>
-                    {profiles.map((profile, index) => (
+    // Render profiles in rows with specified number of profiles per row
+    const renderProfiles = () => {
+        const profileRows = [];
+        for (let i = 0; i < profiles.length; i += profilesPerRow) {
+            profileRows.push(
+                <div className={classes.containerStyle} key={i}>
+                    {profiles.slice(i, i + profilesPerRow).map((profile, index) => (
                         <div key={index} className={classes.itemStyle}>
                             <Image
                                 className={classes.avatarStyle}
-                                src={avatarLogo}
+                                src={profile.image}
                                 alt={profile.caption}
                                 onClick={() => window.location.href = profile.link}
                                 style={{ cursor: 'pointer' }} // Add cursor style
+                                width={150} // Specify width
+                                height={150} // Specify height
                             />
-
                             <span style={{ textAlign: 'center' }}>{profile.caption}</span>
-                            
                         </div>
                     ))}
                 </div>
+            );
+        }
+        return profileRows;
+    };
 
-
-
-
-
+    return (
+        <div style={{ backgroundColor: '#140320', minHeight: '100vh', color: 'white',display:'flex', alignItems:'center', justifyContent:'space-around' }}>
+            {/* <div className={classes.outerStyle}> */}
+            <div>
+                <div className={classes.headingStyle}>
+                    Who's watching?
+                </div>
+                {renderProfiles()}
+                {/* Image to add new profile */}
+                <div className={classes.itemStyle} >
+                    <Image
+                        src={addMoreLogo}
+                        alt="Add  Profile"
+                        className={classes.avatarStyle}
+                        style={{ cursor: 'pointer' }}
+                        width={30} // Specify width
+                        height={30} // Specify height
+                        onClick={handleAddProfile}
+                    />
+                    <span style={{ textAlign: 'center' }}>Add New Profile</span>
+                </div>
             </div>
-
         </div>
     );
 }
 
+
+
+
+
+
 export default SelectProfile;
 
 
-{/* <div className='allProfiles' className={classes.containerStyle}>
-    <div style={itemStyle}>
-        <Avatar style={avatarStyle} src={null} color="#9441D0 " component={Link} href="/" />
-        <span>Profile1</span>
-    </div>
-    <div style={itemStyle}>
-        <Avatar style={avatarStyle} src={null} color="#9441D0" component={Link} href="/" />
-        <span>Profile2</span>
-    </div>
-    <div style={itemStyle}>
-        <Avatar style={avatarStyle} src={null} color="#9441D0" component={Link} href="/" />
-        <span>Kids</span>
-    </div> */}
+// function SelectProfile() {
+//     const [profiles, setProfiles] = useState<Profile[]>(initialProfiles);
+//     const { classes } = useStyles();
+//     const maxProfilesPerRow = 5; 
+
+//     // Function to handle adding a new profile
+//     const handleAddProfile = () => {
+//         // if (profiles.length%5===0) 
+//         const newProfileId = profiles.length + 1;
+//         const newProfile: Profile = {
+//             id: newProfileId,
+//             caption: `Profile${newProfileId}`,
+//             link: '/',
+//             image: avatarLogo1
+//         };
+//         setProfiles([...profiles, newProfile]);
+
+        
+//     };
+
+     
+
+//     return (
+//         <div style={{ backgroundColor: '#140320', minHeight: '100vh', color: 'white' }}>
+
+
+//             <div className={classes.outerStyle}>
+
+
+//                 <div className={classes.headingStyle}>
+//                     Who's watching?
+//                 </div>
+
+
+//                 <div className={classes.containerStyle}>
+//                     {profiles.map((profile, index) => (
+//                         <div key={index} className={classes.itemStyle}>
+//                             <Image
+//                                 className={classes.avatarStyle}
+//                                 src={profile.image}
+//                                 alt={profile.caption}
+//                                 onClick={() => window.location.href = profile.link}
+//                                 style={{ cursor: 'pointer' }} // Add cursor style
+//                             />
+
+//                             <span style={{ textAlign: 'center' }}>{profile.caption}</span>
+//                             {(index + 1) % 5 === 0 && <br />}
+//                         </div>
+//                     ))}
+
+//                     {/* Image to add new profile */}
+//                     <div className={classes.itemStyle} onClick={handleAddProfile}>
+//                         <Image
+//                             src={avatarLogo1}
+//                             alt="Add Profile"
+//                             className={classes.avatarStyle}
+//                             style={{ cursor: 'pointer' }}
+//                             width={150} // Specify width
+//                             height={150} // Specify height
+//                         />
+//                         <span style={{ textAlign: 'center' }}>Add Profile</span>
+//                     </div>
+
+                    
+                    
+//                 </div>
 
 
 
-{/* <Avatar src={null} alt="no image here" />
-<Avatar src={null} alt="no image here" /> */}
 
 
-// &#128100
+//             </div>
+
+//         </div>
+//     );
+// }

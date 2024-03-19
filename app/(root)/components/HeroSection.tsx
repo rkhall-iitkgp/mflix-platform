@@ -85,7 +85,8 @@ const SearchResultCard = () => {
 
 const useStyles = createStyles(() => ({
     bgContainer: {
-        position: 'absolute',
+        position: 'fixed',
+        top: 0,
         width: '100%',
         height: '100vh',
         zIndex: -30,
@@ -114,7 +115,7 @@ const useStyles = createStyles(() => ({
         // marginTop:'10rem'
     },
     hero: {
-        paddingTop: '8rem',
+        // paddingTop: '6rem',
         display: 'flex',
         flex: '2 1 auto',
         // justifyContent: 'space-evenly',

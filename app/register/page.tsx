@@ -98,7 +98,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
         padding: '1rem', // Adjust padding as per your requirement
                 
                 width: '45rem', 
-                height: '85%',
+                height: '88%',
                
                  borderRadius: '15px',
                 backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '0.5rem'
@@ -251,9 +251,9 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                 </Anchor>
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"space-between", paddingBottom:"1%", paddingTop:"20px"}}>
                 {/* <Divider label="Or continue with Google" labelPosition="center" my="lg" /> */}
-                <h5 style={{height:"0px", paddingRight:"15px", top:"50%", left:"28%"  }}>Or continue with Google</h5>
+                <h5 style={{height:"0px", color:"white", paddingRight:"15px", top:"50%", left:"28%"  }}>Or continue with Google</h5>
               
-                <GoogleButton radius="xl">Google</GoogleButton>
+                <div><GoogleButton radius="xl">Google</GoogleButton></div>
                 </div>
                 
           </form>

@@ -12,6 +12,7 @@ const themeOptions = {
     fontSize: {
         xs: '0.75rem',
         s: '1rem',
+        md: '1.5rem',
         l: '2rem',
         xl: '3rem',
         xxl: '4rem',

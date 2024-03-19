@@ -14,6 +14,8 @@ import { IoIosArrowForward } from 'react-icons/io';
 import { createStyles } from '@mantine/styles';
 import SimilarMovies from '@/components/MovieDetails/SimilarMovies';
 import VideoPlayer from '@/components/MovieDetails/VideoPlayer';
+import Footer from '../(root)/components/Footer';
+import Navbar from '../(root)/components/Navbar';
 
 export default function MovieDetails() {
     const genres = ['Mystery', 'Action', 'Thriller'];
@@ -79,6 +81,9 @@ export default function MovieDetails() {
             pr={themeOptions.fontSize.l}
             gap={0}
         >
+            <Stack>
+                <Navbar/>
+            </Stack>
             <Group className={classes.streaming}>
                 <VideoPlayer/>
             </Group>
@@ -208,6 +213,9 @@ export default function MovieDetails() {
             </Group>
             <Stack>
                 <SimilarMovies />
+            </Stack>
+            <Stack>
+                <Footer/>
             </Stack>
         </Stack>
 

@@ -1,12 +1,18 @@
 import SearchBar from '@/app/(root)/components/SearchBar'
 import Image from 'next/image'
 import React from 'react'
+import { useState } from 'react'
 import BgImage from '@/assets/images/bg-home.jpeg'
 import { createStyles } from '@mantine/styles'
 import Poster from '@/assets/images/poster.jpeg'
+import Vector1 from '@/assets/images/vect-1.svg'
 
 export default function HeroSection() {
-    const { classes } = useStyles()
+    const { classes, cx } = useStyles();
+    const [isTyping, setIsTyping] = useState(false);
+    const handleTyping = (typing) => {
+        setIsTyping(typing);
+    };
     return (
         <>
             <div className={classes.bgContainer}>
@@ -15,15 +21,13 @@ export default function HeroSection() {
             <div className={classes.hero}>
                 <div className={classes.leftSection}>
                     <h1 className={classes.heading}>Cool Animated Text</h1>
-                    <SearchBar />
+
+                    <SearchBar onTyping={handleTyping} />
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
                 </div>
-
-
                 <div className={classes.rightSection}>
                     <p className={classes.p}>Recent Searches:</p>
                     <div className={classes.movies}>
-                        <MovieCard />
                         <MovieCard />
                         <MovieCard />
                         <MovieCard />
@@ -35,10 +39,10 @@ export default function HeroSection() {
 }
 
 const MovieCard = () => {
-    const { classes } = useStyles()
+    const { classes, cx } = useStyles()
     return (
-        <div className={classes.movieCard}>
-            <Image src={Poster} alt="poster" style={{height: '100%', width: 'auto'}} />
+        <div className={cx(classes.movieCard)}>
+            <Image src={Poster} alt="poster" style={{ height: '5.25rem', width: '3.7rem' }} />
             <div className={classes.cardDescription}>
                 <h2 className={classes.movieTitle}>{"movie.title"}</h2>
                 <div className={classes.movieGenre}>{"movie.genre"}</div>
@@ -69,23 +73,23 @@ const useStyles = createStyles(() => ({
         gap: '2rem'
     },
     leftSection: {
-        paddingLeft: '10rem',
-        paddingRight: '5rem',
-        paddingTop: '5rem',
+
+        width: '35rem',
+        paddingTop: '3rem',
         paddingBottom: '5rem',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
     heading: {
-        fontSize: '3rem',
+        fontSize: '4.2rem',
         margin: '0.5rem',
         textWrap: 'wrap',
         width: '100%',
+        fontWeight: 500
     },
     rightSection: {
-        width: '100%',
-        marginRight: '10rem',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        gap: '0.8rem'
     },
     p: {
         marginBottom: '0.75rem',
@@ -95,12 +99,8 @@ const useStyles = createStyles(() => ({
     movies: {
         display: 'flex',
         flexDirection: 'column',
-        borderStyle: 'solid',
-        borderWidth: '1px',
-        borderColor: '#FFFFFF',
-        borderRadius: '0.5rem',
         overflow: 'hidden',
-        gap: '1px'
+        gap: '.6rem'
     },
     movieCard: {
         backgroundColor: '#D9D9D926',
@@ -108,20 +108,25 @@ const useStyles = createStyles(() => ({
         padding: 0,
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
-        width: '100%',
+        // justifyContent: 'flex-start',
+        width: '25rem',
         borderStyle: 'solid',
-        borderColor: '#FFFFFF',
+        // borderColor: '#FFFFFF',
         // borderTopWidth: '1px',
+        borderRadius: '.7rem',
+        overflow: 'hidden',
         borderWidth: '0px',
-        borderBottomWidth: '0px',
+        // borderBottomWidth: '0px',
         height: '7rem',
+        gap: '1rem',
+        padding: '1rem 1.125rem',
+        opacity: 1,
     },
     cardDescription: {
         paddingLeft: '1rem',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center'
+        // justifyContent: 'center'
     },
     movieTitle: {
         fontSize: '1.25rem',

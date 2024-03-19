@@ -41,7 +41,8 @@ const styles = {
         outline: 'none',
         color: 'rgb(55, 65, 81)',
         width: '100%',
-        border: 'none'
+        border: 'none',
+        fontSize:'1.25rem'
     },
     icon: {
         width: '1.5rem',

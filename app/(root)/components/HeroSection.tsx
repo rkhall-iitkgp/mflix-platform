@@ -6,9 +6,12 @@ import BgImage from '@/assets/images/bg-home.jpeg'
 import { createStyles } from '@mantine/styles'
 import Poster from '@/assets/images/poster.jpeg'
 import Vector1 from '@/assets/images/vect-1.svg'
+import Vector2 from '@/assets/images/vect-2.svg'
 
 export default function HeroSection() {
     const { classes, cx } = useStyles();
+    const [input, setInput] = React.useState('' as string);
+
     const [isTyping, setIsTyping] = useState(false);
     const handleTyping = (typing) => {
         setIsTyping(typing);
@@ -19,21 +22,34 @@ export default function HeroSection() {
                 <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className={classes.bgImage} />
             </div>
             <div></div>
-            <div className={classes.hero}>
+            <div className={classes.hero} style={{justifyContent:`${input ? 'center':'space-evenly'}`,gap:`${input ? '0rem':'2rem'}`}}>
                 <div className={classes.leftSection}>
                     <h1 className={classes.heading}>Cool Animated Text</h1>
-
-                    <SearchBar onTyping={handleTyping} />
+                    <SearchBar onTyping={handleTyping} input={input} setInput={setInput} />
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
                 </div>
-                <div className={classes.rightSection}>
+                {!input && <div className={classes.rightSection}>
                     <p className={classes.p}>Recent Searches:</p>
                     <div className={classes.movies}>
                         <MovieCard />
                         <MovieCard />
                         <MovieCard />
                     </div>
-                </div>
+                </div>}
+                {input &&
+                    <div className={classes.flex1}>
+                        <Image src={Vector1} alt='vector' className={classes.vec1Style}/>
+                        <Image src={Vector2} alt='vector' className={classes.vec2Style}/>
+                    </div>}
+                {input && <div className={classes.searchRightSection}>
+                    <div className={classes.searchMovies}>
+                        <SearchResultCard />
+                        <SearchResultCard />
+                        <SearchResultCard />
+                        <SearchResultCard />
+                        <SearchResultCard />
+                    </div>
+                </div>}
             </div>
         </>
     )
@@ -52,6 +68,20 @@ const MovieCard = () => {
         </div>
     )
 }
+const SearchResultCard = () => {
+    const { classes, cx } = useStyles()
+    return (
+        <div className={cx(classes.searchCard)}>
+            <div className={classes.cardDescription}>
+                <h2 className={classes.movieTitle}>{"movie.title"}</h2>
+                <div className={classes.flex}>
+                    <div className={classes.movieGenre}>{"movie.genre"}</div>
+                    <span className={classes.movieYear}>Year</span>
+                </div>
+            </div>
+        </div>
+    )
+}
 
 const useStyles = createStyles(() => ({
     bgContainer: {
@@ -65,19 +95,35 @@ const useStyles = createStyles(() => ({
         opacity: 0.25,
         zIndex: -20
     },
+    flex:{
+        display:'flex',
+        justifyContent:'space-between',
+        // width:'100px'
+    },
+    flex1:{
+        display:'flex',
+        flexDirection:'column',
+        marginTop:'12rem'
+        // justifyContent:'space-between',
+        // width:'100px'
+    },
+    vec1Style:{
+        marginTop:'-10rem'
+    },
+    vec2Style:{
+        // marginTop:'10rem'
+    },
     hero: {
         paddingTop: '8rem',
         display: 'flex',
         flex: '2 1 auto',
-        justifyContent: 'space-evenly',
+        // justifyContent: 'space-evenly',
         alignItems: 'center',
         overflow: 'hidden',
         gap: '2rem'
     },
     leftSection: {
-
         width: '35rem',
-        paddingTop: '3rem',
         paddingBottom: '5rem',
         display: 'flex',
         flexDirection: 'column',
@@ -98,7 +144,12 @@ const useStyles = createStyles(() => ({
     },
     rightSection: {
         overflow: 'hidden',
-        gap: '0.8rem'
+        gap: '0.8rem',
+    },
+    searchRightSection: {
+        overflow: 'hidden',
+        gap: '0.8rem',
+        marginTop:'1.5rem'
     },
     p: {
         marginBottom: '0.75rem',
@@ -110,6 +161,15 @@ const useStyles = createStyles(() => ({
         flexDirection: 'column',
         overflow: 'hidden',
         gap: '.6rem'
+    },
+    searchMovies: {
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        // gap: '.6rem',
+        borderStyle: 'solid',
+        borderWidth: '1px',
+        borderRadius: '0.5rem'
     },
     movieCard: {
         backgroundColor: '#D9D9D926',
@@ -132,11 +192,33 @@ const useStyles = createStyles(() => ({
         padding: '1rem 1.125rem',
         opacity: 1,
     },
+    searchCard: {
+        backgroundColor: '#D9D9D926',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        padding: '0.8rem',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        width: '25rem',
+        borderStyle: 'solid',
+        borderColor: '#FFFFFF',
+        borderTopWidth: '1px',
+        // borderRadius: '.7rem',
+        overflow: 'hidden',
+        borderWidth: '0.5px',
+        // borderBottomWidth: '0px',
+        height: '5.575rem',
+        // marginBottom: '0.6rem',
+        gap: '1rem',
+        // padding: '1rem 1.125rem',
+        opacity: 1,
+    },
     cardDescription: {
         paddingLeft: '1rem',
         display: 'flex',
         flexDirection: 'column',
         // justifyContent: 'center'
+        width:'100%'
     },
     movieTitle: {
         fontSize: '1.25rem',

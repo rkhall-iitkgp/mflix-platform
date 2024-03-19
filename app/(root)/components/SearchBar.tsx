@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { SetStateAction } from 'react'
 import SearchIcon from '@/assets/icons/search.svg'
 import XMarkIcon from '@/assets/icons/xmark.svg'
 import MicIcon from '@/assets/icons/mic.svg'
 import Image from 'next/image'
 
-export default function SearchBar() {
-    const [input, setInput] = React.useState('' as string)
+export default function SearchBar({input,setInput}:{input: string, setInput: React.Dispatch<SetStateAction<string>>}) {
     return (
         <div style={styles.container}>
             <label htmlFor="search" style={styles.searchLabel}>
@@ -35,7 +34,7 @@ const styles = {
         padding: '0.5rem 0.5rem 0.5rem 1rem',
         marginTop: '2rem',
         marginBottom: '2rem',
-        height: '7vh'
+        height: '3rem'
     },
     input: {
         backgroundColor: 'transparent',
@@ -46,14 +45,14 @@ const styles = {
         fontSize:'1.25rem'
     },
     icon: {
-        width: '4vh',
-        height: '4vh',
+        width: '2rem',
+        height: '2rem',
         color: 'rgb(156, 163, 175)',
         marginRight: '0.5rem'
     },
     mic: {
-        width: '4vh',
-        height: '4vh',
+        width: '2rem',
+        height: '2rem',
         color: 'rgb(156, 163, 175)',
         marginRight: '0.5rem',
         backgroundColor: '#7011B6',

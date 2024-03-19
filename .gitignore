@@ -133,3 +133,7 @@ dist
 
 # vscode settings
 .vscode
+
+# lock files
+yarn.lock
+package-lock.json

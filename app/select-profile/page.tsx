@@ -83,9 +83,11 @@ const useStyles = createStyles(() => ({
 
         // margin: '0 20px'
         border: 'solid transparent',
-        ':hover': {
-            border: 'white  solid'
-        },
+        // ':hover': {
+        //     border: 'white  solid',
+        //     opacity: 0.5,
+        //     // boxShadow: '0 0 20vh rgba(0, 0, 0, 0.5)',
+        // },
 
 
         transition: 'outline-color 0.3s', // Add transition for smooth effect
@@ -102,6 +104,11 @@ const useStyles = createStyles(() => ({
         color: 'blue',
         transition: 'border-color 0.3s', // Add transition for smooth effect
         border: '2px solid transparent', // Initially transparent outline
+        ':hover': {
+            border: 'white  solid',
+            opacity: 0.5,
+            // boxShadow: '0 0 20vh rgba(0, 0, 0, 0.5)',
+        },
     },
 
     // Define hover styles
@@ -165,39 +172,12 @@ function SelectProfile() {
                                 className={classes.avatarStyle}
                                 src={avatarLogo}
                                 alt={profile.caption}
-                                component={Link}
-                                href={profile.link}
+                                onClick={() => window.location.href = profile.link}
+                                style={{ cursor: 'pointer' }} // Add cursor style
                             />
-                            {editingId === profile.id ? (
-                                <div>
-                                    <input
-                                        type="text"
-                                        value={editedCaption}
-                                        onChange={(e) => setEditedCaption(e.target.value)}
-                                        className={classes.inputStyle}
-                                    />
-                                </div>
-                            ) : (
-                                <div>
-                                    <div>{/* Empty div to create space */}</div>
-                                    <span style={{ textAlign: 'center' }}>{profile.caption}</span>
-                                    <div>{/* Empty div to create space */}</div>
-                                    <IconEdit
-                                        style={{ width: rem(20), height: rem(20) }}
-                                        className={classes.buttonStyle}
-                                        onClick={() => handleEditClick(profile.id, profile.caption)}
-                                    />
-                                </div>
-                            )}
-                            {editingId === profile.id && (
-                                <div>
-                                    <IconCheck
-                                        style={{ width: rem(20), height: rem(20)}}
-                                        className={classes.buttonStyle}
-                                        onClick={() => handleSaveClick(profile.id)}
-                                    />
-                                </div>
-                            )}
+
+                            <span style={{ textAlign: 'center' }}>{profile.caption}</span>
+                            
                         </div>
                     ))}
                 </div>

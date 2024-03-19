@@ -7,6 +7,7 @@ const themeOptions = {
         textColorNormal: '#9441D0',
         insideTextColor: '#828282',
         normalTextColor: '#FFFFFF',
+        background: '#0B0212',
     },
     fontSize: {
         xs: '0.75rem',
@@ -15,6 +16,6 @@ const themeOptions = {
         xl: '3rem',
         xxl: '4rem',
     },
-
 };
+
 export default themeOptions;

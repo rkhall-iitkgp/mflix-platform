@@ -14,7 +14,7 @@ export default function SearchBar() {
             <input
                 id='search'
                 type="text"
-                placeholder="Search..."
+                placeholder="Search"
                 style={styles.input}
                 value={input as string}
                 onChange={(e) => setInput(e.target.value)}
@@ -34,24 +34,26 @@ const styles = {
         backgroundColor: 'rgb(243, 244, 246)',
         padding: '0.5rem 0.5rem 0.5rem 1rem',
         marginTop: '2rem',
-        marginBottom: '2rem'
+        marginBottom: '2rem',
+        height: '7vh'
     },
     input: {
         backgroundColor: 'transparent',
         outline: 'none',
         color: 'rgb(55, 65, 81)',
         width: '100%',
+        fontSize: '1.2rem',
         border: 'none'
     },
     icon: {
-        width: '1.5rem',
-        height: '1.5rem',
+        width: '4vh',
+        height: '4vh',
         color: 'rgb(156, 163, 175)',
         marginRight: '0.5rem'
     },
     mic: {
-        width: '1.5rem',
-        height: '1.5rem',
+        width: '4vh',
+        height: '4vh',
         color: 'rgb(156, 163, 175)',
         marginRight: '0.5rem',
         backgroundColor: '#7011B6',

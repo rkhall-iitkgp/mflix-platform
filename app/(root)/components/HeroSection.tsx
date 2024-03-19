@@ -12,11 +12,12 @@ export default function HeroSection() {
             <div className={classes.bgContainer}>
                 <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className={classes.bgImage} />
             </div>
+            <div></div>
             <div className={classes.hero}>
                 <div className={classes.leftSection}>
                     <h1 className={classes.heading}>Cool Animated Text</h1>
                     <SearchBar />
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
+                    <p className={classes.ptext}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
                 </div>
 
 
@@ -61,8 +62,9 @@ const useStyles = createStyles(() => ({
         zIndex: -20
     },
     hero: {
-        paddingTop: '6rem',
+        paddingTop: '8rem',
         display: 'flex',
+        flex: '2 1 auto',
         justifyContent: 'space-evenly',
         alignItems: 'center',
         overflow: 'hidden',
@@ -70,42 +72,49 @@ const useStyles = createStyles(() => ({
     },
     leftSection: {
         paddingLeft: '10rem',
-        paddingRight: '5rem',
-        paddingTop: '5rem',
+        paddingRight: '8rem',
         paddingBottom: '5rem',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        width: '110%'
     },
+
     heading: {
-        fontSize: '3rem',
+        fontSize: '5rem',
         margin: '0.5rem',
         textWrap: 'wrap',
         width: '100%',
     },
+    ptext: {
+        fontSize: '1.35rem',
+        lineHeight: '2rem',
+        // marginTop: '1rem',
+        // marginBottom: '1rem'
+    },
     rightSection: {
-        width: '100%',
+        width: '60%',
         marginRight: '10rem',
         overflow: 'hidden'
     },
     p: {
         marginBottom: '0.75rem',
-        fontSize: '1.125rem',
+        fontSize: '2rem',
         lineHeight: '1.75rem'
     },
     movies: {
         display: 'flex',
         flexDirection: 'column',
-        borderStyle: 'solid',
-        borderWidth: '1px',
-        borderColor: '#FFFFFF',
-        borderRadius: '0.5rem',
+        // borderStyle: 'solid',
+        // borderWidth: '1px',
+        // borderRadius: '0.5rem',
         overflow: 'hidden',
-        gap: '1px'
+        gap: '1px',
+        padding: '0.5rem'
     },
     movieCard: {
         backgroundColor: '#D9D9D926',
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-        padding: 0,
+        padding: '0.8rem',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -116,6 +125,8 @@ const useStyles = createStyles(() => ({
         borderWidth: '0px',
         borderBottomWidth: '0px',
         height: '7rem',
+        borderRadius: '8px',
+        marginBottom: '0.6rem'
     },
     cardDescription: {
         paddingLeft: '1rem',

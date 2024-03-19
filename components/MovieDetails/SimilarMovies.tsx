@@ -98,7 +98,6 @@ export default function SimilarMovies() {
     return (
         <section className={classes.sectionStyles}>
             <h1 className={classes.titleStyles} style={{fontWeight:"400", fontSize:"50px"}}>SimilarMovies</h1>
-            <Image src={Trend} alt='icon' className={classes.iconStyles} />
             <div ref={scrollRef} className={classes.containerStyles}>
                 <div className={classes.random}>
                     <MovieCard />

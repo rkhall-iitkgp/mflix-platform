@@ -62,10 +62,10 @@ export function Register(props: PaperProps) {
             {/* <BackgroundImage src='Group 18.png'> */}
             <Text size="2.5rem" c={'white'} p={'1rem'}>Create new account</Text>
             <Flex direction="row" justify="centre"
-                align="center" gap={{ sm: 'lg' }}>
-                <Text size="1.1rem" c={'white'}  >Already have an account?
+                align="center" gap={{ sm: 'lg' }} margin-bottom="1rem">
+                <Text size="1.1rem" c={'white'} >Already have an account? <a href="/login" style={{ color: '#9441D0' }}>Log In</a>
                 </Text>
-                <a href="/login" style={{ color: '#9441D0' }}>Log In</a>
+                
             </Flex>
             {/* border: 1px solid;
 
@@ -78,7 +78,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
      <Box style={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-evenly',
+                justifyContent: 'space-between',
                 alignItems: 'center',
                 // border: '3px solid #ccc ',
                 // borderImageSource: 'linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%)',
@@ -97,8 +97,8 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
         
         padding: '1rem', // Adjust padding as per your requirement
                 
-                width: '45rem', 
-                height: '85%',
+                width: '80rem', 
+                height: '80vh',
                
                  borderRadius: '15px',
                 backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '0.5rem'
@@ -106,12 +106,12 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
             {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
             
             <form onSubmit={form.onSubmit((values) => {console.log(values) })} style={{
-                    width: '100%', display: 'flex', flexDirection: 'column',
+                    width: '60%', display: 'flex', flexDirection: 'column',
                     
-                    alignItems: 'center',
+                    alignItems: 'center',margin: "auto",
                 }}>
-               <div style={{marginTop:"1rem",width:"75%",display:"flex", 
-             justifyContent:"space-evenly", alignItems:"center"}}>
+               <div style={{marginTop:"1rem",width:"100%",display:"flex", 
+             justifyContent:"space-between", alignItems:"center", margin: "auto"}}>
                 <TextInput
                     required
                     label="Name"
@@ -121,7 +121,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     // error={form.errors.name && 'Required'}
                     radius="md"
                     size="lg"
-                    style={{ width: '45%', color: 'white' }}
+                    style={{ width: '40%', color: 'white' }}
                     styles={{
                         input: {
                             background: 'transparent',
@@ -130,7 +130,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                         },
                     }}
                 /> <p style={{position:"absolute", 
-                marginTop:"16%", left:"17%", color:"red"}}>
+                marginTop:"16%", left:"24%", color:"red"}}>
                     {form.errors.name}</p>
                  <TextInput
                     required
@@ -141,7 +141,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
                     // error={form.errors.email && 'Required'}                                             
                     size="lg"
-                    style={{ width: '45%', color: 'white' }}
+                    style={{ width: '40%', color: 'white' }}
                     styles={{
                         input: {
                             background: 'transparent',
@@ -155,7 +155,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                 </div>
                 <div style={{marginTop:"0.5rem",
                 paddingTop:"0.5rem",
-                width:"75%", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
+                width:"100%", display:"flex", justifyContent:"space-between", alignItems:"center"}}>
                     <TextInput
                     required
                     label="Date of Birth"
@@ -165,7 +165,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     // error={form.errors.dob && 'Required'}
                     radius="md"
                     size="lg"
-                    style={{ width: '45%', color: 'white' }}
+                    style={{ width: '40%', color: 'white' }}
                     styles={{
                         input: {
                             background: 'transparent',
@@ -185,7 +185,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     // error={form.errors.phone && 'Invalid Mobile No.'}
                     radius="md"
                     size="lg"
-                    style={{ width: '45%', color: 'white' }}
+                    style={{ width: '40%', color: 'white' }}
                     styles={{
                         input: {
                             background: 'transparent',
@@ -206,7 +206,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     // error={form.errors.password && 'Password should include at least 6 characters'}
                     radius="md"
                     size="lg"
-                    style={{ width: '70%', color: 'white', marginTop:'0.5rem', paddingTop:"0.5rem" }}
+                    style={{ width: '100%', color: 'white', marginTop:'0.5rem', paddingTop:"0.5rem" }}
                     styles={{
                         input: {
                             background: 'transparent',
@@ -226,7 +226,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     // error={form.errors.confPassword && 'Password does not match'}
                     radius="md"
                     size="lg"
-                    style={{ width: '70%', color: 'white', marginTop:'0.5rem', paddingTop:"0.5rem" }}
+                    style={{ width: '100%', color: 'white', marginTop:'0.5rem', paddingTop:"0.5rem" }}
                     styles={{
                         input: {
                             background: 'transparent',
@@ -240,12 +240,12 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                
                 {/* <Text style={{position:"absolute", paddingTop:"10rem"}} size="1rem" c={'white'} >Create new account</Text> */}
                 
-               <Anchor type="submit" style={{ textDecoration:"none", marginTop:'1rem', marginLeft:"22%", width: '50%', height: '3rem'}}
+               <Anchor type="submit" style={{ textDecoration:"none", marginTop:'1rem', width: '100%', height: '3rem'}}
                href="/verifyotp">
-               {/* {/* <Link style={{ textDecoration:"none", marginTop:'0rem', marginLeft:"35%", width: '70%', height: '3rem'}}href="/verifyotp">  */}
+               {/* {/* <Link style={{ textDecoration:"none", marginTop:'0rem', marginLeft:"35%", width: '100%', height: '3rem'}}href="/verifyotp">  */}
                <Button onClick={()=>{console.log("clicked")}} 
-                 type='submit' style={{ marginTop:'1rem', width: '50%', 
-                 height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem' }} >Sign Up
+                 type='submit' style={{ marginTop:'1rem', width: '100%', 
+                 height: '3rem', backgroundColor: '#9441D0', borderRadius: '8px', fontSize: '1rem' }} >Create an account
          </Button>
                  {/* </Link> */}
                 </Anchor>

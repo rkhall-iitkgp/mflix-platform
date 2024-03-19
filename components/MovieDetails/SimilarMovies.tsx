@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRef, useState, CSSProperties, useEffect } from 'react';
-import MovieCard from './MovieCard';
+import MovieCard from './MovieCards';
 import rArrow from '@/assets/icons/rarrow.svg';
 import Trend from '@/assets/icons/trends.svg';
 import { createStyles } from '@mantine/styles';
@@ -97,7 +97,7 @@ export default function SimilarMovies() {
 
     return (
         <section className={classes.sectionStyles}>
-            <h1 className={classes.titleStyles}>SimilarMovies</h1>
+            <h1 className={classes.titleStyles} style={{fontWeight:"400", fontSize:"50px"}}>SimilarMovies</h1>
             <Image src={Trend} alt='icon' className={classes.iconStyles} />
             <div ref={scrollRef} className={classes.containerStyles}>
                 <div className={classes.random}>
@@ -135,8 +135,8 @@ export default function SimilarMovies() {
 
 const useStyles = createStyles(() => ({
     sectionStyles: {
-        paddingLeft: '80px',
-        paddingTop: '80px', // You may adjust the padding as needed
+        marginLeft:"20px",
+        marginTop:"100px",
         paddingBottom: '80px',
         position: 'relative',
         width: 'calc(100vw - 20px)',
@@ -148,7 +148,7 @@ const useStyles = createStyles(() => ({
         display: 'inline',
         marginRight: "2.5rem",
         marginTop:"2rem",
-        // fontWeight:"400",
+        
     },
 
     iconStyles: {

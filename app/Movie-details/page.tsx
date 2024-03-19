@@ -13,6 +13,7 @@ import Sample from '@/assets/sample.png';
 import { IoIosArrowForward } from 'react-icons/io';
 import { createStyles } from '@mantine/styles';
 import SimilarMovies from '@/components/MovieDetails/SimilarMovies';
+import VideoPlayer from '@/components/MovieDetails/VideoPlayer';
 
 export default function MovieDetails() {
     const genres = ['Mystery', 'Action', 'Thriller'];
@@ -21,42 +22,48 @@ export default function MovieDetails() {
     const cast = ['Someone'];
 
     const styles = createStyles(() => ({
-        one: {
+        streaming: {
             width: '100%',
             height: '100vh',
-            border: '1px solid #fff',
             marginTop: '150px',
-            background: '#000',
         },
-        two: {
+        moviecontent: {
             marginTop: "30px", 
             paddingLeft: "40px",
         },
-        three:{
+        genre:{
             width:'7rem',
             paddingTop:'5px',
             paddingBottom:'5px',
+            backgroundColor: themeOptions.color.smallBox,
+            '&:hover':{
+                cursor:"pointer",
+                backgroundColor: "black",
+            },
         },
-        four:{
+        imdb:{
             width:'500px',
         },
-        five:{
+        watchlist:{
             marginTop: "50px", 
             border: "1px solid", 
             borderRadius: "10px", 
             padding: "10px", 
             alignItems: "center"
         },
-        six:{
+        country:{
             maxWidth:"max-content",
         },
-        seven:{
+        creators:{
             marginLeft: "70px", marginTop: "200px", color:'#000',
         },
-        eight:{
+        flexbox:{
             border: "1px solid #000", borderRadius: "10px", paddingInline: "15px", background: "#000", opacity: "40%",
             color:'#fff'
-        }
+        },
+        arrow:{
+            color: themeOptions.color.button,
+        },
 
 
     }))
@@ -72,20 +79,19 @@ export default function MovieDetails() {
             pr={themeOptions.fontSize.l}
             gap={0}
         >
-            <Group className={classes.one}>
-
+            <Group className={classes.streaming}>
+                <VideoPlayer/>
             </Group>
             <Group align="center">
                 <div>
                     <Image
                         src={Sample}
                         component={NextImage}
-                        // className={classes.two}
                         style={{ height: "430px", width: "291px", marginTop: "60px", marginLeft: "100px" }}
                         alt="sample"
                     />
                 </div>
-                <Stack ml="xxl" gap="xs" mr="lg" className={classes.two}>
+                <Stack ml="xxl" gap="xs" mr="lg" className={classes.moviecontent}>
                     <Text fz={themeOptions.fontSize.xxl}>Movie Name</Text>
                     <Group gap={themeOptions.fontSize.xs}>
                         {genres.map((e, i) =>
@@ -93,13 +99,13 @@ export default function MovieDetails() {
                                 key={i}
                                 bg={themeOptions.color.smallBox}
                                 fz={themeOptions.fontSize.s}
-                                radius={13}
-                                className={classes.three}
+                                radius={15}
+                                className={classes.genre}
                             >
                                 <Text ta="center">{e}</Text>
                             </Paper>)}
                     </Group>
-                    <Group mt={7} justify='space-between' className={classes.four}>
+                    <Group mt={7} justify='space-between' className={classes.imdb}>
                         <Group gap={6} justify="space-around">
                             <Image
                                 src={ImdbImg}
@@ -128,26 +134,26 @@ export default function MovieDetails() {
                             <PiCalendar />
                             <Text fz={themeOptions.fontSize.xs}>2024</Text>
                         </Group>
-                        <Group gap={6} justify="space-around" className={classes.six}>
+                        <Group gap={6} justify="space-around" className={classes.country}>
                             <GrLocation />
                             <Text fz={themeOptions.fontSize.xs}>Country</Text>
                         </Group>
                         <Group>
                             <Text fz={themeOptions.fontSize.s} style={{ fontWeight: "600" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum eaque provident, corrupti voluptatem, ullam nihil quaerat tenetur itaque libero dignissimos error. Fugit sint voluptates, aut placeat vitae animi eos amet ipsa distinctio neque quidem, nesciunt laborum quasi culpa, qui sapiente hic provident. Ratione perspiciatis ullam corporis voluptatum voluptatibus aperiam reprehenderit.</Text>
                         </Group>
-                        <Group c={themeOptions.color.button} className={classes.five}>
-                            <Text style={{ color: "#000", fontWeight:'500' }}>Add To WatchList</Text>
+                        <Group c={themeOptions.color.button} className={classes.watchlist}>
+                            <Text style={{ color: "#fff", fontWeight:'500' }}>Add To WatchList</Text>
                             <FaPlus />
                         </Group>
                     </Group>
                 </Stack>
-                <Stack className={classes.seven}>
-                    <Group className={classes.eight}>
+                <Stack className={classes.creators}>
+                    <Group className={classes.flexbox}>
                         <Group display={'block'}>
-                            <Text fz={themeOptions.fontSize.md} style={{ marginBottom: "-10px" }}> Director </Text>
+                            <Text fz={themeOptions.fontSize.md}> Director </Text>
                             {director.map((e, i) =>
                                 <Paper
-                                    style={{ backgroundColor: '#fff' }}
+                                    style={{ backgroundColor: '#000' }}
                                     key={i}
                                     fz={themeOptions.fontSize.md}
                                     w={116}
@@ -156,17 +162,17 @@ export default function MovieDetails() {
                                     radius={13}
 
                                 >
-                                    <Text ta="left">{e}</Text>
+                                    <Text ta="left" style={{fontWeight:"500"}}>{e}</Text>
                                 </Paper>)}
                         </Group>
-                        <IoIosArrowForward fontSize={'70px'} />
+                        <IoIosArrowForward fontSize={'70px'} className={classes.arrow} />
                     </Group>
-                    <Group className={classes.eight}>
+                    <Group className={classes.flexbox}>
                         <Group display={'block'} >
                             <Text fz={themeOptions.fontSize.md} style={{ marginBottom: "-10px" }}> Writers </Text>
                             {writer.map((e, i) =>
                                 <Paper
-                                    style={{ backgroundColor: '#fff' }}
+                                    style={{ backgroundColor: '#000'}}
                                     key={i}
                                     fz={themeOptions.fontSize.md}
                                     w={116}
@@ -174,17 +180,17 @@ export default function MovieDetails() {
                                     pb={5}
                                     radius={13}
                                 >
-                                    <Text ta="left">{e}</Text>
+                                    <Text ta="left" style={{fontWeight:"500"}}>{e}</Text>
                                 </Paper>)}
                         </Group>
-                        <IoIosArrowForward fontSize={'70px'} />
+                        <IoIosArrowForward fontSize={'70px'} className={classes.arrow} />
                     </Group>
-                    <Group className={classes.eight}>
+                    <Group className={classes.flexbox}>
                         <Group display={'block'}>
                             <Text fz={themeOptions.fontSize.md} style={{ marginBottom: "-10px" }}> Cast </Text>
                             {cast.map((e, i) =>
                                 <Paper
-                                    style={{ backgroundColor: '#fff' }}
+                                    style={{ backgroundColor: '#000' }}
                                     key={i}
                                     fz={themeOptions.fontSize.md}
                                     w={116}
@@ -193,10 +199,10 @@ export default function MovieDetails() {
                                     radius={13}
 
                                 >
-                                    <Text ta="left">{e}</Text>
+                                    <Text ta="left" style={{fontWeight:"500"}}>{e}</Text>
                                 </Paper>)}
                         </Group>
-                        <IoIosArrowForward fontSize={'70px'} />
+                        <IoIosArrowForward fontSize={'70px'} className={classes.arrow} />
                     </Group>
                 </Stack>
             </Group>

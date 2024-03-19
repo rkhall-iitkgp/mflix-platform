@@ -1,13 +1,10 @@
-import { useState } from 'react';
-import { UnstyledButton, Menu, Image, Group } from '@mantine/core';
+import { useState, useEffect } from 'react';
+import { UnstyledButton, Menu, Group } from '@mantine/core';
 import { IconChevronDown } from '@tabler/icons-react';
-import themeOptions from './../../../../utils/colors'
 import { createStyles } from '@mantine/styles';
-import { useEffect } from 'react';
+import themeOptions from '../../../utils/colors';
 
-const useStyles = createStyles((theme, _params, getRef) => {
-
-    return {
+const useStyles = createStyles(() => ({
         control: {
             boxSizing: 'border-box',
             borderRadius: 'var(--mantine-radius-md)', // Use radius from themeOptions
@@ -17,14 +14,14 @@ const useStyles = createStyles((theme, _params, getRef) => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            paddingTop: "2px",
-            paddingBottom: "2px",
+            paddingTop: '2px',
+            paddingBottom: '2px',
             paddingRight: '8px',
             paddingLeft: '10px',
             // transition: 'backgroundColor 150ms ease',
 
             transition: 'opacity 1s easeout', // Adding transition for opacity change
-            opacity: 1// Initial opacity
+            opacity: 1, // Initial opacity
         },
         controlHidden: {
             opacity: 0, // Opacity when hidden
@@ -54,18 +51,17 @@ const useStyles = createStyles((theme, _params, getRef) => {
             color: themeOptions.color.textColorNormal, // Use textColorNormal color from themeOptions
         },
         visible: {
-            opacity: "1",
-            transform: "translateY(0)", // Move down to its original position
-            transition: "opacity 0.3s ease-out, transform 0.3s ease-out", /* Adjust timing and easing as needed */
+            opacity: '1',
+            transform: 'translateY(0)', // Move down to its original position
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out', /* Adjust timing and easing as needed */
         },
         hidden: {
-            opacity: "0",
-            transform: "translateY(-10px)", // Move up slightly when hidden
-            transition: "opacity 0.3s ease-out, transform 0.3s ease-out", /* Adjust timing and easing as needed */
-            pointerEvents: "none" /* Prevent interaction while hidden */
-        }
-    };
-});
+            opacity: '0',
+            transform: 'translateY(-10px)', // Move up slightly when hidden
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out', /* Adjust timing and easing as needed */
+            pointerEvents: 'none', /* Prevent interaction while hidden */
+        },
+    }));
 
 export function TypeButton({ value, data }: { value: string, data: string[] }) {
     const [opened, setOpened] = useState(false);
@@ -86,11 +82,11 @@ export function TypeButton({ value, data }: { value: string, data: string[] }) {
 
     return (
         <Menu
-            onOpen={() => setOpened(true)}
-            onClose={() => setOpened(false)}
-            radius="md"
-            width="target"
-            withinPortal
+          onOpen={() => setOpened(true)}
+          onClose={() => setOpened(false)}
+          radius="md"
+          width="target"
+          withinPortal
         >
             <Menu.Target>
                 <div className={` ${classes.control} ${visible ? classes.visible : classes.hidden} `}>

@@ -2,10 +2,12 @@ import { Group, Stack, Text } from '@mantine/core';
 import MovieCard from '../../components/Search/MovieCard';
 import MovieBanner from '@/components/Search/MovieBanner';
 import themeOptions from '@/utils/colors';
+import Filter from '@/components/Search/Filter';
 
 export default function Search() {
     return (
         <Stack c={themeOptions.color.normalTextColor} bg={themeOptions.color.background} style={{ paddingLeft: '4rem', paddingRight: '4rem' }}>
+            <Filter />
             {/* top results part, needs more work */}
             <Stack>
                 <Text fw={600} fz={themeOptions.fontSize.l}>

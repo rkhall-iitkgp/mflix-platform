@@ -106,7 +106,7 @@ const SelectProfile: React.FC = () => {
         const newProfileId = profiles.length + 1;
         const newProfile: Profile = {
             id: newProfileId,
-            caption: `Profile${newProfileId}`,
+            caption: `Profile${newProfileId - 1}`,
             link: '/',
             image: avatarLogo1, // Example image, replace with actual path
         };

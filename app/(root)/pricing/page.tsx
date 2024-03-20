@@ -8,6 +8,7 @@ import {
     Flex, Box
 } from '@mantine/core';
 import themeOptions from '../../../assets/themes/colors'
+import SubscriptionTables from './table';
 
 const Pricing = () => {
     return (
@@ -37,9 +38,11 @@ const Pricing = () => {
                 }}>
                 </Box>
             </Box>
-            <Box style={{ marginTop: '1rem', backgroundColor: 'red', height: '20rem' }} >
+            {/* <Box style={{ marginTop: '1rem', backgroundColor: 'purple', height: '25rem' }} >
 
-            </Box>
+
+            </Box> */}
+            <SubscriptionTables></SubscriptionTables>
         </Box>
 
     );

@@ -1,5 +1,6 @@
 import { Card, Image, Text, Group, AspectRatio } from '@mantine/core';
 import NextImage from 'next/image';
+import { IoHeartCircle } from "react-icons/io5";
 import themeOptions from '@/utils/colors';
 import TomatoImg from '@/assets/icons/tomato.png';
 import ImdbImg from '@/assets/icons/imdb.png';
@@ -22,6 +23,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
     info,
 }) => (
         <Card p={0} radius={0} bg="transparent" w={250} maw="20rem" c={themeOptions.color.normalTextColor}>
+            <IoHeartCircle />
             <AspectRatio ratio={320 / 500}>
                 <Image
                   src={image}

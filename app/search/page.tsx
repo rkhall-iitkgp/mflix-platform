@@ -7,7 +7,7 @@ import Filter from '@/components/Search/Filter';
 
 export default function Search() {
     const getBannerMovie = (randomInput: number) => ({
-        image: `https://picsum.photos/1000/${randomInput}`,
+        image: `https://picsum.photos/1000/2000`,
         movieName: 'Movie Name',
         genres: ['horror', 'thriller', 'action'],
         imdbRating: '8.7/10',
@@ -17,7 +17,7 @@ export default function Search() {
         country: 'Country',
     });
     const getCardMovie = (randomInput: number) => ({
-        image: `https://picsum.photos/1000/${randomInput}`,
+        image: `https://picsum.photos/1000/2000`,
         name: 'Movie Name',
         genres: ['horror', 'thriller', 'action'],
         imdbRating: '8.7/10',

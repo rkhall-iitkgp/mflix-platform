@@ -55,10 +55,11 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         justifyContent: 'space-evenly',
         alignItems: 'center',
+        minWidth :'70vw',
     },
     headingStyle: {
         padding: '2vw',
-        fontSize: headingFZ,
+        fontSize: '5vw',
         fontWeight: 'bold',
         textAlign: 'center',
     },
@@ -122,7 +123,7 @@ const SelectProfile: React.FC = () => {
                     {profiles.slice(i, i + profilesPerRow).map((profile, index) => (
                         <div key={index} className={classes.itemStyle} onClick={() => handleProfileClick(profile.link)}>
                             <Image className={classes.avatarStyle} src={profile.image} alt={profile.caption} width={150} height={150} />
-                            <span style={{ textAlign: 'center' }}>{profile.caption}</span>
+                            <span style={{ textAlign: 'center', fontSize:'2vw' }}>{profile.caption}</span>
                         </div>
                     ))}
                 </div>

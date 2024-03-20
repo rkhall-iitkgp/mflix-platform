@@ -1,5 +1,4 @@
 'use client'
-
 import Image from 'next/image';
 import { useRef, useState, CSSProperties, useEffect } from 'react';
 import MovieCard from '@/app/(root)/components/MovieCard';

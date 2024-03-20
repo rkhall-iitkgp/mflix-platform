@@ -1,4 +1,4 @@
-import { Table, Text, Box, Divider } from '@mantine/core';
+import { Table, Text, Box, Divider, Stack, Group } from '@mantine/core';
 import { TiTick } from "react-icons/ti";
 import CustomTickIcon from './customtickicon'; // 
 import themeOptions from '@/utils/colors';
@@ -47,8 +47,6 @@ const SubscriptionTable = () => {
                     <tr>
                         <td colSpan={5}><Divider /></td>
                     </tr>
-                    {/* {index < subscriptionData.length - 1 && (
-                    )} */}
                 </thead>
                 <tbody>
                     {subscriptionData.map((row, index) => (
@@ -63,6 +61,48 @@ const SubscriptionTable = () => {
                     ))}
                 </tbody>
             </Table>
+            <Group gap={0}>
+                <Stack>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                </Stack>
+                <Stack>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                </Stack>
+                <Stack>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                </Stack>
+                <Stack>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                    <Text>What You will get</Text>
+                    <Divider w="100%"/>
+                </Stack>
+            </Group>
 
 
         </Box>

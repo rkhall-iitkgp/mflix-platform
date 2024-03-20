@@ -82,7 +82,7 @@ const useStyles = createStyles(() => ({
         },
     },
 }));
-
+ 
 // Define functional component
 const SelectProfile: React.FC = () => {
     // State for profiles

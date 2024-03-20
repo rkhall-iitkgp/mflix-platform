@@ -9,6 +9,7 @@ import {
 } from '@mantine/core';
 import themeOptions from '../../../assets/themes/colors'
 import SubscriptionTables from './table';
+import Questions from './questions';
 
 const Pricing = () => {
     return (
@@ -22,7 +23,7 @@ const Pricing = () => {
                     backgroundPosition: 'center',
                     width: '30%'
                 }}>
-                    <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '1rem', marginTop: '8rem', marginLeft: '4rem' }}>
+                    <Box style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '1rem', marginTop: '10rem', marginLeft: '6rem' }}>
                         <Text style={{ color: 'white', fontSize: '3.5rem', fontWeight: 'bold', lineHeight: '4.0rem', maxWidth: '30rem' }} >Watch without limits.</Text>
                         <Text style={{ color: themeOptions.color.textColorNormal, fontSize: '1.6rem', width: '80%' }} >Try our premium plans starting at just $5</Text>
                         <Button style={{ backgroundColor: '#7011B6', maxWidth: '8rem' }} >View All Plans</Button>
@@ -43,6 +44,7 @@ const Pricing = () => {
 
             </Box> */}
             <SubscriptionTables></SubscriptionTables>
+            {/* <Questions></Questions> */}
         </Box>
 
     );

@@ -22,11 +22,11 @@ export default function HeroSection() {
                 <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className={classes.bgImage} />
             </div>
             <div></div>
-            <div className={classes.hero} style={{justifyContent:`${input ? 'center':'space-evenly'}`,gap:`${input ? '0rem':'2rem'}`}}>
+            <div className={classes.hero} style={{justifyContent:'center',gap:`${input ? '0px':'80px'}`}}>
                 <div className={classes.leftSection}>
                     <h1 className={classes.heading}>Cool Animated Text</h1>
                     <SearchBar onTyping={handleTyping} input={input} setInput={setInput} />
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
+                    <p className={classes.ptext}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
                 </div>
                 {!input && <div className={classes.rightSection}>
                     <p className={classes.p}>Recent Searches:</p>
@@ -104,9 +104,9 @@ const useStyles = createStyles(() => ({
     flex1:{
         display:'flex',
         flexDirection:'column',
-        marginTop:'12rem'
+        marginTop:'12rem',
+
         // justifyContent:'space-between',
-        // width:'100px'
     },
     vec1Style:{
         marginTop:'-10rem'
@@ -131,7 +131,7 @@ const useStyles = createStyles(() => ({
     },
 
     heading: {
-        fontSize: '4.2rem',
+        fontSize: '5.2rem',
         margin: '0.5rem',
         textWrap: 'wrap',
         width: '100%',
@@ -153,7 +153,7 @@ const useStyles = createStyles(() => ({
         marginTop:'1.5rem'
     },
     p: {
-        marginBottom: '0.75rem',
+        marginBottom: '1.75rem',
         fontSize: '2rem',
         lineHeight: '1.75rem'
     },

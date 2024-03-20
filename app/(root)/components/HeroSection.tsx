@@ -50,7 +50,8 @@ const MovieCard = () => {
 
 const useStyles = createStyles(() => ({
     bgContainer: {
-        position: 'absolute',
+        position: 'fixed',
+        top: 0,
         width: '100%',
         height: '100vh',
         zIndex: -30,
@@ -61,7 +62,7 @@ const useStyles = createStyles(() => ({
         zIndex: -20
     },
     hero: {
-        paddingTop: '6rem',
+        // paddingTop: '6rem',
         display: 'flex',
         justifyContent: 'space-evenly',
         alignItems: 'center',

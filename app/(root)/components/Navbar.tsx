@@ -43,7 +43,6 @@ const useStyles = createStyles(() => ({
         padding: '1rem',
         paddingLeft: '2rem',
         paddingRight: '2rem',
-        position: 'absolute',
         width: '100%',
         color: "white"
     },

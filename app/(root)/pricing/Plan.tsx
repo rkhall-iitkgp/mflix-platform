@@ -100,9 +100,9 @@ export default function Plan() {
         },
 
         PlanCardStylesClicked: {
-            background: "linear-gradient(45deg, rgba(43,10,53,1) 10%, rgba(143,60,205,1) 80%, rgba(43,10,53,1) 95%)",
+            background: "linear-gradient(to left bottom, #36005f, #522e6e, #4d246e, #4b1572, #3e1959)",
             backdropFilter: "blur(10px)", opacity: "0.7",
-            height: '85%',
+            height: '88%',
             width: '25%',
             display: 'flex',
             justifyContent: 'space-evenly',
@@ -112,7 +112,7 @@ export default function Plan() {
             // backgroundColor:"white",
             // background: "linear-gradient(45deg, rgba(43,10,53,1) 10%, rgba(143,60,205,1) 80%, rgba(43,10,53,1) 95%)",
             border: '1.5px solid white',
-            boxShadow: '0.8rem 0.8rem 0.4rem #512072'
+            boxShadow: '0.8rem 0.8rem 0.8rem white'
 
             // backdropFilter:"blur(100px)",
         },

@@ -9,17 +9,16 @@ const Carousel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const viewport = useRef<HTMLDivElement>(null);
     const { ref, height } = useElementSize();
     const [showLeftButton, setShowLeftButton] = useState(false);
-    const [showRightButton, setShowRightButton] = useState(true);
+    const [showRightButton, setShowRightButton] = useState(false);
 
+    const handleScroll = () => {
+        if (viewport.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = viewport.current;
+            setShowLeftButton(scrollLeft > 100);
+            setShowRightButton(scrollLeft + clientWidth < scrollWidth);
+        }
+    };
     useEffect(() => {
-        const handleScroll = () => {
-            if (viewport.current) {
-                const { scrollLeft, scrollWidth, clientWidth } = viewport.current;
-                setShowLeftButton(scrollLeft > 200);
-                setShowRightButton(scrollLeft + clientWidth < scrollWidth);
-            }
-        };
-
         viewport.current?.addEventListener('scroll', handleScroll);
         handleScroll(); // Initial check
         return () => {
@@ -27,10 +26,12 @@ const Carousel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         };
     }, []);
 
-    const scrollPrev = () =>
-        viewport.current!.scrollBy({ top: 0, behavior: 'smooth', left: -400 });
-    const scrollNext = () =>
-        viewport.current!.scrollBy({ top: 0, behavior: 'smooth', left: +400 });
+    const scrollPrev = () => viewport.current!.scrollBy({ top: 0, behavior: 'smooth', left: -400 });
+    const scrollNext = () => viewport.current!.scrollBy({ top: 0, behavior: 'smooth', left: 400 });
+
+    useEffect(() => {
+        handleScroll();
+    }, [children]); // Call handleScroll whenever children change
 
     return (
         <Group align="center" wrap="nowrap" ref={ref} maw="calc(100vw - 10rem)">
@@ -48,7 +49,7 @@ const Carousel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   pr={200}
                   style={{
                       border: 'none',
-                      background: 'linear-gradient(90deg, rgba(0, 0, 0, 0.8) 19.48%, rgba(0, 0, 0, 0) 83.69%)',
+                      background: 'linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0))',
                   }}
                 >
                     <FaChevronLeft size={100} />
@@ -63,7 +64,7 @@ const Carousel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   pl={200}
                   style={{
                       border: 'none',
-                      background: 'linear-gradient(270deg, rgba(0, 0, 0, 0.8) 19.48%, rgba(0, 0, 0, 0) 83.69%)',
+                      background: 'linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0))',
                   }}
                 >
                     <FaChevronRight size={100} />

@@ -1,15 +1,46 @@
 'use client';
 
 import { Group, Stack, Text, Space } from '@mantine/core';
+import { createStyles } from '@mantine/styles';
+import { useMediaQuery } from '@mantine/hooks';
+import { useState, useEffect } from 'react';
 import MovieCard from '@/components/Search/MovieCard';
 import MovieBanner from '@/components/Search/MovieBanner';
 import Carousel from '@/components/Search/Carousel';
 import themeOptions from '@/utils/colors';
 import Filter from '@/components/Search/Filter';
 
+interface RecommendedMovies {
+    image: string,
+    name: string,
+    genres: Array<string>,
+    imdbRating: string,
+    tomatoRating: string,
+    info: string,
+    favourite: boolean,
+}
+
+const useStyles = createStyles(() => ({
+    bg: {
+        backgroundColor: themeOptions.color.background,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        height: '100%',
+        width: '100%',
+        zIndex: -30,
+        overflow: 'hidden',
+    },
+}));
+
 export default function Search() {
-    const getBannerMovie = (randomInput: number) => ({
-        image: `https://picsum.photos/1000/${randomInput}`,
+    const { classes } = useStyles();
+    // const nowrap = useMediaQuery('max-width: 1410px');
+    const nowrap = false;
+    // const [results, setResults] = useState();
+    const [recommended, setRecommended] = useState<Array<RecommendedMovies>>();
+    const getBannerMovie = () => ({
+        image: 'https://picsum.photos/1000/3000',
         movieName: 'Movie Name',
         genres: ['horror', 'thriller', 'action'],
         imdbRating: '8.7/10',
@@ -18,17 +49,23 @@ export default function Search() {
         year: '2024',
         country: 'Country',
     });
-    const getCardMovie = (randomInput: number) => ({
-        image: `https://picsum.photos/1000/${randomInput}`,
+    const getCardMovie = () => ({
+        image: 'https://picsum.photos/1000/3000',
         name: 'Movie Name',
         genres: ['horror', 'thriller', 'action'],
         imdbRating: '8.7/10',
         tomatoRating: '97%',
         info: 'USA, 2016 - Current',
-        favourite: Boolean(Math.floor(Math.random() * 2)),
+        favourite: true,
     });
+    useEffect(() => {
+        const data = Array.from({ length: 10 }).map(() => getCardMovie());
+        // here i will fetch recommended and other stuff probably
+        setRecommended(data);
+    }, []);
     return (
-        <Stack c={themeOptions.color.normalTextColor} bg={themeOptions.color.background} style={{ paddingLeft: '4rem', paddingRight: '4rem' }} mt="6rem">
+        <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '4rem', paddingRight: '4rem' }} mt="6rem">
+            <div className={classes.bg}></div>
             <Filter />
             <Space h="xs" />
             {/* top results part, needs more work */}
@@ -39,12 +76,12 @@ export default function Search() {
                 </Text>
                 <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
                     <Group style={{ rowGap: '30px' }} grow gap="5rem" preventGrowOverflow={false}>
-                        <MovieBanner {...(getBannerMovie(Math.floor(Math.random() * 1000)))} />
-                        <MovieBanner {...(getBannerMovie(Math.floor(Math.random() * 1000)))} />
+                        <MovieBanner {...(getBannerMovie())} />
+                        <MovieBanner {...(getBannerMovie())} />
                     </Group>
-                    <Group style={{ rowGap: '30px' }} grow gap="5rem" preventGrowOverflow={false}>
-                        <MovieBanner {...(getBannerMovie(Math.floor(Math.random() * 1000)))} />
-                        <MovieBanner {...(getBannerMovie(Math.floor(Math.random() * 1000)))} />
+                    <Group style={{ rowGap: '30px' }} grow gap="5rem" preventGrowOverflow={false} wrap={nowrap ? 'nowrap' : 'wrap'}>
+                        <MovieBanner {...(getBannerMovie())} />
+                        <MovieBanner {...(getBannerMovie())} />
                     </Group>
                 </Stack>
             </Stack>
@@ -65,7 +102,7 @@ export default function Search() {
                     {Array.from({ length: 8 }, (_, index) => (
                         <MovieCard
                           key={index}
-                          {...(getCardMovie(Math.floor(600 + Math.random() * 1000)))}
+                          {...(getCardMovie())}
                         />
                     ))}
                 </Group>
@@ -78,12 +115,7 @@ export default function Search() {
                     Recommendations Based on Search Results
                 </Text>
                 <Carousel>
-                    {Array.from({ length: 10 }, (_, index) => (
-                        <MovieCard
-                          key={index}
-                          {...(getCardMovie(Math.floor(600 + Math.random() * 1000)))}
-                        />
-                    ))}
+                    {recommended?.map((data, index) => <MovieCard key={index} {...data} />)}
                 </Carousel>
             </Stack>
             <Space h="lg" />

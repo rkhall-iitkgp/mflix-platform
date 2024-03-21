@@ -34,21 +34,21 @@ const SubscriptionTable = () => {
         <Box style={{ marginTop: '1rem', backgroundColor: 'black', height: '25rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
             <Text size="2.8rem" c={'white'} p={'1rem'} style={{ fontWeight: '600', paddingTop: '3rem' }}>Feel the difference</Text>
             <Text size="1.2rem" c={'white'} style={{ fontWeight: '400' }}>Explore our different plans to enjoy your watch experience</Text>
-            <Table style={{ width: '40%', marginTop: '2rem', height: '40%' }}>
+            <Table style={{ width: '60%', marginTop: '3rem', height: '60%' }}>
                 <thead>
                     <TableTr >
                         <TableTh style={{ width: '30%', textAlign: 'left', color: themeOptions.color.textColorNormal, fontSize: '1.2rem' }}>What You will get</TableTh>
-                        <TableTh style={{ textAlign: 'center', width: '20%', fontSize: '1.1rem' }}>Free</TableTh>
-                        <TableTh style={{ textAlign: 'center', width: '20%', fontSize: '1.1rem' }}>Basic</TableTh>
-                        <TableTh style={{ textAlign: 'center', width: '20%', fontSize: '1.1rem' }}>Premium</TableTh>
-                        <TableTh style={{ textAlign: 'center', width: '20%', fontSize: '1.1rem' }}>Family</TableTh>
+                        <TableTh style={{ textAlign: 'center', width: '15%', fontSize: '1.1rem' }}>Free</TableTh>
+                        <TableTh style={{ textAlign: 'center', width: '15%', fontSize: '1.1rem' }}>Basic</TableTh>
+                        <TableTh style={{ textAlign: 'center', width: '15%', fontSize: '1.1rem' }}>Premium</TableTh>
+                        <TableTh style={{ textAlign: 'center', width: '15%', fontSize: '1.1rem' }}>Family</TableTh>
                     </TableTr>
                 </thead>
                 <tbody>
                     {subscriptionData.map((row, index) => (
                         <React.Fragment key={index}>
                             <TableTr >
-                                <TableTd style={{ textAlign: 'left', fontSize: "1rem" }} >{row.feature}</TableTd>
+                                <TableTd style={{ textAlign: 'left', fontSize: "1.1rem" }} >{row.feature}</TableTd>
                                 <TableTd style={{ textAlign: 'center', }}><Text fz={themeOptions.fontSize.s}>{row.free}</Text></TableTd>
                                 <TableTd style={{ textAlign: 'center', }}><Text fz={themeOptions.fontSize.s}>{row.basic}</Text></TableTd>
                                 <TableTd style={{ textAlign: 'center', }}><Text fz={themeOptions.fontSize.s}>{row.premium}</Text></TableTd>

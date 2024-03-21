@@ -17,6 +17,7 @@ interface MovieBannerProps {
     tomatoRating: string;
     year: string;
     duration: string;
+    redirect: string;
 }
 
 const MovieBanner: React.FC<MovieBannerProps> = ({
@@ -28,6 +29,7 @@ const MovieBanner: React.FC<MovieBannerProps> = ({
     duration,
     year,
     country,
+    redirect,
 }) => (
     <Group p={0} styles={{ root: { minWidth: '600px', borderRadius: '20px', boxShadow: '14px 11px 6.699999809265137px 2px rgba(0, 0, 0, 0.47)' } }}>
         <Stack
@@ -119,7 +121,7 @@ const MovieBanner: React.FC<MovieBannerProps> = ({
                   fz={themeOptions.fontSize.s}
                   c={themeOptions.color.textColorNormal}
                   component="a"
-                  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+                  href={redirect}
                   variant="transparent"
                   rightSection={<IoIosArrowForward size={14} />}
                   p={0}

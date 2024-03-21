@@ -14,7 +14,7 @@ const Carousel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const handleScroll = () => {
         if (viewport.current) {
             const { scrollLeft, scrollWidth, clientWidth } = viewport.current;
-            setShowLeftButton(scrollLeft > 100);
+            setShowLeftButton(scrollLeft > 50);
             setShowRightButton(scrollLeft + clientWidth < scrollWidth);
         }
     };

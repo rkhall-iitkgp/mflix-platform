@@ -35,8 +35,13 @@ const useStyles = createStyles(() => ({
 
 export default function Search() {
     const { classes } = useStyles();
-    // const nowrap = useMediaQuery('max-width: 1410px');
-    const nowrap = false;
+    const [wrap, setWrap] = useState<boolean | undefined>(false);
+    const breakpoint = useMediaQuery('(max-width: 1420px)');
+
+    useEffect(() => {
+        setWrap(breakpoint);
+    }, [breakpoint]);
+    // const nowrap = false;
     // const [results, setResults] = useState();
     const [recommended, setRecommended] = useState<Array<RecommendedMovies>>();
     const getBannerMovie = () => ({
@@ -48,6 +53,7 @@ export default function Search() {
         duration: '2hr 30 min',
         year: '2024',
         country: 'Country',
+        redirect: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley',
     });
     const getCardMovie = () => ({
         image: 'https://picsum.photos/1000/3000',
@@ -59,7 +65,7 @@ export default function Search() {
         favourite: true,
     });
     useEffect(() => {
-        const data = Array.from({ length: 10 }).map(() => getCardMovie());
+        const data = Array.from({ length: 15 }).map(() => getCardMovie());
         // here i will fetch recommended and other stuff probably
         setRecommended(data);
     }, []);
@@ -75,11 +81,11 @@ export default function Search() {
                     <Text span inherit c={themeOptions.color.textColorNormal}>Name</Text>
                 </Text>
                 <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
-                    <Group style={{ rowGap: '30px' }} grow gap="5rem" preventGrowOverflow={false}>
+                    <Group style={{ rowGap: '30px' }} grow gap="5rem" preventGrowOverflow={false} wrap={wrap ? 'wrap' : 'nowrap'}>
                         <MovieBanner {...(getBannerMovie())} />
                         <MovieBanner {...(getBannerMovie())} />
                     </Group>
-                    <Group style={{ rowGap: '30px' }} grow gap="5rem" preventGrowOverflow={false} wrap={nowrap ? 'nowrap' : 'wrap'}>
+                    <Group style={{ rowGap: '30px' }} grow gap="5rem" preventGrowOverflow={false} wrap={wrap ? 'wrap' : 'nowrap'}>
                         <MovieBanner {...(getBannerMovie())} />
                         <MovieBanner {...(getBannerMovie())} />
                     </Group>

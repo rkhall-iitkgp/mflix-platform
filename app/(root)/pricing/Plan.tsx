@@ -204,21 +204,21 @@ export default function Plan() {
                                 <h1>${price}/</h1>
                                 <h3 style={{ marginTop: '2rem' }} >{planInner[0] ? 'month' : planInner[1] ? 'quarter' : 'year'}</h3>
                             </Box>
-                            <Box style={{ display: 'flex', flexDirection: 'column', paddingLeft: '3%' }}>
-                                {/* <Text style={{ fontSize: '1.3rem' }}>. Lorem ipsum dolor sit amet</Text>
-                                <Text style={{ fontSize: '1.3rem' }}>. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
-                                <Text style={{ fontSize: '1.3rem' }} >
+                            <Box style={{ display: 'flex', flexDirection: 'column', paddingLeft: '6%' }}>
+                                <Text style={{ fontSize: '120%' }}>. Lorem ipsum dolor sit amet</Text>
+                                <Text style={{ fontSize: '120%' }}>. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+                                <Text style={{ fontSize: '120%' }} >
                                     . quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                                     consequat. Duis aute{' '}
                                 </Text>
-                                <Text style={{ fontSize: '1.3rem' }} >. cillum dolore eu fugiat nulla pariatur</Text> */}
-                                <List size="xl" style={{ paddingLeft: '1.5rem' }}>
+                                <Text style={{ fontSize: '120%' }} >. cillum dolore eu fugiat nulla pariatur</Text>
+                                {/* <List size="xl" style={{ paddingLeft: '1.5rem' }}>
                                     <List.Item style={{ maxWidth: '90%' }} >Lorem ipsum dolor sit amet</List.Item>
                                     <List.Item style={{ maxWidth: '90%' }}>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</List.Item>
                                     <List.Item style={{ maxWidth: '90%' }}>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                                         consequat. Duis aute</List.Item>
                                     <List.Item style={{ maxWidth: '90%' }}>cillum dolore eu fugiat nulla pariatu</List.Item>
-                                </List>
+                                </List> */}
                             </Box>
                         </Box>
                     ))}

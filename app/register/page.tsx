@@ -16,15 +16,31 @@ import {
     Checkbox,
     Anchor,
     Stack,
-    Flex, Box
+    Flex, Box, useStyles
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
+import { createStyles } from '@mantine/core';
 // import { TwitterButton } from './TwitterButton';
 
 
 
 export function Register(props: PaperProps) {
     // const [type, toggle] = useToggle(['login', 'register'])
+
+    const useStyles = createStyles(() => ({
+        container: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            border: '1px solid white',
+            padding: '1rem', // Adjust padding as needed
+            backgroundImageSource: 'linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%)',
+            backgroundOrigin: 'border-box',
+            backgroundClip: 'content-box, border-box',
+            borderRadius: '1rem',
+        },
+    }));
     
     const form = useForm({
         initialValues: {

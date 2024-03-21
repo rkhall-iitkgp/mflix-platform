@@ -50,12 +50,12 @@ export default function HeroSection() {
             <div className={classes.bgContainer}>
                 <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className={classes.bgImage} />
             </div>
-            <div></div>
-            <div className={classes.hero} style={{justifyContent:'center',gap:`${input ? '0px':'80px'}`}}>
-                <div className={classes.leftSection}>
+            {/* <div></div> */}
+            <div className={classes.hero} style={{ gap: `${input ? '0rem' : '4rem'}` }}>
+                <div className={classes.leftSection} style={{ marginLeft: `${input ? '0rem' : '2.9rem'}` }}>
                     <h1 className={classes.heading}>Cool Animated Text</h1>
                     <SearchBar onTyping={handleTyping} input={input} setInput={setInput} />
-                    <p className={classes.ptext}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
                 </div>
                 <div className={classes.rightSection} style={{ display: `${input.length ? 'none' : 'block'}` }}>
                     <p className={classes.p}>Recent Searches:</p>
@@ -195,12 +195,12 @@ const useStyles = createStyles(() => ({
         // transition:'transform 1s ease-in'
         // width:'100px'
     },
-    flex1:{
-        display:'flex',
-        flexDirection:'column',
-        marginTop:'12rem',
-
+    flex1: {
+        display: 'flex',
+        flexDirection: 'column',
+        marginTop: '12rem'
         // justifyContent:'space-between',
+        // width:'100px'
     },
     vec1Style: {
         marginTop: '-10rem'
@@ -225,7 +225,7 @@ const useStyles = createStyles(() => ({
     },
 
     heading: {
-        fontSize: '5.2rem',
+        fontSize: '4.2rem',
         margin: '0.5rem',
         textWrap: 'wrap',
         width: '100%',
@@ -253,7 +253,7 @@ const useStyles = createStyles(() => ({
         // transform: 'scale(1)',
     },
     p: {
-        marginBottom: '1.75rem',
+        marginBottom: '0.75rem',
         fontSize: '2rem',
         lineHeight: '1.75rem'
     },

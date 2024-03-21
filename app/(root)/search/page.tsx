@@ -1,7 +1,6 @@
 'use client';
 
 import { Group, Stack, Text, Space } from '@mantine/core';
-import { useElementSize } from '@mantine/hooks';
 import MovieCard from '@/components/Search/MovieCard';
 import MovieBanner from '@/components/Search/MovieBanner';
 import Carousel from '@/components/Search/Carousel';

@@ -5,7 +5,7 @@ import { ScrollArea, Group, UnstyledButton } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 
-const Carousel: React.FC<{ children: React.ReactNode, width: number }> = ({ children, width }) => {
+const Carousel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const viewport = useRef<HTMLDivElement>(null);
     const { ref, height } = useElementSize();
     const [showLeftButton, setShowLeftButton] = useState(false);

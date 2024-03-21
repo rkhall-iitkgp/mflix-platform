@@ -134,8 +134,7 @@ export default function Plan() {
       alignItems: 'center',
       border: '1.5px solid #7012b6',
       width: '90%',
-      padding:'0.5rem',
-      
+      padding: '0.5rem',
     },
   }));
 
@@ -143,7 +142,11 @@ export default function Plan() {
 
   const [planInner, setPlanInner] = useState([true, false, false]);
   const [cardPlan, setCardPlan] = useState([false, true, false]);
+  const [isAccordion, setIsAccordion] = useState(false);
 
+  const handleToggleAccordion = () => {
+    setIsAccordion(!isAccordion);
+  };
   const handlePlanInner = (index: number) => {
     const updatedPlanInner = Array(3).fill(false);
     updatedPlanInner[index] = true;
@@ -219,83 +222,109 @@ export default function Plan() {
           fontFamily: 'poppins',
           justifyContent: 'center',
         }}
-      > 
-      <Box style={{marginBottom:"3rem" , textAlign:'center'}}>
+      >
+        <Box style={{ marginBottom: '3rem', textAlign: 'center' }}>
+          <Text style={{ fontSize: '2rem' }}>Questions?</Text>
+          <Text style={{}}>we got answers.</Text>
+        </Box>
+        <Box
+          id="question-answer"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <Box
+            id="question"
+            style={{ display: 'flex', width: '80%', margin: '1rem auto' }}
+            onClick={handleToggleAccordion}
+          >
+            <Box className={classes.QuestionStyles} id="text part">
+              <Text style={{ margin: 'auto 1.5rem' }}>01</Text>
+              <Text style={{}}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. veniama. Lorem ipsum dolor
+                sit, amet consectetur{' '}
+              </Text>
+            </Box>
 
-        <Text style={{ fontSize: '2rem' }}>Questions?</Text>
-        <Text style={{ }}>we got answers.</Text>
-      </Box>
-
-        <Box id="question" style={{display:'flex', width:'80%',margin:'1rem auto'}}>
-          <Box className={classes.QuestionStyles} id="text part">
-            <Text style={{ margin:'auto 1.5rem' }}>01</Text>
-            <Text style={{}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. veniama. Lorem ipsum dolor sit, amet consectetur </Text>
+            <Box style={{ minWidth: '5%' }} id="icon part">
+              <GoPlus
+                style={{
+                  color: 'white',
+                  backgroundColor: '#7012b6',
+                  fontSize: '1.5rem',
+                  height: '100%',
+                  width: '100%',
+                }}
+              />
+            </Box>
           </Box>
-
-          <Box style={{  minWidth:'5%'}} id="icon part">
-            <GoPlus
-              style={{
-                color: 'white',
-                backgroundColor: '#7012b6',
-                fontSize: '1.5rem',
-                height: '100%',
-                width: '100%',
-              }}
-            />
+          <Box
+            id="answer"
+            style={{
+              display: `${isAccordion ? 'block' : 'none'}`,
+              width: '80%',
+              margin: '1rem auto',
+            }}
+          >
+            <Text>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis, impedit libero
+              explicabo autem similique beatae facilis magni ipsam molestias neque voluptates,
+              assumenda at numquam pariatur quasi eos! Non, sint odio!
+            </Text>
           </Box>
         </Box>
-        <Box id="question" style={{display:'flex', width:'80%',margin:'1rem auto'}}>
-          <Box className={classes.QuestionStyles} id="text part">
-            <Text style={{ margin:'auto 1.5rem' }}>01</Text>
-            <Text style={{}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. veniama. Lorem ipsum dolor sit, amet consectetur </Text>
-          </Box>
+        <Box
+          id="question-answer"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <Box
+            id="question"
+            style={{ display: 'flex', width: '80%', margin: '1rem auto' }}
+            onClick={handleToggleAccordion}
+          >
+            <Box className={classes.QuestionStyles} id="text part">
+              <Text style={{ margin: 'auto 1.5rem' }}>01</Text>
+              <Text style={{}}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. veniama. Lorem ipsum dolor
+                sit, amet consectetur{' '}
+              </Text>
+            </Box>
 
-          <Box style={{  minWidth:'5%'}} id="icon part">
-            <GoPlus
-              style={{
-                color: 'white',
-                backgroundColor: '#7012b6',
-                fontSize: '1.5rem',
-                height: '100%',
-                width: '100%',
-              }}
-            />
+            <Box style={{ minWidth: '5%' }} id="icon part">
+              <GoPlus
+                style={{
+                  color: 'white',
+                  backgroundColor: '#7012b6',
+                  fontSize: '1.5rem',
+                  height: '100%',
+                  width: '100%',
+                }}
+              />
+            </Box>
           </Box>
-        </Box>
-        <Box id="question" style={{display:'flex', width:'80%',margin:'1rem auto'}}>
-          <Box className={classes.QuestionStyles} id="text part">
-            <Text style={{ margin:'auto 1.5rem' }}>01</Text>
-            <Text style={{}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. veniama. Lorem ipsum dolor sit, amet consectetur </Text>
-          </Box>
-
-          <Box style={{  minWidth:'5%'}} id="icon part">
-            <GoPlus
-              style={{
-                color: 'white',
-                backgroundColor: '#7012b6',
-                fontSize: '1.5rem',
-                height: '100%',
-                width: '100%',
-              }}
-            />
-          </Box>
-        </Box>
-        <Box id="question" style={{display:'flex', width:'80%',margin:'1rem auto'}}>
-          <Box className={classes.QuestionStyles} id="text part">
-            <Text style={{ margin:'auto 1.5rem' }}>01</Text>
-            <Text style={{}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. veniama. Lorem ipsum dolor sit, amet consectetur </Text>
-          </Box>
-
-          <Box style={{  minWidth:'5%'}} id="icon part">
-            <GoPlus
-              style={{
-                color: 'white',
-                backgroundColor: '#7012b6',
-                fontSize: '1.5rem',
-                height: '100%',
-                width: '100%',
-              }}
-            />
+          <Box
+            id="answer"
+            style={{
+              display: `${isAccordion ? 'block' : 'none'}`,
+              width: '80%',
+              margin: '1rem auto',
+            }}
+          >
+            <Text>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis, impedit libero
+              explicabo autem similique beatae facilis magni ipsam molestias neque voluptates,
+              assumenda at numquam pariatur quasi eos! Non, sint odio!
+            </Text>
           </Box>
         </Box>
       </Box>

@@ -21,8 +21,11 @@ import {
 import { GoogleButton } from '../login/GoogleButton';
 // import { TwitterButton } from './TwitterButton';
 
+
+
 export function Register(props: PaperProps) {
     // const [type, toggle] = useToggle(['login', 'register'])
+    
     const form = useForm({
         initialValues: {
             name:'',
@@ -58,12 +61,13 @@ export function Register(props: PaperProps) {
             justify="center"
             align="center"
             direction="column"
-            wrap="wrap" >
+            margin-bottom = "1.5rem">
             {/* <BackgroundImage src='Group 18.png'> */}
             <Text size="2.5rem" c={'white'} p={'1rem'}>Create new account</Text>
             <Flex direction="row" justify="centre"
-                align="center" gap={{ sm: 'lg' }}>
-                <Text size="1.1rem" c={'white'}  >Already have an account?
+                align="center" gap={{ sm: 'lg' }}
+                margin-bottom="10rem">
+                <Text size="1.1rem" c={'white'}>Already have an account?
                 </Text>
                 <a href="/login" style={{ color: '#9441D0' }}>Log In</a>
             </Flex>
@@ -74,7 +78,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
  */}
 
 
-  
+    <div>
      <Box style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -98,10 +102,8 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
         padding: '1rem', // Adjust padding as per your requirement
                 
                 width: '45rem', 
-                height: '88%',
-               
                  borderRadius: '15px',
-                backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '0.5rem'
+                backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '1.5rem'
             }}>
             {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
             
@@ -259,6 +261,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
           </form>
             
             </Box>
+            </div>
            
         </Flex>
      

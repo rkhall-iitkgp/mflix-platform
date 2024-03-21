@@ -17,6 +17,8 @@ import { GoPlus } from 'react-icons/go';
 import { createStyles } from '@mantine/styles';
 import SubscriptionTables from './table';
 import { List } from '@mantine/core';
+import { SlArrowRight } from "react-icons/sl";
+
 
 export default function Plan() {
     const useStyles = createStyles(() => ({
@@ -223,8 +225,8 @@ export default function Plan() {
                         </Box>
                     ))}
                 </Box>
-                <Button style={{ color: 'white', background: '#5e2787', height: '3rem', width: '30%' }}>
-                    Continue with Plan
+                <Button style={{ color: 'white', background: '#5e2787', height: '3rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem' }}>
+                    Continue with Plan <SlArrowRight style={{ marginRight: '1.3rem' }}></SlArrowRight>
                 </Button>
             </Box>
             <Box

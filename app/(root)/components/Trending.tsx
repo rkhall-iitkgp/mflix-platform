@@ -143,6 +143,7 @@ const useStyles = createStyles(() => ({
         paddingBottom: '80px',
         position: 'relative',
         width: 'calc(100vw - 20px)',
+        background:'#0B0212'
     },
 
     titleStyles: {

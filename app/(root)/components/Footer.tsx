@@ -112,6 +112,7 @@ const styles = createStyles(() => ({
         padding: '2rem',
         paddingTop: '4rem',
         paddingBottom: '2rem',
+        background:'#0B0212'
     },
 
     divStyle: {

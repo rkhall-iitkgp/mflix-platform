@@ -1,58 +1,150 @@
+"use client"
 import SearchBar from '@/app/(root)/components/SearchBar'
 import Image from 'next/image'
 import React from 'react'
-import { useState } from 'react'
+import { gsap } from 'gsap';
+import { useState, useEffect, useRef } from 'react'
 import BgImage from '@/assets/images/bg-home.jpeg'
 import { createStyles } from '@mantine/styles'
 import Poster from '@/assets/images/poster.jpeg'
 import Vector1 from '@/assets/images/vect-1.svg'
 import Vector2 from '@/assets/images/vect-2.svg'
-
+import { memo } from 'react'
+import { ScrollToPlugin } from 'gsap/all';
+gsap.registerPlugin(ScrollToPlugin);
 export default function HeroSection() {
     const { classes, cx } = useStyles();
     const [input, setInput] = React.useState('' as string);
-
+    const [showSearchSection, setShowSearchSection] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
+    const flexRef = useRef(null);
     const handleTyping = (typing) => {
         setIsTyping(typing);
     };
+    console.log(flexRef);
+    useEffect(() => {
+        const tl = gsap.timeline({ paused: true });
+        flexRef.current.style.opacity = 0; // Set initial opacity
+        flexRef.current.style.visibility = 'visible'; // Set initial visibility
+        flexRef.current.style.width = '0'; // Set initial visibility
+        flexRef.current.style.height = '0'; // Set initial visibility
+
+        tl.to(flexRef.current, { // Target the element using the ref
+            duration: 0.25,
+            opacity: 1,
+            height: 'auto',
+            width: 'auto',
+            visibility: 'visible',
+            ease: 'power3.inOut', // Add easing for smoother animation
+        })
+            .to('#vec1', { duration: 0.5, marginTop: '-10rem' }, "-=0.5")
+            .to('#vec2', { duration: 0.5 }, "-=0.5");
+        if (input) {
+            tl.play();
+        } else {
+            tl.reverse();
+        }
+    }, [input]);
     return (
         <>
             <div className={classes.bgContainer}>
                 <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className={classes.bgImage} />
             </div>
             <div></div>
-            <div className={classes.hero} style={{justifyContent:`${input ? 'center':'space-evenly'}`,gap:`${input ? '0rem':'2rem'}`}}>
-                <div className={classes.leftSection}>
+            <div className={classes.hero} style={{ gap: `${input ? '0rem' : '4rem'}` }}>
+                <div className={classes.leftSection} style={{ marginLeft: `${input ? '0rem' : '2.9rem'}` }}>
                     <h1 className={classes.heading}>Cool Animated Text</h1>
                     <SearchBar onTyping={handleTyping} input={input} setInput={setInput} />
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
                 </div>
-                {!input && <div className={classes.rightSection}>
+                <div className={classes.rightSection} style={{ display: `${input.length ? 'none' : 'block'}` }}>
                     <p className={classes.p}>Recent Searches:</p>
                     <div className={classes.movies}>
                         <MovieCard />
                         <MovieCard />
                         <MovieCard />
                     </div>
-                </div>}
-                {input &&
+                </div>
+                <div className={classes.flex} id='flex' ref={flexRef} style={{ // Use the ref here
+                    // opacity: `${input ? 1 : 0}`,
+                    // height: `${input ? 'auto' : '0'}`,
+                    // width: `${input ? 'auto' : '0'}`,
+                    // visibility: `${input ? 'visible' : 'hidden'}`,
+                    // translate: `${input ? '0' : '-50px'}`,
+                    // transition: 'translate 0.25s ease-in,opacity 0.5s ease-in', // Remove inline transition
+                }}>
                     <div className={classes.flex1}>
-                        <Image src={Vector1} alt='vector' className={classes.vec1Style}/>
-                        <Image src={Vector2} alt='vector' className={classes.vec2Style}/>
-                    </div>}
-                {input && <div className={classes.searchRightSection}>
-                    <div className={classes.searchMovies}>
-                        <SearchResultCard />
-                        <SearchResultCard />
-                        <SearchResultCard />
-                        <SearchResultCard />
-                        <SearchResultCard />
+                        <Image src={Vector1} alt='vector' className={classes.vec1Style} id='vec1' />
+                        <Image src={Vector2} alt='vector' className={classes.vec2Style} id='vec2' />
                     </div>
-                </div>}
+                    <div className={cx(classes.searchRightSection, showSearchSection && classes.searchRightSectionVisible)} style={{ height: `${input ? '100px' : '0'}`, transition: 'height 2s ease-in', marginTop: '1rem' }}>
+                        <div className={classes.searchMovies}>
+                            <SearchResultCard />
+                            <SearchResultCard />
+                            <SearchResultCard />
+                            <SearchResultCard />
+                            <SearchResultCard />
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
-    )
+    );
+
+
+    // return (
+    //     <>
+    //         <div className={classes.bgContainer}>
+    //             <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className={classes.bgImage} />
+    //         </div>
+    //         <div></div>
+    //         <div className={classes.hero} style={{ gap: `${input ? '0rem' : '4rem'}` }}>
+    //             <div className={classes.leftSection} style={{ marginLeft: `${input ? '0rem' : '2.9rem'}` }}>
+    //                 <h1 className={classes.heading}>Cool Animated Text</h1>
+    //                 <SearchBar onTyping={handleTyping} input={input} setInput={setInput} />
+    //                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
+    //             </div>
+    //             <div className={classes.rightSection} style={{ display: `${input.length ? 'none' : 'block'}` }}>
+    //                 <p className={classes.p}>Recent Searches:</p>
+    //                 <div className={classes.movies}>
+    //                     <MovieCard />
+    //                     <MovieCard />
+    //                     <MovieCard />
+    //                 </div>
+    //             </div>
+    //             {<div className={classes.flex} id='flex' style={{
+    //                 // transform: `${input ? 'scale(1) translateX(0)' : 'scale(0) translateX(-50%)'}`,
+    //                 // translate: `${input ? 0 : '0'}`,
+    //                 // scale: `${input ? 1 : 0}`,
+    //                 // // position: `${input ? 'relative' : 'absolute'}`,
+    //                 // // opacity: `${input ? 1 : 0}`,
+    //                 // display: `${input ? 'flex' : 'none'}`,
+    //                 // // display: `${input ? 'flex' : 'none'}`,
+    //                 // transition: 'translate 0.5s linear, scale .5s linear,display 0.30s linear'
+    //                 opacity: `${input ? 1 : 0}`,
+    //                 height: `${input ? 'auto' : '0'}`,
+    //                 width: `${input ? 'auto' : '0'}`,
+    //                 visibility: `${input ? 'visible' : 'hidden'}`,
+    //                 translate: `${input ? '0' : '-50px'}`,
+    //                 transition: 'translate 0.25s ease-in,opacity 0.5s ease-in',
+    //             }}>
+    //                 <div className={classes.flex1}>
+    //                     <Image src={Vector1} alt='vector' className={classes.vec1Style} id='vec1' />
+    //                     <Image src={Vector2} alt='vector' className={classes.vec2Style} id='vec2' />
+    //                 </div>
+    //                 <div className={cx(classes.searchRightSection, showSearchSection && classes.searchRightSectionVisible)} style={{ height: `${input ? '100px' : '0'}`, transition: 'height 2s ease-in' }}>
+    //                     <div className={classes.searchMovies}>
+    //                         <SearchResultCard />
+    //                         <SearchResultCard />
+    //                         <SearchResultCard />
+    //                         <SearchResultCard />
+    //                         <SearchResultCard />
+    //                     </div>
+    //                 </div>
+    //             </div>}
+    //         </div>
+    //     </>
+    // )
 }
 
 const MovieCard = () => {
@@ -96,29 +188,31 @@ const useStyles = createStyles(() => ({
         opacity: 0.25,
         zIndex: -20
     },
-    flex:{
-        display:'flex',
-        justifyContent:'space-between',
+    flex: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        // transform:'scale(1) translateX(-10%)',
+        // transition:'transform 1s ease-in'
         // width:'100px'
     },
-    flex1:{
-        display:'flex',
-        flexDirection:'column',
-        marginTop:'12rem'
+    flex1: {
+        display: 'flex',
+        flexDirection: 'column',
+        marginTop: '12rem'
         // justifyContent:'space-between',
         // width:'100px'
     },
-    vec1Style:{
-        marginTop:'-10rem'
+    vec1Style: {
+        marginTop: '-10rem'
     },
-    vec2Style:{
+    vec2Style: {
         // marginTop:'10rem'
     },
     hero: {
         // paddingTop: '6rem',
         display: 'flex',
         flex: '2 1 auto',
-        // justifyContent: 'space-evenly',
+        justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
         gap: '2rem'
@@ -148,9 +242,15 @@ const useStyles = createStyles(() => ({
         gap: '0.8rem',
     },
     searchRightSection: {
-        overflow: 'hidden',
-        gap: '0.8rem',
-        marginTop:'1.5rem'
+        // overflow: 'hidden',
+        // gap: '0.8rem',
+        // marginTop: '1.5rem',
+        // transform: 'scale(0.8)',
+        // transformOrigin: 'top right',
+        // transition: 'transform 2s ease-in-out',
+    },
+    searchRightSectionVisible: {
+        // transform: 'scale(1)',
     },
     p: {
         marginBottom: '0.75rem',
@@ -219,7 +319,7 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         flexDirection: 'column',
         // justifyContent: 'center'
-        width:'100%'
+        width: '100%'
     },
     movieTitle: {
         fontSize: '1.25rem',

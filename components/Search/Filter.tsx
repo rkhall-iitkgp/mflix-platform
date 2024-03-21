@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { createStyles } from '@mantine/styles';
 import FilterIcon from '@/assets/icons/filtericon.svg';
 import { TypeButton } from './FilterButtons/TypeButton';
-import Data from '../../app/search/components/data';
+import Data from '@/app/(root)/search/components/data';
 import { YearButton } from './FilterButtons/YearButton';
 import themeOptions from '../../utils/colors';
 

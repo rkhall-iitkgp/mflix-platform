@@ -1,6 +1,9 @@
-import { Card, Image, Text, Group, AspectRatio } from '@mantine/core';
+'use client';
+
+import { Card, Image, Text, Group, AspectRatio, ActionIcon } from '@mantine/core';
 import NextImage from 'next/image';
-import { IoHeartCircle } from "react-icons/io5";
+import { HiHeart } from 'react-icons/hi';
+import { useState } from 'react';
 import themeOptions from '@/utils/colors';
 import TomatoImg from '@/assets/icons/tomato.png';
 import ImdbImg from '@/assets/icons/imdb.png';
@@ -12,7 +15,20 @@ interface MovieCardProps {
     tomatoRating: string,
     imdbRating: string,
     info: string,
+    favourite?: boolean
 }
+
+const Favourite: React.FC<{ favourite?: boolean }> = ({ favourite }) => {
+    const [fav, setFav] = useState(favourite || false);
+    const handleClick = () => {
+        setFav(!fav);
+    };
+    return (
+    <ActionIcon color="rgba(243, 244, 246, 0.5)" size="lg" radius="xl" pos="absolute" right="5%" top="3%" onClick={handleClick}>
+        <HiHeart size="80%" color={fav ? 'red' : 'white'} />
+    </ActionIcon>
+    );
+};
 
 const MovieCard: React.FC<MovieCardProps> = ({
     image,
@@ -21,9 +37,9 @@ const MovieCard: React.FC<MovieCardProps> = ({
     tomatoRating,
     imdbRating,
     info,
+    favourite,
 }) => (
         <Card p={0} radius={0} bg="transparent" w={250} maw="20rem" c={themeOptions.color.normalTextColor}>
-            <IoHeartCircle />
             <AspectRatio ratio={320 / 500}>
                 <Image
                   src={image}
@@ -62,6 +78,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
             <Text fz={themeOptions.fontSize.xs} c={themeOptions.color.insideTextColor}>
                 {genres.join(', ')}
             </Text>
+            <Favourite favourite={favourite} />
         </Card>
     );
 

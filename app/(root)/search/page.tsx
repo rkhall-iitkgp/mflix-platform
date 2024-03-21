@@ -1,4 +1,7 @@
+'use client';
+
 import { Group, Stack, Text, Space } from '@mantine/core';
+import { useElementSize } from '@mantine/hooks';
 import MovieCard from '@/components/Search/MovieCard';
 import MovieBanner from '@/components/Search/MovieBanner';
 import Carousel from '@/components/Search/Carousel';
@@ -7,7 +10,7 @@ import Filter from '@/components/Search/Filter';
 
 export default function Search() {
     const getBannerMovie = (randomInput: number) => ({
-        image: `https://picsum.photos/1000/2000`,
+        image: `https://picsum.photos/1000/${randomInput}`,
         movieName: 'Movie Name',
         genres: ['horror', 'thriller', 'action'],
         imdbRating: '8.7/10',
@@ -17,15 +20,16 @@ export default function Search() {
         country: 'Country',
     });
     const getCardMovie = (randomInput: number) => ({
-        image: `https://picsum.photos/1000/2000`,
+        image: `https://picsum.photos/1000/${randomInput}`,
         name: 'Movie Name',
         genres: ['horror', 'thriller', 'action'],
         imdbRating: '8.7/10',
         tomatoRating: '97%',
         info: 'USA, 2016 - Current',
+        favourite: Boolean(Math.floor(Math.random() * 2)),
     });
     return (
-        <Stack c={themeOptions.color.normalTextColor} bg={themeOptions.color.background} style={{ paddingLeft: '4rem', paddingRight: '4rem' }}>
+        <Stack c={themeOptions.color.normalTextColor} bg={themeOptions.color.background} style={{ paddingLeft: '4rem', paddingRight: '4rem' }} mt="6rem">
             <Filter />
             <Space h="xs" />
             {/* top results part, needs more work */}
@@ -84,7 +88,6 @@ export default function Search() {
                 </Carousel>
             </Stack>
             <Space h="lg" />
-
         </Stack>
     );
 }

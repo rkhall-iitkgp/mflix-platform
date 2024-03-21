@@ -5,7 +5,7 @@ import { ScrollArea, Group, UnstyledButton } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 
-const Carousel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const Carousel: React.FC<{ children: React.ReactNode, width: number }> = ({ children, width }) => {
     const viewport = useRef<HTMLDivElement>(null);
     const { ref, height } = useElementSize();
     const [showLeftButton, setShowLeftButton] = useState(false);
@@ -33,7 +33,7 @@ const Carousel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         viewport.current!.scrollBy({ top: 0, behavior: 'smooth', left: +400 });
 
     return (
-        <Group align="center" wrap="nowrap" ref={ref}>
+        <Group align="center" wrap="nowrap" ref={ref} maw="calc(100vw - 10rem)">
             <ScrollArea viewportRef={viewport} styles={{ scrollbar: { display: 'none', width: 'none' } }}>
                 <Group wrap="nowrap" gap="4rem">
                     {children}

@@ -60,7 +60,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
                       src={ImdbImg}
                       component={NextImage}
                       alt="imdb"
-                      h={20}
+                      h={17}
                       unoptimized />
                     <Text fz={themeOptions.fontSize.xs}>{imdbRating}</Text>
                 </Group>
@@ -69,7 +69,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
                       src={TomatoImg}
                       component={NextImage}
                       alt="tomato"
-                      h={20}
+                      h={17}
                       unoptimized />
                     <Text fz={themeOptions.fontSize.xs}>{tomatoRating}</Text>
                 </Group>

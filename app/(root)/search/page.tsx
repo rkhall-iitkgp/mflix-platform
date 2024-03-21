@@ -70,7 +70,7 @@ export default function Search() {
         setRecommended(data);
     }, []);
     return (
-        <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '4rem', paddingRight: '4rem' }} mt="6rem">
+        <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
             <div className={classes.bg}></div>
             <Filter />
             <Space h="xs" />
@@ -81,11 +81,11 @@ export default function Search() {
                     <Text span inherit c={themeOptions.color.textColorNormal}>Name</Text>
                 </Text>
                 <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
-                    <Group style={{ rowGap: '30px' }} grow gap="5rem" preventGrowOverflow={false} wrap={wrap ? 'wrap' : 'nowrap'}>
+                    <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false} wrap={wrap ? 'wrap' : 'nowrap'}>
                         <MovieBanner {...(getBannerMovie())} />
                         <MovieBanner {...(getBannerMovie())} />
                     </Group>
-                    <Group style={{ rowGap: '30px' }} grow gap="5rem" preventGrowOverflow={false} wrap={wrap ? 'wrap' : 'nowrap'}>
+                    <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false} wrap={wrap ? 'wrap' : 'nowrap'}>
                         <MovieBanner {...(getBannerMovie())} />
                         <MovieBanner {...(getBannerMovie())} />
                     </Group>
@@ -101,11 +101,11 @@ export default function Search() {
                   style={{
                       rowGap: themeOptions.fontSize.xl,
                   }}
-                  gap={50}
+                  gap="7%"
                   grow
                   preventGrowOverflow={false}
                 >
-                    {Array.from({ length: 8 }, (_, index) => (
+                    {Array.from({ length: 20 }, (_, index) => (
                         <MovieCard
                           key={index}
                           {...(getCardMovie())}

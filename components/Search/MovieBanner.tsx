@@ -41,9 +41,9 @@ const MovieBanner: React.FC<MovieBannerProps> = ({
                   background: 'linear-gradient(0deg, rgba(112, 17, 182, 0.05), rgba(112, 17, 182, 0.05)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
               },
           }}
-          pt="lg"
-          pl={themeOptions.fontSize.md}
-          pr={themeOptions.fontSize.l}
+          pt="xl"
+          pl="5%"
+          pr="5%"
           gap={0}
         >
             <Flex>
@@ -55,15 +55,14 @@ const MovieBanner: React.FC<MovieBannerProps> = ({
                       w={107}
                     />
                 </div>
-                <Stack ml="lg" gap="xs" mr="lg">
+                <Stack ml="6%" gap="xs" mr="lg">
                     <Text fz={themeOptions.fontSize.l}>{movieName}</Text>
-                    <Group gap={themeOptions.fontSize.xs}>
+                    <Group gap="6%" w="90%" grow preventGrowOverflow={false}>
                         {genres.map((e, i) =>
                             <Paper
                               key={i}
                               bg={themeOptions.color.button}
                               fz={themeOptions.fontSize.s}
-                              w={116}
                               pt={5}
                               pb={5}
                               radius={13}
@@ -72,36 +71,36 @@ const MovieBanner: React.FC<MovieBannerProps> = ({
                             </Paper>)}
                     </Group>
                     <Group mt={7} justify="space-between" gap={themeOptions.fontSize.l} style={{ rowGap: '10px' }} grow preventGrowOverflow={false}>
-                        <Group gap={6} justify="space-around">
+                        <Group gap={themeOptions.fontSize.xs}>
                             <Image
                               src={ImdbImg}
                               component={NextImage}
                               alt="imdb"
-                              h={20}
+                              h={17}
                               unoptimized
                             />
                             <Text fz={themeOptions.fontSize.xs}>{imdbRating}</Text>
                         </Group>
-                        <Group gap={6} justify="space-around">
+                        <Group gap={themeOptions.fontSize.xs}>
                             <Image
                               src={TomatoImg}
                               component={NextImage}
                               alt="tomato"
-                              h={20}
+                              h={17}
                               unoptimized
                             />
                             <Text fz={themeOptions.fontSize.xs}>{tomatoRating}</Text>
                         </Group>
-                        <Group gap={6} justify="space-around">
-                            <FaRegHourglass />
+                        <Group gap={themeOptions.fontSize.xs}>
+                            <FaRegHourglass size={17} />
                             <Text fz={themeOptions.fontSize.xs}>{duration}</Text>
                         </Group>
-                        <Group gap={6} justify="space-around">
-                            <PiCalendar />
+                        <Group gap={themeOptions.fontSize.xs}>
+                            <PiCalendar size={17} />
                             <Text fz={themeOptions.fontSize.xs}>{year}</Text>
                         </Group>
-                        <Group gap={6} justify="space-around" style={{ maxWidth: 'max-content' }}>
-                            <GrLocation />
+                        <Group gap={themeOptions.fontSize.xs} style={{ maxWidth: 'max-content' }}>
+                            <GrLocation size={17} />
                             <Text fz={themeOptions.fontSize.xs}>{country}</Text>
                         </Group>
                     </Group>

@@ -106,8 +106,8 @@ const styles = createStyles(() => ({
   },
   footStyle: {
     color: 'white',
-    padding: '2rem',
-    paddingTop: '4rem',
+    padding: '1rem',
+    paddingTop: '1rem',
     paddingBottom: '2rem',
   },
 

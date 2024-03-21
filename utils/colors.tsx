@@ -8,6 +8,7 @@ const themeOptions = {
         insideTextColor: '#828282',
         normalTextColor: '#FFFFFF',
         background: '#0B0212',
+        black:'#000',
     },
     fontSize: {
         xs: '0.75rem',

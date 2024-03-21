@@ -113,7 +113,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
         }}
         controls={true}
       /> */}
-      <video id="video" controls ref={playerRef} height={500} width={2000}></video>
+      {/* <video id="video" controls ref={playerRef} height={758} width={1440}></video> */}
       <div>
         Quality:
         <select onChange={(e) => changeQuality(e.target.value)} value={quality}>

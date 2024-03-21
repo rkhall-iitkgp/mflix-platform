@@ -19,7 +19,8 @@ import {
     Flex, Box, useStyles
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
-import { createStyles } from '@mantine/core';
+import { createStyles } from '@mantine/styles';
+import { InlineInputClasses } from '@mantine/core/lib/components/InlineInput';
 // import { TwitterButton } from './TwitterButton';
 
 
@@ -29,16 +30,10 @@ export function Register(props: PaperProps) {
 
     const useStyles = createStyles(() => ({
         container: {
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            border: '1px solid white',
-            padding: '1rem', // Adjust padding as needed
-            backgroundImageSource: 'linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%)',
-            backgroundOrigin: 'border-box',
-            backgroundClip: 'content-box, border-box',
-            borderRadius: '1rem',
+            padding: '1rem',
+            position: 'relative',
+            background: 'linear-gradient(to right, red, purple)',
+            zIndex: 0,
         },
     }));
     
@@ -63,6 +58,7 @@ export function Register(props: PaperProps) {
            
         },
     });
+    const { classes } = useStyles();
 
     return (
         <Flex
@@ -94,7 +90,6 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
  */}
 
 
-    <div>
      <Box style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -119,7 +114,8 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                 
                 width: '45rem', 
                  borderRadius: '15px',
-                backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '1.5rem'
+                backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '1.5rem',
+                paddingTop: '2rem'
             }}>
             {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
             
@@ -277,7 +273,6 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
           </form>
             
             </Box>
-            </div>
            
         </Flex>
      

@@ -2,8 +2,8 @@
 
 import { Group, Stack, Text, Space } from '@mantine/core';
 import { createStyles } from '@mantine/styles';
-import { useMediaQuery } from '@mantine/hooks';
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import MovieCard from '@/components/Search/MovieCard';
 import MovieBanner from '@/components/Search/MovieBanner';
 import Carousel from '@/components/Search/Carousel';
@@ -34,18 +34,14 @@ const useStyles = createStyles(() => ({
 }));
 
 export default function Search() {
+    const searchParams = useSearchParams();
+    const search = searchParams.get('q');
     const { classes } = useStyles();
-    const [wrap, setWrap] = useState<boolean | undefined>(false);
-    const breakpoint = useMediaQuery('(max-width: 1420px)');
 
-    useEffect(() => {
-        setWrap(breakpoint);
-    }, [breakpoint]);
-    // const nowrap = false;
     // const [results, setResults] = useState();
     const [recommended, setRecommended] = useState<Array<RecommendedMovies>>();
     const getBannerMovie = () => ({
-        image: 'https://picsum.photos/1000/3000',
+        image: 'https://picsum.photos/500/1000',
         movieName: 'Movie Name',
         genres: ['horror', 'thriller', 'action'],
         imdbRating: '8.7/10',
@@ -56,7 +52,7 @@ export default function Search() {
         redirect: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley',
     });
     const getCardMovie = () => ({
-        image: 'https://picsum.photos/1000/3000',
+        image: 'https://picsum.photos/500/1000',
         name: 'Movie Name',
         genres: ['horror', 'thriller', 'action'],
         imdbRating: '8.7/10',
@@ -76,16 +72,16 @@ export default function Search() {
             <Space h="xs" />
             {/* top results part, needs more work */}
             <Stack>
-                <Text fw={600} fz={themeOptions.fontSize.l}>
+                <Text fw={600} fz={themeOptions.fontSize.xl}>
                     Top results for : {' '}
-                    <Text span inherit c={themeOptions.color.textColorNormal}>Name</Text>
+                    <Text span inherit c={themeOptions.color.textColorNormal}>{ search }</Text>
                 </Text>
                 <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
-                    <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false} wrap={wrap ? 'wrap' : 'nowrap'}>
+                    <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false}>
                         <MovieBanner {...(getBannerMovie())} />
                         <MovieBanner {...(getBannerMovie())} />
                     </Group>
-                    <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false} wrap={wrap ? 'wrap' : 'nowrap'}>
+                    <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false}>
                         <MovieBanner {...(getBannerMovie())} />
                         <MovieBanner {...(getBannerMovie())} />
                     </Group>
@@ -95,7 +91,7 @@ export default function Search() {
 
             {/* more results part */}
             <Stack>
-                <Text fw={500} fz={themeOptions.fontSize.l}>More Results</Text>
+                <Text fw={500} fz={themeOptions.fontSize.xl}>More Results</Text>
                 <Group
                   justify="flex-start"
                   style={{
@@ -117,7 +113,7 @@ export default function Search() {
 
             {/* Carousel Part */}
             <Stack>
-                <Text fw={500} fz={themeOptions.fontSize.l}>
+                <Text fw={500} fz={themeOptions.fontSize.xl}>
                     Recommendations Based on Search Results
                 </Text>
                 <Carousel>

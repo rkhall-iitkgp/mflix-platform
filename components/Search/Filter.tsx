@@ -35,6 +35,7 @@ const useStyles = createStyles(() =>
         display: 'flex',
         alignItems: 'center',
         cursor: 'pointer',
+        width: 'fit-content',
 
     },
     outer: {

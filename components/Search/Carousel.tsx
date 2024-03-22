@@ -34,7 +34,7 @@ const Carousel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }, [children]); // Call handleScroll whenever children change
 
     return (
-        <Group align="center" wrap="nowrap" ref={ref} maw="calc(100vw - 10rem)">
+        <Group align="center" wrap="nowrap" ref={ref} maw="calc(100vw - 10vw)">
             <ScrollArea viewportRef={viewport} styles={{ scrollbar: { display: 'none', width: 'none' } }}>
                 <Group wrap="nowrap" gap="4rem">
                     {children}
@@ -44,7 +44,7 @@ const Carousel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 <UnstyledButton
                   onClick={scrollPrev}
                   pos="absolute"
-                  left="4rem"
+                  left="calc(5vw - 3px)"
                   h={height}
                   pr={200}
                   style={{
@@ -59,7 +59,7 @@ const Carousel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 <UnstyledButton
                   onClick={scrollNext}
                   pos="absolute"
-                  right="4rem"
+                  right="calc(5vw - 3px)"
                   h={height}
                   pl={200}
                   style={{

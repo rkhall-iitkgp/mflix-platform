@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { useRef, useState, CSSProperties, useEffect } from 'react';
 import MovieCard from '@/app/(root)/components/MovieCard';
 import rArrow from '@/assets/icons/rarrow.svg';
-import Trend from '@/assets/icons/trends.svg';
 import { createStyles } from '@mantine/styles';
 // export default function Trending() {
 //     const scrollRef = useRef(null);
@@ -50,7 +49,7 @@ import { createStyles } from '@mantine/styles';
 // }
 
 
-export default function Trending() {
+export default function Trending({ title, image }) {
     const scrollRef = useRef(null);
     const [showLeftArrow, setShowFirstArrow] = useState(false);
     const [vis, setVis] = useState(false);
@@ -97,8 +96,8 @@ export default function Trending() {
     return (
         <section className={classes.sectionStyles}>
             <div className={classes.trendStyles}>
-                <h1 className={classes.titleStyles}>Trending</h1>
-                <Image src={Trend} alt='icon' className={classes.iconStyles} />
+                <h1 className={classes.titleStyles}>{title}</h1>
+                <Image src={image} alt='icon' className={classes.iconStyles} />
             </div>
             <div ref={scrollRef} className={classes.containerStyles}>
                 <div className={classes.movieDiv}>
@@ -142,8 +141,9 @@ const useStyles = createStyles(() => ({
         // paddingTop: 'rem', // You may adjust the padding as needed
         paddingBottom: '80px',
         position: 'relative',
-        width: 'calc(100vw - 20px)',
-        background: '#0B0212'
+        width: 'calc(100vw)',
+        background: '#0B0212',
+        overflow: 'hidden'
     },
 
     titleStyles: {
@@ -165,7 +165,7 @@ const useStyles = createStyles(() => ({
     },
 
     arrowStyles: {
-        backgroundColor: '#000',
+        backgroundColor: '#000000e0',
         boxShadow: '-12px 20px 222px 180px #000',
         position: 'absolute',
         top: '55%',
@@ -190,12 +190,13 @@ const useStyles = createStyles(() => ({
     },
 
     rightArrow: {
-        right: '10px'
+        right: '5rem'
     },
     trendStyles: {
-        width: '25rem',
+        width: 'fit-content',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        marginLeft: '5rem'
     },
 }));

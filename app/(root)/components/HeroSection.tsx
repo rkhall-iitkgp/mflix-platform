@@ -6,7 +6,7 @@ import { gsap } from 'gsap';
 import { useState, useEffect, useRef } from 'react'
 import BgImage from '@/assets/images/bg-home.jpeg'
 import { createStyles } from '@mantine/styles'
-import Poster from '@/assets/images/poster.jpeg'
+import Poster from '@/assets/images/poster.png'
 import Vector1 from '@/assets/images/vect-1.svg'
 import Vector2 from '@/assets/images/vect-2.svg'
 import { memo } from 'react'
@@ -22,38 +22,20 @@ const HeroSection = () => {
     console.log(flexRef);
     useEffect(() => {
         const tl = gsap.timeline({ paused: true });
-        // flexRef.current.style.opacity = 1; // Set initial opacity
-        // flexRef.current.style.visibility = 'visible'; // Set initial visibility
-        // flexRef.current.style.width = '0'; // Set initial visibility
-        // flexRef.current.style.height = '0'; // Set initial visibility
-        // flexRef.current.style.transform = 'scale(0)'; // Set initial visibility
-        // tl.to(flexRef.current, { // Target the element using the ref
-        //     duration: 0.25,
-        //     // opacity: 1,
-        //     // height: 'auto',
-        //     // width: 'auto',
-        //     // visibility: 'visible',
-        //     transform: 'scale(1)',
-        //     // ease: 'power', // Add easing for smoother animation
-        // })
         tl.fromTo(
             flexRef.current,
-            { scale: 0, opacity: 0, visibility: 'hidden', height: 0, width: 0 },
+            { scale: 0, opacity: 1, visibility: 'visible', height: 0, width: 0 },
             { duration: 0.25, scale: 1.01, opacity: 1, visibility: 'visible', height: 'auto', width: 'auto' }
         );
-        // .to('#vec1', { duration: 0.5, marginTop: '-9.5rem' }, "-=0.5")
-        // .to('#vec2', { duration: 0.5 }, "-=0.5");
         if (isTyping) {
             tl.play();
         } else {
             tl.reverse();
         }
         return () => {
-            // Ensure the timeline is properly killed when the component unmounts
             tl.kill();
         };
     }, [isTyping]);
-
     const handleTyping = (typing) => {
         console.log("func called");
         setIsTyping(typing !== '');
@@ -65,9 +47,8 @@ const HeroSection = () => {
             <div className={classes.bgContainer}>
                 <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className={classes.bgImage} />
             </div>
-            {/* <div></div> */}
             <div className={classes.hero} style={{ gap: `${isTyping ? '0rem' : '4rem'}` }}>
-                <div className={classes.leftSection} style={{ marginLeft: `${isTyping ? '0rem' : '2.9rem'}` }}>
+                <div className={classes.leftSection} style={{ marginLeft: `${isTyping ? '0rem' : '0rem'}` }}>
                     <h1 className={classes.heading}>Cool Animated Text</h1>
                     <SearchBar onTyping={handleTyping} input={input} setInput={setInput} isTyping={isTyping} />
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
@@ -100,61 +81,6 @@ const HeroSection = () => {
             </div>
         </>
     );
-
-
-    // return (
-    //     <>
-    //         <div className={classes.bgContainer}>
-    //             <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className={classes.bgImage} />
-    //         </div>
-    //         <div></div>
-    //         <div className={classes.hero} style={{ gap: `${isTyping ? '0rem' : '4rem'}` }}>
-    //             <div className={classes.leftSection} style={{ marginLeft: `${isTyping ? '0rem' : '2.9rem'}` }}>
-    //                 <h1 className={classes.heading}>Cool Animated Text</h1>
-    //                 <SearchBar onTyping={handleTyping} input={input} setInput={setInput} />
-    //                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
-    //             </div>
-    //             <div className={classes.rightSection} style={{ display: `${input.length ? 'none' : 'block'}` }}>
-    //                 <p className={classes.p}>Recent Searches:</p>
-    //                 <div className={classes.movies}>
-    //                     <MovieCard />
-    //                     <MovieCard />
-    //                     <MovieCard />
-    //                 </div>
-    //             </div>
-    //             {<div className={classes.flex} id='flex' style={{
-    //                 // transform: `${isTyping ? 'scale(1) translateX(0)' : 'scale(0) translateX(-50%)'}`,
-    //                 // translate: `${isTyping ? 0 : '0'}`,
-    //                 // scale: `${isTyping ? 1 : 0}`,
-    //                 // // position: `${isTyping ? 'relative' : 'absolute'}`,
-    //                 // // opacity: `${isTyping ? 1 : 0}`,
-    //                 // display: `${isTyping ? 'flex' : 'none'}`,
-    //                 // // display: `${isTyping ? 'flex' : 'none'}`,
-    //                 // transition: 'translate 0.5s linear, scale .5s linear,display 0.30s linear'
-    //                 opacity: `${isTyping ? 1 : 0}`,
-    //                 height: `${isTyping ? 'auto' : '0'}`,
-    //                 width: `${isTyping ? 'auto' : '0'}`,
-    //                 visibility: `${isTyping ? 'visible' : 'hidden'}`,
-    //                 translate: `${isTyping ? '0' : '-50px'}`,
-    //                 transition: 'translate 0.25s ease-in,opacity 0.5s ease-in',
-    //             }}>
-    //                 <div className={classes.flex1}>
-    //                     <Image src={Vector1} alt='vector' className={classes.vec1Style} id='vec1' />
-    //                     <Image src={Vector2} alt='vector' className={classes.vec2Style} id='vec2' />
-    //                 </div>
-    //                 <div className={cx(classes.searchRightSection, showSearchSection && classes.searchRightSectionVisible)} style={{ height: `${isTyping ? '100px' : '0'}`, transition: 'height 2s ease-in' }}>
-    //                     <div className={classes.searchMovies}>
-    //                         <SearchResultCard />
-    //                         <SearchResultCard />
-    //                         <SearchResultCard />
-    //                         <SearchResultCard />
-    //                         <SearchResultCard />
-    //                     </div>
-    //                 </div>
-    //             </div>}
-    //         </div>
-    //     </>
-    // )
 }
 
 const MovieCard = () => {
@@ -221,13 +147,15 @@ const useStyles = createStyles(() => ({
     },
     hero: {
         // paddingTop: '6rem',
+        width: '100vw',
         display: 'flex',
         flex: '2 1 auto',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         overflow: 'hidden',
         gap: '2rem',
-        marginBottom: '2.85rem'
+        marginBottom: '2.85rem',
+        marginLeft: '20%'
     },
     leftSection: {
         width: '35rem',
@@ -313,18 +241,14 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        width: '25rem',
+        width: '26vw',
         borderStyle: 'solid',
         borderColor: '#FFFFFF',
         borderTopWidth: '1px',
-        // borderRadius: '.7rem',
         overflow: 'hidden',
         borderWidth: '0.5px',
-        // borderBottomWidth: '0px',
         height: '5.575rem',
-        // marginBottom: '0.6rem',
         gap: '1rem',
-        // padding: '1rem 1.125rem',
         opacity: 1,
     },
     cardDescription: {

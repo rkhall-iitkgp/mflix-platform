@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Heart from '@/assets/images/heart.svg';
 import favHeart from '@/assets/images/fav-heart.svg';
-import Poster from '@/assets/images/poster.jpeg';
+import Poster from '@/assets/images/poster.png';
 import Imdb from '@/assets/images/imdb.png';
 import Tomato from '@/assets/images/tomato.png';
 import { createStyles } from '@mantine/styles';
@@ -39,8 +39,9 @@ const useStyles = createStyles(() => ({
     },
 
     posterStyles: {
-        width: '20.75rem',
-        transform: 'rotate(180deg)'
+        width: '13.75rem',
+
+        // transform: 'rotate(180deg)'
     },
 
     countryStyles: {

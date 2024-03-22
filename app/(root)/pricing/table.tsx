@@ -5,7 +5,7 @@ import themeOptions from '@/utils/colors';
 import React from 'react';
 
 
-const SubscriptionTable = () => {
+const SubscriptionTable = ({ cardPlan }) => {
     const subscriptionData = [
         {
             feature: 'Access to all movies',
@@ -50,9 +50,9 @@ const SubscriptionTable = () => {
                             <TableTr >
                                 <TableTd style={{ textAlign: 'left', fontSize: "1.1rem" }} >{row.feature}</TableTd>
                                 <TableTd style={{ textAlign: 'center', }}><Text fz={themeOptions.fontSize.s}>{row.free}</Text></TableTd>
-                                <TableTd style={{ textAlign: 'center', }}><Text fz={themeOptions.fontSize.s}>{row.basic}</Text></TableTd>
-                                <TableTd style={{ textAlign: 'center', }}><Text fz={themeOptions.fontSize.s}>{row.premium}</Text></TableTd>
-                                <TableTd style={{ textAlign: 'center', }}><Text fz={themeOptions.fontSize.s}>{row.family}</Text></TableTd>
+                                <TableTd style={{ textAlign: 'center', background: cardPlan[0] === false ? 'none' : 'linear-gradient(0deg, rgba(112, 17, 182, 0.15), rgba(112, 17, 182, 0.15)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)' }}><Text fz={themeOptions.fontSize.s}>{row.basic}</Text></TableTd>
+                                <TableTd style={{ textAlign: 'center', background: cardPlan[1] === false ? 'none' : 'linear-gradient(0deg, rgba(112, 17, 182, 0.15), rgba(112, 17, 182, 0.15)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)' }}><Text fz={themeOptions.fontSize.s}>{row.premium}</Text></TableTd>
+                                <TableTd style={{ textAlign: 'center', background: cardPlan[2] === false ? 'none' : 'linear-gradient(0deg, rgba(112, 17, 182, 0.15), rgba(112, 17, 182, 0.15)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)' }}   ><Text fz={themeOptions.fontSize.s}>{row.family}</Text></TableTd>
                             </TableTr>
                         </React.Fragment>
                     ))}

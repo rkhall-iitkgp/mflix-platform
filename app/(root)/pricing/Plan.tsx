@@ -12,9 +12,12 @@ import {
   Divider,
   Flex,
   Box,
+  Accordion,
 } from '@mantine/core';
 import { GoPlus } from 'react-icons/go';
 import { createStyles } from '@mantine/styles';
+import Questions from './questions';
+import Questions2 from './questions2';
 
 export default function Plan() {
   const useStyles = createStyles(() => ({
@@ -158,6 +161,7 @@ export default function Plan() {
     updatedCardPlan[index] = true;
     setCardPlan(updatedCardPlan);
   };
+ 
 
   return (
     <>
@@ -227,7 +231,9 @@ export default function Plan() {
           <Text style={{ fontSize: '2rem' }}>Questions?</Text>
           <Text style={{}}>we got answers.</Text>
         </Box>
-        <Box
+        <Questions2 />
+            {/* <Questions/> */}
+        {/* <Box
           id="question-answer"
           style={{
             display: 'flex',
@@ -326,7 +332,7 @@ export default function Plan() {
               assumenda at numquam pariatur quasi eos! Non, sint odio!
             </Text>
           </Box>
-        </Box>
+        </Box> */}
       </Box>
     </>
   );

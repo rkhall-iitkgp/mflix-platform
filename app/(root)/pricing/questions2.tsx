@@ -18,10 +18,12 @@ const Questions2 = () => {
   const [accordionStates, setAccordionStates] = useState(Array(questions.length).fill(false)); // Assuming 2 questions initially
 
   const handleToggleAccordion = (index: number): void => {
-    const newAccordionStates: boolean[] = Array(questions.length).fill(false);
-    newAccordionStates[index] = true;
-    setAccordionStates(newAccordionStates);
+    setAccordionStates(prevStates => {
+      const newAccordionStates = prevStates.map((state, i) => i === index ? !state : false);
+      return newAccordionStates;
+    });
   };
+  
 
     const useStyles = createStyles((theme) => ({
       AccordionControl: {

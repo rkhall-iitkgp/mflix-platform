@@ -1,10 +1,17 @@
-import React, { SetStateAction } from 'react'
+"use client"
+import React, { SetStateAction, useEffect } from 'react'
 import SearchIcon from '@/assets/icons/search.svg'
 import XMarkIcon from '@/assets/icons/xmark.svg'
 import MicIcon from '@/assets/icons/mic.svg'
 import Image from 'next/image'
 
-export default function SearchBar({input,setInput}:{input: string, setInput: React.Dispatch<SetStateAction<string>>}) {
+export default function SearchBar({ input, setInput, onTyping }: { input: string, setInput: React.Dispatch<SetStateAction<string>>, onTyping: void }) {
+    console.log("ontyping", onTyping);
+    useEffect(() => {
+        if (!input && typeof onTyping === 'function') {
+            onTyping('');
+        }
+    }, [input, onTyping]);
     return (
         <div style={styles.container}>
             <label htmlFor="search" style={styles.searchLabel}>
@@ -16,9 +23,12 @@ export default function SearchBar({input,setInput}:{input: string, setInput: Rea
                 placeholder="Search"
                 style={styles.input}
                 value={input as string}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={(e) => onTyping(e.target.value)}
             />
-            {input && <Image src={XMarkIcon} alt="X" style={styles.icon} onClick={() => setInput('')} />}
+            {input && <Image src={XMarkIcon} alt="X" style={styles.icon} onClick={() => {
+                setInput('');
+                console.log("clicked")
+            }} />}
             <Image src={MicIcon} alt="Mic" style={styles.mic} />
         </div>
     )
@@ -42,13 +52,14 @@ const styles = {
         color: 'rgb(55, 65, 81)',
         width: '100%',
         border: 'none',
-        fontSize:'1.25rem'
+        fontSize: '1.25rem'
     },
     icon: {
         width: '2rem',
         height: '2rem',
         color: 'rgb(156, 163, 175)',
-        marginRight: '0.5rem'
+        marginRight: '0.5rem',
+        cursor: 'pointer'
     },
     mic: {
         width: '2rem',

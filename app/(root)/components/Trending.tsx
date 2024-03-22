@@ -98,7 +98,7 @@ export default function Trending() {
         <section className={classes.sectionStyles}>
             <div className={classes.trendStyles}>
                 <h1 className={classes.titleStyles}>Trending</h1>
-                <Image src={Trend} alt='icon' className={classes.iconStyles}/>
+                <Image src={Trend} alt='icon' className={classes.iconStyles} />
             </div>
             <div ref={scrollRef} className={classes.containerStyles}>
                 <div className={classes.movieDiv}>
@@ -111,16 +111,16 @@ export default function Trending() {
                     <MovieCard />
                     <MovieCard />
                 </div>
-                
-                    <Image
-                        src={rArrow}
-                        alt='slider'
-                        className={cx(classes.arrowStyles, classes.leftArrow, {[classes.opacity]: showLeftArrow === true })}
-                        width={30}
-                        height={40}
-                        onClick={handleScrollLeft}
-                    />
-                
+
+                <Image
+                    src={rArrow}
+                    alt='slider'
+                    className={cx(classes.arrowStyles, classes.leftArrow, { [classes.opacity]: showLeftArrow === true })}
+                    width={30}
+                    height={40}
+                    onClick={handleScrollLeft}
+                />
+
                 <Image
                     src={rArrow}
                     alt='slider'
@@ -139,24 +139,24 @@ const useStyles = createStyles(() => ({
         opacity: 1
     },
     sectionStyles: {
-        paddingTop: '80px', // You may adjust the padding as needed
+        // paddingTop: 'rem', // You may adjust the padding as needed
         paddingBottom: '80px',
         position: 'relative',
         width: 'calc(100vw - 20px)',
-        background:'#0B0212'
+        background: '#0B0212'
     },
 
     titleStyles: {
         fontSize: '3rem',
         lineHeight: "5.5rem",
         display: 'inline',
-        zIndex:5,
+        zIndex: 5,
         // marginRight: "2.5rem"
     },
 
     iconStyles: {
         // marginLeft: '1rem',
-      width:'70px',
+        width: '70px',
     },
 
     containerStyles: {
@@ -171,7 +171,7 @@ const useStyles = createStyles(() => ({
         top: '55%',
         transform: 'translateY(-50%)',
         cursor: 'pointer',
-        zIndex:2,
+        zIndex: 2,
         // filter: 'drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.3))',
     },
 
@@ -179,7 +179,7 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         position: 'relative',
         width: 'max-content',
-        paddingLeft:'5rem'
+        paddingLeft: '5rem'
     },
 
     leftArrow: {
@@ -192,10 +192,10 @@ const useStyles = createStyles(() => ({
     rightArrow: {
         right: '10px'
     },
-    trendStyles:{
-        width:'25rem',
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center',
+    trendStyles: {
+        width: '25rem',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 }));

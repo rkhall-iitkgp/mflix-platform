@@ -12,52 +12,67 @@ import Vector2 from '@/assets/images/vect-2.svg'
 import { memo } from 'react'
 import { ScrollToPlugin } from 'gsap/all';
 gsap.registerPlugin(ScrollToPlugin);
-export default function HeroSection() {
+const HeroSection = () => {
+    console.log("rendered");
     const { classes, cx } = useStyles();
     const [input, setInput] = React.useState('' as string);
     const [showSearchSection, setShowSearchSection] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
     const flexRef = useRef(null);
-    const handleTyping = (typing) => {
-        setIsTyping(typing);
-    };
     console.log(flexRef);
     useEffect(() => {
         const tl = gsap.timeline({ paused: true });
-        flexRef.current.style.opacity = 0; // Set initial opacity
-        flexRef.current.style.visibility = 'visible'; // Set initial visibility
-        flexRef.current.style.width = '0'; // Set initial visibility
-        flexRef.current.style.height = '0'; // Set initial visibility
-
-        tl.to(flexRef.current, { // Target the element using the ref
-            duration: 0.25,
-            opacity: 1,
-            height: 'auto',
-            width: 'auto',
-            visibility: 'visible',
-            ease: 'power3.inOut', // Add easing for smoother animation
-        })
-            .to('#vec1', { duration: 0.5, marginTop: '-10rem' }, "-=0.5")
-            .to('#vec2', { duration: 0.5 }, "-=0.5");
-        if (input) {
+        // flexRef.current.style.opacity = 1; // Set initial opacity
+        // flexRef.current.style.visibility = 'visible'; // Set initial visibility
+        // flexRef.current.style.width = '0'; // Set initial visibility
+        // flexRef.current.style.height = '0'; // Set initial visibility
+        // flexRef.current.style.transform = 'scale(0)'; // Set initial visibility
+        // tl.to(flexRef.current, { // Target the element using the ref
+        //     duration: 0.25,
+        //     // opacity: 1,
+        //     // height: 'auto',
+        //     // width: 'auto',
+        //     // visibility: 'visible',
+        //     transform: 'scale(1)',
+        //     // ease: 'power', // Add easing for smoother animation
+        // })
+        tl.fromTo(
+            flexRef.current,
+            { scale: 0, opacity: 0, visibility: 'hidden', height: 0, width: 0 },
+            { duration: 0.25, scale: 1.01, opacity: 1, visibility: 'visible', height: 'auto', width: 'auto' }
+        );
+        // .to('#vec1', { duration: 0.5, marginTop: '-9.5rem' }, "-=0.5")
+        // .to('#vec2', { duration: 0.5 }, "-=0.5");
+        if (isTyping) {
             tl.play();
         } else {
             tl.reverse();
         }
-    }, [input]);
+        return () => {
+            // Ensure the timeline is properly killed when the component unmounts
+            tl.kill();
+        };
+    }, [isTyping]);
+
+    const handleTyping = (typing) => {
+        console.log("func called");
+        setIsTyping(typing !== '');
+        console.log(isTyping);
+        setInput(typing);
+    };
     return (
         <>
             <div className={classes.bgContainer}>
                 <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className={classes.bgImage} />
             </div>
             {/* <div></div> */}
-            <div className={classes.hero} style={{ gap: `${input ? '0rem' : '4rem'}` }}>
-                <div className={classes.leftSection} style={{ marginLeft: `${input ? '0rem' : '2.9rem'}` }}>
+            <div className={classes.hero} style={{ gap: `${isTyping ? '0rem' : '4rem'}` }}>
+                <div className={classes.leftSection} style={{ marginLeft: `${isTyping ? '0rem' : '2.9rem'}` }}>
                     <h1 className={classes.heading}>Cool Animated Text</h1>
-                    <SearchBar onTyping={handleTyping} input={input} setInput={setInput} />
+                    <SearchBar onTyping={handleTyping} input={input} setInput={setInput} isTyping={isTyping} />
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
                 </div>
-                <div className={classes.rightSection} style={{ display: `${input.length ? 'none' : 'block'}` }}>
+                <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
                     <p className={classes.p}>Recent Searches:</p>
                     <div className={classes.movies}>
                         <MovieCard />
@@ -65,25 +80,20 @@ export default function HeroSection() {
                         <MovieCard />
                     </div>
                 </div>
-                <div className={classes.flex} id='flex' ref={flexRef} style={{ // Use the ref here
-                    // opacity: `${input ? 1 : 0}`,
-                    // height: `${input ? 'auto' : '0'}`,
-                    // width: `${input ? 'auto' : '0'}`,
-                    // visibility: `${input ? 'visible' : 'hidden'}`,
-                    // translate: `${input ? '0' : '-50px'}`,
-                    // transition: 'translate 0.25s ease-in,opacity 0.5s ease-in', // Remove inline transition
-                }}>
-                    <div className={classes.flex1}>
-                        <Image src={Vector1} alt='vector' className={classes.vec1Style} id='vec1' />
-                        <Image src={Vector2} alt='vector' className={classes.vec2Style} id='vec2' />
-                    </div>
-                    <div className={cx(classes.searchRightSection, showSearchSection && classes.searchRightSectionVisible)} style={{ height: `${input ? '100px' : '0'}`, transition: 'height 2s ease-in', marginTop: '1rem' }}>
-                        <div className={classes.searchMovies}>
-                            <SearchResultCard />
-                            <SearchResultCard />
-                            <SearchResultCard />
-                            <SearchResultCard />
-                            <SearchResultCard />
+                <div className={classes.flex} id='flex' ref={flexRef}>
+                    <div className={classes.flex} id='flex'>
+                        <div className={classes.flex1}>
+                            <Image src={Vector1} alt='vector' className={classes.vec1Style} id='vec1' />
+                            <Image src={Vector2} alt='vector' className={classes.vec2Style} id='vec2' />
+                        </div>
+                        <div className={cx(classes.searchRightSection, showSearchSection && classes.searchRightSectionVisible)} style={{ height: `${isTyping ? '0px' : '0'}`, marginTop: '2rem' }}>
+                            <div className={classes.searchMovies}>
+                                <SearchResultCard />
+                                <SearchResultCard />
+                                <SearchResultCard />
+                                <SearchResultCard />
+                                <SearchResultCard />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,8 +108,8 @@ export default function HeroSection() {
     //             <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className={classes.bgImage} />
     //         </div>
     //         <div></div>
-    //         <div className={classes.hero} style={{ gap: `${input ? '0rem' : '4rem'}` }}>
-    //             <div className={classes.leftSection} style={{ marginLeft: `${input ? '0rem' : '2.9rem'}` }}>
+    //         <div className={classes.hero} style={{ gap: `${isTyping ? '0rem' : '4rem'}` }}>
+    //             <div className={classes.leftSection} style={{ marginLeft: `${isTyping ? '0rem' : '2.9rem'}` }}>
     //                 <h1 className={classes.heading}>Cool Animated Text</h1>
     //                 <SearchBar onTyping={handleTyping} input={input} setInput={setInput} />
     //                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
@@ -113,26 +123,26 @@ export default function HeroSection() {
     //                 </div>
     //             </div>
     //             {<div className={classes.flex} id='flex' style={{
-    //                 // transform: `${input ? 'scale(1) translateX(0)' : 'scale(0) translateX(-50%)'}`,
-    //                 // translate: `${input ? 0 : '0'}`,
-    //                 // scale: `${input ? 1 : 0}`,
-    //                 // // position: `${input ? 'relative' : 'absolute'}`,
-    //                 // // opacity: `${input ? 1 : 0}`,
-    //                 // display: `${input ? 'flex' : 'none'}`,
-    //                 // // display: `${input ? 'flex' : 'none'}`,
+    //                 // transform: `${isTyping ? 'scale(1) translateX(0)' : 'scale(0) translateX(-50%)'}`,
+    //                 // translate: `${isTyping ? 0 : '0'}`,
+    //                 // scale: `${isTyping ? 1 : 0}`,
+    //                 // // position: `${isTyping ? 'relative' : 'absolute'}`,
+    //                 // // opacity: `${isTyping ? 1 : 0}`,
+    //                 // display: `${isTyping ? 'flex' : 'none'}`,
+    //                 // // display: `${isTyping ? 'flex' : 'none'}`,
     //                 // transition: 'translate 0.5s linear, scale .5s linear,display 0.30s linear'
-    //                 opacity: `${input ? 1 : 0}`,
-    //                 height: `${input ? 'auto' : '0'}`,
-    //                 width: `${input ? 'auto' : '0'}`,
-    //                 visibility: `${input ? 'visible' : 'hidden'}`,
-    //                 translate: `${input ? '0' : '-50px'}`,
+    //                 opacity: `${isTyping ? 1 : 0}`,
+    //                 height: `${isTyping ? 'auto' : '0'}`,
+    //                 width: `${isTyping ? 'auto' : '0'}`,
+    //                 visibility: `${isTyping ? 'visible' : 'hidden'}`,
+    //                 translate: `${isTyping ? '0' : '-50px'}`,
     //                 transition: 'translate 0.25s ease-in,opacity 0.5s ease-in',
     //             }}>
     //                 <div className={classes.flex1}>
     //                     <Image src={Vector1} alt='vector' className={classes.vec1Style} id='vec1' />
     //                     <Image src={Vector2} alt='vector' className={classes.vec2Style} id='vec2' />
     //                 </div>
-    //                 <div className={cx(classes.searchRightSection, showSearchSection && classes.searchRightSectionVisible)} style={{ height: `${input ? '100px' : '0'}`, transition: 'height 2s ease-in' }}>
+    //                 <div className={cx(classes.searchRightSection, showSearchSection && classes.searchRightSectionVisible)} style={{ height: `${isTyping ? '100px' : '0'}`, transition: 'height 2s ease-in' }}>
     //                     <div className={classes.searchMovies}>
     //                         <SearchResultCard />
     //                         <SearchResultCard />
@@ -191,6 +201,7 @@ const useStyles = createStyles(() => ({
     flex: {
         display: 'flex',
         justifyContent: 'space-between',
+        // alignItems:'center'
         // transform:'scale(1) translateX(-10%)',
         // transition:'transform 1s ease-in'
         // width:'100px'
@@ -203,7 +214,7 @@ const useStyles = createStyles(() => ({
         // width:'100px'
     },
     vec1Style: {
-        marginTop: '-10rem'
+        marginTop: '-9.5rem'
     },
     vec2Style: {
         // marginTop:'10rem'
@@ -215,7 +226,8 @@ const useStyles = createStyles(() => ({
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
-        gap: '2rem'
+        gap: '2rem',
+        marginBottom: '2.85rem'
     },
     leftSection: {
         width: '35rem',
@@ -239,6 +251,7 @@ const useStyles = createStyles(() => ({
     },
     rightSection: {
         overflow: 'hidden',
+        flexDirection: 'column',
         gap: '0.8rem',
     },
     searchRightSection: {
@@ -337,3 +350,5 @@ const useStyles = createStyles(() => ({
         display: 'inline'
     }
 }))
+
+export default React.memo(HeroSection);

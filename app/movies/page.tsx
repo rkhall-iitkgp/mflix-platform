@@ -17,7 +17,7 @@ export default function MovieDetails() {
         streaming: {
             width: '100%',
             height: '100vh',
-            marginTop: '150px',
+            marginTop: '50px',
             border: '1px solid #fff',
         },
         similarmovies:{

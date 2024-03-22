@@ -64,7 +64,7 @@ export default function MovieContent() {
         },
         flexbox: {
             border: "1px solid #000", borderRadius: "10px", paddingInline: "25px", background: "#D9D9D9",
-            color: themeOptions.color.divider, width: '300px',
+            color: themeOptions.color.divider, width: '250px',
         },
         arrow: {
             color: themeOptions.color.button,

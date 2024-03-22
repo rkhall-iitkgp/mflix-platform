@@ -135,7 +135,7 @@ const useStyles = createStyles(() => ({
     flex1: {
         display: 'flex',
         flexDirection: 'column',
-        marginTop: '12rem'
+        marginTop: '13rem'
         // justifyContent:'space-between',
         // width:'100px'
     },
@@ -158,7 +158,8 @@ const useStyles = createStyles(() => ({
         marginLeft: '20%'
     },
     leftSection: {
-        width: '35rem',
+        marginTop: '2rem',
+        width: '35vw',
         paddingBottom: '5rem',
         display: 'flex',
         flexDirection: 'column',
@@ -181,6 +182,7 @@ const useStyles = createStyles(() => ({
         overflow: 'hidden',
         flexDirection: 'column',
         gap: '0.8rem',
+        marginTop: '-2rem'
     },
     searchRightSection: {
         // overflow: 'hidden',
@@ -211,7 +213,8 @@ const useStyles = createStyles(() => ({
         // gap: '.6rem',
         borderStyle: 'solid',
         borderWidth: '1px',
-        borderRadius: '0.5rem'
+        borderRadius: '0.5rem',
+        marginTop: '0.5rem'
     },
     movieCard: {
         backgroundColor: '#D9D9D926',
@@ -241,7 +244,7 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        width: '26vw',
+        width: '22vw',
         borderStyle: 'solid',
         borderColor: '#FFFFFF',
         borderTopWidth: '1px',

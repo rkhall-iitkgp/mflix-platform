@@ -26,6 +26,7 @@ export default function MovieDetails() {
         },
         carousal: {
             marginBottom: '100px',
+            paddingLeft:'50px',
         },
         bgContainer: {
             position: 'absolute',
@@ -70,8 +71,8 @@ export default function MovieDetails() {
             <Space h={"3rem"} />
 
             {/* Carousal */}
+            <p className={classes.similarmovies}>Similar Movies</p>
             <Stack className={classes.carousal}>
-                <p className={classes.similarmovies}>Similar Movies</p>
                 <SimilarMovies>
                     {Array.from({ length: 10 }, (_, index) => <MovieCards key={index} />)}
                 </SimilarMovies>

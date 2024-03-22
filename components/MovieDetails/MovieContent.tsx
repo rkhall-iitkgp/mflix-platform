@@ -40,10 +40,11 @@ export default function MovieContent() {
             width: '7rem',
             paddingTop: '5px',
             paddingBottom: '5px',
-            backgroundColor: themeOptions.color.smallBox,
+            backgroundColor: themeOptions.color.divider,
+            transition:'0.3s',
             '&:hover': {
                 cursor: "pointer",
-                backgroundColor: themeOptions.color.black,
+                backgroundColor: themeOptions.color.button,
             },
         },
         imdb: {
@@ -54,7 +55,12 @@ export default function MovieContent() {
             border: "1px solid",
             borderRadius: "10px",
             padding: "10px",
-            alignItems: "center"
+            alignItems: "center",
+            transition:'0.3s',
+            '&:hover':{
+                cursor:'pointer',
+                background:themeOptions.color.button,
+            }
         },
         country: {
             maxWidth: "max-content",
@@ -63,11 +69,14 @@ export default function MovieContent() {
             marginLeft: "70px", marginTop: "200px", color: themeOptions.color.black,
         },
         flexbox: {
-            border: "1px solid #000", borderRadius: "10px", paddingInline: "25px", background: "#D9D9D9",
-            color: themeOptions.color.divider, width: '250px',
+            border: "1px solid #000", borderRadius: "10px", paddingInline: "25px", background: "rgba(217, 217, 217, 0.25)",
+            color: themeOptions.color.divider, width: '250px',transition:'0.3s',
         },
         arrow: {
             color: themeOptions.color.button,
+            '&:hover':{
+                color:themeOptions.color.divider,
+            }
         },
 
     }))
@@ -89,7 +98,7 @@ export default function MovieContent() {
                 
                 <Group gap={themeOptions.fontSize.xs}>
                     {movieDetails.genres.map((e, i) =>
-                        <Paper key={i} bg={themeOptions.color.smallBox} fz={themeOptions.fontSize.s} radius={15} className={classes.genre}>
+                        <Paper key={i} fz={themeOptions.fontSize.s} radius={15} className={classes.genre}>
                             <Text ta="center">{e}</Text>
                         </Paper>)}
                 </Group>
@@ -121,7 +130,7 @@ export default function MovieContent() {
 
                     <Group c={themeOptions.color.button} className={classes.watchlist}>
                         <Text style={{ color: "#fff", fontWeight: '500' }}>Add To WatchList</Text>
-                        <FaPlus />
+                        <FaPlus className={classes.arrow}/>
                     </Group>
 
                 </Group>

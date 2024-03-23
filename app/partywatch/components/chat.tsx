@@ -4,8 +4,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 import smileIcon from "../../../assets/Mask group.svg";
 import sendIcon from "../../../assets/send.svg";
-import ChatboxLeft from './ChatboxLeft';
-import ChatboxRight from './ChatboxRight';
+import Chatboxleft from './chatboxleft';
+import Chatboxright from './chatboxright';
 
 const useStyles = createStyles((theme, _params, getRef) => {
     return {
@@ -62,7 +62,7 @@ const Chat = () => {
         setMessage(event.target.value);
     };
 
-    const sendMessage = (event: React.FormEvent<HTMLFormElement>) => {
+    const sendMessage = (event: any) => {
         event.preventDefault(); // Prevent form submission from refreshing the page
         console.log('Sending message:', message);
         // Logic to send message goes here
@@ -72,9 +72,9 @@ const Chat = () => {
     return (
         <div className={classes.body}>
             <div className={classes.chattingarea}>
-                <ChatboxLeft user="john" message="lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum" time="9:42" />
+                <Chatboxleft user="john" message="lorem ipsum lorem ipsum lorem ipsumlorem ipsum lorem ipsum lorem ipsum" time="9:42" />
                 {/* Add other messages here */}
-                <ChatboxRight message={message} time="9:42" />
+                <Chatboxright message={message} time="9:42" />
             </div>
             <form onSubmit={sendMessage}>
                 <div className={classes.footer}>
@@ -85,7 +85,10 @@ const Chat = () => {
                         placeholder="Type your message here..."
                         className={classes.input}
                     />
-                    <Image src={sendIcon} alt="" onClick={sendMessage} className={classes.icon} />
+                    <Image src={sendIcon} alt="" className={classes.icon} />
+                    <button onClick={sendMessage} style={{ display: 'none', cursor: "pointer" }} />
+
+
                 </div>
             </form>
         </div>

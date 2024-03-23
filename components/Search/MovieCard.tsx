@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card, Image, Text, Group, AspectRatio, ActionIcon, Skeleton } from '@mantine/core';
+import { Card, Image, Text, Group, AspectRatio, ActionIcon, Skeleton, Container } from '@mantine/core';
 import NextImage from 'next/image';
 import { HiHeart } from 'react-icons/hi';
 import themeOptions from '@/utils/colors';
@@ -18,10 +18,10 @@ interface MovieCardProps {
 
 const DataLoader: React.FC = () => (
     <>
-        <Skeleton radius="xl" width="60%" height={themeOptions.fontSize.xs} mt="xs" mb="xs" />
-        <Skeleton radius="xl" width="40%" height={themeOptions.fontSize.s} />
-        <Skeleton radius="xl" height={themeOptions.fontSize.xs} mt="xs" mb="xs" />
-        <Skeleton radius="xl" width="50%" height={themeOptions.fontSize.xs} />
+        <Skeleton radius="xl" width="60%" height={18.5} mt="xs" mb="xs" />
+        <Skeleton radius="xl" width="40%" height={25} />
+        <Skeleton radius="xl" height={18.5} mt="xs" mb="xs" />
+        <Skeleton radius="xl" width="50%" height={18.5} />
     </>
 );
 
@@ -37,6 +37,10 @@ const Favourite: React.FC<{ favourite?: boolean }> = ({ favourite }) => {
     );
 };
 
+const MovieCardSpace: React.FC = () => (
+    <Card p={0} radius={0} bg="transparent" w={250} h={490}></Card>
+)
+
 const MovieCard: React.FC<MovieCardProps> = ({
     image,
     name,
@@ -49,13 +53,13 @@ const MovieCard: React.FC<MovieCardProps> = ({
     const [loading, setLoading] = useState(true);
 
     return (
-        <Card p={0} radius={0} bg="transparent" w={250} maw="20rem" c={themeOptions.color.normalTextColor}>
+        <Card p={0} radius={0} bg="transparent" w={250} h={490} c={themeOptions.color.normalTextColor}>
             <Skeleton visible={loading} radius={0}>
-                <AspectRatio ratio={320 / 500}>
+                <AspectRatio ratio={250 / 370}>
                     <NextImage
                       src={image}
-                      height={700}
-                      width={600}
+                      height={500}
+                      width={320}
                       alt="sample"
                       onLoad={() => setLoading(false)}
                       style={{ boxShadow: '0px 4px 4px 0px #00000040' }}
@@ -108,4 +112,4 @@ const MovieCard: React.FC<MovieCardProps> = ({
     );
 };
 
-export default MovieCard;
+export { MovieCard, MovieCardSpace };

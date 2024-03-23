@@ -24,7 +24,7 @@ const Carousel: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         return () => {
             viewport.current?.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [viewport]);
 
     const scrollPrev = () => viewport.current!.scrollBy({ top: 0, behavior: 'smooth', left: -400 });
     const scrollNext = () => viewport.current!.scrollBy({ top: 0, behavior: 'smooth', left: 400 });

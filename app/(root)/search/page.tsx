@@ -1,7 +1,5 @@
 'use client';
 
-'use client';
-
 import { Group, Stack, Text, Space } from '@mantine/core';
 import { createStyles } from '@mantine/styles';
 import { useState, useEffect } from 'react';

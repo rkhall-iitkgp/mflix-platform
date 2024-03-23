@@ -91,11 +91,11 @@ export function TypeButton({ value, data }: { value: string, data: string[] }) {
             <Menu.Target>
                 <div className={` ${classes.control} ${visible ? classes.visible : classes.hidden} `}>
                     <UnstyledButton className={classes.control} data-expanded={opened || undefined}>
-                        <Group gap="xs">
+                        <Group gap="xs" justify="space-between">
                             <span className={classes.type}>{value}:</span>
                             <span className={classes.type2}>{selected}</span>
                         </Group>
-                        <IconChevronDown size="1rem" className={classes.icon} stroke={1.5} />
+                        <IconChevronDown color={themeOptions.color.smallBox} size="1rem" className={classes.icon} stroke={1.5} />
                     </UnstyledButton>
                 </div>
             </Menu.Target>

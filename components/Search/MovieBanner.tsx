@@ -70,6 +70,7 @@ const MovieBanner: React.FC<MovieBannerProps> = ({
                           src={image}
                           height={158}
                           width={107}
+                          priority
                           alt="sample"
                           onLoad={() => setLoading(false)}
                           style={{ boxShadow: '0px 4px 4px 0px #00000040' }}

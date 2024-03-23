@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import React from 'react'
 import { createStyles } from "@mantine/styles";
-import { theme } from '@/theme';
 import themeOptions from '@/utils/colors';
 
 export default function Navbar() {
@@ -78,20 +77,29 @@ const useStyles = createStyles(() => ({
         },
         alignItems: 'center',
     },
-    link2: {
-        padding: '0.5rem',
+    premium: {
+        // padding: '0.5rem',
         marginLeft: '1.5rem',
         marginRight: '1.5rem',
-        textDecoration: 'none',
-        fontSize: '1.25rem',
+        height:'2.3rem',
+        width:'7rem',
+        display:'flex',
+        transition:'0.3s',
+        alignItems:'center',
         '&:hover': {
-            color: 'rgb(156, 163, 175)'
+            background:themeOptions.color.button,
+            cursor:'pointer',
         },
-        alignItems: 'center',
-        border: '2px solid white',
+        border: '2px solid',
         borderRadius: '8px',
         borderColor: themeOptions.color.smallBox,
         color: themeOptions.color.smallBox,
-
+    },
+    link2:{
+        textDecoration:'none',
+        fontSize:'1.25rem',
+        marginLeft: '0.6rem',
+        color: themeOptions.color.divider,
     }
+
 }))

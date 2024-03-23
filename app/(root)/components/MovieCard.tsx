@@ -98,26 +98,40 @@ export default function MovieCard() {
     const { classes } = useStyles();
     const [favourite, setFavourite] = useState(true);
 
+    const [movieDetails, setM] = useState({
+        genres: ['Mystery', 'Action', 'Thriller'],
+        director: ['James Cameron'],
+        writer: ['Rick Jaffa'],
+        cast: ['Chris Pratt', 'Bryce Dallas Howard', 'Laura Dern'],
+        rating: "8.6/10",
+        tomato: "97%",
+        duration: "2hr 27min",
+        country: "USA,2016 - Current",
+        year: "2022",
+        title: "Movie Title",
+        moviedetail: "Four years after the destruction of Isla Nublar, dinosaurs now live and hunt alongside humans all over the world. This fragile balance will reshape the future and determine, once and for all, whether human beings are to remain the apex predators on a planet they now share with history most fearsome creatures"
+    })
+
     return (
         <div className={classes.containerStyles}>
             <div className={classes.heartContainerStyles} >
                 <Image src={favourite ? Heart : favHeart} width={35} height={35} alt='fav' className={classes.heartImageStyles} onClick={() => setFavourite(!favourite)} />
             </div>
             <Image src={Poster} alt='poster' width={220} height={310} className={classes.posterStyles} />
-            <span className={classes.countryStyles}>USA, 2016- Current</span>
-            <h3 className={classes.titleStyles}>Movie Title</h3>
+            <span className={classes.countryStyles}>{movieDetails.country}</span>
+            <h3 className={classes.titleStyles}>{movieDetails.title}</h3>
             <div className={classes.ratingContainerStyles}>
                 <div className={classes.ratingItemStyles}>
                     <Image src={Imdb} width={35} height={17} alt='imdb' className={classes.img} />
-                    <span className={classes.rating}>8.6/10</span>
+                    <span className={classes.rating}>{movieDetails.rating}</span>
                 </div>
                 <div className={classes.ratingItemStyles}>
                     <Image src={Tomato} alt='tomato' height={17} width={16} className={classes.tomatoImg} />
-                    <span className={classes.tomatoScore}>96%</span>
+                    <span className={classes.tomatoScore}>{movieDetails.tomato}</span>
                 </div>
             </div >
             <div className={classes.genreStyles}>
-                <span>Action, Adventure / Horror</span>
+                {movieDetails.genres.map((e, i) => <span key={i} style={{ margin: '5px', textAlign: 'left' }}>{e}</span>)}
             </div>
         </div >
     );

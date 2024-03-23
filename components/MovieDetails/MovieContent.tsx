@@ -1,6 +1,6 @@
 "use client"
 
-import { Group, Image, Stack, Text, Paper } from '@mantine/core';
+import { Group, Image, Stack, Paper } from '@mantine/core';
 import { GrLocation } from 'react-icons/gr';
 import { FaRegHourglass } from 'react-icons/fa6';
 import { PiCalendar } from 'react-icons/pi';
@@ -10,13 +10,12 @@ import TomatoImg from '@/assets/icons/tomato.png';
 import { FaPlus } from 'react-icons/fa';
 import themeOptions from '@/utils/colors';
 import Sample from '@/assets/sample.png';
-import { IoIosArrowForward } from 'react-icons/io';
 import { createStyles } from '@mantine/styles';
 import { useState } from 'react';
 
 export default function MovieContent() {
 
-    const [movieDetails, setM] = useState({
+    const [movieDetails, setmovieDetails] = useState({
         genres: ['Mystery', 'Action', 'Thriller'],
         director: ['James Cameron'],
         writer: ['Rick Jaffa'],
@@ -35,6 +34,8 @@ export default function MovieContent() {
             marginTop: "150px",
             paddingLeft: "40px",
             width: '600px',
+            display:'flex',
+            justifyContent:'center',
         },
         genre: {
             width: '7rem',
@@ -60,13 +61,14 @@ export default function MovieContent() {
             '&:hover':{
                 cursor:'pointer',
                 background:themeOptions.color.button,
+                color:themeOptions.color.divider,
             }
         },
         country: {
             maxWidth: "max-content",
         },
         creators: {
-            marginLeft: "70px", marginTop: "200px", color: themeOptions.color.black,
+            marginTop: "200px",
         },
         flexbox: {
             border: "1px solid #000", borderRadius: "10px", paddingInline: "25px", background: "rgba(217, 217, 217, 0.25)",
@@ -78,6 +80,21 @@ export default function MovieContent() {
                 color:themeOptions.color.divider,
             }
         },
+        flexboxstyles:{
+            textAlign:'left', 
+            margin:'2px', 
+            paddingBottom:'5px',
+        },
+        details:{
+            textAlign:'center', 
+            margin:'2px',
+        },
+        image:{
+            height: "530px", 
+            width: "291px", 
+            marginTop: "170px", 
+            marginLeft: "100px",
+        },
 
     }))
 
@@ -86,50 +103,49 @@ export default function MovieContent() {
     return (
         <Group align="center">
             <div>
-                <Image
+                <NextImage
                     src={Sample}
-                    component={NextImage}
-                    style={{ height: "430px", width: "291px", marginTop: "170px", marginLeft: "100px" }}
+                    className={classes.image}
                     alt="sample"
                 />
             </div>
             <Stack ml="xxl" gap="xs" mr="lg" className={classes.moviecontent}>
-                <Text ta="left" fz={themeOptions.fontSize.xl}>{movieDetails.title}</Text>
+                <p style={{textAlign:'left', fontSize:themeOptions.fontSize.xl, margin:'2px'}}>{movieDetails.title}</p>
                 
                 <Group gap={themeOptions.fontSize.xs}>
                     {movieDetails.genres.map((e, i) =>
                         <Paper key={i} fz={themeOptions.fontSize.s} radius={15} className={classes.genre}>
-                            <Text ta="center">{e}</Text>
+                            <p style={{margin:'2px', textAlign:'center' }}>{e}</p>
                         </Paper>)}
                 </Group>
                 <Group mt={7} justify='space-between' className={classes.imdb}>
 
                     <Group gap={6} justify="space-around">
                         <Image src={ImdbImg} component={NextImage} alt="imdb" height={20} unoptimized />
-                        <Text ta="center">{movieDetails.rating}</Text>
+                        <p className={classes.details}>{movieDetails.rating}</p>
                     </Group>
                     <Group gap={6} justify="space-around">
                         <Image src={TomatoImg} component={NextImage} alt="imdb" height={20} unoptimized />
-                        <Text ta="center">{movieDetails.tomato}</Text>
+                        <p className={classes.details}>{movieDetails.tomato}</p>
                     </Group>
                     <Group gap={6} justify="space-around">
                         <FaRegHourglass />
-                        <Text ta="center">{movieDetails.duration}</Text>
+                        <p className={classes.details}>{movieDetails.duration}</p>
                     </Group>
                     <Group gap={6} justify="space-around">
                         <PiCalendar />
-                        <Text ta="center">{movieDetails.year}</Text>
+                        <p className={classes.details}>{movieDetails.year}</p>
                     </Group>
                     <Group gap={6} justify="space-around" className={classes.country}>
                         <GrLocation />
-                        <Text ta="center">{movieDetails.country}</Text>
+                        <p className={classes.details}>{movieDetails.country}</p>
                     </Group>
                     <Group>
-                        <Text ta="center">{movieDetails.moviedetail}</Text>
+                        <p className={classes.details}>{movieDetails.moviedetail}</p>
                     </Group>
 
                     <Group c={themeOptions.color.button} className={classes.watchlist}>
-                        <Text style={{ color: "#fff", fontWeight: '500' }}>Add To WatchList</Text>
+                        <p style={{ color: "#fff", fontWeight: '500', margin:'2px'}}>Add To WatchList</p>
                         <FaPlus className={classes.arrow}/>
                     </Group>
 
@@ -138,24 +154,21 @@ export default function MovieContent() {
             <Stack className={classes.creators}>
                 <Group className={classes.flexbox}>
                     <Group display={'block'}>
-                        <Text fz={themeOptions.fontSize.md}> Director </Text>
-                        {movieDetails.director.map((e, i) => <Text ta="left" style={{ fontWeight: "500" }}>{e}</Text>)}
+                        <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Director </p>
+                        {movieDetails.director.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)}
                     </Group>
-                    {/* <IoIosArrowForward fontSize={'70px'} className={classes.arrow} /> */}
                 </Group>
                 <Group className={classes.flexbox}>
                     <Group display={'block'} >
-                        <Text fz={themeOptions.fontSize.md}> Writers </Text>
-                        {movieDetails.writer.map((e, i) => <Text ta="left" style={{ fontWeight: "500" }}>{e}</Text>)}
+                        <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Writers </p>
+                        {movieDetails.writer.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)}
                     </Group>
-                    {/* <IoIosArrowForward fontSize={'70px'} className={classes.arrow} /> */}
                 </Group>
                 <Group className={classes.flexbox}>
                     <Group display={'block'}>
-                        <Text fz={themeOptions.fontSize.md}> Cast </Text>
-                        {movieDetails.cast.map((e, i) => <Text ta="left" style={{ fontWeight: "500" }}>{e}</Text>)}
+                        <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Cast </p>
+                        {movieDetails.cast.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)}
                     </Group>
-                    {/* <IoIosArrowForward fontSize={'70px'} className={classes.arrow} /> */}
                 </Group>
             </Stack>
         </Group>

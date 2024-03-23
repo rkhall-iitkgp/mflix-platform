@@ -15,8 +15,39 @@ import {
 } from '@mantine/core';
 import { GoogleButton } from './GoogleButton';
 import themeOptions from '../../assets/themes/colors'
+import { useState } from 'react';
+import searchMsApiUrls from '../api/searchMsApi';
 
 export function Login(props: PaperProps) {
+    const [userData, setUserData] = useState(null)
+
+
+    const submitLogin = async (values) => {
+        const base_url = searchMsApiUrls()
+        setUserData(values);
+        console.log(values);
+        await fetch(`${base_url}/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                ...values,
+            }),
+        }).then(async (res) => {
+            let jsonData = await res.json();
+            if (!res.ok) {
+                console.log(jsonData);
+            }
+            //   setLoading(false);
+            else {
+                console.log("login successful");
+                console.log(jsonData);
+                sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
+                sessionStorage.setItem('token', jsonData.user.token);
+            }
+        });
+    };
 
     const useStyles = createStyles(() => ({
         OuterBoxStyles: {
@@ -66,9 +97,7 @@ export function Login(props: PaperProps) {
     const form = useForm({
         initialValues: {
             email: '',
-            name: '',
             password: '',
-            terms: true,
         },
 
         validate: {
@@ -87,11 +116,11 @@ export function Login(props: PaperProps) {
                 align="center" gap={{ sm: 'lg' }}>
                 <Text size="1.1rem" c={'white'}  >Don't have an account?
                 </Text>
-                <a href="" style={{ color: themeOptions.color.textColorNormal }}>Sign in</a>
+                <a href="/register" style={{ color: themeOptions.color.textColorNormal }}>Sign in</a>
             </Flex>
             <Box
                 className={classes.CentreBoxStyles}>
-                <form onSubmit={form.onSubmit(() => { })}
+                <form onSubmit={form.onSubmit((values) => { submitLogin(values) })}
                     className={classes.FormStyles}>
                     <TextInput
                         required

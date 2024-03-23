@@ -33,6 +33,29 @@ const useStyles = createStyles(() => ({
     },
 }));
 
+const dummyBannerMovie = () => ({
+    image: 'https://picsum.photos/500/1000',
+    movieName: 'Movie Name',
+    genres: ['horror', 'thriller', 'action'],
+    imdbRating: '8.7/10',
+    tomatoRating: '97%',
+    duration: '2hr 30 min',
+    year: '2024',
+    country: 'Country',
+    redirect: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley',
+});
+const dummyCardMovie = () => ({
+    image: 'https://picsum.photos/500/1000',
+    name: 'Movie Name',
+    genres: ['horror', 'thriller', 'action'],
+    imdbRating: '8.7/10',
+    tomatoRating: '97%',
+    info: 'USA, 2016 - Current',
+    favourite: true,
+});
+
+const initCard = Array.from({ length: 8 }).map(() => dummyCardMovie());
+
 export default function Search() {
     const searchParams = useSearchParams();
     const search = searchParams.get('q');
@@ -40,37 +63,18 @@ export default function Search() {
     const [elementsPerRow, setElementsPerRow] = useState<number>(4);
     const [justify, setJustify] = useState<'space-between' | 'space-evenly'>('space-between');
 
-    const [recommended, setRecommended] = useState<Array<RecommendedMovies>>();
+    const [recommended, setRecommended] = useState<Array<RecommendedMovies>>(initCard);
+    const [moreResults, setMoreResults] = useState<Array<RecommendedMovies>>(initCard);
 
     const makeGroup = (arr: Array<any>, n: number) =>
         arr.length % n === 0 ? arr : arr.concat(Array(n - (arr.length % n)).fill(null));
 
-    const getBannerMovie = () => ({
-        image: 'https://picsum.photos/500/1000',
-        movieName: 'Movie Name',
-        genres: ['horror', 'thriller', 'action'],
-        imdbRating: '8.7/10',
-        tomatoRating: '97%',
-        duration: '2hr 30 min',
-        year: '2024',
-        country: 'Country',
-        redirect: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley',
-    });
-
-    const getCardMovie = () => ({
-        image: 'https://picsum.photos/500/1000',
-        name: 'Movie Name',
-        genres: ['horror', 'thriller', 'action'],
-        imdbRating: '8.7/10',
-        tomatoRating: '97%',
-        info: 'USA, 2016 - Current',
-        favourite: true,
-    });
 
     useEffect(() => {
-        const data = Array.from({ length: 15 }).map(() => getCardMovie());
+        const data = Array.from({ length: 15 }).map(() => dummyCardMovie());
         // here i will fetch recommended and other stuff probably
         setRecommended(data);
+        setMoreResults(data);
         const handleResize = () => {
             setElementsPerRow(
                 window.innerWidth < 868 ? 2 :
@@ -102,12 +106,12 @@ export default function Search() {
                 </Text>
                 <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
                     <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false}>
-                        <MovieBanner {...(getBannerMovie())} />
-                        <MovieBanner {...(getBannerMovie())} />
+                        <MovieBanner {...(dummyBannerMovie())} />
+                        <MovieBanner {...(dummyBannerMovie())} />
                     </Group>
                     <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false}>
-                        <MovieBanner {...(getBannerMovie())} />
-                        <MovieBanner {...(getBannerMovie())} />
+                        <MovieBanner {...(dummyBannerMovie())} />
+                        <MovieBanner {...(dummyBannerMovie())} />
                     </Group>
                 </Stack>
             </Stack>
@@ -123,7 +127,7 @@ export default function Search() {
                   }}
                   gap="2%"
                 >
-                    {makeGroup(Array.from({ length: 20 }, (_, index) => getCardMovie()), elementsPerRow).map((data, index) => (
+                    {makeGroup(moreResults, elementsPerRow).map((data, index) => (
                         data ?
                         <MovieCard
                           key={index}

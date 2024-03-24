@@ -27,6 +27,7 @@ export default function SearchBar({ input, setInput, onTyping }: { input: string
             />
             {input && <Image src={XMarkIcon} alt="X" style={styles.icon} onClick={() => {
                 setInput('');
+                onTyping('');
                 console.log("clicked")
             }} />}
             <Image src={MicIcon} alt="Mic" style={styles.mic} />
@@ -68,7 +69,8 @@ const styles = {
         marginRight: '0.5rem',
         backgroundColor: '#7011B6',
         padding: '0.125rem',
-        borderRadius: '50%'
+        borderRadius: '50%',
+        cursor: 'pointer'
     },
     searchLabel: {
         display: 'flex',

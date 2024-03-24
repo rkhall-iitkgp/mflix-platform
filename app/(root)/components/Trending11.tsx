@@ -5,7 +5,7 @@ import MovieCard from '@/app/(root)/components/MovieCard';
 import rArrow from '@/assets/icons/rarrow.svg';
 import { createStyles } from '@mantine/styles';
 
-export default function Trending({ title, image }) {
+export default function Trending11({ title, image }) {
     const scrollRef = useRef(null);
     const [showLeftArrow, setShowFirstArrow] = useState(false);
     const [vis, setVis] = useState(false);
@@ -62,7 +62,7 @@ export default function Trending({ title, image }) {
                     <MovieCard />
                     <MovieCard />
                 </div>
-                
+
                 <Image
                     src={rArrow}
                     alt='slider'
@@ -118,7 +118,7 @@ const useStyles = createStyles(() => ({
         backgroundColor: '#000000e0',
         boxShadow: '-12px 20px 222px 180px #000',
         position: 'absolute',
-        top: '21rem',
+        top: '11.5rem',
         transform: 'translateY(-50%)',
         cursor: 'pointer',
         zIndex: 2,
@@ -132,11 +132,11 @@ const useStyles = createStyles(() => ({
         paddingLeft: '5rem',
         paddingTop: '1rem',
         paddingBottom: '.5rem',
-        height: '30rem'
+        // overflow: 'hidden'
     },
 
     leftArrow: {
-        left: '5rem',
+        left: '40px',
         transform: 'translateY(-50%) rotate(180deg)',
         transition: 'opacity .15s',
         opacity: 0
@@ -153,73 +153,3 @@ const useStyles = createStyles(() => ({
         marginLeft: '5rem'
     },
 }));
-
-// const useStyles = createStyles(() => ({
-//     opacity: {
-//         opacity: 1
-//     },
-//     sectionStyles: {
-//         paddingBottom: '0rem',
-//         // position: 'relative',
-//         width: 'calc(100vw)',
-//         background: '#0B0212',
-//         // overflow: 'hidden'
-//     },
-
-//     titleStyles: {
-//         fontSize: '3rem',
-//         lineHeight: "5.5rem",
-//         display: 'inline',
-//         // zIndex: 1,
-//     },
-
-//     iconStyles: {
-//         // marginLeft: '1rem',
-//         width: '70px',
-//     },
-
-//     containerStyles: {
-//         width: '100%',
-//         // overflow: 'hidden',
-//         position: 'relative',
-//     },
-
-//     arrowStyles: {
-//         backgroundColor: '#000000e0',
-//         boxShadow: '-12px 20px 222px 180px #000',
-//         position: 'absolute',
-//         top: '11.5rem',
-//         transform: 'translateY(-50%)',
-//         cursor: 'pointer',
-//         zIndex: 2,
-//         right: '1rem'
-//     },
-
-//     movieDiv: {
-//         display: 'flex',
-//         position: 'relative',
-//         width: 'max-content',
-//         paddingLeft: '5rem',
-//         paddingTop: '1rem',
-//         paddingBottom: '.5rem'
-//     },
-
-//     leftArrow: {
-//         left: '40px',
-//         transition: 'opacity .15s',
-//         opacity: 0
-//     },
-
-//     rightArrow: {
-//         right: '5rem'
-//     },
-//     trendStyles: {
-//         width: 'fit-content',
-//         display: 'flex',
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         marginLeft: '5rem'
-//     },
-// }));
-
-

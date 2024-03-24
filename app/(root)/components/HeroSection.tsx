@@ -236,6 +236,11 @@ const useStyles = createStyles(() => ({
         gap: '1rem',
         padding: '1rem 1.125rem',
         opacity: 1,
+        cursor: 'pointer',
+        transition: 'transform 0.15s ease-in',
+        '&:hover': {
+            transform: 'scale(1.02)'
+        }
     },
     searchCard: {
         backgroundColor: '#D9D9D926',

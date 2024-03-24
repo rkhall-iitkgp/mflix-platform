@@ -22,11 +22,12 @@ export function Login(props: PaperProps) {
     const [userData, setUserData] = useState(null)
 
 
-    const submitLogin = async (values) => {
+    const submitLogin = async (values: any) => {
         const base_url = searchMsApiUrls()
         setUserData(values);
+        values.flag = 0;
         console.log(values);
-        await fetch(`${base_url}/auth/login`, {
+        let res = await fetch(`${base_url}/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -34,19 +35,49 @@ export function Login(props: PaperProps) {
             body: JSON.stringify({
                 ...values,
             }),
-        }).then(async (res) => {
-            let jsonData = await res.json();
+        })
+
+        let jsonData = await res.json();
+        if (!res.ok) {
+            console.log(jsonData);
+        }
+        else {
+            console.log("login successful");
+            console.log(jsonData);
+            sessionStorage.setItem('accessToken', jsonData.user.accessToken);
+            // sessionStorage.setItem('token', jsonData.user.token);
+        }
+
+        if (!jsonData.user.userProfiles.length) {
+            console.log(jsonData.user)
+            console.log(jsonData.user.userProfiles.length)
+            const createData = {
+                "userName": jsonData.user.name,
+                "flag": 1,
+            }
+            console.log(createData)
+            const token = sessionStorage.getItem('accessToken');
+            res = await fetch(`${base_url}/user/create`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    ...createData,
+                }),
+            })
+            jsonData = await res.json();
             if (!res.ok) {
                 console.log(jsonData);
             }
-            //   setLoading(false);
             else {
-                console.log("login successful");
+                console.log("user Created successful");
                 console.log(jsonData);
-                sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
-                sessionStorage.setItem('token', jsonData.user.token);
+                // sessionStorage.setItem('token', jsonData.user.token);
             }
-        });
+        }
+
     };
 
     const useStyles = createStyles(() => ({

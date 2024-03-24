@@ -35,7 +35,7 @@ export function Register(props: PaperProps) {
     const [formData, setFormData] = useState({})
 
     // const router = useRouter();
-    const handleRegister = async (values) => {
+    const handleRegister = async (values: any) => {
         setshowOtp(1);
 
         const base_url = searchMsApiUrls()
@@ -47,7 +47,7 @@ export function Register(props: PaperProps) {
             "flag": 0
         }
         console.log(userData)
-        await fetch(`${base_url}/auth/sendOTP`, {
+        let res = await fetch(`${base_url}/auth/sendOTP`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -55,21 +55,20 @@ export function Register(props: PaperProps) {
             body: JSON.stringify({
                 ...values,
             }),
-        }).then(async (res) => {
-            let jsonData = await res.json();
-            if (!res.ok) {
-                console.log(jsonData.message);
-                // router.push('/verifyotp')
+        })
+        let jsonData = await res.json();
+        if (!res.ok) {
+            console.log(jsonData.message);
+            // router.push('/verifyotp')
 
-            }
-            //   setLoading(false);
-            else {
-                console.log(jsonData.message);
-                // console.log(jsonData);
-                // sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
-                // sessionStorage.setItem('token', jsonData.user.token);
-            }
-        });
+        }
+        //   setLoading(false);
+        else {
+            console.log(jsonData.message);
+            // console.log(jsonData);
+            // sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
+            // sessionStorage.setItem('token', jsonData.user.token);
+        }
     };
     // const [type, toggle] = useToggle(['login', 'register'])
     const form = useForm({
@@ -88,13 +87,19 @@ export function Register(props: PaperProps) {
         validate: {
             name: (val) => (!val ? 'Required' : null),
             dob: (val) => (!val ? 'Required' : null),
-            phone: (val) => (val.length < 10 ? 'Invalid Phone No.' : null),
+            phone: (val) => (val.toString().length < 10 ? 'Invalid Phone No.' : null),
             email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
             password: (val) => (val.length <= 6 ? 'Password should include at least 6 characters' : null),
             confPassword: (val, values) => (val != values.password ? 'Password does not match' : null),
 
         },
     });
+    const handlePhoneNumberChange = (value: any) => {
+        form.setFieldValue('phone', value);
+        console.log(value);
+        const number = value.toString();
+        console.log("Length of value:", number.length); // Output the length of the value
+    };
 
     return (
         <>
@@ -195,7 +200,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                     placeholder="Enter Your Email Id"
                                     value={form.values.email}
                                     radius="md"
-                                    onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+                                    onChange={(event) => { form.setFieldValue('email', event.currentTarget.value) }}
                                     // error={form.errors.email && 'Required'}                                             
                                     size="lg"
                                     style={{ width: '45%', color: 'white' }}
@@ -241,7 +246,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                     value={form.values.dob ? new Date(form.values.dob) : null}
                                     onChange={(value) => {
                                         if (value instanceof Date && !isNaN(value.getTime())) {
-                                            form.setFieldValue('dob', value.toISOString());
+                                            form.setFieldValue('dob', value.toDateString());
                                         } else {
                                             form.setFieldValue('dob', '');
                                         }
@@ -285,7 +290,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                 /> */}
                                 <NumberInput label="Mobile Number" placeholder="Enter Your Mobile No." hideControls
                                     value={form.values.phone}
-                                    onChange={(value) => form.setFieldValue('phone', value)}
+                                    onChange={handlePhoneNumberChange}
                                     // error={form.errors.phone && 'Invalid Mobile No.'}
                                     radius="md"
                                     min={10}

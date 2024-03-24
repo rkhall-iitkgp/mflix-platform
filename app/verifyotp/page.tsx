@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import { PinInput } from '@mantine/core';
@@ -22,19 +22,25 @@ import { GoogleButton } from '../login/GoogleButton';
 import searchMsApiUrls from '../api/searchMsApi';
 
 
-export function Otp({ initialValues }) {
+export function Otp({ initialValues }: any) {
     const [type, toggle] = useToggle(['login', 'register'])
     const [resendTime, setResendTime] = useState(60);
     const [otpValue, setOtpValue] = useState(initialValues.otp);
 
-    setTimeout(() => {
-        setResendTime(resendTime - 1);
-    }, 1000)
+    useEffect(() => {
+        if (resendTime > 0) {
+            const timer = setTimeout(() => {
+                setResendTime(prevTime => prevTime - 1); // Functional update to ensure correct value
+            }, 1000);
+
+            return () => clearTimeout(timer); // Cleanup function to clear the timer on unmount or state change
+        }
+    }, [resendTime]);
 
     const handleOtp = async () => {
         console.log(initialValues)
         const base_url = searchMsApiUrls();
-        await fetch(`${base_url}/auth/verifyOTP`, {
+        let res = await fetch(`${base_url}/auth/verifyOTP`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -42,25 +48,24 @@ export function Otp({ initialValues }) {
             body: JSON.stringify({
                 ...initialValues,
             }),
-        }).then(async (res) => {
-            let jsonData = await res.json();
-            if (!res.ok) {
-                console.log(jsonData.message);
-                // router.push('/verifyotp')
-            }
-            //   setLoading(false);
-            else {
-                console.log(jsonData.message);
-                console.log(jsonData.user);
-                // console.log(jsonData);
-                // sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
-                // sessionStorage.setItem('token', jsonData.user.token);
-            }
-        });
+        })
+        let jsonData = await res.json();
+        if (!res.ok) {
+            console.log(jsonData.message);
+            // router.push('/verifyotp')
+        }
+        //   setLoading(false);
+        else {
+            console.log(jsonData.message);
+            console.log(jsonData.user);
+            // console.log(jsonData);
+            // sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
+            // sessionStorage.setItem('token', jsonData.user.token);
+        }
 
 
     }
-    const handleOtpChange = (value) => {
+    const handleOtpChange = (value: any) => {
         const newOtp = value;
         setOtpValue(newOtp);
         // Update the initialValues object's otp field

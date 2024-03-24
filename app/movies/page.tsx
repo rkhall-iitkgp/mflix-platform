@@ -9,6 +9,7 @@ import Footer from '../(root)/components/Footer';
 import Navbar from '../(root)/components/Navbar';
 import BgImage from '@/assets/images/bg-home.jpeg'
 import MovieContent from '@/components/MovieDetails/MovieContent';
+import VideoPlayer from '@/components/VideoPlayer';
 
 export default function MovieDetails() {
     
@@ -49,7 +50,7 @@ export default function MovieDetails() {
             pb="xs"
             bg={themeOptions.color.background}
             gap={0}
-            style={{backgroundImage:'url(BgImage)'}}
+            // style={{backgroundImage:'url(BgImage)'}}
         >
             {/* Background Image */}
             <div className={classes.bgContainer}>
@@ -62,9 +63,10 @@ export default function MovieDetails() {
             </div>
 
             {/* Streaming Section */}
-            <Group className={classes.streaming}>
+            {/* <Group className={classes.streaming}>
                 
-            </Group>
+            </Group> */}
+            <VideoPlayer />
 
             {/* Movie Details */}
             <MovieContent />
@@ -72,7 +74,7 @@ export default function MovieDetails() {
             <Space h={"3rem"} />
 
             {/* Carousal */}
-            <p className={classes.similarmovies}>Similar Movies</p>
+            <p className={classes.similarmovies} style={{zIndex:'22'}}>Similar Movies</p>
             <Stack className={classes.carousal}>
                 <SimilarMovies/>
             </Stack>

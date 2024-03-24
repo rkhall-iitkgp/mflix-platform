@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import HlsPlayer from 'react-hls-player';
 import Hls from 'hls.js';
 import { createStyles, keyframes } from '@mantine/styles';
-import { relative } from 'path';
 import PlayIcon from '@/assets/icons/play.svg'
 import SkipBackwardIcon from '@/assets/icons/skipBackward.svg'
 import SkipForwardIcon from '@/assets/icons/skipForward.svg'
@@ -219,7 +217,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
 
     const { classes, cx } = useStyles()
     return (
-        <div className={classes.videoContainer} id="video-player">
+        <div className={classes.videoContainer} id="video-player" style={{zIndex:'100'}}>
             <div className={classes.loaderContainer} ref={loader}>
                 <div className={classes.loader}></div>
             </div>
@@ -306,7 +304,8 @@ const useStyles = createStyles(() => ({
         minHeight: "100vh",
         overflowX: "hidden",
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
+        // background:themeOptions.color.black,
     },
     video: {
         // width: "100%",

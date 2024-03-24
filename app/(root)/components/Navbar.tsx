@@ -16,6 +16,8 @@ export default function Navbar() {
     const { classes } = useStyles();
     const [input, setInput] = React.useState('');
     const [isTyping, setIsTyping] = useState(false);
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [visible, setVisible] = useState(true);
     const [isSearchOpen, setIsSearchOpen] = useState(false); // Rename state to indicate whether search is open
 
     const searchBoxRef = useRef<HTMLDivElement>(null); // UseRef with HTMLDivElement type
@@ -48,9 +50,23 @@ export default function Navbar() {
         };
     }, []);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.pageYOffset;
+            setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+            setPrevScrollPos(currentScrollPos);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [prevScrollPos, visible]);
+
     return (
-        <nav>
-            <div className={classes.container} style={{zIndex:'22'}}>
+        <nav >
+            <div className={`${classes.container} ${visible ? classes.visible : classes.hidden}`} style={{zIndex:'220'}}>
                 {/* Logo */}
                 <div className={classes.logoDiv}>
                     <img src="/logo.svg" alt="Logo" className={classes.logo} />
@@ -79,12 +95,12 @@ export default function Navbar() {
                         )}
                     </li>
                     <li>
-                        <Link href="#" className={classes.link}>
+                        <Link href="/" className={`${classes.link} ${path === '/' ? classes.activeLink : ''}`}>
                             Home
                         </Link>
                     </li>
                     <li>
-                        <Link href="#" className={classes.link}>
+                        <Link href="/login" className={`${classes.link} ${path === '/login' ? classes.activeLink : ''}`}>
                             Login
                         </Link>
                     </li>
@@ -118,6 +134,7 @@ const useStyles = createStyles(() => ({
         background:themeOptions.color.black,
         opacity:'1',
         position:'fixed',
+        transition: 'top 0.3s ease-in-out',
         // marginBottom:'500px',
     },
     search: {
@@ -144,6 +161,9 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         alignItems: 'center',
         padding: '1rem'
+    },
+    activeLink: {
+        fontWeight: 'bold',
     },
     links: {
         display: 'flex',
@@ -186,6 +206,12 @@ const useStyles = createStyles(() => ({
         fontSize: '1.25rem',
         marginLeft: '0.6rem',
         color: themeOptions.color.divider,
-    }
+    },
+    visible: {
+        top: 0,
+    },
+    hidden: {
+        top: '-50px',
+    },
 
 }))

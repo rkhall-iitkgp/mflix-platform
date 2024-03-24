@@ -13,27 +13,16 @@ import Sample from '@/assets/sample.png';
 import { createStyles } from '@mantine/styles';
 import { useState } from 'react';
 
-export default function MovieContent() {
 
-    const [movieDetails, setmovieDetails] = useState({
-        genres: ['Mystery', 'Action', 'Thriller'],
-        director: ['James Cameron'],
-        writer: ['Rick Jaffa'],
-        cast: ['Chris Pratt', 'Bryce Dallas Howard', 'Laura Dern'],
-        rating: "8.6/10",
-        tomato: "97%",
-        duration: "2hr 27min",
-        country: "America",
-        year: "2022",
-        title: "Jurassic World Dominion",
-        moviedetail: "Four years after the destruction of Isla Nublar, dinosaurs now live and hunt alongside humans all over the world. This fragile balance will reshape the future and determine, once and for all, whether human beings are to remain the apex predators on a planet they now share with history most fearsome creatures"
-    })
+export default function MovieContent({movieData}) {
+    console.log(movieData);
+    const movieDetails = movieData;
 
     const styles = createStyles(() => ({
         moviecontent: {
             // marginTop: "10px",
             // paddingLeft: "40px",
-            width: '600px',
+            width: '45vw',
             // marginLeft:'-100px',
         },
         genre: {
@@ -48,7 +37,7 @@ export default function MovieContent() {
             },
         },
         imdb: {
-            width: '500px',
+            width: '40vw',
         },
         watchlist: {
             marginTop: "50px",
@@ -67,12 +56,11 @@ export default function MovieContent() {
             maxWidth: "max-content",
         },
         creators: {
-            marginTop: "100px",
-            marginLeft:'-100px',
+            margin:"0 50px 0 0",
         },
         flexbox: {
             border: "1px solid #000", borderRadius: "10px", paddingInline: "25px", background: "rgba(217, 217, 217, 0.25)",
-            color: themeOptions.color.divider, width: '250px',transition:'0.3s',
+            color: themeOptions.color.divider, width: '20vw',transition:'0.3s',
         },
         arrow: {
             color: themeOptions.color.button,
@@ -86,96 +74,113 @@ export default function MovieContent() {
             paddingBottom:'5px',
         },
         details:{
-            textAlign:'center', 
+            textAlign:'left', 
             margin:'2px',
             color:themeOptions.color.divider,
+            fontSize: themeOptions.fontSize.md
+        },
+        moviePlot:{
+            width: '50vw',
+            textAlign:'left', 
+            margin:'2px',
+            color:themeOptions.color.divider,
+            fontSize: themeOptions.fontSize.md
         },
         image:{
-            height: "530px", 
-            width: "291px", 
-            marginTop: "100px", 
-            // marginLeft: "100px",
+            height: "30vw", 
+            width: "17vw", 
+            margin: "100px 0 100px 50px", 
         },
         title:{
             textAlign:'left', 
             fontSize:themeOptions.fontSize.xl, 
-            margin:'2px', 
-            width:'580px',
+            margin:'0.5rem 0', 
+            width:'45vw',
             color:themeOptions.color.divider,
+        },
+        genreName:{
+            textAlign:'center',
+            backgroundColor:themeOptions.color.button,
+            color:themeOptions.color.divider,
+            fontSize:themeOptions.fontSize.md,
+            padding:'0.25rem 3.5rem',
+            margin:0,
+            borderRadius:10,
         }
 
     }))
 
     const { classes } = styles();
-
+    // console.log(movieData.country)
     return (
-        <Group style={{display:'flex' , justifyContent:'space-around', zIndex:'20'}}>
+        <Group style={{display:'flex', justifyContent:'space-between', zIndex:'20'}}>
             <div>
                 <NextImage
-                    src={Sample}
+                    src={movieDetails.poster}
+                    width = "1000"
+                    height = "300"
                     className={classes.image}
                     alt="sample"
                 />
             </div>
-            <Stack ml="xxl" gap="xs" mr="lg" className={classes.moviecontent}>
+            <Stack ml="xxl" gap="0" mr="lg" className={classes.moviecontent}>
                 <p className={classes.title}>{movieDetails.title}</p>
-                
                 <Group gap={themeOptions.fontSize.xs}>
-                    {movieDetails.genres.map((e, i) =>
-                        <Paper key={i} fz={themeOptions.fontSize.s} radius={15} className={classes.genre}>
-                            <p style={{margin:'2px', textAlign:'center', color:themeOptions.color.divider }}>{e}</p>
-                        </Paper>)}
+                    {movieDetails.genres?.map((e, i) =>
+                            <p className={classes.genreName}>{e}</p>
+                    )}
                 </Group>
                 <Group mt={7} justify='space-between' className={classes.imdb}>
-
                     <Group gap={6} justify="space-around">
                         <Image src={ImdbImg} component={NextImage} alt="imdb" height={20} unoptimized />
-                        <p className={classes.details}>{movieDetails.rating}</p>
+                        <p className={classes.details}>{movieDetails.imdb?.rating}/10</p>
                     </Group>
                     <Group gap={6} justify="space-around">
                         <Image src={TomatoImg} component={NextImage} alt="imdb" height={20} unoptimized />
-                        <p className={classes.details}>{movieDetails.tomato}</p>
+                        <p className={classes.details}>{movieDetails.tomatoes?.viewer.rating}/5</p>
                     </Group>
                     <Group gap={6} justify="space-around">
-                        <FaRegHourglass />
-                        <p className={classes.details}>{movieDetails.duration}</p>
+                        <FaRegHourglass color='white' fontSize={20}/>
+                        <p className={classes.details}>{movieDetails.runtime}min</p>
                     </Group>
                     <Group gap={6} justify="space-around">
-                        <PiCalendar />
+                        <PiCalendar color='white' fontSize={20}/>
                         <p className={classes.details}>{movieDetails.year}</p>
                     </Group>
                     <Group gap={6} justify="space-around" className={classes.country}>
-                        <GrLocation />
-                        <p className={classes.details}>{movieDetails.country}</p>
+                        <GrLocation color='white' fontSize={20}/>
+                        <p className={classes.details}>{movieDetails?.countries}</p>
                     </Group>
                     <Group>
-                        <p className={classes.details}>{movieDetails.moviedetail}</p>
+                        <p className={classes.moviePlot}>{movieDetails.fullplot}</p>
                     </Group>
 
                     <Group c={themeOptions.color.button} className={classes.watchlist}>
                         <p style={{ color: "#fff", fontWeight: '500', margin:'2px'}}>Add To WatchList</p>
                         <FaPlus className={classes.arrow}/>
                     </Group>
-
                 </Group>
             </Stack>
             <Stack className={classes.creators}>
                 <Group className={classes.flexbox}>
                     <Group display={'block'}>
                         <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Director </p>
-                        {movieDetails.director.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)}
+                        {movieDetails.directors?.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)}
                     </Group>
                 </Group>
                 <Group className={classes.flexbox}>
-                    <Group display={'block'} >
-                        <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Writers </p>
-                        {movieDetails.writer.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)}
-                    </Group>
+                <Group display={'block'} >
+                        {!movieDetails.writers || movieDetails.writers.length===0 ? <></> : <>
+                            <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Writers </p>
+                            {movieDetails.writers?.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)} 
+                        </>}
+                </Group>
+
                 </Group>
                 <Group className={classes.flexbox}>
                     <Group display={'block'}>
                         <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Cast </p>
-                        {movieDetails.cast.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)}
+                        {movieDetails.cast?.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)}
                     </Group>
                 </Group>
             </Stack>

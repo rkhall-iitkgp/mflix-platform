@@ -5,15 +5,27 @@ import NextImage from 'next/image';
 import themeOptions from '@/utils/colors';
 import { createStyles } from '@mantine/styles';
 import SimilarMovies from '@/components/MovieDetails/SimilarMovies';
-import Footer from '../(root)/components/Footer';
-import Navbar from '../(root)/components/Navbar';
+import Footer from '../../(root)/components/Footer';
+import Navbar from '../../(root)/components/Navbar';
+import searchMsApiUrls from '../../api/searchMsApi';
 import BgImage from '@/assets/images/bg-home.jpeg'
 import MovieContent from '@/components/MovieDetails/MovieContent';
 import { ScrollArea } from '@mantine/core'
 import VideoPlayer from '@/components/MovieDetails/VideoPlayer';
+import { useEffect , useState } from 'react';
 
-export default function MovieDetails() {
-    
+export default function MovieDetails({ params }: { params: { id: string } }) {
+    const url = searchMsApiUrls();
+    const [movieData,setMovieData] = useState({});
+    useEffect(()=>{
+        const id = params.id;
+        const getMovieDetails = async () => {
+            const res = await (await fetch (`${url}/movies/${id}`)).json();
+            setMovieData(res.result);
+            console.log(movieData)
+        }
+        getMovieDetails(); 
+    },[])
     const styles = createStyles(() => ({
         nvbar:{
             background:themeOptions.color.black,
@@ -78,7 +90,7 @@ export default function MovieDetails() {
             </Group>
 
             {/* Movie Details */}
-            <MovieContent />
+            <MovieContent  movieData ={movieData} />
 
             <Space h={"3rem"} />
 

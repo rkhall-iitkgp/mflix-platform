@@ -16,13 +16,27 @@ import {
     Checkbox,
     Anchor,
     Stack,
-    Flex, Box
+    Flex, Box, useStyles
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
+import { createStyles } from '@mantine/styles';
+import { InlineInputClasses } from '@mantine/core/lib/components/InlineInput';
 // import { TwitterButton } from './TwitterButton';
+
+
 
 export function Register(props: PaperProps) {
     // const [type, toggle] = useToggle(['login', 'register'])
+
+    const useStyles = createStyles(() => ({
+        container: {
+            padding: '1rem',
+            position: 'relative',
+            background: 'linear-gradient(to right, red, purple)',
+            zIndex: 0,
+        },
+    }));
+    
     const form = useForm({
         initialValues: {
             name:'',
@@ -44,6 +58,7 @@ export function Register(props: PaperProps) {
            
         },
     });
+    const { classes } = useStyles();
 
     return (
         <Flex
@@ -58,12 +73,13 @@ export function Register(props: PaperProps) {
             justify="center"
             align="center"
             direction="column"
-            wrap="wrap" >
+            margin-bottom = "1.5rem">
             {/* <BackgroundImage src='Group 18.png'> */}
             <Text size="2.5rem" c={'white'} p={'1rem'}>Create new account</Text>
             <Flex direction="row" justify="centre"
-                align="center" gap={{ sm: 'lg' }}>
-                <Text size="1.1rem" c={'white'}  >Already have an account?
+                align="center" gap={{ sm: 'lg' }}
+                margin-bottom="10rem">
+                <Text size="1.1rem" c={'white'}>Already have an account?
                 </Text>
                 <a href="/login" style={{ color: '#9441D0' }}>Log In</a>
             </Flex>
@@ -74,7 +90,6 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
  */}
 
 
-  
      <Box style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -98,10 +113,9 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
         padding: '1rem', // Adjust padding as per your requirement
                 
                 width: '45rem', 
-                height: '85%',
-               
                  borderRadius: '15px',
-                backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '0.5rem'
+                backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '1.5rem',
+                paddingTop: '2rem'
             }}>
             {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
             
@@ -251,15 +265,14 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                 </Anchor>
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"space-between", paddingBottom:"1%", paddingTop:"20px"}}>
                 {/* <Divider label="Or continue with Google" labelPosition="center" my="lg" /> */}
-                <h5 style={{height:"0px", paddingRight:"15px", top:"50%", left:"28%"  }}>Or continue with Google</h5>
+                <h5 style={{height:"0px", color:"white", paddingRight:"15px", top:"50%", left:"28%"  }}>Or continue with Google</h5>
               
-                <GoogleButton radius="xl">Google</GoogleButton>
+                <div><GoogleButton radius="xl">Google</GoogleButton></div>
                 </div>
                 
           </form>
             
             </Box>
-           
         </Flex>
      
     );

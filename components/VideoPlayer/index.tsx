@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import HlsPlayer from 'react-hls-player';
 import Hls from 'hls.js';
-import { createStyles } from '@mantine/styles';
+import { createStyles, keyframes } from '@mantine/styles';
 import { relative } from 'path';
 import PlayIcon from '@/assets/icons/play.svg'
 import SkipBackwardIcon from '@/assets/icons/skipBackward.svg'
@@ -28,7 +28,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
     const [progress, setProgress] = useState(0);
     let update = true;
     let listener = false;
-    // const [timer, setTimer] = React.useState(3);
+    const loader = useRef<HTMLDivElement>(null);
 
     const [levels, setLevels] = useState<any>([]); // State to store the available quality levels
     const togglePlay = () => {
@@ -173,6 +173,18 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
             }
         }, 10)
 
+        document.getElementById('video')?.addEventListener("waiting", () => {
+            loader.current.style.display = "flex";
+        })
+
+        document.getElementById('video')?.addEventListener("playing", () => {
+            loader.current.style.display = "none";
+        })
+
+        document.getElementById('video')?.addEventListener("pause", () => {
+            loader.current.style.display = "none";
+        })
+
         document.getElementById("video-player")?.addEventListener('mousemove', () => {
             timer = 3;
             document.getElementById("video-player")!.style.cursor = "default";
@@ -208,6 +220,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
     const { classes, cx } = useStyles()
     return (
         <div className={classes.videoContainer} id="video-player">
+            <div className={classes.loaderContainer} ref={loader}>
+                <div className={classes.loader}></div>
+            </div>
             <video id="video" controls={false} ref={playerRef} className={classes.video}></video>
             <div className={classes.controlsContainer} id="controls-container">
                 <div className={classes.progressContainer}>
@@ -395,5 +410,32 @@ const useStyles = createStyles(() => ({
                 background: "rgba(0, 0, 0, 0.5)"
             }
         }
+    },
+    loaderContainer: {
+        width: "100%",
+        height: "100%",
+        display: "none",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        zIndex: 100,
+        backgroundColor: "rgba(0, 0, 0, 0.5)"
+    },
+    loader: {
+        width: "50px",
+        height: "50px",
+        border: "5px solid #f3f3f3",
+        borderTop: "5px solid #7011b6",
+        borderRadius: "50%",
+        animation: `${spin} 0.5s linear infinite`,
     }
 }))
+
+const spin = keyframes({
+    '0%': {
+        transform: 'rotate(0deg)'
+    },
+    '100%': {
+        transform: 'rotate(360deg)'
+    }
+})

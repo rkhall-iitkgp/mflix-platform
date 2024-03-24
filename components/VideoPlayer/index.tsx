@@ -11,7 +11,8 @@ import VolumeIcon from '@/assets/icons/volume.svg'
 import CaptionsIcon from '@/assets/icons/captions.svg'
 import FullScreenIcon from '@/assets/icons/fullScreen.svg'
 import PauseIcon from '@/assets/icons/pause.svg'
-import MuteVolume from '@/assets/icons/muteVolume.svg'
+import MuteVolumeIcon from '@/assets/icons/muteVolume.svg'
+import SettingsIcon from '@/assets/icons/settings.svg'
 import Image from 'next/image';
 
 interface VideoPlayerProps {
@@ -20,7 +21,7 @@ interface VideoPlayerProps {
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) => {
     const [src] = useState<string>('http://localhost:5000/videos/output.m3u8');
-    const playerRef = useRef<any>(null);
+    const playerRef = useRef<HTMLVideoElement>(null);
     const [quality, setQuality] = useState<string>(defaultQuality);
     const [isPlaying, setIsPlaying] = useState(false);
     const [hls, setHls] = useState<Hls>();
@@ -29,6 +30,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
     let update = true;
     let listener = false;
     const loader = useRef<HTMLDivElement>(null);
+    const [playbackRate, setPlaybackRate] = React.useState(1)
+    const [showPopup, setShowPopup] = React.useState(false);
 
     const [levels, setLevels] = useState<any>([]); // State to store the available quality levels
     const togglePlay = () => {
@@ -98,6 +101,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
             }
         }
     };
+
+    function changePlaybackRate(value: number) {
+        const video = document.getElementById("video") as HTMLVideoElement
+        video.playbackRate = value
+        setPlaybackRate(value);
+    }
 
     // Effect to attach hls.js event listeners to the player
     useEffect(() => {
@@ -190,13 +199,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
             document.getElementById("video-player")!.style.cursor = "default";
             document.getElementById("controls-container")!.style.opacity = "1";
         })
-        
+
         document.getElementById("video-player")?.addEventListener('click', () => {
             timer = 3;
             document.getElementById("video-player")!.style.cursor = "default";
             document.getElementById("controls-container")!.style.opacity = "1";
         })
-        
+
         document.getElementById("video")?.addEventListener('click', () => {
             togglePlay();
         })
@@ -260,7 +269,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
                         <Image src={SkipForwardIcon} alt="SkipFowardIcon" width={25} height={25} className={classes.icon} onClick={seekForward} />
                     </div>
                     <div className={cx(classes.flex, classes.gap)}>
-                        <div className={classes.quality}>
+                        {/* <div className={classes.quality}>
                             Quality
                             <span>
                                 <select name="quality" id="quality" onChange={(e) => changeQuality(e.target.value)} value={quality}>
@@ -270,9 +279,40 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
                                     ))}
                                 </select>
                             </span>
+                        </div> */}
+                        <div className={classes.settings}>
+                            <Image src={SettingsIcon} alt="Settings" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={() => setShowPopup(!showPopup)} />
+                            {showPopup && <div className={classes.settingsPopup}>
+                                <div className={cx(classes.settingsOption, classes.spaceBetween)}>
+                                    <p>Quality</p>
+                                    <span>
+                                        <select name="quality" id="quality" onChange={(e) => changeQuality(e.target.value)} value={quality}>
+                                            <option value="-1">Auto</option>
+                                            {levels.map((level: any, id: any) => (
+                                                <option value={id}>{level.name}</option>
+                                            ))}
+                                        </select>
+                                    </span>
+                                </div>
+                                <div className={cx(classes.settingsOption, classes.spaceBetween)}>
+                                    <p>Speed</p>
+                                    <span>
+                                        <select name="speed" id="speed" onChange={(e) => changePlaybackRate(Number.parseFloat(e.target.value))} value={playbackRate}>
+                                            <option value={0.25}>0.25</option>
+                                            <option value={0.5}>0.5</option>
+                                            <option value={0.75}>0.75</option>
+                                            <option value={1}>1</option>
+                                            <option value={1.25}>1.25</option>
+                                            <option value={1.5}>1.5</option>
+                                            <option value={1.75}>1.75</option>
+                                            <option value={2}>2</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>}
                         </div>
                         {mute ?
-                            <Image src={MuteVolume} alt='Muted Volume' width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={toggleMute} />
+                            <Image src={MuteVolumeIcon} alt='Muted Volume' width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={toggleMute} />
                             :
                             <Image src={VolumeIcon} alt="PlayIcon" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={toggleMute} />}
                         <Image src={CaptionsIcon} alt="PlayIcon" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} />
@@ -391,7 +431,7 @@ const useStyles = createStyles(() => ({
             transform: 'translate(-5px, -2.7px) scale(1.5)'
         }
     },
-    quality: {
+    settingsOption: {
         color: "white",
         fontWeight: "bold",
         display: "flex",
@@ -428,6 +468,20 @@ const useStyles = createStyles(() => ({
         borderTop: "5px solid #7011b6",
         borderRadius: "50%",
         animation: `${spin} 0.5s linear infinite`,
+    },
+    settings: {
+        position: "relative"
+    },
+    settingsPopup: {
+        position: "absolute",
+        borderRadius: "1rem",
+        bottom: "210%",
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        padding: "1rem"
+    },
+    spaceBetween: {
+        display: "flex",
+        justifyContent: "space-between"
     }
 }))
 

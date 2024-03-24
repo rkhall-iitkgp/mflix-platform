@@ -1,8 +1,10 @@
 "use client"
 
-
+import react, {useState} from "react";
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
+import { DatePicker } from '@mantine/dates';
+import '@mantine/dates/styles.css';
 import Link from 'next/link';
 import {
     TextInput,
@@ -27,7 +29,29 @@ import { InlineInputClasses } from '@mantine/core/lib/components/InlineInput';
 
 export function Register(props: PaperProps) {
     // const [type, toggle] = useToggle(['login', 'register'])
+    const[userData, setUserData]= useState([]);
 
+    const submitRegister = async (values)=>{
+    const apiurl = "";
+    setUserData(values);
+    console.log(values);
+    await fetch("",{
+        method:"POST",
+        body: JSON.stringify({...values}),
+
+    }).then(async (res)=>{
+        let jsonData = await res.json();
+        if(!res.ok){
+            console.log(jsonData);
+        }
+        else {
+            console.log("signup successful");
+            console.log(jsonData);
+            sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
+            sessionStorage.setItem('token', jsonData.user.token);
+        }
+    })
+    }
     const useStyles = createStyles(() => ({
         container: {
             padding: '1rem',
@@ -61,27 +85,28 @@ export function Register(props: PaperProps) {
     const { classes } = useStyles();
 
     return (
-        <Flex
-            style={{
-                backgroundImage: "url('background.png')",
-                backgroundSize: '100% 100%',
-                backgroundRepeat: 'no-repeat',
-                // border:"10px solid yellow",
-                backgroundPosition: 'center',
-            }}
-            h='100vh'
+       
+        <Flex style={{background: "url('background.png')",
+        backgroundSize: 'cover',
+        objectFit:"cover",
+        backgroundRepeat: 'no-repeat',
+        // overflow:"hidden",
+        backgroundPosition: 'center', zIndex:"-1"}}
+
+            h='130vh'
             justify="center"
             align="center"
             direction="column"
-            margin-bottom = "1.5rem">
+            margin-bottom = "1rem">
+                <div style={{}}></div>
             {/* <BackgroundImage src='Group 18.png'> */}
-            <Text size="2.5rem" c={'white'} p={'1rem'}>Create new account</Text>
+            <Text size="2.5rem" c={'white'} p={'1rem'} style={{marginTop:"-8%"}}>Create new account</Text>
             <Flex direction="row" justify="centre"
                 align="center" gap={{ sm: 'lg' }}
                 margin-bottom="10rem">
                 <Text size="1.1rem" c={'white'}>Already have an account?
                 </Text>
-                <a href="/login" style={{ color: '#9441D0' }}>Log In</a>
+                <a href="/login" style={{ color: '#9441D0', cursor:"pointer" }}>Log In</a>
             </Flex>
             {/* border: 1px solid;
 
@@ -99,32 +124,24 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                 // borderImageSource: 'linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%)',
                 // borderImageSlice: 1, 
                 border: '1px solid white',
-        // padding: '10px', // Adjust padding as needed
-        // backgroundImageSource: 'linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%)',
-        // backgroundOrigin: 'border-box',
-        // backgroundClip: 'content-box, border-box',
-        // borderRadius: '1rem',
-                // borderImage:"linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%)"
-                // background: 'linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%)',
-                
-        // backgroundOrigin: 'border-box',
-        // backgroundClip: 'content-box, border-box',
+     
         
         padding: '1rem', // Adjust padding as per your requirement
                 
-                width: '45rem', 
-                 borderRadius: '15px',
+                width: '65%', 
+                height: "70%",
+                borderRadius: '15px',
                 backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '1.5rem',
-                paddingTop: '2rem'
+                paddingTop: '1rem'
             }}>
             {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
             
-            <form onSubmit={form.onSubmit((values) => {console.log(values) })} style={{
+            <form onSubmit={form.onSubmit((values) => {submitRegister(values)})} style={{
                     width: '100%', display: 'flex', flexDirection: 'column',
                     
                     alignItems: 'center',
                 }}>
-               <div style={{marginTop:"1rem",width:"75%",display:"flex", 
+               <div style={{marginTop:"2%",width:"80%",display:"flex", 
              justifyContent:"space-evenly", alignItems:"center"}}>
                 <TextInput
                     required
@@ -164,13 +181,13 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                         },
                     }}
                 /><p style={{position:"absolute", 
-                marginTop:"16%", left:"52%", color:"red"}}>
+                marginTop:"14%", left:"52%", color:"red"}}>
                     {form.errors.email}</p>
                 </div>
                 <div style={{marginTop:"0.5rem",
                 paddingTop:"0.5rem",
-                width:"75%", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
-                    <TextInput
+                width:"80%", display:"flex", justifyContent:"space-evenly", alignItems:"center"}}>
+                    <DatePicker
                     required
                     label="Date of Birth"
                     placeholder="Enter Your Date of Birth"
@@ -208,7 +225,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                         },
                     }}
                 /><p style={{position:"absolute", 
-                marginTop:"16%", left:"52%", color:"red"}}>
+                marginTop:"14%", left:"52%", color:"red"}}>
                     {form.errors.phone}</p>
                 </div>
                 <PasswordInput
@@ -220,7 +237,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     // error={form.errors.password && 'Password should include at least 6 characters'}
                     radius="md"
                     size="lg"
-                    style={{ width: '70%', color: 'white', marginTop:'0.5rem', paddingTop:"0.5rem" }}
+                    style={{ width: '75%', color: 'white', marginTop:'0.5rem', paddingTop:"0.5rem" }}
                     styles={{
                         input: {
                             background: 'transparent',
@@ -229,7 +246,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                         },
                     }}
                 /><p style={{position:"absolute", 
-                marginTop:"39%", left:"17%", color:"red"}}>
+                marginTop:"34%", left:"17%", color:"red"}}>
                     {form.errors.password}</p>
                 <PasswordInput
                     required
@@ -240,7 +257,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     // error={form.errors.confPassword && 'Password does not match'}
                     radius="md"
                     size="lg"
-                    style={{ width: '70%', color: 'white', marginTop:'0.5rem', paddingTop:"0.5rem" }}
+                    style={{ width: '75%', color: 'white', marginTop:'0.5rem', paddingTop:"0.5rem" }}
                     styles={{
                         input: {
                             background: 'transparent',
@@ -249,25 +266,25 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                         },
                     }}
                 /><p style={{position:"absolute", 
-                marginTop:"52%", left:"17%", color:"red"}}>
+                marginTop:"46%", left:"17%", color:"red"}}>
                     {form.errors.confPassword}</p>
                
                 {/* <Text style={{position:"absolute", paddingTop:"10rem"}} size="1rem" c={'white'} >Create new account</Text> */}
                 
-               <Anchor type="submit" style={{ textDecoration:"none", marginTop:'1rem', marginLeft:"22%", width: '50%', height: '3rem'}}
+               <Anchor type="submit" style={{ textDecoration:"none", marginTop:'0.2rem', marginLeft:"16%", width: '50%', height: '3rem'}}
                href="/verifyotp">
                {/* {/* <Link style={{ textDecoration:"none", marginTop:'0rem', marginLeft:"35%", width: '70%', height: '3rem'}}href="/verifyotp">  */}
                <Button onClick={()=>{console.log("clicked")}} 
-                 type='submit' style={{ marginTop:'1rem', width: '50%', 
+                 type='submit' style={{ marginTop:'1rem', width: '70%', 
                  height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem' }} >Sign Up
          </Button>
                  {/* </Link> */}
                 </Anchor>
                 <div style={{display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"space-between", paddingBottom:"1%", paddingTop:"20px"}}>
                 {/* <Divider label="Or continue with Google" labelPosition="center" my="lg" /> */}
-                <h5 style={{height:"0px", color:"white", paddingRight:"15px", top:"50%", left:"28%"  }}>Or continue with Google</h5>
+                <h5 style={{height:"0px", color:"white", paddingRight:"15px", left:"28%"  }}>Or continue with Google</h5>
               
-                <div><GoogleButton radius="xl">Google</GoogleButton></div>
+                <div style={{paddingTop:"5%"}}><GoogleButton radius="xl">Google</GoogleButton></div>
                 </div>
                 
           </form>
@@ -275,6 +292,8 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
             </Box>
            
         </Flex>
+        
+        
      
     );
 }

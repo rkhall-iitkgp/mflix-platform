@@ -4,7 +4,6 @@ import Link from 'next/link'
 import React from 'react'
 import { createStyles } from "@mantine/styles";
 import themeOptions from '@/utils/colors';
-import SearchBar from '@/app/(root)/components/SearchBar'
 import { FaSearch } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
 import { ActionIcon, Divider } from '@mantine/core';

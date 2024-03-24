@@ -28,28 +28,31 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
     const [progress, setProgress] = useState(0);
     let update = true;
     let listener = false;
+    // const [timer, setTimer] = React.useState(3);
 
     const [levels, setLevels] = useState<any>([]); // State to store the available quality levels
     const togglePlay = () => {
-        if (playerRef.current) {
-            if (isPlaying) {
-                playerRef.current.pause();
+        const videoPlayer = playerRef.current;
+        if (videoPlayer) {
+            if (videoPlayer.paused) {
+                videoPlayer.play();
+                setIsPlaying(true);
             } else {
-                playerRef.current.play();
+                videoPlayer.pause();
+                setIsPlaying(false);
             }
-            setIsPlaying(!isPlaying);
         }
     };
 
     function toggleMute() {
         playerRef.current.muted = !playerRef.current.muted;
         setMute(playerRef.current.muted ? 1 : 0)
-        document.getElementById('mute-btn')!.textContent = playerRef.current.muted ? 'Unmute' : 'Mute';
     }
 
     function toggleFullscreen() {
         if (!document.fullscreenElement) {
-            playerRef.current.requestFullscreen().catch((err: any) => {
+            const videoPlayer = document.getElementById('video-player')!;
+            videoPlayer.requestFullscreen().catch((err: any) => {
                 alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
             });
         } else {
@@ -98,6 +101,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
 
     // Effect to attach hls.js event listeners to the player
     useEffect(() => {
+        let timer = 3;
         const video = document.getElementById('video') as HTMLMediaElement;
         const videoSrc = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
 
@@ -115,7 +119,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
             });
 
             playerRef.current.addEventListener('timeupdate', updateProgress);
-            playerRef.current.addEventListener('click', togglePlay);
         } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
             video.src = videoSrc;
             video.addEventListener('loadedmetadata', () => {
@@ -161,6 +164,39 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
             progress.style.width = `${percentage}%`;
         }
 
+        setInterval(() => {
+            timer -= 0.01;
+            if (timer <= 0) timer = 0;
+            if (timer === 0) {
+                document.getElementById("video-player")!.style.cursor = "none";
+                document.getElementById("controls-container")!.style.opacity = "0";
+            }
+        }, 10)
+
+        document.getElementById("video-player")?.addEventListener('mousemove', () => {
+            timer = 3;
+            document.getElementById("video-player")!.style.cursor = "default";
+            document.getElementById("controls-container")!.style.opacity = "1";
+        })
+        
+        document.getElementById("video-player")?.addEventListener('click', () => {
+            timer = 3;
+            document.getElementById("video-player")!.style.cursor = "default";
+            document.getElementById("controls-container")!.style.opacity = "1";
+        })
+        
+        document.getElementById("video")?.addEventListener('click', () => {
+            togglePlay();
+        })
+
+        document.addEventListener("keypress", (e) => {
+            console.log(e);
+            if (e.code == "KeyK" || e.code == "Space") togglePlay();
+            else if (e.code == "KeyM") toggleMute();
+            else if (e.code == "KeyF") toggleFullscreen();
+            else if (e.code == "ArrowLeft" || e.code == "KeyJ") seekBackward();
+            else if (e.code == "ArrowRight" || e.code == "KeyL") seekForward();
+        })
     }, []);
     useEffect(() => {
         if (hls) {
@@ -171,76 +207,64 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
 
     const { classes, cx } = useStyles()
     return (
-        <div>
-            <div className={classes.videoContainer}>
-                <video id="video" controls={false} ref={playerRef} className={classes.video}></video>
-                <div className={classes.controlsContainer}>
-                    <div className={classes.progressContainer}>
-                        <p className={classes.durations} id="current-time">00:00</p>
-                        <div
-                            id="progress-bar"
-                            className={classes.progressBar}
-                            onClick={(e: any) => {
-                                seek(e);
-                            }}
-                        >
-                            <div id="progress" className={classes.progress}></div>
-                            <div id='dot' className={classes.dot}></div>
-                        </div>
-                        <p className={classes.durations} id="duration">00:00</p>
+        <div className={classes.videoContainer} id="video-player">
+            <video id="video" controls={false} ref={playerRef} className={classes.video}></video>
+            <div className={classes.controlsContainer} id="controls-container">
+                <div className={classes.progressContainer}>
+                    <p className={classes.durations} id="current-time">00:00</p>
+                    <div
+                        id="progress-bar"
+                        className={classes.progressBar}
+                        onClick={(e: any) => {
+                            seek(e);
+                        }}
+                    >
+                        <div id="progress" className={classes.progress}></div>
+                        <div id='dot' className={classes.dot}></div>
                     </div>
-                    <div className={classes.controls}>
-                        <div className={classes.flex}>
-                            <Image src={PartyWatchIcon} alt="PlayIcon" width={25} height={25} className={classes.partyWatchIcon} />
-                            <p className={classes.partyWatch}>Party Watch</p>
+                    <p className={classes.durations} id="duration">00:00</p>
+                </div>
+                <div className={classes.controls}>
+                    <div className={classes.flex}>
+                        <Image src={PartyWatchIcon} alt="PartyWatchIcon" width={25} height={25} className={classes.partyWatchIcon} />
+                        <p className={classes.partyWatch}>Party Watch</p>
+                    </div>
+                    <div className={classes.flex}>
+                        <Image src={SkipBackwardIcon} alt="SkipBackwardIcon" width={25} height={25} className={classes.icon} onClick={seekBackward} />
+                        {isPlaying ?
+                            <Image src={PauseIcon} alt='PauseIcon' width={25} height={25} className={classes.icon} style={{ scale: 1.2 }} onClick={e => {
+                                e.stopPropagation();
+                                togglePlay();
+                            }} />
+                            :
+                            <Image src={PlayIcon} alt="PlayIcon" width={25} height={25} className={classes.icon} style={{ scale: 1.2 }} onClick={e => {
+                                e.stopPropagation();
+                                togglePlay();
+                            }} />
+                        }
+                        <Image src={SkipForwardIcon} alt="SkipFowardIcon" width={25} height={25} className={classes.icon} onClick={seekForward} />
+                    </div>
+                    <div className={cx(classes.flex, classes.gap)}>
+                        <div className={classes.quality}>
+                            Quality
+                            <span>
+                                <select name="quality" id="quality" onChange={(e) => changeQuality(e.target.value)} value={quality}>
+                                    <option value="-1">Auto</option>
+                                    {levels.map((level: any, id: any) => (
+                                        <option value={id}>{level.name}</option>
+                                    ))}
+                                </select>
+                            </span>
                         </div>
-                        <div className={classes.flex}>
-                            <Image src={SkipBackwardIcon} alt="PlayIcon" width={25} height={25} className={classes.icon} onClick={seekBackward} />
-                            {isPlaying ?
-                                <Image src={PauseIcon} alt='PauseIcon' width={25} height={25} className={classes.icon} style={{ scale: 1.2 }} onClick={togglePlay} />
-                                :
-                                <Image src={PlayIcon} alt="PlayIcon" width={25} height={25} className={classes.icon} style={{ scale: 1.2 }} onClick={togglePlay} />
-                            }
-                            <Image src={SkipForwardIcon} alt="PlayIcon" width={25} height={25} className={classes.icon} onClick={seekForward} />
-                        </div>
-                        <div className={cx(classes.flex, classes.gap)}>
-                            <div className={classes.quality}>
-                                Quality 
-                                <span>
-                                    <select name="quality" id="quality" onChange={(e) => changeQuality(e.target.value)} value={quality}>
-                                        <option value="-1">Auto</option>
-                                        {levels.map((level: any, id: any) => (
-                                            <option value={id}>{level.name}</option>
-                                        ))}
-                                    </select>
-                                </span>
-                            </div>
-                            {mute ?
-                                <Image src={MuteVolume} alt='Muted Volume' width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={toggleMute} />
-                                :
-                                <Image src={VolumeIcon} alt="PlayIcon" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={toggleMute} />}
-                            <Image src={CaptionsIcon} alt="PlayIcon" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} />
-                            <Image src={FullScreenIcon} alt="PlayIcon" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} />
-                        </div>
+                        {mute ?
+                            <Image src={MuteVolume} alt='Muted Volume' width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={toggleMute} />
+                            :
+                            <Image src={VolumeIcon} alt="PlayIcon" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={toggleMute} />}
+                        <Image src={CaptionsIcon} alt="PlayIcon" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} />
+                        <Image src={FullScreenIcon} alt="PlayIcon" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={toggleFullscreen} />
                     </div>
                 </div>
             </div>
-            <div>
-                Quality:
-                <select onChange={(e) => changeQuality(e.target.value)} value={quality}>
-                    <option value="-1">Auto</option>
-                    {levels.map((level: any, id: any) => (
-                        <option value={id}>{level.name}</option>
-                    ))}
-                </select>
-            </div>
-            <button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play'}</button>
-            <button id="mute-btn" onClick={toggleMute}>
-                Mute
-            </button>
-            <button id="fullscreen-btn" onClick={toggleFullscreen}>
-                Fullscreen
-            </button>
         </div>
     );
 };
@@ -295,6 +319,9 @@ const useStyles = createStyles(() => ({
     rightIcons: {
         width: "1.7rem",
         height: "1.7rem",
+        "&:hover": {
+            transform: "scale(1.2)"
+        }
     },
     flex: {
         display: "flex",

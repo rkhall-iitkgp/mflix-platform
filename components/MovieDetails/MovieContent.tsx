@@ -31,11 +31,10 @@ export default function MovieContent() {
 
     const styles = createStyles(() => ({
         moviecontent: {
-            marginTop: "150px",
-            paddingLeft: "40px",
+            // marginTop: "10px",
+            // paddingLeft: "40px",
             width: '600px',
-            display:'flex',
-            justifyContent:'center',
+            // marginLeft:'-100px',
         },
         genre: {
             width: '7rem',
@@ -68,7 +67,8 @@ export default function MovieContent() {
             maxWidth: "max-content",
         },
         creators: {
-            marginTop: "200px",
+            marginTop: "100px",
+            marginLeft:'-100px',
         },
         flexbox: {
             border: "1px solid #000", borderRadius: "10px", paddingInline: "25px", background: "rgba(217, 217, 217, 0.25)",
@@ -88,20 +88,28 @@ export default function MovieContent() {
         details:{
             textAlign:'center', 
             margin:'2px',
+            color:themeOptions.color.divider,
         },
         image:{
             height: "530px", 
             width: "291px", 
-            marginTop: "170px", 
-            marginLeft: "100px",
+            marginTop: "100px", 
+            // marginLeft: "100px",
         },
+        title:{
+            textAlign:'left', 
+            fontSize:themeOptions.fontSize.xl, 
+            margin:'2px', 
+            width:'580px',
+            color:themeOptions.color.divider,
+        }
 
     }))
 
     const { classes } = styles();
 
     return (
-        <Group align="center">
+        <Group style={{display:'flex' , justifyContent:'space-around', zIndex:'20'}}>
             <div>
                 <NextImage
                     src={Sample}
@@ -110,12 +118,12 @@ export default function MovieContent() {
                 />
             </div>
             <Stack ml="xxl" gap="xs" mr="lg" className={classes.moviecontent}>
-                <p style={{textAlign:'left', fontSize:themeOptions.fontSize.xl, margin:'2px'}}>{movieDetails.title}</p>
+                <p className={classes.title}>{movieDetails.title}</p>
                 
                 <Group gap={themeOptions.fontSize.xs}>
                     {movieDetails.genres.map((e, i) =>
                         <Paper key={i} fz={themeOptions.fontSize.s} radius={15} className={classes.genre}>
-                            <p style={{margin:'2px', textAlign:'center' }}>{e}</p>
+                            <p style={{margin:'2px', textAlign:'center', color:themeOptions.color.divider }}>{e}</p>
                         </Paper>)}
                 </Group>
                 <Group mt={7} justify='space-between' className={classes.imdb}>

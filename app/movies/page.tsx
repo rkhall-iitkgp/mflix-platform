@@ -13,8 +13,14 @@ import { ScrollArea } from '@mantine/core'
 import VideoPlayer from '@/components/MovieDetails/VideoPlayer';
 
 export default function MovieDetails() {
-
+    
     const styles = createStyles(() => ({
+        nvbar:{
+            background:themeOptions.color.black,
+            opacity:'0.7',
+            position:'fixed',
+            width:'100%',
+        },
         streaming: {
             width: '100%',
             height: '98vh',
@@ -29,19 +35,17 @@ export default function MovieDetails() {
             marginTop: '-100px',
         },
         bgContainer: {
-            position: 'absolute',
+            position: 'fixed',
+            top: 0,
             width: '100%',
-            height: '120vh',
-            zIndex: 0,
+            height: '100vh',
+            // zIndex: -10,
             overflow: 'hidden'
         },
         bgImage: {
             opacity: 0.25,
             zIndex: -20,
         },
-        mainStyles: {
-            color: 'white',
-        }
 
     }))
 
@@ -53,6 +57,7 @@ export default function MovieDetails() {
             pb="xs"
             bg={themeOptions.color.background}
             gap={0}
+            style={{backgroundImage:'url(BgImage)'}}
         >
             {/* Background Image */}
             <div className={classes.bgContainer}>
@@ -60,14 +65,16 @@ export default function MovieDetails() {
             </div>
 
             {/* Navbar */}
-            <ScrollArea type='hover'>
+            {/* <ScrollArea type='hover'> */}
+            <div style={{zIndex:'20'}} className={classes.nvbar} >
                 <Navbar />
+            </div>
                 {/* <main className={classes.mainStyles}/> */}
-            </ScrollArea>
+            {/* </ScrollArea> */}
 
             {/* Streaming Section */}
             <Group className={classes.streaming}>
-                {/* <VideoPlayer/> */}
+                
             </Group>
 
             {/* Movie Details */}
@@ -82,7 +89,7 @@ export default function MovieDetails() {
             </Stack>
 
             {/* Footer */}
-            <Stack bg={themeOptions.color.black}>
+            <Stack bg={themeOptions.color.black} style={{zIndex:'20'}}>
                 <Footer />
             </Stack>
 

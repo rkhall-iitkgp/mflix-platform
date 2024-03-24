@@ -20,11 +20,15 @@ export default function Trending() {
         };
 
         // Add scroll event listener to the container
-        scrollRef.current.addEventListener('scroll', handleScroll);
-
+        if (scrollRef.current) {
+            scrollRef.current.addEventListener('scroll', handleScroll);
+        }
+    
         // Remove event listener on component unmount
         return () => {
-            scrollRef.current.removeEventListener('scroll', handleScroll);
+            if (scrollRef.current) {
+                scrollRef.current.removeEventListener('scroll', handleScroll);
+            }
         };
     }, []);
 

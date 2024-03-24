@@ -4,7 +4,7 @@ import XMarkIcon from '@/assets/icons/xmark.svg'
 import MicIcon from '@/assets/icons/mic.svg'
 import Image from 'next/image'
 
-export default function NavSearch({input,setInput}:{input: string, setInput: React.Dispatch<SetStateAction<string>>}) {
+export default function SearchBar({input,setInput}:{input: string, setInput: React.Dispatch<SetStateAction<string>>}) {
     return (
         <div style={styles.container}>
             <label htmlFor="search" style={styles.searchLabel}>
@@ -34,7 +34,7 @@ const styles = {
         padding: '0.5rem 0.5rem 0.5rem 1rem',
         marginTop: '2rem',
         marginBottom: '2rem',
-        height: '3.6rem',
+        height: '2.6rem',
     },
     input: {
         backgroundColor: 'transparent',

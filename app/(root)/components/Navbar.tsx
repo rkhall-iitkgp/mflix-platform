@@ -9,8 +9,11 @@ import { FaSearch } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
 import { ActionIcon, Divider } from '@mantine/core';
 import { IoCloseOutline } from "react-icons/io5";
+import NavSearch from '@/app/(root)/components/NavSearch';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
+    const path = usePathname();
     const { classes } = useStyles();
     const [input, setInput] = React.useState('');
     const [isTyping, setIsTyping] = useState(false);
@@ -47,46 +50,55 @@ export default function Navbar() {
     }, []);
 
     return (
-        <nav className={classes.container}>
-            {/* Logo */}
-            <div className={classes.logoDiv}>
-                <img src="/logo.svg" alt="Logo" className={classes.logo} />
-            </div>
+        <nav>
+            <div className={classes.container} style={{zIndex:'22'}}>
+                {/* Logo */}
+                <div className={classes.logoDiv}>
+                    <img src="/logo.svg" alt="Logo" className={classes.logo} />
+                </div>
 
-            {/* Links */}
-            <ul className={classes.links}>
-                <li>
-                    {isSearchOpen ? ( // Check if search is open
-                        <>
+                {/* Links */}
+                <ul className={classes.links}>
+                    <li>
+                        {path !== '/' && ( // Check if current path is not the home page
                             <div>
-                                <ActionIcon size={30} variant='transparent' onClick={handleCloseClick}>
-                                    <IoCloseOutline color={themeOptions.color.divider} size={30} />
-                                </ActionIcon>
-                                <div style={{ marginLeft: '-500px', width: '600px', position: 'absolute', zIndex:'40' }}>
-                                    <SearchBar input={input} setInput={setInput} />
-                                </div>
+                                {isSearchOpen ? (
+                                    <>
+                                        <div>
+                                            <ActionIcon size={30} variant='transparent' onClick={handleCloseClick} style={{marginRight:'5px'}}>
+                                                <IoCloseOutline color={themeOptions.color.divider} size={30}  />
+                                            </ActionIcon>
+                                            <div style={{ marginLeft: '-630px', marginTop:'-70px', width: '600px', height:'20px', position: 'absolute', zIndex:'40' }}>
+                                                <NavSearch input={input} setInput={setInput} />
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <FaSearch className={classes.search} onClick={handleSearchClick} />
+                                )}
                             </div>
-                        </>
-                    ) : (
-                        <FaSearch className={classes.search} onClick={handleSearchClick} />
-                    )}
-                </li>
-                <li>
-                    <Link href="#" className={classes.link}>
-                        Home
-                    </Link>
-                </li>
-                <li>
-                    <Link href="#" className={classes.link}>
-                        Login
-                    </Link>
-                </li>
-                <li className={classes.premium} >
-                    <Link href="#" className={classes.link2}>
-                        Premium
-                    </Link>
-                </li>
-            </ul>
+                        )}
+                    </li>
+                    <li>
+                        <Link href="#" className={classes.link}>
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="#" className={classes.link}>
+                            Login
+                        </Link>
+                    </li>
+                    <li className={classes.premium} >
+                        <Link href="#" className={classes.link2}>
+                            Premium
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+            <div style={{width:'100%', height:'50px'}}>
+
+            </div>
         </nav>
     )
 }
@@ -97,15 +109,20 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '1rem',
+        height:'50px',
+        // padding: '1rem',
         paddingLeft: '2rem',
         paddingRight: '2rem',
         paddingTop: '0rem',
         width: '100%',
-        color: "white"
+        color: "white",
+        background:themeOptions.color.black,
+        opacity:'1',
+        position:'fixed',
+        // marginBottom:'500px',
     },
     search: {
-        height: '25px',
+        height: '20px',
         width: '50px',
         marginTop: '5px',
         '&:hover': {
@@ -115,7 +132,7 @@ const useStyles = createStyles(() => ({
     },
     icon: {
         width: '2rem',
-        height: '2rem',
+        height: '1rem',
         color: themeOptions.color.divider,
         marginRight: '0.5rem'
     },

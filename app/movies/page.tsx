@@ -9,22 +9,14 @@ import Footer from '../(root)/components/Footer';
 import Navbar from '../(root)/components/Navbar';
 import BgImage from '@/assets/images/bg-home.jpeg'
 import MovieContent from '@/components/MovieDetails/MovieContent';
-import { ScrollArea } from '@mantine/core'
-import VideoPlayer from '@/components/MovieDetails/VideoPlayer';
 
 export default function MovieDetails() {
     
     const styles = createStyles(() => ({
-        nvbar:{
-            background:themeOptions.color.black,
-            opacity:'0.7',
-            position:'fixed',
-            width:'100%',
-        },
         streaming: {
             width: '100%',
             height: '98vh',
-            marginTop: '35px',
+            marginTop: '45px',
             border: '1px solid #fff',
         },
         similarmovies:{
@@ -65,12 +57,9 @@ export default function MovieDetails() {
             </div>
 
             {/* Navbar */}
-            {/* <ScrollArea type='hover'> */}
-            <div style={{zIndex:'20'}} className={classes.nvbar} >
+            <div>
                 <Navbar />
             </div>
-                {/* <main className={classes.mainStyles}/> */}
-            {/* </ScrollArea> */}
 
             {/* Streaming Section */}
             <Group className={classes.streaming}>

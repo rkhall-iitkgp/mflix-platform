@@ -117,12 +117,12 @@ const useStyles = createStyles(() => ({
         top: 0,
         width: '100%',
         height: '100vh',
-        zIndex: -30,
+        zIndex: -10,
         overflow: 'hidden'
     },
     bgImage: {
         opacity: 0.25,
-        zIndex: -20
+        // zIndex: -20
     },
     flex: {
         display: 'flex',

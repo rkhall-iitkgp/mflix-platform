@@ -2346,6 +2346,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/dates@npm:^7.6.2":
+  version: 7.6.2
+  resolution: "@mantine/dates@npm:7.6.2"
+  dependencies:
+    clsx: "npm:2.1.0"
+  peerDependencies:
+    "@mantine/core": 7.6.2
+    "@mantine/hooks": 7.6.2
+    dayjs: ">=1.0.0"
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10c0/e695e61838a20d6bdada3f5f2c0872b5b05371a8e288de4ad6b0629ca09fde83d3dcdfee55b775611550db1cb140ca5771afe64cfe4eb57017d6802e6fe7323a
+  languageName: node
+  linkType: hard
+
 "@mantine/form@npm:^7.6.2":
   version: 7.6.2
   resolution: "@mantine/form@npm:7.6.2"
@@ -7197,6 +7212,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dayjs@npm:^1.11.10":
+  version: 1.11.10
+  resolution: "dayjs@npm:1.11.10"
+  checksum: 10c0/4de9af50639d47df87f2e15fa36bb07e0f9ed1e9c52c6caa1482788ee9a384d668f1dbd00c54f82aaab163db07d61d2899384b8254da3a9184fc6deca080e2fe
+  languageName: node
+  linkType: hard
+
 "debounce@npm:^1.2.1":
   version: 1.2.1
   resolution: "debounce@npm:1.2.1"
@@ -7309,7 +7331,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deepmerge@npm:^4.2.2":
+"deepmerge@npm:^4.0.0, deepmerge@npm:^4.2.2":
   version: 4.3.1
   resolution: "deepmerge@npm:4.3.1"
   checksum: 10c0/e53481aaf1aa2c4082b5342be6b6d8ad9dfe387bc92ce197a66dea08bd4265904a087e75e464f14d1347cf2ac8afe1e4c16b266e0561cc5df29382d3c5f80044
@@ -8476,6 +8498,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eventemitter3@npm:^4.0.3":
+  version: 4.0.7
+  resolution: "eventemitter3@npm:4.0.7"
+  checksum: 10c0/5f6d97cbcbac47be798e6355e3a7639a84ee1f7d9b199a07017f1d2f1e2fe236004d14fa5dfaeba661f94ea57805385e326236a6debbc7145c8877fbc0297c6b
+  languageName: node
+  linkType: hard
+
 "events@npm:^3.2.0, events@npm:^3.3.0":
   version: 3.3.0
   resolution: "events@npm:3.3.0"
@@ -9459,6 +9488,23 @@ __metadata:
   bin:
     he: bin/he
   checksum: 10c0/a27d478befe3c8192f006cdd0639a66798979dfa6e2125c6ac582a19a5ebfec62ad83e8382e6036170d873f46e4536a7e795bf8b95bf7c247f4cc0825ccc8c17
+  languageName: node
+  linkType: hard
+
+"hls.js@npm:^0.14.17":
+  version: 0.14.17
+  resolution: "hls.js@npm:0.14.17"
+  dependencies:
+    eventemitter3: "npm:^4.0.3"
+    url-toolkit: "npm:^2.1.6"
+  checksum: 10c0/d8a3f09dbcd72e15a5b6562b21fe29904410a1f56dcba5a03dab3cd253871d051231dfaef89d4297732652b999640b4adc1dfba5d7fbe790331184fd6d0521a3
+  languageName: node
+  linkType: hard
+
+"hls.js@npm:^1.5.7":
+  version: 1.5.7
+  resolution: "hls.js@npm:1.5.7"
+  checksum: 10c0/779882be5e282df9418838615582a11cb8ca46928c4f5209f5809dedb6a9e2611320d830658e027b50d051f829a202f43e88e58693099c8214e1d9626ad3c6d5
   languageName: node
   linkType: hard
 
@@ -11107,6 +11153,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"load-script@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "load-script@npm:1.0.0"
+  checksum: 10c0/9919c777fe83f8a3a917f65c9c3ab186ad8b194248c57f413ef6e610194abc8484d123a6838d77ab33e5fa1a05a676b5dfe779c38cfe602bdd27c239423d0acd
+  languageName: node
+  linkType: hard
+
 "loader-runner@npm:^4.2.0":
   version: 4.3.0
   resolution: "loader-runner@npm:4.3.0"
@@ -11347,6 +11400,7 @@ __metadata:
     "@babel/core": "npm:^7.24.0"
     "@emotion/react": "npm:^11.11.4"
     "@mantine/core": "npm:^7.6.2"
+    "@mantine/dates": "npm:^7.6.2"
     "@mantine/form": "npm:^7.6.2"
     "@mantine/hooks": "npm:^7.6.2"
     "@mantine/styles": "npm:^6.0.21"
@@ -11368,6 +11422,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^7.2.0"
     "@typescript-eslint/parser": "npm:^7.2.0"
     babel-loader: "npm:^9.1.3"
+    dayjs: "npm:^1.11.10"
     eslint: "npm:^8.57.0"
     eslint-config-airbnb: "npm:19.0.4"
     eslint-config-airbnb-typescript: "npm:^18.0.0"
@@ -11379,6 +11434,7 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-testing-library: "npm:^6.2.0"
     gsap: "npm:^3.12.5"
+    hls.js: "npm:^1.5.7"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
     next: "npm:14.1.3"
@@ -11388,14 +11444,16 @@ __metadata:
     prettier: "npm:^3.2.5"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
+    react-hls-player: "npm:^3.0.7"
     react-icons: "npm:^5.0.1"
+    react-player: "npm:^2.15.1"
+    react-switch: "npm:^7.0.0"
     storybook: "npm:^8.0.0"
     storybook-dark-mode: "npm:^3.0.3"
     stylelint: "npm:^16.2.1"
     stylelint-config-standard-scss: "npm:^13.0.0"
     ts-jest: "npm:^29.1.2"
     typescript: "npm:5.4.2"
-    yarn: "npm:^1.22.22"
     zustand: "npm:^4.5.2"
   languageName: unknown
   linkType: soft
@@ -11454,6 +11512,13 @@ __metadata:
   dependencies:
     fs-monkey: "npm:^1.0.4"
   checksum: 10c0/038fc81bce17ea92dde15aaa68fa0fdaf4960c721ce3ffc7c2cb87a259333f5159784ea48b3b72bf9e054254d9d0d0d5209d0fdc3d07d08653a09933b168fbd7
+  languageName: node
+  linkType: hard
+
+"memoize-one@npm:^5.1.1":
+  version: 5.2.1
+  resolution: "memoize-one@npm:5.2.1"
+  checksum: 10c0/fd22dbe9a978a2b4f30d6a491fc02fb90792432ad0dab840dc96c1734d2bd7c9cdeb6a26130ec60507eb43230559523615873168bcbe8fafab221c30b11d54c1
   languageName: node
   linkType: hard
 
@@ -13209,6 +13274,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-fast-compare@npm:^3.0.1":
+  version: 3.2.2
+  resolution: "react-fast-compare@npm:3.2.2"
+  checksum: 10c0/0bbd2f3eb41ab2ff7380daaa55105db698d965c396df73e6874831dbafec8c4b5b08ba36ff09df01526caa3c61595247e3269558c284e37646241cba2b90a367
+  languageName: node
+  linkType: hard
+
+"react-hls-player@npm:^3.0.7":
+  version: 3.0.7
+  resolution: "react-hls-player@npm:3.0.7"
+  dependencies:
+    hls.js: "npm:^0.14.17"
+  peerDependencies:
+    react: ^16.13.1
+    react-dom: ^16.13.1
+  checksum: 10c0/74fc533d2ea63f56f814deff53cf38d9149b28e595f9a9e09a87302f288bdfccb125e13d19ff1f2bc7fad6aa65f32fef9ae4cb23624772559291a8b4671e740c
+  languageName: node
+  linkType: hard
+
 "react-icons@npm:^5.0.1":
   version: 5.0.1
   resolution: "react-icons@npm:5.0.1"
@@ -13255,6 +13339,21 @@ __metadata:
     react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/a9ab7ed90cfc74eb07c3dce1916c17f3f068db29f069c1cae361c8340b860ccf5a7e6cb9048f68dd698d7ed6fe0ad04d987670d50589d1f17b113f546c35d719
+  languageName: node
+  linkType: hard
+
+"react-player@npm:^2.15.1":
+  version: 2.15.1
+  resolution: "react-player@npm:2.15.1"
+  dependencies:
+    deepmerge: "npm:^4.0.0"
+    load-script: "npm:^1.0.0"
+    memoize-one: "npm:^5.1.1"
+    prop-types: "npm:^15.7.2"
+    react-fast-compare: "npm:^3.0.1"
+  peerDependencies:
+    react: ">=16.6.0"
+  checksum: 10c0/0d17002c08b333cfc9844d762e6cb064c992f4b58088895af6a445a6850f48a318fb39c54a5e0e3bc5c5d7027c76a8d8ed796a0fa723c011450634ba2ff881ca
   languageName: node
   linkType: hard
 
@@ -13333,6 +13432,18 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/6d66f3bdb65e1ec79089f80314da97c9a005087a04ee034255a5de129a4c0d9fd0bf99fa7bf642781ac2dc745ca687aae3de082bd8afdd0d117bc953241e15ad
+  languageName: node
+  linkType: hard
+
+"react-switch@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "react-switch@npm:7.0.0"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    react: ^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/fe5d2fc7c25998de5ff8c0f5a0013d43bb5dc89564d97b03f9e0202761a00127e477d4d670e8cc2885cfcacbc98e87c0c3555a1398d0db1403db45598d0dc753
   languageName: node
   linkType: hard
 
@@ -15562,6 +15673,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"url-toolkit@npm:^2.1.6":
+  version: 2.2.5
+  resolution: "url-toolkit@npm:2.2.5"
+  checksum: 10c0/758d1921988661beec9e5bbc49447470cef0979b30a69002f0c357d393f23f22c257cf863893411e5ad1f3a7e7e8c17d057653f965afcd1c8f85583abeb9eca4
+  languageName: node
+  linkType: hard
+
 "url@npm:^0.11.0":
   version: 0.11.3
   resolution: "url@npm:0.11.3"
@@ -16190,16 +16308,6 @@ __metadata:
     y18n: "npm:^5.0.5"
     yargs-parser: "npm:^21.1.1"
   checksum: 10c0/ccd7e723e61ad5965fffbb791366db689572b80cca80e0f96aad968dfff4156cd7cd1ad18607afe1046d8241e6fb2d6c08bf7fa7bfb5eaec818735d8feac8f05
-  languageName: node
-  linkType: hard
-
-"yarn@npm:^1.22.22":
-  version: 1.22.22
-  resolution: "yarn@npm:1.22.22"
-  bin:
-    yarn: bin/yarn.js
-    yarnpkg: bin/yarn.js
-  checksum: 10c0/8c77198c93d7542e7f4e131c63b66de357b7076ecfbcfe709ec0d674115c2dd9edaa45196e5510e6e9366d368707a802579e3402071002e1c9d9a99d491478de
   languageName: node
   linkType: hard
 

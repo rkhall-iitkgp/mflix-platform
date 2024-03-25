@@ -2,11 +2,11 @@ import { Table, TableTd, TableTh, TableTr, Text, Box, Divider, Stack, Group } fr
 import { TiTick } from "react-icons/ti";
 import CustomTickIcon from './customtickicon'; // 
 import themeOptions from '@/utils/colors';
-import React from 'react';
+import React, { useRef } from 'react';
 import { createStyles } from '@mantine/styles';
 
 
-const SubscriptionTable = ({ cardPlan }) => {
+const SubscriptionTable = ({ cardPlan }: any) => {
     const useStyles = createStyles(() => ({
         OuterBoxStyles: {
             marginTop: '1rem', backgroundColor: 'black', height: '25rem', display: 'flex', flexDirection: 'column', alignItems: 'center'
@@ -68,7 +68,7 @@ const SubscriptionTable = ({ cardPlan }) => {
         // Add more features here
     ];
     return (
-        <Box style={{ marginTop: '1rem', backgroundColor: 'black', height: '25rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
+        <Box style={{ marginTop: '1rem', backgroundColor: 'black', height: '25rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }} id='pricing'>
             <Text size="2.8rem" c={'white'} p={'1rem'} style={{ fontWeight: '600', paddingTop: '3rem' }}>Feel the difference</Text>
             <Text size="1.2rem" c={'white'} style={{ fontWeight: '400' }}>Explore our different plans to enjoy your watch experience</Text>
             <Table classNames={{

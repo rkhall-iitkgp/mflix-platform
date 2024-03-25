@@ -44,7 +44,7 @@ export function Register(props: PaperProps) {
         setFormData(values);
         const userData = {
             "email": values.email,
-            "flag": 0
+            "type": "register",
         }
         console.log(userData)
         let res = await fetch(`${base_url}/auth/sendOTP`, {
@@ -65,7 +65,7 @@ export function Register(props: PaperProps) {
         //   setLoading(false);
         else {
             console.log(jsonData.message);
-            // console.log(jsonData);
+            console.log(jsonData);
             // sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
             // sessionStorage.setItem('token', jsonData.user.token);
         }
@@ -77,9 +77,9 @@ export function Register(props: PaperProps) {
             dob: '',
             phone: '',
             email: '',
-            password: '',
+            newPassword: '',
             confPassword: '',
-            terms: true,
+            type: 'register',
             otp: '',
             flag: 0
         },
@@ -89,8 +89,8 @@ export function Register(props: PaperProps) {
             dob: (val) => (!val ? 'Required' : null),
             phone: (val) => (val.toString().length < 10 ? 'Invalid Phone No.' : null),
             email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-            password: (val) => (val.length <= 6 ? 'Password should include at least 6 characters' : null),
-            confPassword: (val, values) => (val != values.password ? 'Password does not match' : null),
+            newPassword: (val) => (val.length <= 6 ? 'Password should include at least 6 characters' : null),
+            confPassword: (val, values) => (val != values.newPassword ? 'Password does not match' : null),
 
         },
     });
@@ -314,8 +314,8 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                 required
                                 label="Password"
                                 placeholder="Enter Your password"
-                                value={form.values.password}
-                                onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
+                                value={form.values.newPassword}
+                                onChange={(event) => form.setFieldValue('newPassword', event.currentTarget.value)}
                                 // error={form.errors.password && 'Password should include at least 6 characters'}
                                 radius="md"
                                 size="lg"
@@ -331,7 +331,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                 position: "absolute",
                                 marginTop: "39%", left: "17%", color: "red"
                             }}>
-                                {form.errors.password}</p>
+                                {form.errors.newPassword}</p>
                             <PasswordInput
                                 required
                                 label="Confirm Password"
@@ -368,12 +368,12 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                 </Button>
                                 {/* </Link> */}
                             </Anchor>
-                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "space-between", paddingBottom: "1%", paddingTop: "20px" }}>
-                                {/* <Divider label="Or continue with Google" labelPosition="center" my="lg" /> */}
+                            {/* <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "space-between", paddingBottom: "1%", paddingTop: "20px" }}>
+                                <Divider label="Or continue with Google" labelPosition="center" my="lg" />
                                 <h5 style={{ height: "0px", paddingRight: "15px", top: "50%", left: "28%", color: 'white' }}>Or continue with Google</h5>
 
                                 <GoogleButton radius="xl" style={{ marginTop: '5%' }}>Google</GoogleButton>
-                            </div>
+                            </div> */}
 
                         </form>
 

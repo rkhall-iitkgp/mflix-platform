@@ -10,8 +10,107 @@ import { ActionIcon, Divider } from '@mantine/core';
 import { IoCloseOutline } from "react-icons/io5";
 import NavSearch from '@/app/(root)/components/NavSearch';
 import { usePathname } from 'next/navigation';
+import searchMsApiUrls from '../../api/searchMsApi';
 
 export default function Navbar() {
+
+    const useStyles = createStyles(() => ({
+        container: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height:'50px',
+            // padding: '1rem',
+            paddingLeft: '2rem',
+            paddingRight: '2rem',
+            paddingTop: '0rem',
+            width: '100%',
+            color: "white",
+            background:themeOptions.color.black,
+            opacity:'1',
+            position:'fixed',
+            transition: 'top 0.3s ease-in-out',
+            // marginBottom:'500px',
+        },
+        search: {
+            height: '20px',
+            width: '50px',
+            marginTop: '5px',
+            '&:hover': {
+                color: 'gray',
+                cursor: 'pointer',
+            }
+        },
+        icon: {
+            width: '2rem',
+            height: '1rem',
+            color: themeOptions.color.divider,
+            marginRight: '0.5rem'
+        },
+        logo: {
+            height: '2rem',
+            marginLeft: '1rem',
+            marginRight: '3rem',
+        },
+        logoDiv: {
+            display: 'flex',
+            alignItems: 'center',
+            padding: '1rem'
+        },
+        activeLink: {
+            fontWeight: 'bold',
+        },
+        links: {
+            display: 'flex',
+            padding: '1rem',
+            marginLeft: '1rem',
+            marginRight: '1rem',
+            listStyle: 'none',
+        },
+        link: {
+            padding: '1rem',
+            marginLeft: '1.5rem',
+            marginRight: '1.5rem',
+            textDecoration: 'none',
+            fontSize: '1.25rem',
+            color: 'white',
+            '&:hover': {
+                color: 'rgb(156, 163, 175)'
+            },
+            alignItems: 'center',
+        },
+        premium: {
+            marginLeft: '1.5rem',
+            marginRight: '1.5rem',
+            height: '2.3rem',
+            width: '7rem',
+            display: 'flex',
+            transition: '0.3s',
+            alignItems: 'center',
+            '&:hover': {
+                background: themeOptions.color.button,
+                cursor: 'pointer',
+            },
+            border: '2px solid',
+            borderRadius: '8px',
+            borderColor: themeOptions.color.smallBox,
+            color: themeOptions.color.smallBox,
+        },
+        link2: {
+            textDecoration: 'none',
+            fontSize: '1.25rem',
+            marginLeft: '0.6rem',
+            color: themeOptions.color.divider,
+        },
+        visible: {
+            top: 0,
+        },
+        hidden: {
+            top: '-50px',
+        },
+    
+    }))
+    
     const path = usePathname();
     const { classes } = useStyles();
     const [input, setInput] = React.useState('');
@@ -63,6 +162,36 @@ export default function Navbar() {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [prevScrollPos, visible]);
+
+    const handleLogOut = async () => {
+        const values = {
+            "flag": 1,
+        }
+        const base_url = searchMsApiUrls()
+        const token = sessionStorage.getItem('accessToken');
+        await fetch(`${base_url}/auth/logout`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`
+            }, body: JSON.stringify({
+                ...values,
+            }),
+        }).then(async (res) => {
+            let jsonData = await res.json();
+            if (!res.ok) {
+                console.log(jsonData);
+            }
+            //   setLoading(false);
+            else {
+                sessionStorage.removeItem('accessToken');
+                console.log("Logout successful");
+                // console.log(jsonData);
+                // sessionStorage.setItem('accessToken', jsonData.user.accessToken);
+                // sessionStorage.setItem('token', jsonData.user.token);
+            }
+        });
+    }
 
     return (
         <nav >
@@ -117,101 +246,3 @@ export default function Navbar() {
         </nav>
     )
 }
-
-const useStyles = createStyles(() => ({
-
-    container: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        height:'50px',
-        // padding: '1rem',
-        paddingLeft: '2rem',
-        paddingRight: '2rem',
-        paddingTop: '0rem',
-        width: '100%',
-        color: "white",
-        background:themeOptions.color.black,
-        opacity:'1',
-        position:'fixed',
-        transition: 'top 0.3s ease-in-out',
-        // marginBottom:'500px',
-    },
-    search: {
-        height: '20px',
-        width: '50px',
-        marginTop: '5px',
-        '&:hover': {
-            color: 'gray',
-            cursor: 'pointer',
-        }
-    },
-    icon: {
-        width: '2rem',
-        height: '1rem',
-        color: themeOptions.color.divider,
-        marginRight: '0.5rem'
-    },
-    logo: {
-        height: '2rem',
-        marginLeft: '1rem',
-        marginRight: '3rem',
-    },
-    logoDiv: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: '1rem'
-    },
-    activeLink: {
-        fontWeight: 'bold',
-    },
-    links: {
-        display: 'flex',
-        padding: '1rem',
-        marginLeft: '1rem',
-        marginRight: '1rem',
-        listStyle: 'none',
-    },
-    link: {
-        padding: '1rem',
-        marginLeft: '1.5rem',
-        marginRight: '1.5rem',
-        textDecoration: 'none',
-        fontSize: '1.25rem',
-        color: 'white',
-        '&:hover': {
-            color: 'rgb(156, 163, 175)'
-        },
-        alignItems: 'center',
-    },
-    premium: {
-        marginLeft: '1.5rem',
-        marginRight: '1.5rem',
-        height: '2.3rem',
-        width: '7rem',
-        display: 'flex',
-        transition: '0.3s',
-        alignItems: 'center',
-        '&:hover': {
-            background: themeOptions.color.button,
-            cursor: 'pointer',
-        },
-        border: '2px solid',
-        borderRadius: '8px',
-        borderColor: themeOptions.color.smallBox,
-        color: themeOptions.color.smallBox,
-    },
-    link2: {
-        textDecoration: 'none',
-        fontSize: '1.25rem',
-        marginLeft: '0.6rem',
-        color: themeOptions.color.divider,
-    },
-    visible: {
-        top: 0,
-    },
-    hidden: {
-        top: '-50px',
-    },
-
-}))

@@ -1,58 +1,86 @@
+"use client"
 import SearchBar from '@/app/(root)/components/SearchBar'
 import Image from 'next/image'
 import React from 'react'
-import { useState } from 'react'
+import { gsap } from 'gsap';
+import { useState, useEffect, useRef } from 'react'
 import BgImage from '@/assets/images/bg-home.jpeg'
 import { createStyles } from '@mantine/styles'
-import Poster from '@/assets/images/poster.jpeg'
+import Poster from '@/assets/images/poster.png'
 import Vector1 from '@/assets/images/vect-1.svg'
 import Vector2 from '@/assets/images/vect-2.svg'
-
-export default function HeroSection() {
+import { memo } from 'react'
+import { ScrollToPlugin } from 'gsap/all';
+gsap.registerPlugin(ScrollToPlugin);
+const HeroSection = () => {
+    console.log("rendered");
     const { classes, cx } = useStyles();
     const [input, setInput] = React.useState('' as string);
-
+    const [showSearchSection, setShowSearchSection] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
+    const flexRef = useRef(null);
+    console.log(flexRef);
+    useEffect(() => {
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(
+            flexRef.current,
+            { scale: 0, opacity: 1, visibility: 'visible', height: 0, width: 0 },
+            { duration: 0.25, scale: 1.01, opacity: 1, visibility: 'visible', height: 'auto', width: 'auto' }
+        );
+        if (isTyping) {
+            tl.play();
+        } else {
+            tl.reverse();
+        }
+        return () => {
+            tl.kill();
+        };
+    }, [isTyping]);
     const handleTyping = (typing) => {
-        setIsTyping(typing);
+        console.log("func called");
+        setIsTyping(typing !== '');
+        console.log(isTyping);
+        setInput(typing);
     };
     return (
         <>
             <div className={classes.bgContainer}>
                 <Image src={BgImage} alt='Background Image' layout='fill' objectFit='cover' className={classes.bgImage} />
             </div>
-            <div></div>
-            <div className={classes.hero} style={{justifyContent:'center',gap:`${input ? '0px':'80px'}`}}>
-                <div className={classes.leftSection}>
+            <div className={classes.hero} style={{ gap: `${isTyping ? '0rem' : '4rem'}` }}>
+                <div className={classes.leftSection} style={{ marginLeft: `${isTyping ? '0rem' : '0rem'}` }}>
                     <h1 className={classes.heading}>Cool Animated Text</h1>
-                    <SearchBar onTyping={handleTyping} input={input} setInput={setInput} />
-                    <p className={classes.ptext}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
+                    <SearchBar onTyping={handleTyping} input={input} setInput={setInput} isTyping={isTyping} />
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
                 </div>
-                {!input && <div className={classes.rightSection}>
+                <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
                     <p className={classes.p}>Recent Searches:</p>
                     <div className={classes.movies}>
                         <MovieCard />
                         <MovieCard />
                         <MovieCard />
                     </div>
-                </div>}
-                {input &&
-                    <div className={classes.flex1}>
-                        <Image src={Vector1} alt='vector' className={classes.vec1Style}/>
-                        <Image src={Vector2} alt='vector' className={classes.vec2Style}/>
-                    </div>}
-                {input && <div className={classes.searchRightSection}>
-                    <div className={classes.searchMovies}>
-                        <SearchResultCard />
-                        <SearchResultCard />
-                        <SearchResultCard />
-                        <SearchResultCard />
-                        <SearchResultCard />
+                </div>
+                <div className={classes.flex} id='flex' ref={flexRef}>
+                    <div className={classes.flex} id='flex'>
+                        <div className={classes.flex1}>
+                            <Image src={Vector1} alt='vector' className={classes.vec1Style} id='vec1' />
+                            <Image src={Vector2} alt='vector' className={classes.vec2Style} id='vec2' />
+                        </div>
+                        <div className={cx(classes.searchRightSection, showSearchSection && classes.searchRightSectionVisible)} style={{ height: `${isTyping ? '0px' : '0'}`, marginTop: '2rem' }}>
+                            <div className={classes.searchMovies}>
+                                <SearchResultCard />
+                                <SearchResultCard />
+                                <SearchResultCard />
+                                <SearchResultCard />
+                                <SearchResultCard />
+                            </div>
+                        </div>
                     </div>
-                </div>}
+                </div>
             </div>
         </>
-    )
+    );
 }
 
 const MovieCard = () => {
@@ -96,42 +124,49 @@ const useStyles = createStyles(() => ({
         opacity: 0.25,
         // zIndex: -20
     },
-    flex:{
-        display:'flex',
-        justifyContent:'space-between',
+    flex: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        // alignItems:'center'
+        // transform:'scale(1) translateX(-10%)',
+        // transition:'transform 1s ease-in'
         // width:'100px'
     },
-    flex1:{
-        display:'flex',
-        flexDirection:'column',
-        marginTop:'12rem',
-
+    flex1: {
+        display: 'flex',
+        flexDirection: 'column',
+        marginTop: '13rem'
         // justifyContent:'space-between',
+        // width:'100px'
     },
-    vec1Style:{
-        marginTop:'-10rem'
+    vec1Style: {
+        marginTop: '-9.5rem'
     },
-    vec2Style:{
+    vec2Style: {
         // marginTop:'10rem'
     },
     hero: {
         // paddingTop: '6rem',
+        width: '100vw',
         display: 'flex',
         flex: '2 1 auto',
-        // justifyContent: 'space-evenly',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         overflow: 'hidden',
-        gap: '2rem'
+        gap: '2rem',
+        marginBottom: '2.85rem',
+        marginLeft: '20%'
     },
     leftSection: {
-        width: '35rem',
+        marginTop: '2rem',
+        width: '35vw',
         paddingBottom: '5rem',
         display: 'flex',
         flexDirection: 'column',
     },
 
     heading: {
-        fontSize: '5.2rem',
+        fontSize: '4.2rem',
         margin: '0.5rem',
         textWrap: 'wrap',
         width: '100%',
@@ -145,15 +180,23 @@ const useStyles = createStyles(() => ({
     },
     rightSection: {
         overflow: 'hidden',
+        flexDirection: 'column',
         gap: '0.8rem',
+        marginTop: '-2rem'
     },
     searchRightSection: {
-        overflow: 'hidden',
-        gap: '0.8rem',
-        marginTop:'1.5rem'
+        // overflow: 'hidden',
+        // gap: '0.8rem',
+        // marginTop: '1.5rem',
+        // transform: 'scale(0.8)',
+        // transformOrigin: 'top right',
+        // transition: 'transform 2s ease-in-out',
+    },
+    searchRightSectionVisible: {
+        // transform: 'scale(1)',
     },
     p: {
-        marginBottom: '1.75rem',
+        marginBottom: '0.75rem',
         fontSize: '2rem',
         lineHeight: '1.75rem'
     },
@@ -170,7 +213,8 @@ const useStyles = createStyles(() => ({
         // gap: '.6rem',
         borderStyle: 'solid',
         borderWidth: '1px',
-        borderRadius: '0.5rem'
+        borderRadius: '0.5rem',
+        marginTop: '0.5rem'
     },
     movieCard: {
         backgroundColor: '#D9D9D926',
@@ -192,6 +236,11 @@ const useStyles = createStyles(() => ({
         gap: '1rem',
         padding: '1rem 1.125rem',
         opacity: 1,
+        cursor: 'pointer',
+        transition: 'transform 0.15s ease-in',
+        '&:hover': {
+            transform: 'scale(1.02)'
+        }
     },
     searchCard: {
         backgroundColor: '#D9D9D926',
@@ -200,18 +249,14 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        width: '25rem',
+        width: '22vw',
         borderStyle: 'solid',
         borderColor: '#FFFFFF',
         borderTopWidth: '1px',
-        // borderRadius: '.7rem',
         overflow: 'hidden',
         borderWidth: '0.5px',
-        // borderBottomWidth: '0px',
         height: '5.575rem',
-        // marginBottom: '0.6rem',
         gap: '1rem',
-        // padding: '1rem 1.125rem',
         opacity: 1,
     },
     cardDescription: {
@@ -219,7 +264,7 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         flexDirection: 'column',
         // justifyContent: 'center'
-        width:'100%'
+        width: '100%'
     },
     movieTitle: {
         fontSize: '1.25rem',
@@ -237,3 +282,5 @@ const useStyles = createStyles(() => ({
         display: 'inline'
     }
 }))
+
+export default React.memo(HeroSection);

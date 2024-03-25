@@ -12,7 +12,7 @@ import {
     Divider,
     Flex,
     Box,
-  Accordion,
+    Accordion,
 } from '@mantine/core';
 import { GoPlus } from 'react-icons/go';
 import { createStyles } from '@mantine/styles';
@@ -147,6 +147,26 @@ export default function Plan() {
             width: '90%',
             padding: '0.5rem',
         },
+        PriceStyles: {
+            display: 'flex', flexDirection: 'row', paddingLeft: '4%'
+        },
+        SubscriptionDetailsStyles: {
+            display: 'flex', flexDirection: 'column', paddingLeft: '6%'
+        },
+        ArrowStyles: {
+            marginRight: '1.3rem'
+        },
+        QuestionSectionStyles: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginTop: '3rem',
+            fontFamily: 'poppins',
+            justifyContent: 'center',
+        },
+        QuestionTextBoxStyles: {
+            marginBottom: '3rem', textAlign: 'center'
+        }
     }));
 
 
@@ -169,7 +189,7 @@ export default function Plan() {
         updatedCardPlan[index] = true;
         setCardPlan(updatedCardPlan);
     };
- 
+
 
     const { classes } = useStyles();
     return (
@@ -206,11 +226,11 @@ export default function Plan() {
                                     {name}
                                 </Text>
                             </Box>
-                            <Box style={{ display: 'flex', flexDirection: 'row', paddingLeft: '4%' }}>
+                            <Box className={classes.PriceStyles}>
                                 <h1>${price}/</h1>
                                 <h3 style={{ marginTop: '2rem' }} >{planInner[0] ? 'month' : planInner[1] ? 'quarter' : 'year'}</h3>
                             </Box>
-                            <Box style={{ display: 'flex', flexDirection: 'column', paddingLeft: '6%' }}>
+                            <Box className={classes.SubscriptionDetailsStyles}>
                                 <Text style={{ fontSize: '120%' }}>. Lorem ipsum dolor sit amet</Text>
                                 <Text style={{ fontSize: '120%' }}>. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
                                 <Text style={{ fontSize: '120%' }} >
@@ -218,138 +238,25 @@ export default function Plan() {
                                     consequat. Duis aute{' '}
                                 </Text>
                                 <Text style={{ fontSize: '120%' }} >. cillum dolore eu fugiat nulla pariatur</Text>
-                                {/* <List size="xl" style={{ paddingLeft: '1.5rem' }}>
-                                    <List.Item style={{ maxWidth: '90%' }} >Lorem ipsum dolor sit amet</List.Item>
-                                    <List.Item style={{ maxWidth: '90%' }}>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</List.Item>
-                                    <List.Item style={{ maxWidth: '90%' }}>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                        consequat. Duis aute</List.Item>
-                                    <List.Item style={{ maxWidth: '90%' }}>cillum dolore eu fugiat nulla pariatu</List.Item>
-                                </List> */}
+
                             </Box>
                         </Box>
                     ))}
                 </Box>
-                <Button style={{ color: 'white', background: '#5e2787', height: '3rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem' }}>
-                    Continue with Plan <SlArrowRight style={{ marginRight: '1.3rem' }}></SlArrowRight>
+                <Button style={{ color: 'white', background: '#5e2787', height: '3.3rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem' }}>
+                    Continue with Plan <SlArrowRight className={classes.ArrowStyles}></SlArrowRight>
                 </Button>
             </Box>
             <Box
                 id="questions section"
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    marginTop: '3rem',
-                    fontFamily: 'poppins',
-                    justifyContent: 'center',
-                }}
+
+                className={classes.QuestionSectionStyles}
             >
-                <Box style={{ marginBottom: '3rem', textAlign: 'center' }}>
+                <Box className={classes.QuestionTextBoxStyles}>
                     <Text style={{ fontSize: '2rem' }}>Questions?</Text>
                     <Text style={{}}>we got answers.</Text>
                 </Box>
                 <Questions2 />
-            {/* <Questions/> */}
-        {/* <Box
-                    id="question-answer"
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: '100%',
-                    }}
-                >
-                    <Box
-                        id="question"
-                        style={{ display: 'flex', width: '80%', margin: '1rem auto' }}
-                        onClick={handleToggleAccordion}
-                    >
-                        <Box className={classes.QuestionStyles} id="text part">
-                            <Text style={{ margin: 'auto 1.5rem' }}>01</Text>
-                            <Text style={{}}>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. veniama. Lorem ipsum dolor
-                                sit, amet consectetur{' '}
-                            </Text>
-                        </Box>
-
-                        <Box style={{ minWidth: '5%' }} id="icon part">
-                            <GoPlus
-                                style={{
-                                    color: 'white',
-                                    backgroundColor: '#7012b6',
-                                    fontSize: '1.5rem',
-                                    height: '100%',
-                                    width: '100%',
-                                }}
-                            />
-                        </Box>
-                    </Box>
-                    <Box
-                        id="answer"
-                        style={{
-                            display: `${isAccordion ? 'block' : 'none'}`,
-                            width: '80%',
-                            margin: '1rem auto',
-                        }}
-                    >
-                        <Text>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis, impedit libero
-                            explicabo autem similique beatae facilis magni ipsam molestias neque voluptates,
-                            assumenda at numquam pariatur quasi eos! Non, sint odio!
-                        </Text>
-                    </Box>
-                </Box>
-                <Box
-                    id="question-answer"
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: '100%',
-                    }}
-                >
-                    <Box
-                        id="question"
-                        style={{ display: 'flex', width: '80%', margin: '1rem auto' }}
-                        onClick={handleToggleAccordion}
-                    >
-                        <Box className={classes.QuestionStyles} id="text part">
-                            <Text style={{ margin: 'auto 1.5rem' }}>01</Text>
-                            <Text style={{}}>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. veniama. Lorem ipsum dolor
-                                sit, amet consectetur{' '}
-                            </Text>
-                        </Box>
-
-                        <Box style={{ minWidth: '5%' }} id="icon part">
-                            <GoPlus
-                                style={{
-                                    color: 'white',
-                                    backgroundColor: '#7012b6',
-                                    fontSize: '1.5rem',
-                                    height: '100%',
-                                    width: '100%',
-                                }}
-                            />
-                        </Box>
-                    </Box>
-                    <Box
-                        id="answer"
-                        style={{
-                            display: `${isAccordion ? 'block' : 'none'}`,
-                            width: '80%',
-                            margin: '1rem auto',
-                        }}
-                    >
-                        <Text>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis, impedit libero
-                            explicabo autem similique beatae facilis magni ipsam molestias neque voluptates,
-                            assumenda at numquam pariatur quasi eos! Non, sint odio!
-                        </Text>
-                    </Box>
-                </Box> */}
             </Box>
         </>
     );

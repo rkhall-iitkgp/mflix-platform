@@ -16,10 +16,9 @@ const ListMovies = () => {
       margin: 'auto',
     },
     MovieListNavigation: {
-      position: 'absolute',
       display: 'flex',
       justifyContent: 'space-between',
-      width: '100%',
+      //   width: '100%',
       height: '350px',
     },
     MovieListBox: {
@@ -32,19 +31,24 @@ const ListMovies = () => {
       transform: 'translateX(100px)',
     },
     MovieListLeftArrow: {
+      position: 'absolute',
+      left: 0,
       width: '50px',
       background:
         'linear-gradient(90deg, rgba(0,0,0,1) 0%,rgba(0,0,0,0.5) 80%, rgba(0,0,0,0) 100%)',
-      height: '100%',
+      height: '400px',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
     },
     MovieListRightArrow: {
+      position: 'absolute',
+      //   left: '100%',
+      right: 0,
       width: '50px',
       background:
         'linear-gradient(90deg, rgba(0,0,0,0) 0%,rgba(0,0,0,0.5) 20%, rgba(0,0,0,1) 100%)',
-      height: '100%',
+      height: '400px',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',

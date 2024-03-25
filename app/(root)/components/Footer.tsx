@@ -155,40 +155,41 @@ const styles = createStyles(() => ({
             color: 'rgb(75 85 99)',
             '&:hover': {
                 color: 'gray',
-            }
-        
+            },
     },
-    pStyle: {
-        color: 'rgb(156, 163, 175)',
-        padding: '2.5rem',
-        fontSize: '0.875rem',
-        lineHeight: '1.25rem',
-    },
-    footStyle: {
-        color: 'white',
-        padding: '2rem',
-        paddingTop: '4rem',
-        paddingBottom: '2rem',
-        background:'#0B0212'
-    },
+},
+pStyle: {
+  color: 'rgb(156, 163, 175)',
+  padding: '2.5rem',
+  fontSize: '0.875rem',
+  lineHeight: '1.25rem',
+},
+footStyle: {
+  color: 'white',
+  padding: '2rem',
+  paddingTop: '4rem',
+  paddingBottom: '2rem',
+  background:'#0B0212'
+},
 
-    divStyle: {
-        width: '100%',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        paddingLeft: '1rem',
-        paddingRight: '1rem',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    logoDivStyle: {
-        width: '100%',
-        paddingLeft: '2rem',
-        paddingRight: '2rem',
-        marginTop: '2rem',
-    }
-}));
+divStyle: {
+  width: '100%',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  paddingLeft: '1rem',
+  paddingRight: '1rem',
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between'
+},
+logoDivStyle: {
+  paddingLeft: '2rem',
+  paddingRight: '2rem',
+  marginTop: '2rem',
+},
+}
+));
+
 
 function Footer() {
   const { classes } = styles();

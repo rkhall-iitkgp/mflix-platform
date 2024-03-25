@@ -51,7 +51,7 @@ const HeroSection = () => {
                 <div className={classes.leftSection} style={{ marginLeft: `${isTyping ? '0rem' : '0rem'}` }}>
                     <h1 className={classes.heading}>Cool Animated Text</h1>
                     <SearchBar onTyping={handleTyping} input={input} setInput={setInput} isTyping={isTyping} />
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
+                    <p className={classes.searchText}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
                 </div>
                 <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
                     <p className={classes.p}>Recent Searches:</p>
@@ -112,6 +112,12 @@ const SearchResultCard = () => {
 }
 
 const useStyles = createStyles(() => ({
+    searchText:{
+        fontSize: '1.25rem',
+        lineHeight: '1.75rem',
+        marginTop: '0.5rem',
+        marginBottom: '1rem',
+    },
     bgContainer: {
         position: 'fixed',
         top: 0,
@@ -154,8 +160,8 @@ const useStyles = createStyles(() => ({
         alignItems: 'center',
         overflow: 'hidden',
         gap: '2rem',
-        marginBottom: '2.85rem',
-        marginLeft: '20%'
+        marginLeft: '20%',
+        height: '86vh',
     },
     leftSection: {
         marginTop: '2rem',
@@ -166,11 +172,12 @@ const useStyles = createStyles(() => ({
     },
 
     heading: {
-        fontSize: '4.2rem',
+        fontSize: '4.6rem',
         margin: '0.5rem',
         textWrap: 'wrap',
         width: '100%',
-        fontWeight: 500
+        fontWeight: 500,
+        marginBottom: '-1rem'
     },
     ptext: {
         fontSize: '1.35rem',
@@ -218,6 +225,7 @@ const useStyles = createStyles(() => ({
     },
     movieCard: {
         backgroundColor: '#D9D9D926',
+        
         boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
         // padding: '0.8rem',
         display: 'flex',

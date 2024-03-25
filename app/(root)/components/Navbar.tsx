@@ -78,7 +78,8 @@ const useStyles = createStyles(() => ({
         paddingRight: '2rem',
         paddingTop: '0rem',
         width: '100vw',
-        color: "white"
+        color: "white",
+        height: '14vh'
     },
     logo: {
         height: '2rem',
@@ -120,8 +121,8 @@ const useStyles = createStyles(() => ({
         alignItems: 'center',
         border: '2px solid white',
         borderRadius: '8px',
-        borderColor: themeOptions.color.smallBox,
-        color: themeOptions.color.smallBox,
+        borderColor: 'themeOptions.color.smallBox',
+        color: 'themeOptions.color.smallBox',
 
     }
 }))

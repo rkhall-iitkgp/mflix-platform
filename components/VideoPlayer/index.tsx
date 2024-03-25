@@ -410,13 +410,13 @@ const useStyles = createStyles(() => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: "2.5rem",
-        height: "2.5rem",
+        width: "2rem",
+        height: "2rem",
         zIndex: 10
     },
     rightIcons: {
-        width: "1.7rem",
-        height: "1.7rem",
+        width: "1.5rem",
+        height: "1.5rem",
         "&:hover": {
             transform: "scale(1.2)"
         }

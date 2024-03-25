@@ -40,6 +40,64 @@ const styles = createStyles(() => ({
       color: 'gray',
     },
   },
+  // ulStyle: {
+  //   listStyleType: 'none',
+  //   marginTop: '0.5rem',
+  //   paddingLeft: '0',
+  //   textDecoration: 'none',
+  // },
+
+  // contactStylesRoot: {
+  //   width: '100%',
+  //   maxWidth: 300,
+  //   paddingLeft: 20,
+  //   marginTop: 32,
+  // },
+  // contactStylesTitle: {
+  //   color: 'gray',
+  //   fontWeight: 500,
+  //   marginBottom: 8,
+  //   fontSize: 18,
+  // },
+  // contactStylesLink: {
+  //   color: 'rgb(75 85 99)',
+  //   display: 'block',
+  //   marginBottom: '0.5rem',
+  //   textDecoration: 'none',
+  //   '&:hover': {
+  //     color: 'gray',
+  //   },
+  // },
+
+  // findUsStylesRoot: {
+  //   width: '100%',
+  //   maxWidth: 300,
+  //   paddingLeft: 20,
+  //   marginTop: 32,
+  // },
+  // findUsStylesTitle: {
+  //   color: 'gray',
+  //   fontWeight: 500,
+  //   marginBottom: 8,
+  //   fontSize: 18,
+  // },
+  // findUsStylesText: {
+  //   color: 'rgb(75 85 99)',
+  //   fontSize: '0.875rem',
+  //   lineHeight: '1.25rem',
+  //   marginBottom: 12,
+  //   marginTop: 0,
+  //   textDecoration: 'none',
+  // },
+  // findUsStylesLink: {
+  //   display: 'inline-flex',
+  //   alignItems: 'center',
+  //   marginTop: '0.5rem',
+  //   color: 'rgb(75 85 99)',
+  //   '&:hover': {
+  //     color: 'gray',
+  //   },
+  // },
   ulStyle: {
     listStyleType: 'none',
     marginTop: '0.5rem',

@@ -8,12 +8,13 @@ import SkipBackwardIcon from '@/assets/icons/skipBackward.svg'
 import SkipForwardIcon from '@/assets/icons/skipForward.svg'
 import PartyWatchIcon from '@/assets/icons/partyWatch.svg'
 import VolumeIcon from '@/assets/icons/volume.svg'
-import CaptionsIcon from '@/assets/icons/captions.svg'
 import FullScreenIcon from '@/assets/icons/fullScreen.svg'
 import PauseIcon from '@/assets/icons/pause.svg'
 import MuteVolumeIcon from '@/assets/icons/muteVolume.svg'
 import SettingsIcon from '@/assets/icons/settings.svg'
+import LeftArrowIcon from '@/assets/icons/leftArrow.svg'
 import Image from 'next/image';
+import { useHover } from '@mantine/hooks';
 
 interface VideoPlayerProps {
     defaultQuality?: string; // Optional prop for default quality
@@ -26,9 +27,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
     const [isPlaying, setIsPlaying] = useState(false);
     const [hls, setHls] = useState<Hls>();
     const [mute, setMute] = useState(0);
-    const [progress, setProgress] = useState(0);
+    const { hovered, ref } = useHover();
     let update = true;
     let listener = false;
+    let listenerVol = false;
     const loader = useRef<HTMLDivElement>(null);
     const [playbackRate, setPlaybackRate] = React.useState(1)
     const [showPopup, setShowPopup] = React.useState(false);
@@ -58,8 +60,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
             videoPlayer.requestFullscreen().catch((err: any) => {
                 alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
             });
+            document.getElementById('video-header')!.style.display = "flex";
         } else {
             document.exitFullscreen();
+            document.getElementById('video-header')!.style.display = "none";
         }
     }
 
@@ -179,6 +183,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
             if (timer === 0) {
                 document.getElementById("video-player")!.style.cursor = "none";
                 document.getElementById("controls-container")!.style.opacity = "0";
+                document.getElementById("video-header")!.style.opacity = "0";
             }
         }, 10)
 
@@ -198,12 +203,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
             timer = 3;
             document.getElementById("video-player")!.style.cursor = "default";
             document.getElementById("controls-container")!.style.opacity = "1";
+            document.getElementById("video-header")!.style.opacity = "1";
         })
 
         document.getElementById("video-player")?.addEventListener('click', () => {
             timer = 3;
             document.getElementById("video-player")!.style.cursor = "default";
             document.getElementById("controls-container")!.style.opacity = "1";
+            document.getElementById("video-header")!.style.opacity = "1";
         })
 
         document.getElementById("video")?.addEventListener('click', () => {
@@ -218,6 +225,42 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
             else if (e.code == "ArrowLeft" || e.code == "KeyJ") seekBackward();
             else if (e.code == "ArrowRight" || e.code == "KeyL") seekForward();
         })
+
+        const vol = document.getElementById('volume-dot')!;
+        const volBar = document.getElementById('volume-bar')!;
+        vol.addEventListener("mousedown", (e) => {
+            listenerVol = true;
+            document.addEventListener('mousemove', moveVol)
+        })
+
+        document.addEventListener('mouseup', (e) => {
+            if (!listenerVol) return false;
+            document.removeEventListener('mousemove', moveVol);
+            listenerVol = false
+        })
+
+        function moveVol(e) {
+            const { width } = volBar.getBoundingClientRect();
+            const x = e.clientX - volBar.getBoundingClientRect().left;
+            let percentage = (x / width) * 100;
+            if (percentage < 0) percentage = 0;
+            if (percentage > 100) percentage = 100;
+            const volume = document.getElementById('volume')!;
+            volume.style.width = `${percentage}%`;
+            playerRef.current.volume = (percentage / 100);
+        }
+
+        volBar.addEventListener("click", (e) => {
+            const { width } = volBar.getBoundingClientRect();
+            const x = e.clientX - volBar.getBoundingClientRect().left;
+            let percentage = (x / width) * 100;
+            if (percentage < 0) percentage = 0;
+            if (percentage > 100) percentage = 100;
+            const volume = document.getElementById('volume')!;
+            volume.style.width = `${percentage}%`;
+            playerRef.current.volume = (percentage / 100);
+        })
+
     }, []);
     useEffect(() => {
         if (hls) {
@@ -231,6 +274,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
         <div className={classes.videoContainer} id="video-player">
             <div className={classes.loaderContainer} ref={loader}>
                 <div className={classes.loader}></div>
+            </div>
+            <div className={classes.videoHeaders} id="video-header">
+                <Image src={LeftArrowIcon} alt="Esc" width={25} height={25} className={classes.icon} onClick={toggleFullscreen} />
+                <h2>Movie Title</h2>
+                <div></div>
             </div>
             <video id="video" controls={false} ref={playerRef} className={classes.video}></video>
             <div className={classes.controlsContainer} id="controls-container">
@@ -250,11 +298,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
                 </div>
                 <div className={classes.controls}>
                     <div className={classes.flex}>
-                        <Image src={PartyWatchIcon} alt="PartyWatchIcon" width={25} height={25} className={classes.partyWatchIcon} />
-                        <p className={classes.partyWatch}>Party Watch</p>
-                    </div>
-                    <div className={classes.flex}>
-                        <Image src={SkipBackwardIcon} alt="SkipBackwardIcon" width={25} height={25} className={classes.icon} onClick={seekBackward} />
                         {isPlaying ?
                             <Image src={PauseIcon} alt='PauseIcon' width={25} height={25} className={classes.icon} style={{ scale: 1.2 }} onClick={e => {
                                 e.stopPropagation();
@@ -266,23 +309,28 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
                                 togglePlay();
                             }} />
                         }
+                        <Image src={SkipBackwardIcon} alt="SkipBackwardIcon" width={25} height={25} className={classes.icon} onClick={seekBackward} />
                         <Image src={SkipForwardIcon} alt="SkipFowardIcon" width={25} height={25} className={classes.icon} onClick={seekForward} />
+                        <div className={cx(classes.relative, classes.flex)} ref={ref}>
+                            {mute ?
+                                <Image src={MuteVolumeIcon} alt='Muted Volume' width={25} height={25} className={classes.icon} onClick={toggleMute} />
+                                :
+                                <Image src={VolumeIcon} alt="PlayIcon" width={25} height={25} className={classes.icon} onClick={toggleMute} />
+                            }
+                            <div className={cx(classes.popup, classes.volPopup)} style={{ display: hovered ? "block" : "none" }}>
+                                <div id="volume-bar" className={classes.volBar}>
+                                    <div id="volume" className={classes.volume}></div>
+                                    <div id='volume-dot' className={classes.volumeDot}></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className={cx(classes.flex, classes.gap)}>
-                        {/* <div className={classes.quality}>
-                            Quality
-                            <span>
-                                <select name="quality" id="quality" onChange={(e) => changeQuality(e.target.value)} value={quality}>
-                                    <option value="-1">Auto</option>
-                                    {levels.map((level: any, id: any) => (
-                                        <option value={id}>{level.name}</option>
-                                    ))}
-                                </select>
-                            </span>
-                        </div> */}
-                        <div className={classes.settings}>
+                        <Image src={PartyWatchIcon} alt="PartyWatchIcon" width={25} height={25} className={classes.partyWatchIcon} />
+                        <p className={classes.partyWatch}>Party Watch</p>
+                        <div className={classes.relative}>
                             <Image src={SettingsIcon} alt="Settings" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={() => setShowPopup(!showPopup)} />
-                            {showPopup && <div className={classes.settingsPopup}>
+                            {showPopup && <div className={classes.popup}>
                                 <div className={cx(classes.settingsOption, classes.spaceBetween)}>
                                     <p>Quality</p>
                                     <span>
@@ -311,11 +359,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
                                 </div>
                             </div>}
                         </div>
-                        {mute ?
-                            <Image src={MuteVolumeIcon} alt='Muted Volume' width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={toggleMute} />
-                            :
-                            <Image src={VolumeIcon} alt="PlayIcon" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={toggleMute} />}
-                        <Image src={CaptionsIcon} alt="PlayIcon" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} />
                         <Image src={FullScreenIcon} alt="PlayIcon" width={25} height={25} className={cx(classes.icon, classes.rightIcons)} onClick={toggleFullscreen} />
                     </div>
                 </div>
@@ -431,6 +474,18 @@ const useStyles = createStyles(() => ({
             transform: 'translate(-5px, -2.7px) scale(1.5)'
         }
     },
+    volumeDot: {
+        // position: "absolute",
+        transform: 'translateY(-2.7px)',
+        height: '10px',
+        width: '10px',
+        background: 'white',
+        borderRadius: '50%',
+        transition: "transform 0.1s",
+        "&:hover": {
+            transform: 'translateY(-2.7px) scale(1.5)'
+        }
+    },
     settingsOption: {
         color: "white",
         fontWeight: "bold",
@@ -469,19 +524,48 @@ const useStyles = createStyles(() => ({
         borderRadius: "50%",
         animation: `${spin} 0.5s linear infinite`,
     },
-    settings: {
+    relative: {
         position: "relative"
     },
-    settingsPopup: {
+    popup: {
         position: "absolute",
         borderRadius: "1rem",
         bottom: "210%",
         backgroundColor: "rgba(0, 0, 0, 0.7)",
-        padding: "1rem"
+        padding: "1rem",
+        transition: "display 0.5s 2s"
+    },
+    volPopup: {
+        position: "static",
+        backgroundColor: "transparent",
+        padding: 0
     },
     spaceBetween: {
         display: "flex",
         justifyContent: "space-between"
+    },
+    volBar: {
+        width: "100px",
+        height: "5px",
+        background: "rgba(255, 255, 255, 0.7)",
+        display: "flex",
+        cursor: "pointer"
+    },
+    volume: {
+        width: "100%",
+        height: "100%",
+        background: "white"
+    },
+    videoHeaders: {
+        position: "absolute",
+        top: 0,
+        width: "100%",
+        display: "none",
+        justifyContent: "space-between",
+        paddingLeft: "1rem",
+        color: "white",
+        zIndex: 10,
+        background: "linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 80%)"
     }
 }))
 

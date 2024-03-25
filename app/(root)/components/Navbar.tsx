@@ -7,7 +7,7 @@ import { theme } from '@/theme';
 import themeOptions from '@/utils/colors';
 
 export default function Navbar() {
-    const {classes} = useStyles()
+    const { classes } = useStyles()
     return (
         <nav className={classes.container}>
             {/* Logo */}
@@ -38,8 +38,8 @@ export default function Navbar() {
 }
 
 const useStyles = createStyles(() => ({
-    
-    container : {
+
+    container: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -47,7 +47,7 @@ const useStyles = createStyles(() => ({
         paddingLeft: '2rem',
         paddingRight: '2rem',
         paddingTop: '0rem',
-        width: '100%',
+        width: '100vw',
         color: "white"
     },
     logo: {

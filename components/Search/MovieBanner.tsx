@@ -1,4 +1,7 @@
-import { Group, Button, Image, Stack, Text, Paper, Flex } from '@mantine/core';
+'use client';
+
+import { useState } from 'react';
+import { Group, Button, Image, Stack, Text, Paper, Flex, Skeleton } from '@mantine/core';
 import { GrLocation } from 'react-icons/gr';
 import { IoIosArrowForward } from 'react-icons/io';
 import { FaRegHourglass } from 'react-icons/fa6';
@@ -7,107 +10,151 @@ import NextImage from 'next/image';
 import ImdbImg from '@/assets/icons/imdb.png';
 import TomatoImg from '@/assets/icons/tomato.png';
 import themeOptions from '@/utils/colors';
-import Sample from '@/assets/sample.png';
 
-export default function MovieBanner() {
-    const genres = ['Mystery', 'Action', 'Thriller'];
+interface MovieBannerProps {
+    image: string,
+    movieName: string;
+    country: string;
+    genres: Array<string>;
+    imdbRating: string;
+    tomatoRating: string;
+    year: string;
+    duration: string;
+    redirect: string;
+}
+
+const Loader: React.FC = () => (
+    <Stack ml="6%" gap="xs" mr="lg" w="80%" mt={13}>
+        <Skeleton width="50%" height={themeOptions.fontSize.l} radius="xl" />
+        <Group gap="6%" w="85%" mt={5}>
+            {[1.2, 0.8, 1].map((e, index) => <Skeleton key={index} height={themeOptions.fontSize.l} width={`${e * 25}%`} radius={13} />)}
+        </Group>
+        <Group mt={5} justify="space-between" gap={themeOptions.fontSize.md} style={{ rowGap: '10px' }}>
+            {[1.75, 1, 1.8, 2, 1.5].map((e, index) => <Skeleton key={index} height={17} width={`${e * 10}%`} radius="xl" />)}
+        </Group>
+    </Stack>
+);
+
+const MovieBanner: React.FC<MovieBannerProps> = ({
+    image,
+    movieName,
+    genres,
+    imdbRating,
+    tomatoRating,
+    duration,
+    year,
+    country,
+    redirect,
+}) => {
+    const [loading, setLoading] = useState(true);
+
     return (
-        <Stack
-          styles={{
-              root: {
-                  minWidth: '600px',
-                  borderRadius: '20px',
-                  background: 'linear-gradient(0deg, rgba(112, 17, 182, 0.05), rgba(112, 17, 182, 0.05)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
-              },
-          }}
-          pt="md"
-          pl={themeOptions.fontSize.l}
-          pr={themeOptions.fontSize.l}
-          gap={0}
-        >
-            <Flex>
-                <div>
-                    <Image
-                      src={Sample}
-                      component={NextImage}
-                      alt="sample"
-                      h={160}
-                    />
-                </div>
-                <Stack ml="lg" gap="xs" mr="lg">
-                    <Text fz={themeOptions.fontSize.l}>Movie Name</Text>
-                    <Group gap={themeOptions.fontSize.xs}>
-                        {genres.map((e, i) =>
-                            <Paper
-                              key={i}
-                              bg={themeOptions.color.button}
-                              fz={themeOptions.fontSize.s}
-                              w={116}
-                              pt={5}
-                              pb={5}
-                              radius={13}
-                            >
-                                <Text ta="center">{e}</Text>
-                            </Paper>)}
-                    </Group>
-                    <Group mt={7} justify="space-between" gap={themeOptions.fontSize.l} style={{ rowGap: '10px' }} grow preventGrowOverflow={false}>
-                        <Group gap={6} justify="space-around">
-                            <Image
-                              src={ImdbImg}
-                              component={NextImage}
-                              alt="imdb"
-                              height={20}
-                              unoptimized
-                            />
-                            <Text fz={themeOptions.fontSize.xs}>8.6/10</Text>
-                        </Group>
-                        <Group gap={6} justify="space-around">
-                            <Image
-                              src={TomatoImg}
-                              component={NextImage}
-                              alt="tomato"
-                              height={20}
-                              unoptimized
-                            />
-                            <Text fz={themeOptions.fontSize.xs}>97 %</Text>
-                        </Group>
-                        <Group gap={6} justify="space-around">
-                            <FaRegHourglass />
-                            <Text fz={themeOptions.fontSize.xs}>2 hr 12 min</Text>
-                        </Group>
-                        <Group gap={6} justify="space-around">
-                            <PiCalendar />
-                            <Text fz={themeOptions.fontSize.xs}>2024</Text>
-                        </Group>
-                        <Group gap={6} justify="space-around" style={{ maxWidth: 'max-content' }}>
-                            <GrLocation />
-                            <Text fz={themeOptions.fontSize.xs}>Country</Text>
-                        </Group>
-                    </Group>
-                </Stack>
-            </Flex>
-            <Text
-              ta="right"
-              w="100%"
+        <Group p={0} styles={{ root: { minWidth: '600px', borderRadius: '20px', boxShadow: '14px 11px 6.699999809265137px 2px rgba(0, 0, 0, 0.47)' } }}>
+            <Stack
               styles={{
                   root: {
-                      position: 'relative',
-                      top: '-1rem',
+                      width: '100%',
+                      borderRadius: '20px',
+                      boxShadow: '2px 5px 8px 2px rgba(50, 41, 54, 0.87) inset',
+                      background: 'linear-gradient(0deg, rgba(112, 17, 182, 0.05), rgba(112, 17, 182, 0.05)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
                   },
               }}
+              pt="xl"
+              pl="5%"
+              pr="5%"
+              gap={0}
             >
-                <Button
-                  fz={themeOptions.fontSize.s}
-                  c={themeOptions.color.textColorNormal}
-                  component="a"
-                  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
-                  variant="transparent"
-                  rightSection={<IoIosArrowForward size={14} />}
-                  p={0}
+                <Flex>
+                    <Skeleton visible={loading} width={107} height={158} radius={0}>
+                        <NextImage
+                          src={image}
+                          height={158}
+                          width={107}
+                          alt="sample"
+                          onLoad={() => setLoading(false)}
+                          style={{ boxShadow: '0px 4px 4px 0px #00000040' }}
+                          />
+                    </Skeleton>
+                    {loading ?
+                    <Loader />
+                    :
+                    <Stack ml="6%" gap="xs" mr="lg">
+                        <Text fz={themeOptions.fontSize.l}>{movieName}</Text>
+                        <Group gap="6%" w="90%" grow preventGrowOverflow={false}>
+                            {genres.map((e, i) =>
+                                <Paper
+                                  key={i}
+                                  bg={themeOptions.color.button}
+                                  fz={themeOptions.fontSize.s}
+                                  pt={5}
+                                  pb={5}
+                                  radius={13}
+                                >
+                                    <Text ta="center">{e}</Text>
+                                </Paper>)}
+                        </Group>
+                        <Group mt={7} justify="space-between" gap={themeOptions.fontSize.l} style={{ rowGap: '10px' }} grow preventGrowOverflow={false}>
+                            <Group gap={themeOptions.fontSize.xs}>
+                                <Image
+                                  src={ImdbImg}
+                                  component={NextImage}
+                                  alt="imdb"
+                                  h={17}
+                                  unoptimized
+                                />
+                                <Text fz={themeOptions.fontSize.xs}>{imdbRating}</Text>
+                            </Group>
+                            <Group gap={themeOptions.fontSize.xs}>
+                                <Image
+                                  src={TomatoImg}
+                                  component={NextImage}
+                                  alt="tomato"
+                                  h={17}
+                                  unoptimized
+                                />
+                                <Text fz={themeOptions.fontSize.xs}>{tomatoRating}</Text>
+                            </Group>
+                            <Group gap={themeOptions.fontSize.xs}>
+                                <FaRegHourglass size={17} />
+                                <Text fz={themeOptions.fontSize.xs}>{duration}</Text>
+                            </Group>
+                            <Group gap={themeOptions.fontSize.xs}>
+                                <PiCalendar size={17} />
+                                <Text fz={themeOptions.fontSize.xs}>{year}</Text>
+                            </Group>
+                            <Group gap={themeOptions.fontSize.xs} style={{ maxWidth: 'max-content' }}>
+                                <GrLocation size={17} />
+                                <Text fz={themeOptions.fontSize.xs}>{country}</Text>
+                            </Group>
+                        </Group>
+                    </Stack>
+                    }
+                </Flex>
+                <Text
+                  ta="right"
+                  w="100%"
+                  styles={{
+                      root: {
+                          position: 'relative',
+                          top: '-1rem',
+                      },
+                  }}
                 >
-                    View More
-                </Button>
-            </Text>
-        </Stack>
+                    <Button
+                      fz={themeOptions.fontSize.s}
+                      c={themeOptions.color.textColorNormal}
+                      component="a"
+                      href={redirect}
+                      variant="transparent"
+                      rightSection={<IoIosArrowForward size={14} />}
+                      p={0}
+                    >
+                        View More
+                    </Button>
+                </Text>
+            </Stack>
+        </Group>
     );
-}
+};
+
+export default MovieBanner;

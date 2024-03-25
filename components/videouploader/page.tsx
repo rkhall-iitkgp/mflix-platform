@@ -41,7 +41,9 @@ const UploadVideo = () => {
           'Content-Type': 'multipart/form-data',
         },
         onUploadProgress: (progressEvent) => {
-          let percentCompleted = Math.round((progressEvent.loaded * 50) / progressEvent.total);
+          let percentCompleted = Math.round(
+            (progressEvent.loaded * 50) / (progressEvent.total ?? 1)
+          );
           setUploadPercentage(percentCompleted);
         },
       });

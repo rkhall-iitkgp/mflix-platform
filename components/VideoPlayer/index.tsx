@@ -47,8 +47,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
   function updateProgress1(data: any) {
     console.log('playerRef.current', data);
     const progress = document.getElementById('progress1')!;
-    const percentage = (playerRef.current.currentTime / playerRef.current.duration) * 100;
-    progress.style.width = `${percentage}%`;
+    if (playerRef.current && playerRef.current.buffered.length > 0) {
+      const bufferedEnd = playerRef.current.buffered.end(0);
+      const duration = playerRef.current.duration;
+      const percentage = (bufferedEnd / duration) * 100;
+      progress.style.width = `${percentage}%`;
+    }
   }
 
   function seek(event: any) {
@@ -108,7 +112,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
       // });
 
       playerRef.current.addEventListener('timeupdate', updateProgress);
-      playerRef.current.addEventListener('canplaythrough', updateProgress1);
+      playerRef.current.addEventListener('timeupdate', updateProgress1);
       playerRef.current.addEventListener('click', togglePlay);
       playerRef.current.addEventListener('waiting', () => {
         setIsLoading(true);
@@ -129,7 +133,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
       setLevels(hls.levels);
     }
   }, [quality, hls, hls?.levels]);
-
+  useEffect(() => {
+    document.addEventListener('keyup', (e) => {
+      if (e.key == 'PrintScreen') {
+        navigator.clipboard.writeText('');
+        alert('Screenshots disabled!');
+      }
+    });
+  }, []);
   return (
     <div>
       {/* <HlsPlayer
@@ -168,13 +179,37 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
       <button onClick={togglePlay}>{isPlaying ? 'Paus' : 'Play'}</button>
       <div
         id="progress-bar"
-        style={{ width: '100%', height: '5px', background: '#ddd', cursor: 'pointer' }}
+        style={{
+          width: '100%',
+          height: '5px',
+          background: '#ddd',
+          cursor: 'pointer',
+          position: 'relative',
+        }}
         onClick={(e: any) => {
           seek(e);
         }}
       >
-        <div id="progress" style={{ height: '100%', background: ' #666', width: '0%' }}></div>
-        <div id="progress1" style={{ height: '100%', background: ' #888', width: '0%' }}></div>
+        <div
+          id="progress"
+          style={{
+            height: '100%',
+            background: ' #666',
+            width: '0%',
+            position: 'absolute',
+            zIndex: 2,
+          }}
+        ></div>
+        <div
+          id="progress1"
+          style={{
+            height: '100%',
+            background: ' red',
+            width: '0%',
+            position: 'absolute',
+            zIndex: 1,
+          }}
+        ></div>
       </div>
       <button id="mute-btn" onClick={toggleMute}>
         Mute

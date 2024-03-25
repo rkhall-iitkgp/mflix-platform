@@ -45,7 +45,7 @@ const styles = {
         padding: '0.5rem 0.5rem 0.5rem 1rem',
         marginTop: '2rem',
         marginBottom: '2rem',
-        height: '3.6rem'
+        height: '3.6rem',
     },
     input: {
         backgroundColor: 'transparent',

@@ -1,8 +1,8 @@
-
+'use client'
 import Switch from 'react-switch';
 import themeOptions from '@/utils/themes'
 import { Box, Button, Divider, Flex, Group, Stack, Text, Title, useMantineTheme } from '@mantine/core'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 
  const PricingContainer = () => {
@@ -247,3 +247,5 @@ import { useState } from 'react'
       </>
    )
 }
+
+export default PricingContainer;

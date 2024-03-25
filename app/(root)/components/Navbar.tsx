@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 import { createStyles } from "@mantine/styles";
 import searchMsApiUrls from '../../api/searchMsApi';
+import themeOptions from '../../../utils/colors';
 
 export default function Navbar() {
 
@@ -49,12 +50,12 @@ export default function Navbar() {
             {/* Links CSSPropertyRule*/}
             <ul className={classes.links}>
                 <li>
-                    <Link href="#" className={classes.link}>
+                    <Link href="/" className={classes.link}>
                         Home
                     </Link>
                 </li>
                 <li>
-                    <Link href="#" className={classes.link}>
+                    <Link href="/login" className={classes.link}>
                         Login
                     </Link>
                 </li>

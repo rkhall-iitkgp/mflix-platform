@@ -15,8 +15,75 @@ import {
 } from '@mantine/core';
 import { GoogleButton } from './GoogleButton';
 import themeOptions from '../../assets/themes/colors'
+import { useState } from 'react';
+import searchMsApiUrls from '../api/searchMsApi';
+import useLoginStore from '@/Stores/LoginStore';
 
 export function Login(props: PaperProps) {
+    const [userData, setUserData] = useState(null)
+
+
+    const submitLogin = async (values: any) => {
+        const base_url = searchMsApiUrls()
+        setUserData(values);
+        values.flag = 0;
+        console.log(values);
+        let res = await fetch(`${base_url}/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                ...values,
+            }),
+        })
+
+        let jsonData = await res.json();
+        if (!res.ok) {
+            console.log(jsonData);
+        }
+        else {
+            console.log("login successful");
+            console.log(jsonData);
+            sessionStorage.setItem('accessToken', jsonData.user.accessToken);
+            useLoginStore.getState().updateUser(jsonData.user);
+            const state = useLoginStore.getState();
+            console.log(state);
+            // sessionStorage.setItem('token', jsonData.user.token);
+        }
+
+        if (!jsonData.user.userProfiles.length) {
+            console.log(jsonData.user)
+            console.log(jsonData.user.userProfiles.length)
+            const createData = {
+                "userName": jsonData.user.name,
+                "flag": 1,
+            }
+            console.log(createData)
+            const token = sessionStorage.getItem('accessToken');
+            res = await fetch(`${base_url}/user/create`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    ...createData,
+                }),
+            })
+            jsonData = await res.json();
+            if (!res.ok) {
+                console.log(jsonData);
+            }
+            else {
+                console.log("user Created successful");
+                console.log(jsonData);
+
+                // sessionStorage.setItem('token', jsonData.user.token);
+            }
+        }
+
+    };
 
     const useStyles = createStyles(() => ({
         OuterBoxStyles: {
@@ -66,9 +133,7 @@ export function Login(props: PaperProps) {
     const form = useForm({
         initialValues: {
             email: '',
-            name: '',
             password: '',
-            terms: true,
         },
 
         validate: {
@@ -87,11 +152,11 @@ export function Login(props: PaperProps) {
                 align="center" gap={{ sm: 'lg' }}>
                 <Text size="1.1rem" c={'white'}  >Don't have an account?
                 </Text>
-                <a href="" style={{ color: themeOptions.color.textColorNormal }}>Sign in</a>
+                <a href="/register" style={{ color: themeOptions.color.textColorNormal }}>Sign in</a>
             </Flex>
             <Box
                 className={classes.CentreBoxStyles}>
-                <form onSubmit={form.onSubmit(() => { })}
+                <form onSubmit={form.onSubmit((values) => { submitLogin(values) })}
                     className={classes.FormStyles}>
                     <TextInput
                         required

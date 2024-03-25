@@ -3,9 +3,42 @@
 import Link from 'next/link'
 import React from 'react'
 import { createStyles } from "@mantine/styles";
+import searchMsApiUrls from '../../api/searchMsApi';
 
 export default function Navbar() {
-    const {classes} = useStyles()
+
+    const handleLogOut = async () => {
+        const values = {
+            "flag": 1,
+        }
+        const base_url = searchMsApiUrls()
+        const token = sessionStorage.getItem('accessToken');
+        await fetch(`${base_url}/auth/logout`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`
+            }, body: JSON.stringify({
+                ...values,
+            }),
+        }).then(async (res) => {
+            let jsonData = await res.json();
+            if (!res.ok) {
+                console.log(jsonData);
+            }
+            //   setLoading(false);
+            else {
+                sessionStorage.removeItem('accessToken');
+                console.log("Logout successful");
+                // console.log(jsonData);
+                // sessionStorage.setItem('accessToken', jsonData.user.accessToken);
+                // sessionStorage.setItem('token', jsonData.user.token);
+            }
+        });
+    }
+
+
+    const { classes } = useStyles()
     return (
         <nav className={classes.container}>
             {/* Logo */}
@@ -17,17 +50,17 @@ export default function Navbar() {
             <ul className={classes.links}>
                 <li>
                     <Link href="#" className={classes.link}>
-                        Movies
+                        Home
                     </Link>
                 </li>
                 <li>
                     <Link href="#" className={classes.link}>
-                        Shows
+                        Login
                     </Link>
                 </li>
-                <li>
-                    <Link href="#" className={classes.link}>
-                        Drama
+                <li className={classes.premium} >
+                    <Link href="#" className={classes.link2}>
+                        Premium
                     </Link>
                 </li>
             </ul>
@@ -36,15 +69,15 @@ export default function Navbar() {
 }
 
 const useStyles = createStyles(() => ({
-    container : {
+    container: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '1rem',
         paddingLeft: '2rem',
         paddingRight: '2rem',
-        position: 'absolute',
-        width: '100%',
+        paddingTop: '0rem',
+        width: '100vw',
         color: "white"
     },
     logo: {
@@ -65,12 +98,30 @@ const useStyles = createStyles(() => ({
     },
     link: {
         padding: '1rem',
-        marginLeft: '1rem',
-        marginRight: '1rem',
+        marginLeft: '1.5rem',
+        marginRight: '1.5rem',
         textDecoration: 'none',
+        fontSize: '1.25rem',
         color: 'white',
         '&:hover': {
             color: 'rgb(156, 163, 175)'
-        }
+        },
+        alignItems: 'center',
+    },
+    link2: {
+        padding: '0.5rem',
+        marginLeft: '1.5rem',
+        marginRight: '1.5rem',
+        textDecoration: 'none',
+        fontSize: '1.25rem',
+        '&:hover': {
+            color: 'rgb(156, 163, 175)'
+        },
+        alignItems: 'center',
+        border: '2px solid white',
+        borderRadius: '8px',
+        borderColor: themeOptions.color.smallBox,
+        color: themeOptions.color.smallBox,
+
     }
 }))

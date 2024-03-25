@@ -56,6 +56,10 @@ export default function MovieDetails() {
         eight:{
             border: "1px solid #000", borderRadius: "10px", paddingInline: "15px", background: "#000", opacity: "40%",
             color:'#fff'
+        },
+        movieName:{
+            color: 'white',
+            fontSize: themeOptions.fontSize.xxl,
         }
 
 
@@ -86,7 +90,9 @@ export default function MovieDetails() {
                     />
                 </div>
                 <Stack ml="xxl" gap="xs" mr="lg" className={classes.two}>
-                    <Text fz={themeOptions.fontSize.xxl}>Movie Name</Text>
+                    <p
+                    className={classes.movieName}
+                    >Movie Name</p>
                     <Group gap={themeOptions.fontSize.xs}>
                         {genres.map((e, i) =>
                             <Paper

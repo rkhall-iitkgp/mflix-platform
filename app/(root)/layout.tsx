@@ -9,6 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const styles = createStyles(() => ({
         mainStyles: {
             color: 'white',
+            overflow: 'hidden'
         }
     }));
     const { classes } = styles();

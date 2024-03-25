@@ -4,16 +4,20 @@ import Link from 'next/link'
 import React from 'react'
 import { createStyles } from "@mantine/styles";
 import themeOptions from '@/utils/colors';
-import SearchBar from '@/app/(root)/components/SearchBar'
 import { FaSearch } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
 import { ActionIcon, Divider } from '@mantine/core';
 import { IoCloseOutline } from "react-icons/io5";
+import NavSearch from '@/app/(root)/components/NavSearch';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
+    const path = usePathname();
     const { classes } = useStyles();
     const [input, setInput] = React.useState('');
     const [isTyping, setIsTyping] = useState(false);
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [visible, setVisible] = useState(true);
     const [isSearchOpen, setIsSearchOpen] = useState(false); // Rename state to indicate whether search is open
 
     const searchBoxRef = useRef<HTMLDivElement>(null); // UseRef with HTMLDivElement type
@@ -46,47 +50,70 @@ export default function Navbar() {
         };
     }, []);
 
-    return (
-        <nav className={classes.container}>
-            {/* Logo */}
-            <div className={classes.logoDiv}>
-                <img src="/logo.svg" alt="Logo" className={classes.logo} />
-            </div>
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.pageYOffset;
+            setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+            setPrevScrollPos(currentScrollPos);
+        };
 
-            {/* Links */}
-            <ul className={classes.links}>
-                <li>
-                    {isSearchOpen ? ( // Check if search is open
-                        <>
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [prevScrollPos, visible]);
+
+    return (
+        <nav >
+            <div className={`${classes.container} ${visible ? classes.visible : classes.hidden}`} style={{zIndex:'220'}}>
+                {/* Logo */}
+                <div className={classes.logoDiv}>
+                    <img src="/logo.svg" alt="Logo" className={classes.logo} />
+                </div>
+
+                {/* Links */}
+                <ul className={classes.links}>
+                    <li>
+                        {path !== '/' && ( // Check if current path is not the home page
                             <div>
-                                <ActionIcon size={30} variant='transparent' onClick={handleCloseClick}>
-                                    <IoCloseOutline color={themeOptions.color.divider} size={30} />
-                                </ActionIcon>
-                                <div style={{ marginLeft: '-500px', width: '600px', position: 'absolute', zIndex:'40' }}>
-                                    <SearchBar input={input} setInput={setInput} />
-                                </div>
+                                {isSearchOpen ? (
+                                    <>
+                                        <div>
+                                            <ActionIcon size={30} variant='transparent' onClick={handleCloseClick} style={{marginRight:'5px'}}>
+                                                <IoCloseOutline color={themeOptions.color.divider} size={30}  />
+                                            </ActionIcon>
+                                            <div style={{ marginLeft: '-630px', marginTop:'-70px', width: '600px', height:'20px', position: 'absolute', zIndex:'40' }}>
+                                                <NavSearch input={input} setInput={setInput} />
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <FaSearch className={classes.search} onClick={handleSearchClick} />
+                                )}
                             </div>
-                        </>
-                    ) : (
-                        <FaSearch className={classes.search} onClick={handleSearchClick} />
-                    )}
-                </li>
-                <li>
-                    <Link href="#" className={classes.link}>
-                        Home
-                    </Link>
-                </li>
-                <li>
-                    <Link href="#" className={classes.link}>
-                        Login
-                    </Link>
-                </li>
-                <li className={classes.premium} >
-                    <Link href="#" className={classes.link2}>
-                        Premium
-                    </Link>
-                </li>
-            </ul>
+                        )}
+                    </li>
+                    <li>
+                        <Link href="/" className={`${classes.link} ${path === '/' ? classes.activeLink : ''}`}>
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/login" className={`${classes.link} ${path === '/login' ? classes.activeLink : ''}`}>
+                            Login
+                        </Link>
+                    </li>
+                    <li className={classes.premium} >
+                        <Link href="#" className={classes.link2}>
+                            Premium
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+            <div style={{width:'100%', height:'50px'}}>
+
+            </div>
         </nav>
     )
 }
@@ -97,15 +124,21 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '1rem',
+        height:'50px',
+        // padding: '1rem',
         paddingLeft: '2rem',
         paddingRight: '2rem',
         paddingTop: '0rem',
         width: '100%',
-        color: "white"
+        color: "white",
+        background:themeOptions.color.black,
+        opacity:'1',
+        position:'fixed',
+        transition: 'top 0.3s ease-in-out',
+        // marginBottom:'500px',
     },
     search: {
-        height: '25px',
+        height: '20px',
         width: '50px',
         marginTop: '5px',
         '&:hover': {
@@ -115,7 +148,7 @@ const useStyles = createStyles(() => ({
     },
     icon: {
         width: '2rem',
-        height: '2rem',
+        height: '1rem',
         color: themeOptions.color.divider,
         marginRight: '0.5rem'
     },
@@ -128,6 +161,9 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         alignItems: 'center',
         padding: '1rem'
+    },
+    activeLink: {
+        fontWeight: 'bold',
     },
     links: {
         display: 'flex',
@@ -170,6 +206,12 @@ const useStyles = createStyles(() => ({
         fontSize: '1.25rem',
         marginLeft: '0.6rem',
         color: themeOptions.color.divider,
-    }
+    },
+    visible: {
+        top: 0,
+    },
+    hidden: {
+        top: '-50px',
+    },
 
 }))

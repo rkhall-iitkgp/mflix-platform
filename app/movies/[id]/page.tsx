@@ -11,7 +11,7 @@ import searchMsApiUrls from '../../api/searchMsApi';
 import BgImage from '@/assets/images/bg-home.jpeg'
 import MovieContent from '@/components/MovieDetails/MovieContent';
 import { ScrollArea } from '@mantine/core'
-import VideoPlayer from '@/components/MovieDetails/VideoPlayer';
+import VideoPlayer from '@/components/VideoPlayer';
 import { useEffect , useState } from 'react';
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
@@ -27,16 +27,10 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
         getMovieDetails(); 
     },[])
     const styles = createStyles(() => ({
-        nvbar:{
-            background:themeOptions.color.black,
-            opacity:'0.7',
-            position:'fixed',
-            width:'100%',
-        },
         streaming: {
             width: '100%',
             height: '98vh',
-            marginTop: '35px',
+            marginTop: '45px',
             border: '1px solid #fff',
         },
         similarmovies:{
@@ -69,7 +63,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
             pb="xs"
             bg={themeOptions.color.background}
             gap={0}
-            style={{backgroundImage:'url(BgImage)'}}
+            // style={{backgroundImage:'url(BgImage)'}}
         >
             {/* Background Image */}
             <div className={classes.bgContainer}>
@@ -77,25 +71,23 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
             </div>
 
             {/* Navbar */}
-            {/* <ScrollArea type='hover'> */}
-            <div style={{zIndex:'20'}} className={classes.nvbar} >
+            <div>
                 <Navbar />
             </div>
-                {/* <main className={classes.mainStyles}/> */}
-            {/* </ScrollArea> */}
 
             {/* Streaming Section */}
-            <Group className={classes.streaming}>
+            {/* <Group className={classes.streaming}>
                 
-            </Group>
+            </Group> */}
+            <VideoPlayer />
 
             {/* Movie Details */}
-            <MovieContent  movieData ={movieData} />
+            <MovieContent movieData />
 
             <Space h={"3rem"} />
 
             {/* Carousal */}
-            <p className={classes.similarmovies}>Similar Movies</p>
+            <p className={classes.similarmovies} style={{zIndex:'22'}}>Similar Movies</p>
             <Stack className={classes.carousal}>
                 <SimilarMovies/>
             </Stack>

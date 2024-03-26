@@ -82,25 +82,33 @@ const useStyles = createStyles(() => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: '60vh',
+        minHeight: '100vh',
         width: '100vw',
+        // border :'solid white 2px'
+
     },
     childStyle: {
-        width: '80%',
+        width: '60%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        border: '1px solid #ccc',
+        // border: '1px solid #ccc',
         margin: '10px',
-        padding: '10px',
+        padding: '2vw',
         textAlign: 'center',
+        // height:'80vh'
     },
     flexContainer: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        border: '1px solid yellow',
+        border: '3px solid white',
+        borderRadius:'8px',
         width: '100%',
+        padding:'2vw',
+        // gap:'2rem',
+        marginLeft:'3vw',
+        marginRight:'3vw',
     },
     profileContainer: {
         display: 'flex',
@@ -110,23 +118,35 @@ const useStyles = createStyles(() => ({
     profileItem: {
         display: 'flex',
         margin: '0.5vw',
-        padding: '5px',
-        marginLeft: '1vw',
-        marginRight: '1vw',
-        borderBottom: 'white 1px solid',
-        justifyContent: 'space-evenly',
+        // padding: '2vw',
+        // marginLeft: '1vw',
+        // marginRight: '1vw',
+        // borderBottom: 'white 1px solid',
+        justifyContent: 'flex-start',
         width: '100%',
+        gap:'3vw',
+
     },
+
+  
     userInfoItem: {
         display: 'flex',
         justifyContent: 'space-between',
-        margin: '5px',
+        paddingLeft: '0',
+        paddingRight: '0',
+        paddingTop:'1vw',
+        paddingBottom:'1vw',
+        borderBottom:'white solid 1px'
     },
     userInfoInput: {
         border: 'none',
         backgroundColor: 'transparent',
-        width: '50%',
+        width: '40%',
         textAlign: 'right',
+    },
+
+    editableInput: {
+        borderBottom: '1px solid white',
     },
 }));
 
@@ -134,41 +154,71 @@ const UserProfile = () => {
     const { classes } = useStyles();
     const [userInfo, setUserInfo] = useState<UserInfo>(initialUserInfo);
     const [editMode, setEditMode] = useState<boolean>(false);
+    const [nameError, setNameError] = useState<string>('');
+    const [phoneError, setPhoneError] = useState<string>('');
+    const [lastValidValues, setLastValidValues] = useState<UserInfo>(initialUserInfo);
 
     const handleEditClick = () => {
         setEditMode(!editMode);
     };
 
     const handleSaveClick = () => {
-        // Check for name and mobile number validity before saving
+        let nameValid = true;
+        let phoneValid = true;
+
         if (!userInfo.name.trim()) {
-            console.error('Name cannot be empty');
-            return;
+            setNameError('Name cannot be empty');
+            nameValid = false;
+        } else {
+            setNameError('');
         }
 
         if (!/^\d{10}$/.test(userInfo.phoneNo)) {
-            console.error('Phone number must be 10 digits long and contain only numbers');
-            return;
+            setPhoneError('Phone number must be 10 digits long and contain only numbers');
+            phoneValid = false;
+        } else {
+            setPhoneError('');
         }
 
-        // If all checks pass, exit edit mode and save changes
-        setEditMode(false);
+        if (nameValid && phoneValid) {
+            setEditMode(false);
+            setLastValidValues({ ...userInfo }); // Update lastValidValues when input is valid
+        } else {
+            console.log('Input error');
+            setUserInfo(lastValidValues); // Revert to last valid values on invalid input
+        }
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, key: keyof UserInfo) => {
         const { value } = event.target;
         setUserInfo({ ...userInfo, [key]: value });
+
+        if (key === 'name') {
+            setNameError('');
+        } else if (key === 'phoneNo') {
+            setPhoneError('');
+        }
     };
 
-
+    const handleFieldFocus = (key: keyof UserInfo) => {
+        setLastValidValues({ ...userInfo });
+    };
 
     return (
         <div className={classes.containerStyle}>
-
+            
+            <div className={classes.childStyle} style={{flexDirection:'column', alignItems:'center'}}>
+                
+                    <h1 style={{ color: 'white', marginBottom: '4vh' }}>User Profile</h1>
+                    <div style={{ width: '20vh', height: '20vh', borderRadius: '50%', overflow: 'hidden', border: '2px solid white' }}>
+                        <Image src="" alt="Profile" width={150} height={150} />
+                    </div>
+                
+            </div>
             <div className={classes.childStyle}>
                 <div className={classes.flexContainer}>
                     <div className={classes.userInfoItem}>
-                        <h2>User Info</h2>
+                        <h2 style={{ color: '#7011B6' }}>User Information</h2>
                         {editMode ? (
                             <Image src={saveIcon} alt="Save" width={40} height={40} onClick={handleSaveClick} />
                         ) : (
@@ -176,31 +226,40 @@ const UserProfile = () => {
                         )}
                     </div>
                     {Object.entries(userInfo).map(([key, value], index) => (
-                        <div key={index} className={classes.userInfoItem}>
+                        <div key={index} className={classes.userInfoItem} style={{ borderBottom: index === Object.entries(userInfo).length - 1 ? 'none' : 'white solid 1px' }}>
                             <div>{key}</div>
-                            <input
-                                type="text"
-                                value={value}
-                                onChange={(event) => handleChange(event, key)}
-                                className={classes.userInfoInput}
-                                disabled={!editMode}
-                            />
+                            {editMode && (key === 'name' || key === 'phoneNo') ? (
+                                <>
+                                    {key === 'name' && nameError && <div style={{ color: 'red', alignContent: 'right' }}>{nameError}</div>}
+                                    {key === 'phoneNo' && phoneError && <div style={{ color: 'red' }}>{phoneError}</div>}
+                                    <input
+                                        type="text"
+                                        value={value}
+                                        onChange={(event) => handleChange(event, key)}
+                                        onFocus={() => handleFieldFocus(key)}
+                                        className={`${classes.userInfoInput} ${editMode && (key === 'name' || key === 'phoneNo') ? classes.editableInput : ''}`}
+                                    />
+                                </>
+                            ) : (
+                                <div>{value}</div>
+                            )}
                         </div>
                     ))}
                 </div>
             </div>
-            {/* Second child div */}
+
+           
 
 
             <div className={classes.childStyle}>
                 {/* Inner div for user profiles */}
                 <div className={classes.flexContainer}>
-                    <h2>User Profiles</h2>
+                    <h2 style={{ color: '#7011B6', textAlign:'left' }}>Your Profiles</h2>
                     <div className={classes.profileContainer}>
                         {userProfiles.map((profile, index) => (
                             <div key={index} className={classes.profileItem}>
                                 <Image  src={profile.avatarUrl} alt="prfl" width={50} height={50} />
-                                <div>Name: {profile.profileName}</div>
+                                <div>{profile.profileName}</div>
                                 {/* <div>ID: {profile.profileId}</div> */}
                             </div>
                         ))}
@@ -208,13 +267,13 @@ const UserProfile = () => {
                 </div>
                 {/* Inner div for user signed-in info */}
                 <div className={classes.flexContainer}>
-                    <h2>User Signed-in Info</h2>
+                    <h2 style={{ color: '#7011B6', textAlign: 'left' }}>User Signed-in Info</h2>
                     <div className={classes.profileContainer}>
                         {userSignedInInfos.map((info, index) => (
                             <div key={index} className={classes.profileItem}>
                                 <Image src={info.iconUrl} alt="prfl" width={50} height={50} />
                                 <><div>Device ID: {info.deviceId}</div>
-                                    <div>Device Name: {info.deviceName}</div></>
+                                    <div> {info.deviceName}</div></>
                             </div>
                         ))}
                     </div>

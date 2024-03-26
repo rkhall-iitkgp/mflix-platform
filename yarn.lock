@@ -2346,6 +2346,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/dates@npm:^7.6.2":
+  version: 7.7.0
+  resolution: "@mantine/dates@npm:7.7.0"
+  dependencies:
+    clsx: "npm:2.1.0"
+  peerDependencies:
+    "@mantine/core": 7.7.0
+    "@mantine/hooks": 7.7.0
+    dayjs: ">=1.0.0"
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10c0/09229a5331738bb90eb81543477fa503f23763940181865bff66d5e7830c4a4af756221d754ea028de2c2dd9be68cf7cebdb92ab25aa968168692dbda78d949f
+  languageName: node
+  linkType: hard
+
 "@mantine/form@npm:^7.6.2":
   version: 7.6.2
   resolution: "@mantine/form@npm:7.6.2"
@@ -11347,6 +11362,7 @@ __metadata:
     "@babel/core": "npm:^7.24.0"
     "@emotion/react": "npm:^11.11.4"
     "@mantine/core": "npm:^7.6.2"
+    "@mantine/dates": "npm:^7.6.2"
     "@mantine/form": "npm:^7.6.2"
     "@mantine/hooks": "npm:^7.6.2"
     "@mantine/styles": "npm:^6.0.21"

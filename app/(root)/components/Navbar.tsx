@@ -50,17 +50,17 @@ export default function Navbar() {
             <ul className={classes.links}>
                 <li>
                     <Link href="#" className={classes.link}>
-                        Movies
+                        Home
                     </Link>
                 </li>
                 <li>
                     <Link href="#" className={classes.link}>
-                        Shows
+                        Login
                     </Link>
                 </li>
-                <li>
-                    <Link href="#" className={classes.link}>
-                        Drama
+                <li className={classes.premium} >
+                    <Link href="#" className={classes.link2}>
+                        Premium
                     </Link>
                 </li>
             </ul>
@@ -76,7 +76,8 @@ const useStyles = createStyles(() => ({
         padding: '1rem',
         paddingLeft: '2rem',
         paddingRight: '2rem',
-        width: '100%',
+        paddingTop: '0rem',
+        width: '100vw',
         color: "white"
     },
     logo: {
@@ -97,12 +98,30 @@ const useStyles = createStyles(() => ({
     },
     link: {
         padding: '1rem',
-        marginLeft: '1rem',
-        marginRight: '1rem',
+        marginLeft: '1.5rem',
+        marginRight: '1.5rem',
         textDecoration: 'none',
+        fontSize: '1.25rem',
         color: 'white',
         '&:hover': {
             color: 'rgb(156, 163, 175)'
-        }
+        },
+        alignItems: 'center',
+    },
+    link2: {
+        padding: '0.5rem',
+        marginLeft: '1.5rem',
+        marginRight: '1.5rem',
+        textDecoration: 'none',
+        fontSize: '1.25rem',
+        '&:hover': {
+            color: 'rgb(156, 163, 175)'
+        },
+        alignItems: 'center',
+        border: '2px solid white',
+        borderRadius: '8px',
+        borderColor: themeOptions.color.smallBox,
+        color: themeOptions.color.smallBox,
+
     }
 }))

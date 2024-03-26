@@ -20,7 +20,7 @@ import {
     Checkbox,
     Anchor,
     Stack,
-    Flex, Box
+    Flex, Box, useStyles
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
 import Otp from '../verifyotp/page';
@@ -71,6 +71,16 @@ export function Register(props: PaperProps) {
         }
     };
     // const [type, toggle] = useToggle(['login', 'register'])
+
+    const useStyles = createStyles(() => ({
+        container: {
+            padding: '1rem',
+            position: 'relative',
+            background: 'linear-gradient(to right, red, purple)',
+            zIndex: 0,
+        },
+    }));
+    
     const form = useForm({
         initialValues: {
             name: '',
@@ -130,7 +140,6 @@ export function Register(props: PaperProps) {
 border-image-source: linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%),
 linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%);
  */}
-
 
 
                     <Box style={{

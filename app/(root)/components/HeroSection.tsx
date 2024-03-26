@@ -11,6 +11,8 @@ import Vector1 from '@/assets/images/vect-1.svg'
 import Vector2 from '@/assets/images/vect-2.svg'
 import { memo } from 'react'
 import { ScrollToPlugin } from 'gsap/all';
+import { useVoice } from './UseVoice';
+
 gsap.registerPlugin(ScrollToPlugin);
 const HeroSection = () => {
     console.log("rendered");
@@ -19,7 +21,9 @@ const HeroSection = () => {
     const [showSearchSection, setShowSearchSection] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
     const flexRef = useRef(null);
+    const { text, isListening, listen, voiceSupported, isTyping1 } = useVoice();
     console.log(flexRef);
+    
     useEffect(() => {
         const tl = gsap.timeline({ paused: true });
         tl.fromTo(
@@ -35,11 +39,12 @@ const HeroSection = () => {
         return () => {
             tl.kill();
         };
-    }, [isTyping]);
+    }, [isTyping, isTyping1]);
+
     const handleTyping = (typing) => {
-        console.log("func called");
+        // console.log("func called");
         setIsTyping(typing !== '');
-        console.log(isTyping);
+        // console.log(isTyping);
         setInput(typing);
     };
     return (
@@ -50,7 +55,7 @@ const HeroSection = () => {
             <div className={classes.hero} style={{ gap: `${isTyping ? '0rem' : '4rem'}` }}>
                 <div className={classes.leftSection} style={{ marginLeft: `${isTyping ? '0rem' : '0rem'}` }}>
                     <h1 className={classes.heading}>Cool Animated Text</h1>
-                    <SearchBar onTyping={handleTyping} input={input} setInput={setInput} isTyping={isTyping} />
+                    <SearchBar text={text} isListening={isListening} voiceSupported={voiceSupported} listen={listen} onTyping={handleTyping} input={input} setInput={setInput} isTyping={isTyping} />
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse iusto atque iste quos qui, officiis obcaecati voluptatibus!</p>
                 </div>
                 <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>

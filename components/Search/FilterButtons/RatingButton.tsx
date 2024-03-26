@@ -95,14 +95,18 @@ export function RatingButton() {
                                     <input
                                         style={{ width: '50%', height: '20px', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#9441d0', backgroundColor: '#140320', outline: 'none', borderRadius: '5px', }}
                                         type="number"
-                                        placeholder="LOW"
+                                        min={0}
+                                        max={10}
+                                        placeholder=""
                                         value={firstNumber}
                                         onChange={handleFirstInputChange}
                                     />
                                     <input
                                         style={{ width: '50%', height: '20px', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#9441d0', backgroundColor: '#140320', outline: 'none', borderRadius: '5px' }}
                                         type="number"
-                                        placeholder="HIGH"
+                                        min={0}
+                                        max={10}
+                                        placeholder=""
                                         value={secondNumber}
                                         onChange={handleSecondInputChange}
                                     />

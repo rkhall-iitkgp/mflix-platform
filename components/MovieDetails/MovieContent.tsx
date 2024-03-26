@@ -116,7 +116,7 @@ export default function MovieContent({movieData}) {
         <Flex className={classes.detailsContainer} align='center' justify='space-around' direction={isSmallerScreen ? 'column' : 'row'}>
             <Group className={classes.imageContainer}>
                 <NextImage
-                    src={movieData.poster}
+                    src={movieData?.poster}
                     width = "1000"
                     height = "300"
                     className={classes.image}
@@ -126,26 +126,26 @@ export default function MovieContent({movieData}) {
             <Group >
                 <Flex justify='space-between' align='center'>
                     <Container>
-                        <h1 className={classes.movieTitle}>{movieData.title}</h1>
+                        <h1 className={classes.movieTitle}>{movieData?.title}</h1>
                         <Flex className={classes.genreContainer}>
-                            {movieData.genres?.map((e, i) => <p className={classes.genre}>{e}</p>)}
+                            {movieData?.genres?.map((e, i) => <p className={classes.genre}>{e}</p>)}
                         </Flex>
                         <Flex className={classes.otherDetailsContainer} justify='flex-start' gap={2}>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <Image src={ImdbImg} component={NextImage} alt="imdb" height={17} unoptimized />
-                                <p className={classes.detailsText}>{movieData.imdb?.rating}/10</p>
+                                <p className={classes.detailsText}>{movieData?.imdb?.rating}/10</p>
                             </Flex>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <Image src={TomatoImg} component={NextImage} alt="imdb" height={17} unoptimized />
-                                <p className={classes.detailsText}>{movieData.tomatoes?.viewer.rating}/5</p>
+                                <p className={classes.detailsText}>{movieData?.tomatoes?.viewer.rating}/5</p>
                             </Flex>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <FaRegHourglass color='white' fontSize={20}/>
-                                <p className={classes.detailsText}>{movieData.runtime}min</p>
+                                <p className={classes.detailsText}>{movieData?.runtime}min</p>
                             </Flex>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <PiCalendar color='white' fontSize={25}/>
-                                <p className={classes.detailsText}>{movieData.year}</p>
+                                <p className={classes.detailsText}>{movieData?.year}</p>
                             </Flex>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <GrLocation color='white' fontSize={30}/>
@@ -153,7 +153,7 @@ export default function MovieContent({movieData}) {
                             </Flex>
                         </Flex>
                         <Stack>
-                            <p className={classes.plot}>{movieData.fullplot}</p>
+                            <p className={classes.plot}>{movieData?.fullplot}</p>
                             <Flex align='center' justify='space-around' onClick = {()=> setChecked(!checked)} className={`${classes.buttonContainer} ${checked ? classes.checkboxChecked : ''}`}>
                                 <Checkbox
                                     className={`${classes.checkbox}`}
@@ -168,17 +168,17 @@ export default function MovieContent({movieData}) {
                         </Stack>
                     </Container>
                     <Stack justify="flex-start" gap="s">
-                        {!movieData.directors || movieData.directors.length === 0 ? <></> : <Stack className={classes.creatersContainer} justify="flex-start" gap="xs">
+                        {!movieData?.directors || movieData?.directors.length === 0 ? <></> : <Stack className={classes.creatersContainer} justify="flex-start" gap="xs">
                             <p style={{fontSize: isSmallScreen ? themeOptions.fontSize.s : themeOptions.fontSize.md, margin:'0 2px',fontWeight:'500'}}> Directors </p>   
-                            {movieData.directors?.map((e, i) => <p style={{margin:'0',fontSize: isSmallScreen ? themeOptions.fontSize.xs : themeOptions.fontSize.s}}>{e}</p>)}
+                            {movieData?.directors?.map((e, i) => <p style={{margin:'0',fontSize: isSmallScreen ? themeOptions.fontSize.xs : themeOptions.fontSize.s}}>{e}</p>)}
                         </Stack>}
-                        {!movieData.writers|| movieData.writers.length === 0 ? <></> : <Stack className={classes.creatersContainer} justify="flex-start" gap="xs">
+                        {!movieData?.writers|| movieData?.writers.length === 0 ? <></> : <Stack className={classes.creatersContainer} justify="flex-start" gap="xs">
                             <p style={{fontSize: isSmallScreen ? themeOptions.fontSize.s : themeOptions.fontSize.md, margin:'0 2px',fontWeight:'500'}}> Writers </p>   
-                            {movieData.writers?.map((e, i) => <p style={{margin:'0',fontSize: isSmallScreen ? themeOptions.fontSize.xs : themeOptions.fontSize.s}}>{e}</p>)}
+                            {movieData?.writers?.map((e, i) => <p style={{margin:'0',fontSize: isSmallScreen ? themeOptions.fontSize.xs : themeOptions.fontSize.s}}>{e}</p>)}
                         </Stack>}
-                        {!movieData.cast|| movieData.cast.length === 0 ? <></> : <Stack className={classes.creatersContainer} justify="flex-start" gap="xs">
+                        {!movieData?.cast|| movieData?.cast.length === 0 ? <></> : <Stack className={classes.creatersContainer} justify="flex-start" gap="xs">
                             <p style={{fontSize: isSmallScreen ? themeOptions.fontSize.s : themeOptions.fontSize.md, margin:'0 2px',fontWeight:'500'}}> Cast </p>   
-                            {movieData.cast?.map((e, i) => <p style={{margin:'0',fontSize: isSmallScreen ? themeOptions.fontSize.xs : themeOptions.fontSize.s}}>{e}</p>)}
+                            {movieData?.cast?.map((e, i) => <p style={{margin:'0',fontSize: isSmallScreen ? themeOptions.fontSize.xs : themeOptions.fontSize.s}}>{e}</p>)}
                         </Stack>}
                     </Stack>
                 </Flex>

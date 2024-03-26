@@ -13,10 +13,13 @@ import MovieContent from '@/components/MovieDetails/MovieContent';
 import { ScrollArea } from '@mantine/core'
 import VideoPlayer from '@/components/VideoPlayer';
 import { useEffect , useState } from 'react';
+import usePlayerStore from '@/Stores/PlayerStore';
+import PartyChat from '@/components/PartyChat/PartyChat';
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();
     const [movieData,setMovieData] = useState({});
+    
     useEffect(()=>{
         const id = params.id;
         const getMovieDetails = async () => {
@@ -56,7 +59,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     }))
 
     const { classes } = styles();
-
+    const { activeChat } = usePlayerStore();
     return (
         <Stack
             justify="space-between"
@@ -79,7 +82,10 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
             {/* <Group className={classes.streaming}>
                 
             </Group> */}
-            <VideoPlayer />
+            <div style={{ display: 'flex' }}>
+                <VideoPlayer />
+                {activeChat && <PartyChat />}
+            </div>
 
             {/* Movie Details */}
             <MovieContent movieData = {movieData}/>

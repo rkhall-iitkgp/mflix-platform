@@ -6,6 +6,7 @@ import style from './PartyChat.module.css';
 
 export default function PartyChat() {
   const [activeTab, setActiveTab] = useState(0);
+  
   return (
     <div className={style.container}>
       <div className={style.tabcontainer}>

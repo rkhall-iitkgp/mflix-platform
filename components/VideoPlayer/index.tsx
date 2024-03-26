@@ -50,6 +50,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
     };
 
     function toggleMute() {
+        if (!playerRef.current) return;
         playerRef.current.muted = !playerRef.current.muted;
         setMute(playerRef.current.muted ? 1 : 0)
     }
@@ -68,29 +69,33 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
     }
 
     function updateProgress() {
+        if (!playerRef.current) return;
         if (!update) return;
         const progress = document.getElementById('progress')!;
         const currentTime = document.getElementById('current-time')!;
-        currentTime.innerText = `${String(Number.parseInt(playerRef.current.currentTime / 60)).padStart(2, '0')}:${String(Number.parseInt(playerRef.current.currentTime % 60)).padStart(2, '0')}`;
+        currentTime.innerText = `${String(Number.parseInt(`${playerRef.current.currentTime / 60}`)).padStart(2, '0')}:${String(Number.parseInt(`${playerRef.current.currentTime % 60}`)).padStart(2, '0')}`;
         const duration = document.getElementById("duration")!;
-        duration.innerText = `${String(Number.parseInt(playerRef.current.duration / 60)).padStart(2, '0')}:${String(Number.parseInt(playerRef.current.duration % 60)).padStart(2, '0')}`;
+        duration.innerText = `${String(Number.parseInt(`${playerRef.current.duration / 60}`)).padStart(2, '0')}:${String(Number.parseInt(`${playerRef.current.duration % 60}`)).padStart(2, '0')}`;
         const percentage = (playerRef.current.currentTime / playerRef.current.duration) * 100;
         progress.style.width = `${percentage}%`;
     }
 
     function seek(event: any) {
+        if (!playerRef.current) return;
         const progressBar = document.getElementById('progress-bar')!;
         const bounds = progressBar.getBoundingClientRect();
         const percent = (event.clientX - bounds.left) / bounds.width;
         const currentTime = document.getElementById('current-time')!;
-        currentTime.innerText = `${String(Number.parseInt(playerRef.current.currentTime / 60)).padStart(2, '0')}:${String(Number.parseInt(playerRef.current.currentTime % 60)).padStart(2, '0')}`;
+        currentTime.innerText = `${String(Number.parseInt(`${playerRef.current.currentTime / 60}`)).padStart(2, '0')}:${String(Number.parseInt(`${playerRef.current.currentTime % 60}`)).padStart(2, '0')}`;
         playerRef.current.currentTime = percent * playerRef.current.duration;
     }
 
     function seekForward() {
+        if (!playerRef.current) return;
         playerRef.current.currentTime += 15;
     }
     function seekBackward() {
+        if (!playerRef.current) return;
         playerRef.current.currentTime -= 15;
     }
     // Function to handle quality changes
@@ -131,7 +136,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
                 console.log(`Switched to level: ${level.height}p`);
             });
 
-            playerRef.current.addEventListener('timeupdate', updateProgress);
+            playerRef.current!.addEventListener('timeupdate', updateProgress);
         } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
             video.src = videoSrc;
             video.addEventListener('loadedmetadata', () => {
@@ -139,14 +144,15 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
             });
             const duration = document.getElementById('duration')!;
             video.addEventListener('timeupdate', () => {
-                duration.innerText = `${String(Number.parseInt(playerRef.current.duration / 60)).padStart(2, '0')}:${String(Number.parseInt(playerRef.current.duration % 60)).padStart(2, '0')}`;
+                duration.innerText = `${String(Number.parseInt(`${playerRef.current!.duration / 60}`)).padStart(2, '0')}:${String(Number.parseInt(`${playerRef.current!.duration % 60}`)).padStart(2, '0')}`;
             });
         }
 
         const dot = document.getElementById('dot')!;
         dot.addEventListener('mousedown', dragDot)
         document.addEventListener('mouseup', (e) => {
-            if (!listener) return false;
+            if (!listener) return;
+            if (!playerRef.current) return;
             document.removeEventListener('mousemove', moveDot);
             listener = false
             const progressBar = document.getElementById('progress-bar')!;
@@ -166,7 +172,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
             update = false;
         }
 
-        function moveDot(e) {
+        function moveDot(e: any) {
             const progressBar = document.getElementById('progress-bar')!;
             const { width } = progressBar.getBoundingClientRect();
             const x = e.clientX - progressBar.getBoundingClientRect().left;
@@ -188,15 +194,15 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
         }, 10)
 
         document.getElementById('video')?.addEventListener("waiting", () => {
-            loader.current.style.display = "flex";
+            loader.current!.style.display = "flex";
         })
 
         document.getElementById('video')?.addEventListener("playing", () => {
-            loader.current.style.display = "none";
+            loader.current!.style.display = "none";
         })
 
         document.getElementById('video')?.addEventListener("pause", () => {
-            loader.current.style.display = "none";
+            loader.current!.style.display = "none";
         })
 
         document.getElementById("video-player")?.addEventListener('mousemove', () => {
@@ -239,7 +245,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
             listenerVol = false
         })
 
-        function moveVol(e) {
+        function moveVol(e: any) {
+            if (!playerRef.current) return;
             const { width } = volBar.getBoundingClientRect();
             const x = e.clientX - volBar.getBoundingClientRect().left;
             let percentage = (x / width) * 100;
@@ -251,6 +258,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
         }
 
         volBar.addEventListener("click", (e) => {
+            if (!playerRef.current) return;
             const { width } = volBar.getBoundingClientRect();
             const x = e.clientX - volBar.getBoundingClientRect().left;
             let percentage = (x / width) * 100;

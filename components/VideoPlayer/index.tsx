@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import HlsPlayer from 'react-hls-player';
 import Hls from 'hls.js';
 import { createStyles, keyframes } from '@mantine/styles';
 import { relative } from 'path';

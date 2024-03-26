@@ -130,3 +130,12 @@ dist
 .pnp.*
 
 .DS_Store
+
+# vscode settings
+.vscode
+
+# lock files
+yarn.lock
+package-lock.json
+
+.gitattributes

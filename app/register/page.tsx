@@ -7,6 +7,7 @@ import { DateInput } from '@mantine/dates';
 import '@mantine/dates/styles.css';
 // import Link from 'next/link';
 import { NumberInput } from '@mantine/core';
+import { createStyles } from '@mantine/styles';
 
 import {
     TextInput,

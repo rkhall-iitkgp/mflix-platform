@@ -74,6 +74,11 @@ export default function MovieContent({movieData}) {
             padding:'0',
             color: watchList === "Add to Watchlist" ? themeOptions.color.button : themeOptions.color.divider,
             backgroundColor : watchList === "Add to Watchlist" ? themeOptions.color.divider : themeOptions.color.button,
+            borderRadius:'0.7rem',
+            transition:'0.3s',
+            '&:hover':{
+                cursor:'pointer',
+            }
         },
         creatersContainer:{
             width:'10rem',

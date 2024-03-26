@@ -94,8 +94,8 @@ const useStyles = createStyles(() => ({
         opacity: 1
     },
     sectionStyles: {
-        paddingTop: '80px', // You may adjust the padding as needed
-        paddingBottom: '80px',
+        paddingTop: '80px',
+        // paddingBottom: '80px',
         position: 'relative',
         width: 'calc(100vw - 20px)',
     },
@@ -103,13 +103,14 @@ const useStyles = createStyles(() => ({
     containerStyles: {
         width: '100%',
         overflow: 'hidden',
+        height:'32rem',
     },
 
     arrowStyles: {
         backgroundColor: '#000',
         boxShadow: '-12px 20px 222px 180px #000',
         position: 'absolute',
-        top: '55%',
+        top: '45%',
         transform: 'translateY(-50%)',
         cursor: 'pointer',
         zIndex:2,
@@ -120,7 +121,9 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         position: 'relative',
         width: 'max-content',
-        paddingLeft:'5rem'
+        paddingLeft:'5rem',
+        height:'40rem',
+        marginTop:'2rem'
     },
 
     leftArrow: {

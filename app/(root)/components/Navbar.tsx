@@ -117,17 +117,17 @@ export default function Navbar() {
     const [isTyping, setIsTyping] = useState(false);
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visible, setVisible] = useState(true);
-    const [isSearchOpen, setIsSearchOpen] = useState(false); // Rename state to indicate whether search is open
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-    const searchBoxRef = useRef<HTMLDivElement>(null); // UseRef with HTMLDivElement type
+    const searchBoxRef = useRef<HTMLDivElement>(null);
 
     const handleSearchClick = () => {
         setIsSearchOpen(true);
     };
 
     const handleCloseClick = () => {
-        setIsSearchOpen(false); // Close the search box
-        setInput(''); // Clear input when closing search box
+        setIsSearchOpen(false);
+        setInput('');
     };
 
     // const handleTyping = (typing) => {
@@ -136,9 +136,8 @@ export default function Navbar() {
 
     const handleClickOutside = (event: MouseEvent) => {
         if (searchBoxRef.current && !searchBoxRef.current.contains(event.target as Node)) {
-            // Click occurred outside the search box, so close it
             setIsSearchOpen(false);
-            setInput(''); // Clear input when closing search box
+            setInput('');
         }
     };
 
@@ -182,13 +181,9 @@ export default function Navbar() {
             if (!res.ok) {
                 console.log(jsonData);
             }
-            //   setLoading(false);
             else {
                 sessionStorage.removeItem('accessToken');
                 console.log("Logout successful");
-                // console.log(jsonData);
-                // sessionStorage.setItem('accessToken', jsonData.user.accessToken);
-                // sessionStorage.setItem('token', jsonData.user.token);
             }
         });
     }
@@ -204,7 +199,7 @@ export default function Navbar() {
                 {/* Links */}
                 <ul className={classes.links}>
                     <li>
-                        {path !== '/' && ( // Check if current path is not the home page
+                        {path !== '/' && (
                             <div>
                                 {isSearchOpen ? (
                                     <>

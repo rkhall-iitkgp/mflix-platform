@@ -82,7 +82,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
             <VideoPlayer />
 
             {/* Movie Details */}
-            <MovieContent movieData />
+            <MovieContent movieData = {movieData}/>
 
             <Space h={"3rem"} />
 

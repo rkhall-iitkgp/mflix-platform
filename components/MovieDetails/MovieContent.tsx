@@ -16,7 +16,7 @@ import { watch } from 'fs';
 
 //{url}/movies/573a1391f29313caabcd6d40
 export default function MovieContent({movieData}) {
-    // console.log(movieData);
+    console.log(movieData);
     const [checked, setChecked] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width: 1200px)');
     const isSmallerScreen = useMediaQuery('(max-width:1000px)');

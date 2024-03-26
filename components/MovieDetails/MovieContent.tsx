@@ -81,10 +81,19 @@ export default function MovieContent({movieData}) {
             }
         },
         creatersContainer:{
-            width:'10rem',
-            backgroundColor:themeOptions.color.divider,
-            margin:'0 2.5rem 0 5rem'
-        }
+            width:'15em',
+            backgroundColor:'rgba(255,255,255,0.25)',
+            margin:'0 2.5rem 0 5rem',
+            borderRadius:'1rem',
+            padding:'0.2rem',
+            marginLeft:'-8rem',
+            display:'block'
+        },
+        creators:{
+            // padding:'0rem',
+            marginTop:'-0.6rem',
+            marginLeft:'.5rem',
+        },
     }))
     const { classes } = styles();
     return (
@@ -136,29 +145,29 @@ export default function MovieContent({movieData}) {
                         </Group>
                     </div>
                     <Stack>
-                        <Group className={classes.creatersContainer}>
-                                <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Director </p>
-                                <p>Harry</p>
-                                <p>Harry</p>
-                                <p>Harry</p>
+                        <div className={classes.creatersContainer}>
+                                <p style={{fontSize:themeOptions.fontSize.md, margin:'5px'}}> Director </p>
+                                <p className={classes.creators}>Harry</p>
+                                <p className={classes.creators}>Harry</p>
+                                <p className={classes.creators}>Harry</p>
                                 {/* {movieDetails.directors?.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)} */}
-                        </Group>
-                        <Group className={classes.creatersContainer}>
+                        </div>
+                        <div className={classes.creatersContainer}>
                                 {/* {!movieDetails.writers || movieDetails.writers.length===0 ? <></> : <>
                                     {movieDetails.writers?.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)} 
                                 </>} */}                                    
-                                <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Writers </p>
-                                <p>Harry</p>
-                                <p>Harry</p>
-                                <p>Harry</p>
-                        </Group>
-                        <Group className={classes.creatersContainer}>
-                                <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Cast </p>
-                                <p>Harry</p>
-                                <p>Harry</p>
-                                <p>Harry</p>
+                                <p style={{fontSize:themeOptions.fontSize.md, margin:'5px'}}> Writers </p>
+                                <p className={classes.creators}>Harry</p>
+                                <p className={classes.creators}>Harry</p>
+                                <p className={classes.creators}>Harry</p>
+                        </div>
+                        <div className={classes.creatersContainer}>
+                                <p style={{fontSize:themeOptions.fontSize.md, margin:'5px'}}> Cast </p>
+                                <p className={classes.creators}>Chris Hemsworth</p>
+                                <p className={classes.creators}>Robert Downy Jr.</p>
+                                <p className={classes.creators}>Chris Pratt</p>
                                 {/* {movieDetails.cast?.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)} */}
-                        </Group>
+                        </div>
                     </Stack>
                 </Flex>
             </Grid.Col>

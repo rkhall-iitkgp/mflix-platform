@@ -11323,6 +11323,10 @@ __metadata:
     stylelint-config-standard-scss: "npm:^13.0.0"
     ts-jest: "npm:^29.1.2"
     typescript: "npm:5.4.2"
+<<<<<<< HEAD
+=======
+    yarn: "npm:^1.22.22"
+>>>>>>> 445a6eeaf6f4e367e3f18039bdd05dcc6d85d1fa
     zustand: "npm:^4.5.2"
   languageName: unknown
   linkType: soft

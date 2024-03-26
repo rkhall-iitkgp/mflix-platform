@@ -11,7 +11,7 @@ import { useState } from 'react';
 const useStyles = createStyles(() => ({
     containerStyles: {
         position: 'relative',
-        width: '220px',
+        width: '225px',
         marginRight: '3rem',
         height: '310px',
         overflow: 'visible',
@@ -36,7 +36,7 @@ const useStyles = createStyles(() => ({
         width: '13rem',
         marginTop: '0.75rem',
     },
-
+    
     heartImageStyles: {
         fill: 'red',
         alignSelf: 'flex-end',
@@ -123,11 +123,14 @@ const useStyles = createStyles(() => ({
     card:
     {
         position: 'absolute',
-        boxShadow: '-1px 1px 10px 3px rgba(209,209,209,0.5)',
+        // boxShadow: '-1px 1px 10px 3px rgba(209,209,209,0.5)',
         '&:hover': {
             height: '27rem',
-            boxShadow: '-1px 1px 20px 5px rgba(209,209,209,0.75)',
+            boxShadow: '0px 0px 14px 6px rgba(209,209,209,0.5)',
+            borderRadius: '0.5rem',
         },
+        padding: '0.5rem',
+        
     },
     hovered: {
         // height: '27rem',
@@ -167,7 +170,8 @@ export default function MovieCard() {
                         height={35}
                         alt='fav'
                         className={classes.heartImageStyles}
-                        onClick={() => setFavourite(!favourite)}
+                        onClick={() => setFavourite(!favourite)
+                        }
                     />
                 </div>
                 <Image
@@ -178,7 +182,7 @@ export default function MovieCard() {
                     className={classes.posterStyles}
                 />
                 {/* {true && ( */}
-                {isHovered && (
+                {/* {isHovered && ( */}
                     <div style={{
 
                     }} className={classes.hovered}>
@@ -210,7 +214,7 @@ export default function MovieCard() {
                             <span>Action, Adventure / Horror</span>
                         </div>
                     </div>
-                )}
+                {/* )} */}
             </div>
         </div >
     );

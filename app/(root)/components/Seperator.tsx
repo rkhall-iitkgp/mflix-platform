@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
+import { createStyles } from "@mantine/styles";
 import gsap from 'gsap';
 
 const AnimatedLines = () => {
   // Refs for the DOM elements you want to animate
   const line1Ref = useRef(null);
   const line2Ref = useRef(null);
+  const { classes } = useStyles();
 
   useEffect(() => {
     // Simple GSAP animation to grow the lines' width
@@ -13,10 +15,10 @@ const AnimatedLines = () => {
   }, []);
 
   return (
-    <div style={styles.container}>
+    <div className={classes.container}>
     {/* //   <div style={styles.searchBox}> Your search box here </div> */}
-      <div style={styles.line} ref={line1Ref}></div> {/* First line */}
-      <div style={styles.line} ref={line2Ref}></div> {/* Second line */}
+      <div className={classes.line} ref={line1Ref}></div> {/* First line */}
+      <div className={classes.line} ref={line2Ref}></div> {/* Second line */}
     {/* //   <div style={styles.resultsBox}> Your results box here </div> */}
     </div>
   );
@@ -24,7 +26,7 @@ const AnimatedLines = () => {
 
 export default AnimatedLines;
 
-const styles = {
+const useStyles = createStyles(() => ({
     container: {
       position: 'relative',
       // Add other styles for the container as needed
@@ -46,6 +48,6 @@ const styles = {
     resultsBox: {
       // Add your styles here
     }
-  };
+  }))
   
   

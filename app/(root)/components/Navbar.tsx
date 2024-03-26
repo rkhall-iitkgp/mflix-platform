@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Link from 'next/link'
 import React from 'react'
@@ -19,16 +19,16 @@ export default function Navbar() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height:'50px',
+            height: '50px',
             // padding: '1rem',
             paddingLeft: '2rem',
             paddingRight: '2rem',
             paddingTop: '0rem',
             width: '100%',
             color: "white",
-            background:themeOptions.color.black,
-            opacity:'1',
-            position:'fixed',
+            background: themeOptions.color.black,
+            // opacity:'1',
+            position: 'fixed',
             transition: 'top 0.3s ease-in-out',
             // marginBottom:'500px',
         },
@@ -108,26 +108,26 @@ export default function Navbar() {
         hidden: {
             top: '-50px',
         },
-    
+
     }))
-    
+
     const path = usePathname();
     const { classes } = useStyles();
     const [input, setInput] = React.useState('');
     const [isTyping, setIsTyping] = useState(false);
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visible, setVisible] = useState(true);
-    const [isSearchOpen, setIsSearchOpen] = useState(false); // Rename state to indicate whether search is open
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-    const searchBoxRef = useRef<HTMLDivElement>(null); // UseRef with HTMLDivElement type
+    const searchBoxRef = useRef<HTMLDivElement>(null);
 
     const handleSearchClick = () => {
         setIsSearchOpen(true);
     };
 
     const handleCloseClick = () => {
-        setIsSearchOpen(false); // Close the search box
-        setInput(''); // Clear input when closing search box
+        setIsSearchOpen(false);
+        setInput('');
     };
 
     // const handleTyping = (typing) => {
@@ -136,9 +136,8 @@ export default function Navbar() {
 
     const handleClickOutside = (event: MouseEvent) => {
         if (searchBoxRef.current && !searchBoxRef.current.contains(event.target as Node)) {
-            // Click occurred outside the search box, so close it
             setIsSearchOpen(false);
-            setInput(''); // Clear input when closing search box
+            setInput('');
         }
     };
 
@@ -182,20 +181,16 @@ export default function Navbar() {
             if (!res.ok) {
                 console.log(jsonData);
             }
-            //   setLoading(false);
             else {
                 sessionStorage.removeItem('accessToken');
                 console.log("Logout successful");
-                // console.log(jsonData);
-                // sessionStorage.setItem('accessToken', jsonData.user.accessToken);
-                // sessionStorage.setItem('token', jsonData.user.token);
             }
         });
     }
 
     return (
         <nav >
-            <div className={`${classes.container} ${visible ? classes.visible : classes.hidden}`} style={{zIndex:'220'}}>
+            <div className={`${classes.container} ${visible ? classes.visible : classes.hidden}`} style={{ zIndex: '200' }}>
                 {/* Logo */}
                 <div className={classes.logoDiv}>
                     <img src="/logo.svg" alt="Logo" className={classes.logo} />
@@ -204,15 +199,15 @@ export default function Navbar() {
                 {/* Links */}
                 <ul className={classes.links}>
                     <li>
-                        {path !== '/' && ( // Check if current path is not the home page
+                        {path !== '/' && (
                             <div>
                                 {isSearchOpen ? (
                                     <>
                                         <div>
-                                            <ActionIcon size={30} variant='transparent' onClick={handleCloseClick} style={{marginRight:'5px'}}>
-                                                <IoCloseOutline color={themeOptions.color.divider} size={30}  />
+                                            <ActionIcon size={30} variant='transparent' onClick={handleCloseClick} style={{ marginRight: '5px' }}>
+                                                <IoCloseOutline color={themeOptions.color.divider} size={30} />
                                             </ActionIcon>
-                                            <div style={{ marginLeft: '-630px', marginTop:'-70px', width: '600px', height:'20px', position: 'absolute', zIndex:'40' }}>
+                                            <div style={{ marginLeft: '-630px', marginTop: '-70px', width: '600px', height: '20px', position: 'absolute', zIndex: '40' }}>
                                                 <NavSearch input={input} setInput={setInput} />
                                             </div>
                                         </div>
@@ -240,7 +235,7 @@ export default function Navbar() {
                     </li>
                 </ul>
             </div>
-            <div style={{width:'100%', height:'50px'}}>
+            <div style={{ width: '100%', height: '50px' }}>
 
             </div>
         </nav>

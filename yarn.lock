@@ -1954,7 +1954,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@npm:^2.0.0, @floating-ui/react-dom@npm:^2.0.8":
+"@floating-ui/react-dom@npm:^2.0.0":
   version: 2.0.8
   resolution: "@floating-ui/react-dom@npm:2.0.8"
   dependencies:
@@ -1967,16 +1967,16 @@ __metadata:
   linkType: hard
 
 "@floating-ui/react@npm:^0.26.9":
-  version: 0.26.9
-  resolution: "@floating-ui/react@npm:0.26.9"
+  version: 0.26.10
+  resolution: "@floating-ui/react@npm:0.26.10"
   dependencies:
-    "@floating-ui/react-dom": "npm:^2.0.8"
-    "@floating-ui/utils": "npm:^0.2.1"
-    tabbable: "npm:^6.0.1"
+    "@floating-ui/react-dom": "npm:^2.0.0"
+    "@floating-ui/utils": "npm:^0.2.0"
+    tabbable: "npm:^6.0.0"
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 10c0/769a6bc33c4fa6c8c38b2e1c91622854e5e8fdf39cb92b0998a7ca099dc831a551a005cd0aec7e98edf9bfed4f697397335f03034b5f41a0f4fb17c97fce6d20
+  checksum: 10c0/6d960dd5c681aebe98103437f5289d4f4fae7dc49e098051cef438a986be563aa791157416c843d063208c434f578a1ee15402f47b7c2ea6240321fa023d38bf
   languageName: node
   linkType: hard
 
@@ -2336,8 +2336,8 @@ __metadata:
   linkType: hard
 
 "@mantine/core@npm:^7.6.2":
-  version: 7.6.2
-  resolution: "@mantine/core@npm:7.6.2"
+  version: 7.7.0
+  resolution: "@mantine/core@npm:7.7.0"
   dependencies:
     "@floating-ui/react": "npm:^0.26.9"
     clsx: "npm:2.1.0"
@@ -2346,46 +2346,46 @@ __metadata:
     react-textarea-autosize: "npm:8.5.3"
     type-fest: "npm:^4.12.0"
   peerDependencies:
-    "@mantine/hooks": 7.6.2
+    "@mantine/hooks": 7.7.0
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10c0/c6e85ead73c8b825ed61761b48d6ecfd55cb53878e5505942ac81f15d4a4f20bc2c597b72fe7aebf1e0a752b1e1ae76fea1506db5c032d5717401e5769aeae1d
+  checksum: 10c0/d2934192c92a5193431f56af473f50e06bed584aa4f1033038bf409444c608665814c072d064ad8c3fde4a5a3a3472f8a5363b3a095e6e8195e619c1d15032fc
   languageName: node
   linkType: hard
 
 "@mantine/dates@npm:^7.6.2":
-  version: 7.6.2
-  resolution: "@mantine/dates@npm:7.6.2"
+  version: 7.7.0
+  resolution: "@mantine/dates@npm:7.7.0"
   dependencies:
     clsx: "npm:2.1.0"
   peerDependencies:
-    "@mantine/core": 7.6.2
-    "@mantine/hooks": 7.6.2
+    "@mantine/core": 7.7.0
+    "@mantine/hooks": 7.7.0
     dayjs: ">=1.0.0"
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10c0/e695e61838a20d6bdada3f5f2c0872b5b05371a8e288de4ad6b0629ca09fde83d3dcdfee55b775611550db1cb140ca5771afe64cfe4eb57017d6802e6fe7323a
+  checksum: 10c0/09229a5331738bb90eb81543477fa503f23763940181865bff66d5e7830c4a4af756221d754ea028de2c2dd9be68cf7cebdb92ab25aa968168692dbda78d949f
   languageName: node
   linkType: hard
 
 "@mantine/form@npm:^7.6.2":
-  version: 7.6.2
-  resolution: "@mantine/form@npm:7.6.2"
+  version: 7.7.0
+  resolution: "@mantine/form@npm:7.7.0"
   dependencies:
     fast-deep-equal: "npm:^3.1.3"
     klona: "npm:^2.0.6"
   peerDependencies:
     react: ^18.2.0
-  checksum: 10c0/784bfefdcebe5df8b44fa2e0d0a6a7ea9b7085053b989ce688bbdbebb001304158de08b2938c52dc9ba0227fc43239345c024d6e0027cdc9f9edfae066d829f9
+  checksum: 10c0/7d2280f9038e3c339cf26ba9266831f97b56b8797dd72935b330914c4ab5a05bf8138ef97c364484c8189fc5332bfd1aeaeee0bf27cf0d1ec140537ea0c4b84f
   languageName: node
   linkType: hard
 
 "@mantine/hooks@npm:^7.6.2":
-  version: 7.6.2
-  resolution: "@mantine/hooks@npm:7.6.2"
+  version: 7.7.0
+  resolution: "@mantine/hooks@npm:7.7.0"
   peerDependencies:
     react: ^18.2.0
-  checksum: 10c0/95d2e33de0a7fa5dba0a579944e3846c5848b7c069a919e155cb25e712d0e47f1839a1edf7a9e63aa10ec22de2de41bd7f4cb631b5c2aebca0332e29b398947d
+  checksum: 10c0/eadf0dc8e702a0c2e255bb8116ac9cc4da05b69f9895e29af1940a1e04eb752367062262cf17171fd2f18c3f7761618a2eb7e930e88a238db008c2f6892c0390
   languageName: node
   linkType: hard
 
@@ -4659,13 +4659,12 @@ __metadata:
   linkType: hard
 
 "@types/react@npm:*, @types/react@npm:^16.8.0 || ^17.0.0 || ^18.0.0":
-  version: 18.2.70
-  resolution: "@types/react@npm:18.2.70"
+  version: 18.2.72
+  resolution: "@types/react@npm:18.2.72"
   dependencies:
     "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10c0/2107b1fa8963cabe33d981cf1c0e3b7534c9d12b98c1046cd9f7975851690a0780db011f6a1d637ae4e612ef00c94ebdbe76a9e2f9e0f3baa6aad3213932af41
+  checksum: 10c0/fe8a17a4067ab9d432ab1034967a8b2a773125e47ae84ee00e428a8b6c48912ab22d244ae6128663b119a38716a642bc5be019fcd2b3b2f4ab3c9b0200a6cc2d
   languageName: node
   linkType: hard
 
@@ -4688,9 +4687,9 @@ __metadata:
   linkType: hard
 
 "@types/scheduler@npm:*":
-  version: 0.16.8
-  resolution: "@types/scheduler@npm:0.16.8"
-  checksum: 10c0/f86de504945b8fc41b1f391f847444d542e2e4067cf7e5d9bfeb5d2d2393d3203b1161bc0ef3b1e104d828dabfb60baf06e8d2c27e27ff7e8258e6e618d8c4ec
+  version: 0.23.0
+  resolution: "@types/scheduler@npm:0.23.0"
+  checksum: 10c0/5cf7f2ba3732b74877559eb20b19f95fcd0a20c17dcb20e75a7ca7c7369cd455aeb2d406b3ff5a38168a9750da3bad78dd20d96d11118468b78f4959b8e56090
   languageName: node
   linkType: hard
 
@@ -7539,9 +7538,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.668":
-  version: 1.4.716
-  resolution: "electron-to-chromium@npm:1.4.716"
-  checksum: 10c0/8ab3d5def384756e520d23f7e303d5dbfc9d0c789a9ebb994deae52ce0d2ab7b5d32bbad77806b2b3a7089d98d1fdf33284ed9f11d6135dafd05662ef4bece9e
+  version: 1.4.717
+  resolution: "electron-to-chromium@npm:1.4.717"
+  checksum: 10c0/1de0a9f078211471442010d574634d147491c06f415cc3c178dd378004c4ee5e743cda288973ac01f5204abc6b5bc7bec1d770807b60eb012b49aae4c9570985
   languageName: node
   linkType: hard
 
@@ -11323,10 +11322,6 @@ __metadata:
     stylelint-config-standard-scss: "npm:^13.0.0"
     ts-jest: "npm:^29.1.2"
     typescript: "npm:5.4.2"
-<<<<<<< HEAD
-=======
-    yarn: "npm:^1.22.22"
->>>>>>> 445a6eeaf6f4e367e3f18039bdd05dcc6d85d1fa
     zustand: "npm:^4.5.2"
   languageName: unknown
   linkType: soft
@@ -14661,8 +14656,8 @@ __metadata:
   linkType: hard
 
 "stylelint@npm:^16.2.1":
-  version: 16.3.0
-  resolution: "stylelint@npm:16.3.0"
+  version: 16.3.1
+  resolution: "stylelint@npm:16.3.1"
   dependencies:
     "@csstools/css-parser-algorithms": "npm:^2.6.1"
     "@csstools/css-tokenizer": "npm:^2.2.4"
@@ -14705,7 +14700,7 @@ __metadata:
     write-file-atomic: "npm:^5.0.1"
   bin:
     stylelint: bin/stylelint.mjs
-  checksum: 10c0/98bf770078d727eb7c3ec0932b09c9486481f2d086ea1f4232e00bd1bf58b6b5d3a8d6fc9802df05380cdb06b3d97c5a7c4f27adb221b2a5707ea9829c0ee350
+  checksum: 10c0/1660bb359002ff8e07cea044018b13abc73f48cf02a5062953b086f4d58611cd10677787560774c1acabeb192b6d059ce7fcf4c11defa7f64e50dca908fc664f
   languageName: node
   linkType: hard
 
@@ -14790,7 +14785,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tabbable@npm:^6.0.1":
+"tabbable@npm:^6.0.0":
   version: 6.2.0
   resolution: "tabbable@npm:6.2.0"
   checksum: 10c0/ced8b38f05f2de62cd46836d77c2646c42b8c9713f5bd265daf0e78ff5ac73d3ba48a7ca45f348bafeef29b23da7187c72250742d37627883ef89cbd7fa76898
@@ -14798,15 +14793,15 @@ __metadata:
   linkType: hard
 
 "table@npm:^6.8.1":
-  version: 6.8.1
-  resolution: "table@npm:6.8.1"
+  version: 6.8.2
+  resolution: "table@npm:6.8.2"
   dependencies:
     ajv: "npm:^8.0.1"
     lodash.truncate: "npm:^4.4.2"
     slice-ansi: "npm:^4.0.0"
     string-width: "npm:^4.2.3"
     strip-ansi: "npm:^6.0.1"
-  checksum: 10c0/591ed84b2438b01c9bc02248e2238e21e8bfb73654bc5acca0d469053eb39be3db2f57d600dcf08ac983b6f50f80842c44612c03877567c2afee3aec4a033e5f
+  checksum: 10c0/f8b348af38ee34e419d8ce7306ba00671ce6f20e861ccff22555f491ba264e8416086063ce278a8d81abfa8d23b736ec2cca7ac4029b5472f63daa4b4688b803
   languageName: node
   linkType: hard
 

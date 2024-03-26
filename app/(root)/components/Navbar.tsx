@@ -1,6 +1,5 @@
 'use client';
 
-<<<<<<< HEAD
 import Link from 'next/link'
 import React from 'react'
 import { createStyles } from "@mantine/styles";
@@ -11,62 +10,25 @@ import { ActionIcon, Divider } from '@mantine/core';
 import { IoCloseOutline } from "react-icons/io5";
 import NavSearch from '@/app/(root)/components/NavSearch';
 import { usePathname } from 'next/navigation';
-=======
-import Link from 'next/link';
-import React from 'react';
-import { createStyles } from '@mantine/styles';
->>>>>>> 445a6eeaf6f4e367e3f18039bdd05dcc6d85d1fa
 import searchMsApiUrls from '../../api/searchMsApi';
-import themeOptions from '@/utils/colors';
 
 export default function Navbar() {
-  const handleLogOut = async () => {
-    const values = {
-      flag: 1,
-    };
-    const base_url = searchMsApiUrls();
-    const token = sessionStorage.getItem('accessToken');
-    await fetch(`${base_url}/auth/logout`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        ...values,
-      }),
-    }).then(async (res) => {
-      let jsonData = await res.json();
-      if (!res.ok) {
-        console.log(jsonData);
-      }
-      //   setLoading(false);
-      else {
-        sessionStorage.removeItem('accessToken');
-        console.log('Logout successful');
-        // console.log(jsonData);
-        // sessionStorage.setItem('accessToken', jsonData.user.accessToken);
-        // sessionStorage.setItem('token', jsonData.user.token);
-      }
-    });
-  };
 
-<<<<<<< HEAD
     const useStyles = createStyles(() => ({
         container: {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height:'50px',
+            height: '50px',
             // padding: '1rem',
             paddingLeft: '2rem',
             paddingRight: '2rem',
             paddingTop: '0rem',
             width: '100%',
             color: "white",
-            background:themeOptions.color.black,
-            opacity:'1',
-            position:'fixed',
+            background: themeOptions.color.black,
+            // opacity:'1',
+            position: 'fixed',
             transition: 'top 0.3s ease-in-out',
             // marginBottom:'500px',
         },
@@ -146,9 +108,9 @@ export default function Navbar() {
         hidden: {
             top: '-50px',
         },
-    
+
     }))
-    
+
     const path = usePathname();
     const { classes } = useStyles();
     const [input, setInput] = React.useState('');
@@ -228,7 +190,7 @@ export default function Navbar() {
 
     return (
         <nav >
-            <div className={`${classes.container} ${visible ? classes.visible : classes.hidden}`} style={{zIndex:'220'}}>
+            <div className={`${classes.container} ${visible ? classes.visible : classes.hidden}`} style={{ zIndex: '200' }}>
                 {/* Logo */}
                 <div className={classes.logoDiv}>
                     <img src="/logo.svg" alt="Logo" className={classes.logo} />
@@ -242,10 +204,10 @@ export default function Navbar() {
                                 {isSearchOpen ? (
                                     <>
                                         <div>
-                                            <ActionIcon size={30} variant='transparent' onClick={handleCloseClick} style={{marginRight:'5px'}}>
-                                                <IoCloseOutline color={themeOptions.color.divider} size={30}  />
+                                            <ActionIcon size={30} variant='transparent' onClick={handleCloseClick} style={{ marginRight: '5px' }}>
+                                                <IoCloseOutline color={themeOptions.color.divider} size={30} />
                                             </ActionIcon>
-                                            <div style={{ marginLeft: '-630px', marginTop:'-70px', width: '600px', height:'20px', position: 'absolute', zIndex:'40' }}>
+                                            <div style={{ marginLeft: '-630px', marginTop: '-70px', width: '600px', height: '20px', position: 'absolute', zIndex: '40' }}>
                                                 <NavSearch input={input} setInput={setInput} />
                                             </div>
                                         </div>
@@ -273,96 +235,9 @@ export default function Navbar() {
                     </li>
                 </ul>
             </div>
-            <div style={{width:'100%', height:'50px'}}>
+            <div style={{ width: '100%', height: '50px' }}>
 
             </div>
         </nav>
     )
 }
-=======
-  const { classes } = useStyles();
-  return (
-    <nav className={classes.container}>
-      {/* Logo */}
-      <div className={classes.logoDiv}>
-        <img src="/logo.svg" alt="Logo" className={classes.logo} />
-      </div>
-
-      {/* Links CSSPropertyRule*/}
-      <ul className={classes.links}>
-        <li>
-          <Link href="#" className={classes.link}>
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link href="#" className={classes.link}>
-            Login
-          </Link>
-        </li>
-        <li className={classes.premium}>
-          <Link href="#" className={classes.link2}>
-            Premium
-          </Link>
-        </li>
-      </ul>
-    </nav>
-  );
-}
-
-const useStyles = createStyles(() => ({
-    container: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '1rem',
-        paddingLeft: '2rem',
-        paddingRight: '2rem',
-        paddingTop: '0rem',
-        width: '100vw',
-        color: "white",
-        height: '14vh'
-    },
-    logo: {
-        height: '2rem',
-        marginLeft: '1rem'
-    },
-    logoDiv: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: '1rem'
-    },
-    links: {
-        display: 'flex',
-        padding: '1rem',
-        marginLeft: '1rem',
-        marginRight: '1rem',
-        listStyle: 'none',
-    },
-    link: {
-        padding: '1rem',
-        marginLeft: '1.5rem',
-        marginRight: '1.5rem',
-        textDecoration: 'none',
-        fontSize: '1.25rem',
-        color: 'white',
-        '&:hover': {
-            color: 'rgb(156, 163, 175)'
-        },
-        alignItems: 'center',
-    },
-    link2: {
-        padding: '0.5rem',
-        marginLeft: '1.5rem',
-        marginRight: '1.5rem',
-        textDecoration: 'none',
-        fontSize: '1.25rem',
-        '&:hover': {
-            color: 'rgb(156, 163, 175)'
-        },
-        alignItems: 'center',
-        border: '2px solid white',
-        borderRadius: '8px',
-        borderColor: 'themeOptions.color.smallBox',
-        color: 'themeOptions.color.smallBox',
->>>>>>> 445a6eeaf6f4e367e3f18039bdd05dcc6d85d1fa

@@ -51,7 +51,6 @@ const useVoice = (): {
     if (isListening) {
       speech?.stop();
     } else {
-      
       speech?.start();
     }
   };
@@ -62,7 +61,7 @@ const useVoice = (): {
     }
 
     speech.onresult = (event) => {
-      console.log(event.results[event.results.length - 1][0].transcript)
+      console.log(event.results[event.results.length - 1][0].transcript);
       setText(event.results[event.results.length - 1][0].transcript);
       setIsListening(false);
       if (speech) speech.stop();

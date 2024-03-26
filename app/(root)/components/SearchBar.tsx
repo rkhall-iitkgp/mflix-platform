@@ -5,15 +5,22 @@ import MicIcon from '@/assets/icons/mic.svg';
 import { Button } from '@mantine/core';
 import Image from 'next/image';
 import { useVoice } from '@/components/VoiceSearchButton/UseVoice';
+import { FaMicrophone } from 'react-icons/fa6';
 
 export default function SearchBar() {
-  const [input, setInput] = React.useState('' as string);
+  const [input, setInput] = React.useState('');
   const { text, isListening, listen, voiceSupported } = useVoice();
+
   useEffect(() => {
     if (text !== '') {
       setInput(text);
     }
   }, [text]);
+
+  useEffect(() => {
+    console.log('isListening', isListening);
+  }, [isListening]);
+
   return (
     <div style={styles.container}>
       <label htmlFor="search" style={styles.searchLabel}>
@@ -24,12 +31,22 @@ export default function SearchBar() {
         type="text"
         placeholder="Search..."
         style={styles.input}
-        value={input as string}
+        value={input}
         onChange={(e) => setInput(e.target.value)}
       />
       {input && <Image src={XMarkIcon} alt="X" style={styles.icon} onClick={() => setInput('')} />}
-
-      <Image onClick={listen} src={MicIcon} alt="Mic" style={styles.mic} />
+      <button style={styles.button} onClick={listen} type="button">
+        <FaMicrophone
+          style={{
+            ...styles.mic,
+            backgroundColor: isListening ? '#7011B6' : 'transparent',
+            transition: 'background-color 0.3s ease',
+            borderRadius: '50%',
+            padding: '5px',
+          }}
+          size={48}
+        />
+      </button>
     </div>
   );
 }
@@ -63,7 +80,6 @@ const styles = {
     height: '1.5rem',
     color: 'rgb(156, 163, 175)',
     marginRight: '0.5rem',
-    backgroundColor: '#7011B6',
     padding: '0.125rem',
     borderRadius: '50%',
   },
@@ -71,5 +87,15 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     backgroundColor: 'transparent',
+  },
+  button: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: 'none',
+    background: 'none',
+    cursor: 'pointer',
+    outline: 'none',
+    padding: '0',
   },
 };

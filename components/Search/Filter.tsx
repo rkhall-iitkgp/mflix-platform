@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Grid } from '@mantine/core';
+import { Grid, Rating } from '@mantine/core';
 import Image from 'next/image';
 import { createStyles } from '@mantine/styles';
 import FilterIcon from '@/assets/icons/filtericon.svg';
@@ -9,6 +9,7 @@ import { TypeButton } from './FilterButtons/TypeButton';
 import Data from '@/app/(root)/search/components/data';
 import { YearButton } from './FilterButtons/YearButton';
 import themeOptions from '../../utils/colors';
+import { RatingButton } from './FilterButtons/RatingButton';
 
 const useStyles = createStyles(() =>
 //const child = getRef('child');
@@ -79,8 +80,12 @@ export default function Filter() {
                                 </Grid.Col>
                             ))}
                             <Grid.Col span={3}>
+                                <RatingButton />
+                            </Grid.Col>
+                            <Grid.Col span={3}>
                                 <YearButton />
                             </Grid.Col>
+
                         </Grid>
                     </div>
                 }

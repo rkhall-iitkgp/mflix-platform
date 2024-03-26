@@ -57,57 +57,57 @@ const MovieCard: React.FC<MovieCardProps> = ({
             <Skeleton visible={loading} radius={0}>
                 <AspectRatio ratio={250 / 370}>
                     <NextImage
-                      src={image}
-                      height={500}
-                      width={320}
-                      alt="sample"
-                      onLoad={() => setLoading(false)}
-                      style={{ boxShadow: '0px 4px 4px 0px #00000040' }}
+                        src={image}
+                        height={500}
+                        width={320}
+                        alt="sample"
+                        onLoad={() => setLoading(false)}
+                        style={{ boxShadow: '0px 4px 4px 0px #00000040' }}
                     />
                 </AspectRatio>
             </Skeleton>
 
             {loading ?
-            <DataLoader />
-            :
-            <>
-                <Text fz={themeOptions.fontSize.xs} c={themeOptions.color.dimmed} mt="xs" mb="xs">
-                    {info}
-                </Text>
+                <DataLoader />
+                :
+                <>
+                    <Text fz={themeOptions.fontSize.xs} c={themeOptions.color.dimmed} mt="xs" mb="xs">
+                        {info}
+                    </Text>
 
-                <Text fz={themeOptions.fontSize.s} fw={500}>
-                    {name}
-                </Text>
+                    <Text fz={themeOptions.fontSize.s} fw={500}>
+                        {name}
+                    </Text>
 
-                <Group justify="space-between" mt="xs" mb="xs">
-                    <Group justify="space-around">
-                        <Image
-                          src={ImdbImg}
-                          component={NextImage}
-                          alt="imdb"
-                          h={17}
-                          unoptimized
-                        />
-                        <Text fz={themeOptions.fontSize.xs}>{imdbRating}</Text>
+                    <Group justify="space-between" mt="xs" mb="xs">
+                        <Group justify="space-around">
+                            <Image
+                                src={ImdbImg}
+                                component={NextImage}
+                                alt="imdb"
+                                h={17}
+                                unoptimized
+                            />
+                            <Text fz={themeOptions.fontSize.xs}>{imdbRating}</Text>
+                        </Group>
+                        <Group>
+                            <Image
+                                src={TomatoImg}
+                                component={NextImage}
+                                alt="tomato"
+                                h={17}
+                                unoptimized
+                            />
+                            <Text fz={themeOptions.fontSize.xs}>{tomatoRating}</Text>
+                        </Group>
                     </Group>
-                    <Group>
-                        <Image
-                          src={TomatoImg}
-                          component={NextImage}
-                          alt="tomato"
-                          h={17}
-                          unoptimized
-                        />
-                        <Text fz={themeOptions.fontSize.xs}>{tomatoRating}</Text>
-                    </Group>
-                </Group>
 
-                <Text fz={themeOptions.fontSize.xs} c={themeOptions.color.dimmed}>
-                    {genres.join(', ')}
-                </Text>
+                    <Text fz={themeOptions.fontSize.xs} c={themeOptions.color.dimmed}>
+                        {genres.join(', ')}
+                    </Text>
 
-                <Favourite favourite={favourite} />
-            </>}
+                    <Favourite favourite={favourite} />
+                </>}
         </Card>
     );
 };

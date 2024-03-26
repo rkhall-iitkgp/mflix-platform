@@ -29,33 +29,33 @@ export default function MovieDetails() {
             background: '#000',
         },
         two: {
-            marginTop: "30px", 
+            marginTop: "30px",
             paddingLeft: "40px",
         },
-        three:{
-            width:'7rem',
-            paddingTop:'5px',
-            paddingBottom:'5px',
+        three: {
+            width: '7rem',
+            paddingTop: '5px',
+            paddingBottom: '5px',
         },
-        four:{
-            width:'500px',
+        four: {
+            width: '500px',
         },
-        five:{
-            marginTop: "50px", 
-            border: "1px solid", 
-            borderRadius: "10px", 
-            padding: "10px", 
+        five: {
+            marginTop: "50px",
+            border: "1px solid",
+            borderRadius: "10px",
+            padding: "10px",
             alignItems: "center"
         },
-        six:{
-            maxWidth:"max-content",
+        six: {
+            maxWidth: "max-content",
         },
-        seven:{
-            marginLeft: "70px", marginTop: "200px", color:'#000',
+        seven: {
+            marginLeft: "70px", marginTop: "200px", color: '#000',
         },
-        eight:{
+        eight: {
             border: "1px solid #000", borderRadius: "10px", paddingInline: "15px", background: "#000", opacity: "40%",
-            color:'#fff'
+            color: '#fff'
         }
 
 
@@ -136,7 +136,7 @@ export default function MovieDetails() {
                             <Text fz={themeOptions.fontSize.s} style={{ fontWeight: "600" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum eaque provident, corrupti voluptatem, ullam nihil quaerat tenetur itaque libero dignissimos error. Fugit sint voluptates, aut placeat vitae animi eos amet ipsa distinctio neque quidem, nesciunt laborum quasi culpa, qui sapiente hic provident. Ratione perspiciatis ullam corporis voluptatum voluptatibus aperiam reprehenderit.</Text>
                         </Group>
                         <Group c={themeOptions.color.button} className={classes.five}>
-                            <Text style={{ color: "#000", fontWeight:'500' }}>Add To WatchList</Text>
+                            <Text style={{ color: "#000", fontWeight: '500' }}>Add To WatchList</Text>
                             <FaPlus />
                         </Group>
                     </Group>

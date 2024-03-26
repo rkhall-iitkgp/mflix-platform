@@ -4,12 +4,13 @@ import { Group, Stack, Text, Space } from '@mantine/core';
 import { createStyles } from '@mantine/styles';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { MovieCard, MovieCardSpace } from '@/components/Search/MovieCard';
+import { MovieCardSpace } from '@/components/Search/MovieCard';
+import MovieCard from '../../(root)/components/MovieCard'
 import MovieBanner from '@/components/Search/MovieBanner';
 import Carousel from '@/components/Search/Carousel';
 import themeOptions from '@/utils/colors';
 import Filter from '@/components/Search/Filter';
-
+import { Grid } from '@mantine/core'
 interface RecommendedMovies {
     image: string,
     name: string,
@@ -31,6 +32,15 @@ const useStyles = createStyles(() => ({
         zIndex: -30,
         overflow: 'hidden',
     },
+    moviecard: {
+        marginBottom: '20px',
+        transition: 'all 0.3s ease-in-out',
+        '&:hover': {
+            transform: 'scale(1.1)', // Adjust as needed
+        },
+    }
+
+
 }));
 
 const dummyBannerMovie = () => ({
@@ -78,11 +88,11 @@ export default function Search() {
         const handleResize = () => {
             setElementsPerRow(
                 window.innerWidth < 868 ? 2 :
-                window.innerWidth < 1182 ? 3 :
-                window.innerWidth < 1510 ? 4 :
-                window.innerWidth < 1852 ? 5 :
-                window.innerWidth < 2210 ? 6 :
-                7
+                    window.innerWidth < 1182 ? 3 :
+                        window.innerWidth < 1510 ? 4 :
+                            window.innerWidth < 1852 ? 5 :
+                                window.innerWidth < 2210 ? 6 :
+                                    7
             );
             setJustify(window.innerWidth < 1182 ? 'space-evenly' : 'space-between');
         };
@@ -102,42 +112,41 @@ export default function Search() {
             <Stack>
                 <Text fw={600} fz={themeOptions.fontSize.xl}>
                     Top results for : {' '}
-                    <Text span inherit c={themeOptions.color.textColorNormal}>{ search }</Text>
+                    <Text span inherit c={themeOptions.color.textColorNormal}>{search}</Text>
                 </Text>
-                <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
-                    <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false}>
-                        <MovieBanner {...(dummyBannerMovie())} />
-                        <MovieBanner {...(dummyBannerMovie())} />
-                    </Group>
-                    <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false}>
-                        <MovieBanner {...(dummyBannerMovie())} />
-                        <MovieBanner {...(dummyBannerMovie())} />
-                    </Group>
-                </Stack>
+                <Grid justify="space-between" >
+                    {/* <Group style={{ rowGap: '20%' }} grow gap="8%" preventGrowOverflow={false}> */}
+                    <Grid.Col span={6} className={classes.moviecard}><MovieBanner {...(dummyBannerMovie())} /></Grid.Col>
+                    <Grid.Col span={6} className={classes.moviecard}><MovieBanner {...(dummyBannerMovie())} /></Grid.Col>
+                    <Grid.Col span={6} className={classes.moviecard}><MovieBanner {...(dummyBannerMovie())} /></Grid.Col>
+                    <Grid.Col span={6} className={classes.moviecard}><MovieBanner {...(dummyBannerMovie())} /></Grid.Col>
+
+                </Grid>
             </Stack>
             <Space h="lg" />
 
             {/* more results part */}
-            <Stack>
-                <Text fw={500} fz={themeOptions.fontSize.xl}>More Results</Text>
-                <Group
-                  justify={justify}
-                  style={{
-                      rowGap: themeOptions.fontSize.xl,
-                  }}
-                  gap="2%"
-                >
-                    {makeGroup(moreResults, elementsPerRow).map((data, index) => (
-                        data ?
-                        <MovieCard
-                          key={index}
-                          {...data}
-                        />
-                        :
-                        <MovieCardSpace key={index} />
-                    ))}
-                </Group>
-            </Stack>
+            <Text fw={500} fz={themeOptions.fontSize.xl}>More Results</Text>
+
+
+            <Grid
+            //justify={justify}
+            >
+                {moreResults.map((data, index) => (
+
+                    <Grid.Col span={12 / 5} key={index} style={{ marginBottom: '20px' }}>
+                        <div className={classes.moviecard}> {/* Apply movie-card class here */}
+                            {data ? (
+                                <MovieCard
+                                // {...data}
+                                />
+                            ) : (
+                                <MovieCardSpace key={index} />
+                            )}
+                        </div>
+                    </Grid.Col>
+                ))}
+            </Grid>
             <Space h="lg" />
 
             {/* Carousel Part */}
@@ -146,7 +155,7 @@ export default function Search() {
                     Recommendations Based on Search Results
                 </Text>
                 <Carousel>
-                    {recommended?.map((data, index) => <MovieCard key={index} {...data} />)}
+                    {recommended?.map((data, index) => <div key={index} className={classes.moviecard}><MovieCard key={index} {...data} /></div>)}
                 </Carousel>
             </Stack>
             <Space h="lg" />

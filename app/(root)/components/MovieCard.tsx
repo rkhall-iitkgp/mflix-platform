@@ -100,9 +100,7 @@ export default function MovieCard() {
 
     return (
         <div className={classes.containerStyles}>
-            <div className={classes.heartContainerStyles} >
-                <Image src={favourite ? Heart : favHeart} width={35} height={35} alt='fav' className={classes.heartImageStyles} onClick={() => setFavourite(!favourite)} />
-            </div>
+
             <Image src={Poster} alt='poster' width={220} height={310} className={classes.posterStyles} />
             <span className={classes.countryStyles}>USA, 2016- Current</span>
             <h3 className={classes.titleStyles}>Movie Title</h3>

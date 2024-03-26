@@ -1,6 +1,5 @@
-"use client"
-
-import { Group, Image, Stack, Paper } from '@mantine/core';
+import { Group, Image, Stack, Paper, getDefaultZIndex, GridCol} from '@mantine/core';
+import { Grid ,Flex,Button} from '@mantine/core';
 import { GrLocation } from 'react-icons/gr';
 import { FaRegHourglass } from 'react-icons/fa6';
 import { PiCalendar } from 'react-icons/pi';
@@ -12,174 +11,153 @@ import themeOptions from '@/utils/colors';
 import Sample from '@/assets/sample.png';
 import { createStyles } from '@mantine/styles';
 import { useState } from 'react';
+import { IconBoxMargin } from '@tabler/icons-react';
+import { useMediaQuery } from '@mantine/hooks';
 
-export default function MovieContent() {
-
-    const [movieDetails, setmovieDetails] = useState({
-        genres: ['Mystery', 'Action', 'Thriller'],
-        director: ['James Cameron'],
-        writer: ['Rick Jaffa'],
-        cast: ['Chris Pratt', 'Bryce Dallas Howard', 'Laura Dern'],
-        rating: "8.6/10",
-        tomato: "97%",
-        duration: "2hr 27min",
-        country: "America",
-        year: "2022",
-        title: "Jurassic World Dominion",
-        moviedetail: "Four years after the destruction of Isla Nublar, dinosaurs now live and hunt alongside humans all over the world. This fragile balance will reshape the future and determine, once and for all, whether human beings are to remain the apex predators on a planet they now share with history most fearsome creatures"
-    })
-
+//{url}/movies/573a1391f29313caabcd6d40
+export default function MovieContent({movieData}) {
+    console.log(movieData);
+    const isSmallScreen = useMediaQuery('(max-width: 1200px)');
+    const [watchList,setWatchList] = useState("Add to Watchlist");
+    const TogglewatchListStatus = () =>{
+        if(watchList === "Add to Watchlist") setWatchList("Added to Watchlist");
+        else setWatchList("Add to Watchlist");
+    }
     const styles = createStyles(() => ({
-        moviecontent: {
-            // marginTop: "10px",
-            // paddingLeft: "40px",
-            width: '600px',
-            // marginLeft:'-100px',
+        detailsContainer:{
+            margin:'5rem 0',
+            zIndex:1,
+            alignItems:'center'
         },
-        genre: {
-            width: '7rem',
-            paddingTop: '5px',
-            paddingBottom: '5px',
-            backgroundColor: themeOptions.color.divider,
-            transition:'0.3s',
-            '&:hover': {
-                cursor: "pointer",
-                backgroundColor: themeOptions.color.button,
-            },
-        },
-        imdb: {
-            width: '500px',
-        },
-        watchlist: {
-            marginTop: "50px",
-            border: "1px solid",
-            borderRadius: "10px",
-            padding: "10px",
-            alignItems: "center",
-            transition:'0.3s',
-            '&:hover':{
-                cursor:'pointer',
-                background:themeOptions.color.button,
-                color:themeOptions.color.divider,
-            }
-        },
-        country: {
-            maxWidth: "max-content",
-        },
-        creators: {
-            marginTop: "100px",
-            marginLeft:'-100px',
-        },
-        flexbox: {
-            border: "1px solid #000", borderRadius: "10px", paddingInline: "25px", background: "rgba(217, 217, 217, 0.25)",
-            color: themeOptions.color.divider, width: '250px',transition:'0.3s',
-        },
-        arrow: {
-            color: themeOptions.color.button,
-            '&:hover':{
-                color:themeOptions.color.divider,
-            }
-        },
-        flexboxstyles:{
-            textAlign:'left', 
-            margin:'2px', 
-            paddingBottom:'5px',
-        },
-        details:{
-            textAlign:'center', 
-            margin:'2px',
-            color:themeOptions.color.divider,
+        imageContainer:{
+            textAlign:'center'
         },
         image:{
-            height: "530px", 
-            width: "291px", 
-            marginTop: "100px", 
-            // marginLeft: "100px",
+            width:'85%',
+            height:'auto'
         },
-        title:{
-            textAlign:'left', 
-            fontSize:themeOptions.fontSize.xl, 
-            margin:'2px', 
-            width:'580px',
+        movieTitle:{
+            fontSize: isSmallScreen ? themeOptions.fontSize.l : themeOptions.fontSize.xl,
             color:themeOptions.color.divider,
+            margin:'0'
+        },
+        genreContainer:{
+            display:'flex',
+        },
+        genre:{
+            textAlign:'center',
+            minWidth:'5rem',
+            padding:'0 1.25rem',
+            margin:'0.25rem 1rem 0 0',
+            borderRadius:10,
+            color:themeOptions.color.divider,
+            fontSize: isSmallScreen ? themeOptions.fontSize.s : themeOptions.fontSize.md ,
+            backgroundColor:themeOptions.color.button,
+        },
+        otherDetailsContainer:{
+
+        },
+        details:{
+            margin:'0 1rem 0 0',
+        },
+        detailsText:{
+            color:themeOptions.color.divider,
+            fontSize:themeOptions.fontSize.s,
+        },
+        plot:{
+            width:'80%',
+            fontSize: isSmallScreen ? themeOptions.fontSize.s : themeOptions.fontSize.md,
+            color:themeOptions.color.divider
+        },
+        addToWatchList:{
+            width:'fit-content',
+            padding:'0',
+            color: watchList === "Add to Watchlist" ? themeOptions.color.button : themeOptions.color.divider,
+            backgroundColor : watchList === "Add to Watchlist" ? themeOptions.color.divider : themeOptions.color.button,
+        },
+        creatersContainer:{
+            width:'10rem',
+            backgroundColor:themeOptions.color.divider,
+            margin:'0 2.5rem 0 5rem'
         }
-
     }))
-
     const { classes } = styles();
-
     return (
-        <Group style={{display:'flex' , justifyContent:'space-around', zIndex:'20'}}>
-            <div>
+        <Grid className={classes.detailsContainer}>
+            <Grid.Col span={3} className={classes.imageContainer}>
                 <NextImage
                     src={Sample}
+                    width = "1000"
+                    height = "300"
                     className={classes.image}
                     alt="sample"
                 />
-            </div>
-            <Stack ml="xxl" gap="xs" mr="lg" className={classes.moviecontent}>
-                <p className={classes.title}>{movieDetails.title}</p>
-                
-                <Group gap={themeOptions.fontSize.xs}>
-                    {movieDetails.genres.map((e, i) =>
-                        <Paper key={i} fz={themeOptions.fontSize.s} radius={15} className={classes.genre}>
-                            <p style={{margin:'2px', textAlign:'center', color:themeOptions.color.divider }}>{e}</p>
-                        </Paper>)}
-                </Group>
-                <Group mt={7} justify='space-between' className={classes.imdb}>
-
-                    <Group gap={6} justify="space-around">
-                        <Image src={ImdbImg} component={NextImage} alt="imdb" height={20} unoptimized />
-                        <p className={classes.details}>{movieDetails.rating}</p>
-                    </Group>
-                    <Group gap={6} justify="space-around">
-                        <Image src={TomatoImg} component={NextImage} alt="imdb" height={20} unoptimized />
-                        <p className={classes.details}>{movieDetails.tomato}</p>
-                    </Group>
-                    <Group gap={6} justify="space-around">
-                        <FaRegHourglass />
-                        <p className={classes.details}>{movieDetails.duration}</p>
-                    </Group>
-                    <Group gap={6} justify="space-around">
-                        <PiCalendar />
-                        <p className={classes.details}>{movieDetails.year}</p>
-                    </Group>
-                    <Group gap={6} justify="space-around" className={classes.country}>
-                        <GrLocation />
-                        <p className={classes.details}>{movieDetails.country}</p>
-                    </Group>
-                    <Group>
-                        <p className={classes.details}>{movieDetails.moviedetail}</p>
-                    </Group>
-
-                    <Group c={themeOptions.color.button} className={classes.watchlist}>
-                        <p style={{ color: "#fff", fontWeight: '500', margin:'2px'}}>Add To WatchList</p>
-                        <FaPlus className={classes.arrow}/>
-                    </Group>
-
-                </Group>
-            </Stack>
-            <Stack className={classes.creators}>
-                <Group className={classes.flexbox}>
-                    <Group display={'block'}>
-                        <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Director </p>
-                        {movieDetails.director.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)}
-                    </Group>
-                </Group>
-                <Group className={classes.flexbox}>
-                    <Group display={'block'} >
-                        <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Writers </p>
-                        {movieDetails.writer.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)}
-                    </Group>
-                </Group>
-                <Group className={classes.flexbox}>
-                    <Group display={'block'}>
-                        <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Cast </p>
-                        {movieDetails.cast.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)}
-                    </Group>
-                </Group>
-            </Stack>
-        </Group>
+            </Grid.Col>
+            <Grid.Col span={9}>
+                <Flex>
+                    <div>
+                        <h1 className={classes.movieTitle}>Movie Title</h1>
+                        <Flex className={classes.genreContainer}>
+                            <p className={classes.genre}>Action</p>
+                            <p className={classes.genre}>Adventure</p>
+                            <p className={classes.genre}>Thriller</p>
+                        </Flex>
+                        <Flex className={classes.otherDetailsContainer}>
+                            <Group gap={6} justify="space-around" className={classes.details}>
+                                <Image src={ImdbImg} component={NextImage} alt="imdb" height={17} unoptimized />
+                                <p className={classes.detailsText}>7.5/10</p>
+                            </Group>
+                            <Group gap={6} justify="space-around" className={classes.details}>
+                                <Image src={TomatoImg} component={NextImage} alt="imdb" height={17} unoptimized />
+                                <p className={classes.detailsText}>3.5/5</p>
+                            </Group>
+                            <Group gap={6} justify="space-around" className={classes.details}>
+                                <FaRegHourglass color='white' fontSize={20}/>
+                                <p className={classes.detailsText}>60 min</p>
+                            </Group>
+                            <Group gap={6} justify="space-around" className={classes.details}>
+                                <PiCalendar color='white' fontSize={20}/>
+                                <p className={classes.detailsText}>2026</p>
+                            </Group>
+                            <Group gap={6} justify="space-around" className={classes.details}>
+                                <GrLocation color='white' fontSize={20}/>
+                                <p className={classes.detailsText}>USA</p>
+                            </Group>
+                        </Flex>
+                        <p className={classes.plot}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, voluptate? Optio culpa eius repellat corporis, itaque totam animi, facere a vero minus tempore debitis expedita praesentium inventore amet, numquam perferendis necessitatibus nobis voluptas esse? Sed quas beatae laboriosam aspernatur atque. Blanditiis dicta alias, pariatur totam delectus consequuntur eveniet quasi maiores!</p>
+                        <Group className={classes.addToWatchList} onClick = {TogglewatchListStatus}>
+                            <p style={{fontSize:themeOptions.fontSize.md ,margin:'0'}}>{watchList}</p>
+                            <FaPlus/>
+                        </Group>
+                    </div>
+                    <Stack>
+                        <Group className={classes.creatersContainer}>
+                                <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Director </p>
+                                <p>Harry</p>
+                                <p>Harry</p>
+                                <p>Harry</p>
+                                {/* {movieDetails.directors?.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)} */}
+                        </Group>
+                        <Group className={classes.creatersContainer}>
+                                {/* {!movieDetails.writers || movieDetails.writers.length===0 ? <></> : <>
+                                    {movieDetails.writers?.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)} 
+                                </>} */}                                    
+                                <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Writers </p>
+                                <p>Harry</p>
+                                <p>Harry</p>
+                                <p>Harry</p>
+                        </Group>
+                        <Group className={classes.creatersContainer}>
+                                <p style={{fontSize:themeOptions.fontSize.md, margin:'2px'}}> Cast </p>
+                                <p>Harry</p>
+                                <p>Harry</p>
+                                <p>Harry</p>
+                                {/* {movieDetails.cast?.map((e, i) => <p className={classes.flexboxstyles} style={{fontWeight: "500"}}>{e}</p>)} */}
+                        </Group>
+                    </Stack>
+                </Flex>
+            </Grid.Col>
+        </Grid>
 
     );
 }

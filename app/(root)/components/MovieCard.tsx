@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Heart from '@/assets/images/heart.svg';
 import favHeart from '@/assets/images/fav-heart.svg';
-import Poster from '@/assets/images/poster.jpeg';
+import Poster from '@/assets/images/poster.png';
 import Imdb from '@/assets/images/imdb.png';
 import Tomato from '@/assets/images/tomato.png';
 import { createStyles } from '@mantine/styles';
@@ -10,10 +10,21 @@ import { useState } from 'react';
 
 const useStyles = createStyles(() => ({
     containerStyles: {
-        marginRight: '3rem',
+        position: 'relative',
         width: '220px',
-        height: '420px',
-        overflow: 'hidden',
+        marginRight: '3rem',
+        height: '310px',
+        overflow: 'visible',
+        transition: 'box-shadow 0.3s ease, transform 0.3s ease',
+        '&:hover': {
+            // boxShadow: '-1px 1px 20px 10px rgba(209,209,209,0.5)',
+            transform: 'scale(1.05)',
+            // height: '430px',
+            // marginTop: '.5rem',
+            // marginBottom: '2rem',
+            // zIndex: 10,
+            // position: 'relativ',
+        },
     },
 
     heartContainerStyles: {
@@ -39,8 +50,10 @@ const useStyles = createStyles(() => ({
     },
 
     posterStyles: {
-        width: '20.75rem',
-        transform: 'rotate(180deg)'
+        width: '13.75rem',
+        cursor: 'pointer',
+        // transform: 'rotate(180deg)'
+        zIndex: 1
     },
 
     countryStyles: {
@@ -91,47 +104,113 @@ const useStyles = createStyles(() => ({
 
     tomatoImg: {
         marginRight: '0.5rem'
+    },
+    movieInfoContainer: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        width: '100%',
+        // height: 'max-content',
+        padding: '10px',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        color: '#fff',
+        transition: 'background-color 0.3s ease, opacity 0.3s ease',
+        opacity: 0,
+    },
+    movieInfoContainerVisible: {
+        opacity: 1,
+    },
+    card:
+    {
+        position: 'absolute',
+        boxShadow: '-1px 1px 10px 3px rgba(209,209,209,0.5)',
+        '&:hover': {
+            height: '27rem',
+            boxShadow: '-1px 1px 20px 5px rgba(209,209,209,0.75)',
+        },
+    },
+    hovered: {
+        // height: '27rem',
+        padding: '0.5rem',
+        position: 'absolute',
+        zIndex: 500,
+        background: 'black',
+        top: '19.375rem',
     }
 }))
 
 export default function MovieCard() {
     const { classes } = useStyles();
+    const [isHovered, setIsHovered] = useState(false);
     const [favourite, setFavourite] = useState(true);
 
-    const [movieDetails, setM] = useState({
-        genres: ['Mystery', 'Action', 'Thriller'],
-        director: ['James Cameron'],
-        writer: ['Rick Jaffa'],
-        cast: ['Chris Pratt', 'Bryce Dallas Howard', 'Laura Dern'],
-        rating: "8.6/10",
-        tomato: "97%",
-        duration: "2hr 27min",
-        country: "USA,2016 - Current",
-        year: "2022",
-        title: "Movie Title",
-        moviedetail: "Four years after the destruction of Isla Nublar, dinosaurs now live and hunt alongside humans all over the world. This fragile balance will reshape the future and determine, once and for all, whether human beings are to remain the apex predators on a planet they now share with history most fearsome creatures"
-    })
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
 
     return (
-        <div className={classes.containerStyles}>
-            <div className={classes.heartContainerStyles} >
-                <Image src={favourite ? Heart : favHeart} width={35} height={35} alt='fav' className={classes.heartImageStyles} onClick={() => setFavourite(!favourite)} />
-            </div>
-            <Image src={Poster} alt='poster' width={220} height={310} className={classes.posterStyles} />
-            <span className={classes.countryStyles}>{movieDetails.country}</span>
-            <h3 className={classes.titleStyles}>{movieDetails.title}</h3>
-            <div className={classes.ratingContainerStyles}>
-                <div className={classes.ratingItemStyles}>
-                    <Image src={Imdb} width={35} height={17} alt='imdb' className={classes.img} />
-                    <span className={classes.rating}>{movieDetails.rating}</span>
+        <div
+            className={classes.containerStyles}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
+            <div style={{
+            }} className={classes.card}>
+                <div className={classes.heartContainerStyles}>
+                    <Image
+                        src={favourite ? Heart : favHeart}
+                        width={35}
+                        height={35}
+                        alt='fav'
+                        className={classes.heartImageStyles}
+                        onClick={() => setFavourite(!favourite)}
+                    />
                 </div>
-                <div className={classes.ratingItemStyles}>
-                    <Image src={Tomato} alt='tomato' height={17} width={16} className={classes.tomatoImg} />
-                    <span className={classes.tomatoScore}>{movieDetails.tomato}</span>
-                </div>
-            </div >
-            <div className={classes.genreStyles}>
-                {movieDetails.genres.map((e, i) => <span key={i} style={{ margin: '5px', textAlign: 'left' }}>{e}</span>)}
+                <Image
+                    src={Poster}
+                    alt='poster'
+                    width={220}
+                    height={310}
+                    className={classes.posterStyles}
+                />
+                {/* {true && ( */}
+                {isHovered && (
+                    <div style={{
+
+                    }} className={classes.hovered}>
+                        <span className={classes.countryStyles}>USA, 2016- Current</span>
+                        <h3 className={classes.titleStyles}>Movie Title</h3>
+                        <div className={classes.ratingContainerStyles}>
+                            <div className={classes.ratingItemStyles}>
+                                <Image
+                                    src={Imdb}
+                                    width={35}
+                                    height={17}
+                                    alt='imdb'
+                                    className={classes.img}
+                                />
+                                <span className={classes.rating}>8.6/10</span>
+                            </div>
+                            <div className={classes.ratingItemStyles}>
+                                <Image
+                                    src={Tomato}
+                                    alt='tomato'
+                                    height={17}
+                                    width={16}
+                                    className={classes.tomatoImg}
+                                />
+                                <span className={classes.tomatoScore}>96%</span>
+                            </div>
+                        </div>
+                        <div className={classes.genreStyles}>
+                            <span>Action, Adventure / Horror</span>
+                        </div>
+                    </div>
+                )}
             </div>
         </div >
     );

@@ -85,8 +85,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
         console.log(`Switched to level: ${level.height}p`);
       });
 
-      playerRef.current.addEventListener('timeupdate', updateProgress);
-      playerRef.current.addEventListener('click', togglePlay);
+      playerRef.current?.addEventListener('timeupdate', updateProgress);
+      playerRef.current?.addEventListener('click', togglePlay);
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = videoSrc;
       video.addEventListener('loadedmetadata', () => {

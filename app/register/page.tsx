@@ -153,15 +153,10 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
               // borderRadius: '1rem',
               // borderImage:"linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%)"
               // background: 'linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%)',
-
               // backgroundOrigin: 'border-box',
               // backgroundClip: 'content-box, border-box',
-
               padding: '1rem', // Adjust padding as per your requirement
-
               width: '45rem',
-              height: '85%',
-
               borderRadius: '15px',
               backdropFilter: 'blur(10px)',
               backgroundColor: 'rgba(0, 0, 0, 0.1)',

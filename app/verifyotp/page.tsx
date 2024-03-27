@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
-import { PinInput } from '@mantine/core';
+import { PinInput, darken } from '@mantine/core';
 import {
     TextInput,
     PasswordInput,
@@ -20,9 +20,14 @@ import {
 import { GoogleButton } from '../login/GoogleButton';
 // import { TwitterButton } from './TwitterButton';
 import searchMsApiUrls from '../api/searchMsApi';
+import useLoginStore from "@/Stores/LoginStore";
+import { useRouter } from "next/navigation";
 
 
-export default function Otp({ initialValues = { otp: '' } }: any) {
+
+
+export function Otp({ initialValues }: any) {
+    const router = useRouter()
     const [type, toggle] = useToggle(['login', 'register'])
     const [resendTime, setResendTime] = useState(60);
     const [otpValue, setOtpValue] = useState(initialValues?.otp || '');
@@ -38,6 +43,7 @@ export default function Otp({ initialValues = { otp: '' } }: any) {
     }, [resendTime]);
 
     const handleOtp = async () => {
+
         console.log(initialValues)
         const base_url = searchMsApiUrls();
         let res = await fetch(`${base_url}/auth/verifyOTP`, {
@@ -57,7 +63,16 @@ export default function Otp({ initialValues = { otp: '' } }: any) {
         //   setLoading(false);
         else {
             console.log(jsonData.message);
-            console.log(jsonData.user);
+            console.log(jsonData)
+            if (initialValues.type == 'register') {
+                useLoginStore.getState().updateUser(jsonData.account);
+                const state = useLoginStore.getState();
+                console.log(state);
+                // router.push('/userprogfile')
+            } else {
+                router.push('/login')
+            }
+            // console.log(jsonData.account);
             // console.log(jsonData);
             // sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
             // sessionStorage.setItem('token', jsonData.user.token);

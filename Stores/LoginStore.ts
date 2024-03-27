@@ -11,13 +11,6 @@ type State = {
     activeLogins: string[];
 }
 type Action = {
-    // updateName: (newName: State['name']) => void;
-    // updateEmail: (newEmail: State['email']) => void;
-    // updateDob: (newDob: State['dob']) => void;
-    // updatePhone: (newPhone: State['phone']) => void;
-    // updatePayments: (newPayments: State['payments']) => void;
-    // updateUserProfiles: (newProfiles: State['userProfiles']) => void;
-    // updateActiveLogins: (newLogins: State['activeLogins']) => void;
     updateUser: (newUser: Partial<State>) => void;
 }
 const useLoginStore = create<State & Action>((set) => ({
@@ -30,12 +23,6 @@ const useLoginStore = create<State & Action>((set) => ({
     userProfiles: [],
     activeLogins: [],
     updateUser: (newUser) => set(() => ({ ...newUser })),
-    // updateName: (name) => set(() => ({ name: name })),
-    // updateEmail: (email) => set(() => ({ email: email })),
-    // updateDob: (dob) => set(() => ({ dob: dob })),
-    // updatePhone: (phone) => set(() => ({ phone: phone })),
-    // updatePayments: (payments) => set(() => ({ payments: payments })),
-    // updateUserProfiles: (profiles) => set(() => ({ userProfiles: profiles })),
-    // updateActiveLogins: (logins) => set(() => ({ activeLogins: logins }))
+
 }))
 export default useLoginStore;

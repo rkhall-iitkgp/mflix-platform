@@ -186,7 +186,6 @@ function Footer() {
         justifyContent: 'space-between'
       },
       logoDivStyle: {
-        width: '100%',
         paddingLeft: '2rem',
         paddingRight: '2rem',
         marginTop: '2rem',

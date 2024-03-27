@@ -21,8 +21,6 @@ import useLoginStore from '@/Stores/LoginStore';
 
 export default function Login() {
     const [userData, setUserData] = useState(null)
-
-
     const submitLogin = async (values: any) => {
         const base_url = searchMsApiUrls()
         setUserData(values);
@@ -137,7 +135,7 @@ export default function Login() {
 
         validate: {
             email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-            password: (val) => (val.length <= 8 ? 'Password should include at least 8 characters' : null),
+            password: (val) => (val.length <= 5 ? 'Password should include at least 6 characters' : null),
         },
     });
 
@@ -151,7 +149,7 @@ export default function Login() {
                 align="center" gap={{ sm: 'lg' }}>
                 <Text size="1.1rem" c={'white'}  >Don't have an account?
                 </Text>
-                <a href="/register" style={{ color: themeOptions.color.textColorNormal }}>Sign in</a>
+                <a href="/register" style={{ color: themeOptions.color.textColorNormal }}>Register</a>
             </Flex>
             <Box
                 className={classes.CentreBoxStyles}>
@@ -222,7 +220,7 @@ export default function Login() {
                         {form.errors.password ? form.errors.password : ''}
                     </div>
                     <Box style={{ display: 'flex', flexDirection: 'row-reverse', width: '70%' }}>
-                        <a href="/forgetpassword" style={{ color: 'white', fontSize: '0.8rem', fontWeight: 'normal', padding: '0.2rem' }} >Forget Password?</a>
+                        <a href="/forgetpassword" style={{ color: 'white', fontSize: '0.8rem', fontWeight: 'normal', padding: '0.2rem' }} >Forgot Password?</a>
                     </Box>
                     <Button
                         // className={classes.ButtonStyles}

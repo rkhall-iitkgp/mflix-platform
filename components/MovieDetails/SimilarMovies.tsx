@@ -1,64 +1,19 @@
 'use client'
-
 import Image from 'next/image';
 import { useRef, useState, CSSProperties, useEffect } from 'react';
-import MovieCard from './MovieCard';
+import MovieCard from '@/app/(root)/components/MovieCard';
 import rArrow from '@/assets/icons/rarrow.svg';
-import Trend from '@/assets/icons/trends.svg';
 import { createStyles } from '@mantine/styles';
-// export default function SimilarMovies() {
-//     const scrollRef = useRef(null);
-//     const handleScrollRight = () => {
-//         console.log("scrolling")
-//         scrollRef.current.scrollBy({
-//             top: 0,
-//             left: 300, // Adjust this value based on the width of each item
-//             behavior: 'smooth',
-//         });
-//     };
-//     const handleScrollLeft = () => {
-//         console.log("scrolling")
-//         scrollRef.current.scrollBy({
-//             top: 0,
-//             left: -300, // Adjust this value based on the width of each item
-//             behavior: 'smooth',
-//         });
-//     };
-//     const [vis,setVis]=useState(false);
-//     return (
-//         <section className='pl-20  md:py-20 relative w-[calc(100vw-20px)]'>
-//             <h1 className='text-4xl mb-10 inline'>SimilarMovies</h1>
-//             <Image src={Trend} alt='icon' className='inline ml-2 pb-2' width={35} height={30} />
-//             <div ref={scrollRef} className='w-full overflow-hidden'>
-//                 <div className='flex w-max relative'>
-//                     <MovieCard />
-//                     <MovieCard />
-//                     <MovieCard />
-//                     <MovieCard />
-//                     <MovieCard />
-//                     <MovieCard />
-//                     <MovieCard />
-//                     <MovieCard />
-//                 </div>
 
-//             {vis && <Image src={rArrow} alt='slider' width={30} height={40} className='bg-[#1a202c] shadow-[-12px_20px_222px_200px_#1a202c] absolute left-40 top-1/2 transform -translate-y-1/2 cursor-pointer rotate-180' onClick={handleScrollLeft} />}
-//                     <Image src={rArrow} alt='slider' width={30} height={40} className='bg-[#1a202c] shadow-[-12px_20px_222px_200px_#1a202c] absolute right-10 top-1/2 transform -translate-y-1/2 cursor-pointer' onClick={handleScrollRight} />
-
-//             </div>
-//         </section>
-
-//     )
-// }
-
-
-export default function SimilarMovies() {
-    const scrollRef = useRef(null);
+export default function Trending() {
+    const scrollRef = useRef<HTMLDivElement>(null);
     const [showLeftArrow, setShowFirstArrow] = useState(false);
     const [vis, setVis] = useState(false);
     useEffect(() => {
         const handleScroll = () => {
             // Check if the container is scrolled horizontally
-            if (scrollRef.current.scrollLeft > 100) {
+            if (!scrollRef.current) return;
+            if (scrollRef.current.scrollLeft > 0) {
                 setShowFirstArrow(true);
             } else {
                 setShowFirstArrow(false);
@@ -66,41 +21,45 @@ export default function SimilarMovies() {
         };
 
         // Add scroll event listener to the container
-        scrollRef.current.addEventListener('scroll', handleScroll);
-
+        if (scrollRef.current) {
+            scrollRef.current.addEventListener('scroll', handleScroll);
+        }
+    
         // Remove event listener on component unmount
         return () => {
-            scrollRef.current.removeEventListener('scroll', handleScroll);
+            if (scrollRef.current) {
+                scrollRef.current.removeEventListener('scroll', handleScroll);
+            }
         };
     }, []);
 
     const handleScrollRight = () => {
+        if (!scrollRef.current) return;
         console.log("scrolling");
         setVis(true);
         scrollRef.current.scrollBy({
             top: 0,
-            left: 300, // Adjust this value based on the width of each item
+            left: 220, // Adjust this value based on the width of each item
             behavior: 'smooth',
         });
     };
 
     const handleScrollLeft = () => {
+        if (!scrollRef.current) return;
         console.log("scrolling")
         scrollRef.current.scrollBy({
             top: 0,
-            left: -300, // Adjust this value based on the width of each item
+            left: -220, // Adjust this value based on the width of each item
             behavior: 'smooth',
         });
     };
 
-    const {classes, cx} = useStyles()
+    const { classes, cx } = useStyles()
 
     return (
         <section className={classes.sectionStyles}>
-            <h1 className={classes.titleStyles}>SimilarMovies</h1>
-            <Image src={Trend} alt='icon' className={classes.iconStyles} />
             <div ref={scrollRef} className={classes.containerStyles}>
-                <div className={classes.random}>
+                <div className={classes.movieDiv}>
                     <MovieCard />
                     <MovieCard />
                     <MovieCard />
@@ -110,16 +69,16 @@ export default function SimilarMovies() {
                     <MovieCard />
                     <MovieCard />
                 </div>
-                {showLeftArrow && (
+                
                     <Image
                         src={rArrow}
                         alt='slider'
-                        className={cx(classes.arrowStyles, classes.leftArrow, {opacity: showLeftArrow ? 1 : 0})}
+                        className={cx(classes.arrowStyles, classes.leftArrow, {[classes.opacity]: showLeftArrow === true })}
                         width={30}
                         height={40}
                         onClick={handleScrollLeft}
                     />
-                )}
+                
                 <Image
                     src={rArrow}
                     alt='slider'
@@ -134,57 +93,47 @@ export default function SimilarMovies() {
 }
 
 const useStyles = createStyles(() => ({
+    opacity: {
+        opacity: 1
+    },
     sectionStyles: {
-        paddingLeft: '80px',
         paddingTop: '80px', // You may adjust the padding as needed
         paddingBottom: '80px',
         position: 'relative',
         width: 'calc(100vw - 20px)',
     },
 
-    titleStyles: {
-        fontSize: '2.25rem',
-        lineHeight: "2.5rem",
-        display: 'inline',
-        marginRight: "2.5rem",
-        marginTop:"2rem",
-        // fontWeight:"400",
-    },
-
-    iconStyles: {
-        marginLeft: '2rem',
-        paddingBottom: '2rem',
-        display: 'inline',
-    },
-
     containerStyles: {
         width: '100%',
         overflow: 'hidden',
-        marginTop:'30px',
     },
 
     arrowStyles: {
-        backgroundColor: '#1a202c',
-        boxShadow: '-12px 20px 222px 200px #1a202c',
+        backgroundColor: '#000',
+        boxShadow: '-12px 20px 222px 180px #000',
         position: 'absolute',
-        top: '50%',
+        top: '55%',
         transform: 'translateY(-50%)',
         cursor: 'pointer',
+        zIndex:2,
+        // filter: 'drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.3))',
     },
 
-    random: {
+    movieDiv: {
         display: 'flex',
         position: 'relative',
         width: 'max-content',
+        paddingLeft:'5rem'
     },
 
     leftArrow: {
         left: '40px',
         transform: 'translateY(-50%) rotate(180deg)',
-        transition: 'opacity 5s'
+        transition: 'opacity .15s',
+        opacity: 0
     },
 
     rightArrow: {
         right: '10px'
-    }
-}))
+    },
+}));

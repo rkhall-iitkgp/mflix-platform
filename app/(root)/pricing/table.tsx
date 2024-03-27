@@ -6,7 +6,7 @@ import React from 'react';
 import { createStyles } from '@mantine/styles';
 
 
-const SubscriptionTable = ({ cardPlan }) => {
+const SubscriptionTable = ({ cardPlan }: { cardPlan: any}) => {
     const useStyles = createStyles(() => ({
         OuterBoxStyles: {
             marginTop: '1rem', backgroundColor: 'black', height: '25rem', display: 'flex', flexDirection: 'column', alignItems: 'center'
@@ -21,7 +21,7 @@ const SubscriptionTable = ({ cardPlan }) => {
             width: '30%', textAlign: 'left', color: themeOptions.color.textColorNormal, fontSize: '1.2rem'
         },
         TableThRestStyles: {
-            textAlign: 'center !important', width: '15%', fontSize: '1.1rem '
+            textAlign: 'center', width: '15%', fontSize: '1.1rem '
         },
         FeatureStyles: {
             textAlign: 'left', fontSize: "1.1rem"

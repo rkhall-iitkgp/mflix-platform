@@ -9,6 +9,49 @@ import DownIcon from '@/assets/icons/down.svg'
 export default function Chatbot() {
     const { classes, cx } = styles();
     const [show, setShow] = React.useState(false);
+    const [input, setInput] = React.useState('');
+    const [messages, setMessages] = React.useState<{
+        message: string,
+        type: 'sent' | 'received'
+    }[]>([]);
+
+    // React.useEffect(() => {
+    //     function sendOnEnter(e: KeyboardEvent) {
+    //         if (e.key === 'Enter') {
+    //             sendMessage()
+    //         }
+    //     }
+
+    //     document.addEventListener("keypress", sendOnEnter)
+
+    //     return () => {
+    //         document.removeEventListener("keypress", sendOnEnter)
+    //     }
+
+    // }, [])
+
+    React.useEffect(() => {
+        document.getElementById("messages")?.scrollTo(0, document.getElementById("messages")?.scrollHeight!);
+    }, [messages])
+
+    async function sendMessage() {
+        setMessages(messages => [...messages, { message: input, type: 'sent' }])
+        setInput('')
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chatbot/message`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: input })
+            })
+            const data = await response.json()
+            setMessages(messages => [...messages, { message: (data.message as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'), type: 'received' }])
+        } catch (error) {
+            setMessages(messages => [...messages, { message: 'Sorry, I am not able to process your request at the moment.', type: 'received' }])
+        }
+    }
+
     return (
         <Container className={classes.chatbot}>
             {!show && <Image src={Bot} alt="Chatbot" width={70} height={70} className={classes.icon} onClick={() => setShow(true)} />}
@@ -24,13 +67,14 @@ export default function Chatbot() {
                     {<Image src={DownIcon} alt="close" width={30} height={30} className={classes.icon} onClick={() => setShow(false)} />}
                 </Group>
                 <Stack className={classes.body}>
-                    <div className={classes.messages}>
-                        <p className={classes.sent}>Sent message</p>
-                        <p className={classes.received}>Received message</p>
+                    <div id="messages" className={classes.messages}>
+                        {/* <p className={classes.sent}>Sent message</p>
+                        <p className={classes.received}>Received message</p> */}
+                        {messages.map((msg, i) => <p key={i} className={cx(classes[msg.type])} dangerouslySetInnerHTML={{ __html: msg.message }} />)}
                     </div>
                     <Group className={classes.messageInput}>
-                        <input type="text" placeholder='Enter your message...' className={classes.input} />
-                        <Container className={classes.sendIcon}>
+                        <input type="text" placeholder='Enter your message...' className={classes.input} value={input} onChange={e => setInput((e.target as HTMLInputElement).value)} id="messageInput" />
+                        <Container className={classes.sendIcon} onClick={sendMessage} >
                             <Image src={SendIcon} alt="Send" width={22} height={22} />
                         </Container>
                     </Group>
@@ -46,7 +90,7 @@ const styles = createStyles((theme) => ({
         bottom: 0,
         right: 0,
         margin: "2rem",
-        zIndex: 500
+        zIndex: 500,
     },
     icon: {
         borderRadius: '50%',
@@ -76,7 +120,8 @@ const styles = createStyles((theme) => ({
         borderTop: "1px solid #ADADAD",
     },
     body: {
-        backgroundColor: "#333333"
+        backgroundColor: "#333333",
+        width: "20rem",
     },
     input: {
         backgroundColor: "transparent",
@@ -108,7 +153,7 @@ const styles = createStyles((theme) => ({
         height: "20rem",
         overflowY: "scroll",
         display: "flex",
-        justifyContent: "flex-end",
+        // justifyContent: "flex-end",
         flexDirection: "column",
         gap: "1rem",
         "::-webkit-scrollbar": {

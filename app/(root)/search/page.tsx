@@ -67,7 +67,7 @@ export default function Search() {
         setRecommended(data);
     }, []);
     return (
-        <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
+        <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="1rem">
             <div className={classes.bg}></div>
             <Filter />
             <Space h="xs" />

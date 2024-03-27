@@ -17,6 +17,7 @@ import { useEffect , useState } from 'react';
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();
     const [movieData,setMovieData] = useState({});
+    const [similarMoviesData,setSimilarMoviesData] = useState({});
     useEffect(()=>{
         const id = params.id;
         const getMovieDetails = async () => {
@@ -33,8 +34,8 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                 body: JSON.stringify({a: 1, b: 'Textual content'})
               });
               const similarMovies = await res2.json();
-            
-              console.log(similarMovies.results);
+              setSimilarMoviesData(similarMovies.results);
+            //   console.log(similarMovies.results);
         }   
         getMovieDetails(); 
     },[])
@@ -103,7 +104,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                 {/* Carousal */}
                 <p className={classes.similarmovies} style={{zIndex:'22',color:themeOptions.color.divider}}>Similar Movies</p>
                 <Stack className={classes.carousal}>
-                    <SimilarMovies/>
+                    <SimilarMovies similarMoviesData={similarMoviesData}/>
                 </Stack>
             </div>
             {/* Footer */}

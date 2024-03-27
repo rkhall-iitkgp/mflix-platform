@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image';
 import Heart from '@/assets/images/heart.svg';
 import favHeart from '@/assets/images/fav-heart.svg';
@@ -137,7 +138,7 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-export default function MovieCard() {
+export default function MovieCard({movieData}) {
   const { classes } = useStyles();
   const [isHovered, setIsHovered] = useState(false);
   const [favourite, setFavourite] = useState(true);

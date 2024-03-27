@@ -322,6 +322,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { GoPencil } from "react-icons/go";
 import { CiPower } from "react-icons/ci";
 import { useState } from 'react';
+import History from './history';
 // import { CIcon } from '@coreui/icons-react';
 // import { cilList, cilHistory } from '@coreui/icons';
 export function UserProfile() {
@@ -400,7 +401,7 @@ export function UserProfile() {
             </AppShell.Navbar>
             <AppShell.Main>
                 <Box style={{ height: '100%', width: '100%', marginTop: '-1.2rem' }}>
-                    <UserDetails></UserDetails>
+                    {page === 1 ? <UserDetails></UserDetails> : (page === 2 ? <History></History> : null)}
                 </Box>
             </AppShell.Main>
             {/* <AppShell.Aside p="md">Aside</AppShell.Aside> */}

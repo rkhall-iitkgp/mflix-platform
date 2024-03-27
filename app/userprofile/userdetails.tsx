@@ -220,7 +220,7 @@ const UserDetails = () => {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'space-between' }} >
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <h1 style={{ color: 'white' }}>User Profile</h1>
-                <div style={{ height: '20vh', width: '20vh', borderRadius: '0.8', overflow: 'hidden', border: '0.2rem solid white' }}>
+                <div style={{ height: '20vh', width: '20vh', borderRadius: '50%', overflow: 'hidden', border: '0.2rem solid white' }}>
                     <Image src="" alt="Profile" width={150} height={150} />
                 </div>
             </div>

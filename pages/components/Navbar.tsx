@@ -8,9 +8,9 @@ import { FaSearch } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
 import { ActionIcon, Divider } from '@mantine/core';
 import { IoCloseOutline } from 'react-icons/io5';
-import NavSearch from '@/app/(root)/components/NavSearch';
+import NavSearch from '@/pages/components/NavSearch';
 import { usePathname } from 'next/navigation';
-import searchMsApiUrls from '../../api/searchMsApi';
+import searchMsApiUrls from '../api/searchMsApi';
 
 export default function Navbar() {
   const useStyles = createStyles(() => ({

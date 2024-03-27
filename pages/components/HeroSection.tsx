@@ -1,8 +1,8 @@
 'use client';
-import SearchBar from '@/app/(root)/components/SearchBar';
+import SearchBar from '@/pages/components/SearchBar';
 import Image from 'next/image';
 import React from 'react';
-import { gsap } from 'gsap';
+// import { gsap } from 'gsap';
 import { useState, useEffect, useRef } from 'react';
 import BgImage from '@/assets/images/bg-home.jpeg';
 import { createStyles } from '@mantine/styles';
@@ -10,10 +10,10 @@ import Poster from '@/assets/images/poster.png';
 import Vector1 from '@/assets/images/vect-1.svg';
 import Vector2 from '@/assets/images/vect-2.svg';
 import { memo } from 'react';
-import { ScrollToPlugin } from 'gsap/all';
+// import { ScrollToPlugin } from 'gsap/all';
 import { useMediaQuery } from '@mantine/hooks';
 import { em } from '@mantine/core';
-gsap.registerPlugin(ScrollToPlugin);
+// gsap.registerPlugin(ScrollToPlugin);
 const HeroSection = () => {
   console.log('rendered');
   const { classes, cx } = useStyles();
@@ -23,35 +23,35 @@ const HeroSection = () => {
   const flexRef = useRef(null);
   const isMobile = useMediaQuery(`(max-width: ${1250}px)`);
   console.log(flexRef);
-  useEffect(() => {
-    const tl = gsap.timeline({ paused: true });
-    tl.fromTo(
-      flexRef.current,
-      { scale: 0, opacity: 1, visibility: 'visible', height: 0, width: 0 },
-      {
-        duration: 0.25,
-        scale: 1.01,
-        opacity: 1,
-        visibility: 'visible',
-        height: 'auto',
-        width: 'auto',
-      }
-    );
-    if (isTyping) {
-      tl.play();
-    } else {
-      tl.reverse();
-    }
-    return () => {
-      tl.kill();
-    };
-  }, [isTyping]);
-  const handleTyping = (typing: string) => {
-    console.log('func called');
-    setIsTyping(typing !== '');
-    console.log(isTyping);
-    setInput(typing);
-  };
+  // useEffect(() => {
+  //   const tl = gsap.timeline({ paused: true });
+  //   tl.fromTo(
+  //     flexRef.current,
+  //     { scale: 0, opacity: 1, visibility: 'visible', height: 0, width: 0 },
+  //     {
+  //       duration: 0.25,
+  //       scale: 1.01,
+  //       opacity: 1,
+  //       visibility: 'visible',
+  //       height: 'auto',
+  //       width: 'auto',
+  //     }
+  //   );
+  //   if (isTyping) {
+  //     tl.play();
+  //   } else {
+  //     tl.reverse();
+  //   }
+  //   return () => {
+  //     tl.kill();
+  //   };
+  // }, [isTyping]);
+  // const handleTyping = (typing: string) => {
+  //   console.log('func called');
+  //   setIsTyping(typing !== '');
+  //   console.log(isTyping);
+  //   setInput(typing);
+  // };
   return (
     <>
       <div className={classes.bgContainer}>
@@ -73,7 +73,8 @@ const HeroSection = () => {
             Cool <br /> Animated Text
           </h1>
           <SearchBar
-            onTyping={handleTyping}
+            onTyping={() => {}}
+            // onTyping={handleTyping}
             input={input}
             setInput={setInput}
             // isTyping={isTyping}

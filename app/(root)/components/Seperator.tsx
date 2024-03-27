@@ -1,12 +1,10 @@
-import React, { useEffect, useRef } from 'react';
-import { createStyles } from "@mantine/styles";
+import React, { useEffect, useRef, CSSProperties } from 'react';
 import gsap from 'gsap';
 
 const AnimatedLines = () => {
   // Refs for the DOM elements you want to animate
   const line1Ref = useRef(null);
   const line2Ref = useRef(null);
-  const { classes } = useStyles();
 
   useEffect(() => {
     // Simple GSAP animation to grow the lines' width
@@ -14,25 +12,13 @@ const AnimatedLines = () => {
     gsap.to(line2Ref.current, { width: '100%', duration: 1, delay: 0.5 });
   }, []);
 
-  return (
-    <div className={classes.container}>
-    {/* //   <div style={styles.searchBox}> Your search box here </div> */}
-      <div className={classes.line} ref={line1Ref}></div> {/* First line */}
-      <div className={classes.line} ref={line2Ref}></div> {/* Second line */}
-    {/* //   <div style={styles.resultsBox}> Your results box here </div> */}
-    </div>
-  );
-};
-
-export default AnimatedLines;
-
-const useStyles = createStyles(() => ({
+  const styles = {
     container: {
-      position: 'relative',
+      position: 'relative' as 'relative',
       // Add other styles for the container as needed
     },
     line: {
-      position: 'absolute',
+      position: 'absolute' as 'absolute',
       height: '2px',
       backgroundColor: '#FFFFFF', // White line color
       width: '0', // Start with 0 width to animate from
@@ -48,6 +34,16 @@ const useStyles = createStyles(() => ({
     resultsBox: {
       // Add your styles here
     }
-  }))
-  
-  
+  };
+
+  return (
+    <div style={styles.container}>
+    {/* //   <div style={styles.searchBox}> Your search box here </div> */}
+      <div style={styles.line} ref={line1Ref}></div> {/* First line */}
+      <div style={styles.line} ref={line2Ref}></div> {/* Second line */}
+    {/* //   <div style={styles.resultsBox}> Your results box here </div> */}
+    </div>
+  );
+};
+
+export default AnimatedLines;

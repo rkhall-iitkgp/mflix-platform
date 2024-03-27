@@ -7,22 +7,13 @@ import { DateInput } from '@mantine/dates';
 import '@mantine/dates/styles.css';
 // import Link from 'next/link';
 import { NumberInput } from '@mantine/core';
-
 import {
-  TextInput,
-  PasswordInput,
-  Text,
-  Paper,
-  Group,
-  PaperProps,
-  Button,
-  Divider,
-  Checkbox,
-  Anchor,
-  Stack,
-  Flex,
-  Box,
-  useStyles,
+    TextInput,
+    PasswordInput,
+    Text,
+    Button,
+    Anchor,
+    Flex, Box
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
 import Otp from '../verifyotp/page';
@@ -31,9 +22,9 @@ import searchMsApiUrls from '../api/searchMsApi';
 import { useState } from 'react';
 import { createStyles } from '@mantine/styles';
 
-export function Register(props: PaperProps) {
-  const [showOtp, setshowOtp] = useState(0);
-  const [formData, setFormData] = useState({});
+export default function Register() {
+    const [showOtp, setshowOtp] = useState(0)
+    const [formData, setFormData] = useState({})
 
   // const router = useRouter();
   const handleRegister = async (values: any) => {
@@ -72,27 +63,27 @@ export function Register(props: PaperProps) {
   };
   // const [type, toggle] = useToggle(['login', 'register'])
 
-  const useStyles = createStyles(() => ({
-    container: {
-      padding: '1rem',
-      position: 'relative',
-      background: 'linear-gradient(to right, red, purple)',
-      zIndex: 0,
-    },
-  }));
-
-  const form = useForm({
-    initialValues: {
-      name: '',
-      dob: '',
-      phone: '',
-      email: '',
-      password: '',
-      confPassword: '',
-      terms: true,
-      otp: '',
-      flag: 0,
-    },
+    // const useStyles = createStyles(() => ({
+    //     container: {
+    //         padding: '1rem',
+    //         position: 'relative',
+    //         background: 'linear-gradient(to right, red, purple)',
+    //         zIndex: 0,
+    //     },
+    // }));
+    
+    const form = useForm({
+        initialValues: {
+            name: '',
+            dob: '',
+            phone: '',
+            email: '',
+            password: '',
+            confPassword: '',
+            terms: true,
+            otp: '',
+            flag: 0
+        },
 
     validate: {
       name: (val) => (!val ? 'Required' : null),
@@ -496,4 +487,4 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
   );
 }
 
-export default Register;
+// export default Register;

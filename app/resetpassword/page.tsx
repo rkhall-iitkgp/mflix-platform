@@ -18,7 +18,7 @@ import themeOptions from '../../assets/themes/colors'
 import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
 
-export function ResetPassword(props: PaperProps) {
+export default function ResetPassword() {
     const [userData, setUserData] = useState(null)
 
 
@@ -258,7 +258,7 @@ export function ResetPassword(props: PaperProps) {
                     </Box> */}
                     <Button
                         // className={classes.ButtonStyles}
-                        style={{ width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'n]=ormal', marginTop: '1.5rem' }}
+                        style={{ width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'normal', marginTop: '1.5rem' }}
                         type="submit" radius="xl" >Send OTP</Button>
 
                     {/* <Divider label="Or " labelPosition="center" my="lg" style={{ color: 'white', width: '80%' }} styles={{
@@ -278,4 +278,4 @@ export function ResetPassword(props: PaperProps) {
     );
 }
 
-export default ResetPassword;
+// export default ResetPassword;

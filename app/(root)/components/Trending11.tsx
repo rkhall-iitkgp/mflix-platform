@@ -5,21 +5,24 @@ import MovieCard from '@/app/(root)/components/MovieCard';
 import rArrow from '@/assets/icons/rarrow.svg';
 import { createStyles } from '@mantine/styles';
 
-export default function Trending11({ title, image }) {
-    const scrollRef = useRef(null);
+export default function Trending11({ title, image } : { title: string, image: any}) {
+    const scrollRef = useRef<HTMLDivElement>(null);
     const [showLeftArrow, setShowFirstArrow] = useState(false);
     const [vis, setVis] = useState(false);
     useEffect(() => {
         const handleScroll = () => {
             // Check if the container is scrolled horizontally
+            if (!scrollRef.current) return;
             if (scrollRef.current.scrollLeft > 0) {
                 setShowFirstArrow(true);
             } else {
                 setShowFirstArrow(false);
             }
         };
+        if (!scrollRef.current) return;
         scrollRef.current.addEventListener('scroll', handleScroll);
         return () => {
+            if (!scrollRef.current) return;
             scrollRef.current.removeEventListener('scroll', handleScroll);
         };
     }, []);
@@ -27,6 +30,7 @@ export default function Trending11({ title, image }) {
     const handleScrollRight = () => {
         console.log("scrolling");
         setVis(true);
+        if (!scrollRef.current) return;
         scrollRef.current.scrollBy({
             top: 0,
             left: 220,
@@ -35,6 +39,7 @@ export default function Trending11({ title, image }) {
     };
 
     const handleScrollLeft = () => {
+        if (!scrollRef.current) return;
         console.log("scrolling")
         scrollRef.current.scrollBy({
             top: 0,

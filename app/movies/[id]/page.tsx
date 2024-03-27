@@ -13,11 +13,14 @@ import MovieContent from '@/components/MovieDetails/MovieContent';
 import { ScrollArea } from '@mantine/core'
 import VideoPlayer from '@/components/VideoPlayer';
 import { useEffect , useState } from 'react';
+import useLoginStore from '@/Stores/LoginStore';
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();
     const [movieData,setMovieData] = useState({});
     const [similarMoviesData,setSimilarMoviesData] = useState({});
+    const state = useLoginStore.getState();
+    console.log(state)
     useEffect(()=>{
         const id = params.id;
         const getMovieDetails = async () => {

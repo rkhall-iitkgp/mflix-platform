@@ -166,6 +166,9 @@ export default function MovieContent({movieData}) {
                                     checked={checked}
                                     onChange={() => setChecked(!checked)}
                                     radius="m"
+                                    styles={{input:{
+                                        color: !checked ? themeOptions.color.button : themeOptions.color.divider,
+                                    }}}
                                 />
                                 <span>Watch List</span>
                             </Flex>

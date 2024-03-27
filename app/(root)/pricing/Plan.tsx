@@ -209,7 +209,7 @@ export default function Plan() {
                                 planInner[index] ? classes.PlanInnerBoxStylesClicked : classes.PlanInnerBoxStyles
                             }
                         >
-                            <Text style={{ fontSize: '1.5rem' }}>{label}</Text>
+                            <Text style={{ fontSize: '1.5rem', textAlign: 'center'}}>{label}</Text>
                         </Box>
                     ))}
                 </Box>
@@ -226,7 +226,7 @@ export default function Plan() {
                             className={cardPlan[index] ? classes.PlanCardStylesClicked : classes.PlanCardStyles}
                         >
                             <Box className={classes.PlanNameStyles}>
-                                <Text style={{ fontSize: '1.8rem' }} size="xl" fw={700}>
+                                <Text style={{ fontSize: '1.8rem', textAlign: 'center'}} size="xl" fw={700}>
                                     {name}
                                 </Text>
                             </Box>

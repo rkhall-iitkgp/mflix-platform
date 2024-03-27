@@ -1,3 +1,5 @@
+"use client"
+
 import { Group, Image, Stack,Flex,Container,Checkbox , UnstyledButton,Text} from '@mantine/core';
 import { GrLocation } from 'react-icons/gr';
 import { FaRegHourglass } from 'react-icons/fa6';
@@ -32,7 +34,9 @@ export default function MovieContent({movieData}) {
             zIndex:1
         },
         imageContainer:{
-            textAlign:'center'
+            display:'flex',
+            justifyContent:'center',
+            alignItems:'center'
         },
         image:{
             width: isSmallScreen ? '100%' : '80%',
@@ -113,8 +117,8 @@ export default function MovieContent({movieData}) {
     }))
     const { classes } = styles();
     return (
-        <Flex className={classes.detailsContainer} align='center' justify='space-around' direction={isSmallerScreen ? 'column' : 'row'}>
-            <Group className={classes.imageContainer}>
+        <Flex className={classes.detailsContainer} align='center' justify='space-evenly' direction={isSmallerScreen ? 'column' : 'row'}>
+            <div className={classes.imageContainer}>
                 <NextImage
                     src={movieData.poster}
                     width = "1000"
@@ -122,9 +126,9 @@ export default function MovieContent({movieData}) {
                     className={classes.image}
                     alt="sample"
                 />
-            </Group>
+            </div>
             <Group >
-                <Flex justify='space-between' align='center'>
+                <Flex justify='center' align='center'>
                     <Container>
                         <h1 className={classes.movieTitle}>{movieData.title}</h1>
                         <Flex className={classes.genreContainer}>
@@ -156,12 +160,15 @@ export default function MovieContent({movieData}) {
                             <p className={classes.plot}>{movieData.fullplot}</p>
                             <Flex align='center' justify='space-around' onClick = {()=> setChecked(!checked)} className={`${classes.buttonContainer} ${checked ? classes.checkboxChecked : ''}`}>
                                 <Checkbox
-                                    className={`${classes.checkbox}`}
+                                    className={classes.checkbox}
                                     color='#7011B6'
                                     mt="l"
                                     checked={checked}
                                     onChange={() => setChecked(!checked)}
-                                    radius="lg"
+                                    radius="m"
+                                    styles={{input:{
+                                        color: !checked ? themeOptions.color.button : themeOptions.color.divider,
+                                    }}}
                                 />
                                 <span>Watch List</span>
                             </Flex>

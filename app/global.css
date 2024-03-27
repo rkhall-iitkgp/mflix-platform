@@ -1,0 +1,20 @@
+::-webkit-scrollbar {
+  width: 5px; /* Width of vertical scrollbar */
+  height: 5px; /* Height of horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color of scrollbar thumb */
+  border-radius: 5px; /* Rounded corners */
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+  height: 100%;
+  overflow-x: hidden;
+}

@@ -1,13 +1,13 @@
 'use client';
 
-import Link from 'next/link'
-import React from 'react'
-import { createStyles } from "@mantine/styles";
+import Link from 'next/link';
+import React from 'react';
+import { createStyles } from '@mantine/styles';
 import themeOptions from '@/utils/colors';
 import { FaSearch } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
 import { ActionIcon, Divider } from '@mantine/core';
-import { IoCloseOutline } from "react-icons/io5";
+import { IoCloseOutline } from 'react-icons/io5';
 import NavSearch from '@/app/(root)/components/NavSearch';
 import { usePathname } from 'next/navigation';
 import searchMsApiUrls from '../../api/searchMsApi';
@@ -23,48 +23,49 @@ export default function Navbar() {
     const { hovered: categoryHovered, ref: categoryRef } = useHover();
     const { hovered: dropdownHovered, ref: dropdownRef } = useHover();
 
-    const searchBoxRef = useRef<HTMLDivElement>(null);
+  const searchBoxRef = useRef<HTMLDivElement>(null); // UseRef with HTMLDivElement type
 
-    const handleSearchClick = () => {
-        setIsSearchOpen(true);
+  const handleSearchClick = () => {
+    setIsSearchOpen(true);
+  };
+
+  const handleCloseClick = () => {
+    setIsSearchOpen(false); // Close the search box
+    setInput(''); // Clear input when closing search box
+  };
+
+  // const handleTyping = (typing) => {
+  //     setIsTyping(typing);
+  // };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (searchBoxRef.current && !searchBoxRef.current.contains(event.target as Node)) {
+      // Click occurred outside the search box, so close it
+      setIsSearchOpen(false);
+      setInput(''); // Clear input when closing search box
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+      setPrevScrollPos(currentScrollPos);
     };
 
-    const handleCloseClick = () => {
-        setIsSearchOpen(false);
-        setInput('');
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
     };
-
-    // const handleTyping = (typing) => {
-    //     setIsTyping(typing);
-    // };
-
-    const handleClickOutside = (event: MouseEvent) => {
-        if (searchBoxRef.current && !searchBoxRef.current.contains(event.target as Node)) {
-            setIsSearchOpen(false);
-            setInput('');
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener('click', handleClickOutside);
-        return () => {
-            document.removeEventListener('click', handleClickOutside);
-        };
-    }, []);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollPos = window.pageYOffset;
-            setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
-            setPrevScrollPos(currentScrollPos);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [prevScrollPos, visible]);
+  }, [prevScrollPos, visible]);
 
     const handleLogOut = async () => {
         const values = {
@@ -257,13 +258,16 @@ export default function Navbar() {
 
     const { classes } = useStyles();
 
-    return (
-        <nav >
-            <div className={`${classes.container} ${visible ? classes.visible : classes.hidden}`} style={{ zIndex: '200' }}>
-                {/* Logo */}
-                <div className={classes.logoDiv}>
-                    <img src="/logo.svg" alt="Logo" className={classes.logo} />
-                </div>
+  return (
+    <nav>
+      <div
+        className={`${classes.container} ${visible ? classes.visible : classes.hidden}`}
+        style={{ zIndex: '220' }}
+      >
+        {/* Logo */}
+        <div className={classes.logoDiv}>
+          <img src="/logo.svg" alt="Logo" className={classes.logo} />
+        </div>
 
                 {/* Links */}
                 <ul className={classes.links}>

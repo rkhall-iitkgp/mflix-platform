@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import {
     TextInput,
@@ -21,6 +21,7 @@ import Questions2 from './questions2';
 import SubscriptionTables from './table';
 import { List } from '@mantine/core';
 import { SlArrowRight } from "react-icons/sl";
+
 
 
 export default function Plan() {
@@ -154,7 +155,8 @@ export default function Plan() {
             display: 'flex', flexDirection: 'column', paddingLeft: '6%'
         },
         ArrowStyles: {
-            marginRight: '1.3rem'
+            // marginRight: '1.1rem'
+            marginLeft: '1.1rem'
         },
         QuestionSectionStyles: {
             display: 'flex',
@@ -165,10 +167,10 @@ export default function Plan() {
             justifyContent: 'center',
         },
         QuestionTextBoxStyles: {
-            marginBottom: '3rem', textAlign: 'center'
+            marginBottom: '2rem', textAlign: 'center', width: '100vw'
         }
     }));
-
+ 
 
 
     const [planInner, setPlanInner] = useState([true, false, false]);
@@ -189,12 +191,14 @@ export default function Plan() {
         updatedCardPlan[index] = true;
         setCardPlan(updatedCardPlan);
     };
+    const subscriptionTablesRef = useRef(null);
+
 
 
     const { classes } = useStyles();
     return (
         <>
-            <SubscriptionTables cardPlan={cardPlan} />
+            <SubscriptionTables ref={subscriptionTablesRef} cardPlan={cardPlan} />
             <Box className={classes.OuterBoxStyles}>
                 <Box className={classes.PlanBoxStyles}>
                     {['Monthly', 'Quarterly', 'Annually'].map((label, index) => (
@@ -205,7 +209,7 @@ export default function Plan() {
                                 planInner[index] ? classes.PlanInnerBoxStylesClicked : classes.PlanInnerBoxStyles
                             }
                         >
-                            <Text style={{ fontSize: '1.5rem' }}>{label}</Text>
+                            <Text style={{ fontSize: '1.5rem', textAlign: 'center'}}>{label}</Text>
                         </Box>
                     ))}
                 </Box>
@@ -222,7 +226,7 @@ export default function Plan() {
                             className={cardPlan[index] ? classes.PlanCardStylesClicked : classes.PlanCardStyles}
                         >
                             <Box className={classes.PlanNameStyles}>
-                                <Text style={{ fontSize: '1.8rem' }} size="xl" fw={700}>
+                                <Text style={{ fontSize: '1.8rem', textAlign: 'center'}} size="xl" fw={700}>
                                     {name}
                                 </Text>
                             </Box>
@@ -243,7 +247,7 @@ export default function Plan() {
                         </Box>
                     ))}
                 </Box>
-                <Button style={{ color: 'white', background: '#5e2787', height: '3.3rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem' }}>
+                <Button style={{ color: 'white', background: '#5e2787', height: '3.6rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem', }}>
                     Continue with Plan <SlArrowRight className={classes.ArrowStyles}></SlArrowRight>
                 </Button>
             </Box>
@@ -255,8 +259,8 @@ export default function Plan() {
                 <Box className={classes.QuestionTextBoxStyles}>
                     <Text style={{ fontSize: '2rem' }}>Questions?</Text>
                     <Text style={{}}>we got answers.</Text>
-                </Box>
                 <Questions2 />
+                </Box>
             </Box>
         </>
     );

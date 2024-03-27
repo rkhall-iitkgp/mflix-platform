@@ -141,7 +141,7 @@ import React, { useState } from 'react'
                            },
                         }}
                      >
-                        <Stack w={'100%'} align={'center'} spacing={20}>
+                        <Stack w={'100%'} align={'center'} gap={20}>
                            <Text style={{
                               fontWeight: 700,
                            }} fz={'md'}>Professional</Text>

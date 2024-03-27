@@ -13,19 +13,36 @@ import MovieContent from '@/components/MovieDetails/MovieContent';
 import { ScrollArea } from '@mantine/core'
 import VideoPlayer from '@/components/VideoPlayer';
 import { useEffect , useState } from 'react';
+import useLoginStore from '@/Stores/LoginStore';
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();
     const [movieData,setMovieData] = useState({});
+    const [similarMoviesData,setSimilarMoviesData] = useState({});
+    const state = useLoginStore.getState();
+    console.log(state)
     useEffect(()=>{
         const id = params.id;
         const getMovieDetails = async () => {
             const res = await (await fetch (`${url}/movies/${id}`)).json();
             setMovieData(res.result);
-            console.log(movieData)
-        }
+            const similar_results_url=`${url}/search/semantic?query=${res.result.plot}`
+            // console.log(final_url)
+            const res2 = await fetch(similar_results_url, {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({a: 1, b: 'Textual content'})
+              });
+              const similarMovies = await res2.json();
+              setSimilarMoviesData(similarMovies.results);
+            //   console.log(similarMovies.results);
+        }   
         getMovieDetails(); 
     },[])
+
     const styles = createStyles(() => ({
         streaming: {
             width: '100%',
@@ -82,16 +99,17 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
             <VideoPlayer />
 
             {/* Movie Details */}
-            <MovieContent movieData = {movieData}/>
+            <div style={{backgroundColor:themeOptions.color.background ,zIndex:1}}>
+                <MovieContent movieData = {movieData}/>
 
-            <Space h={"3rem"} />
+                <Space h={"3rem"} />
 
-            {/* Carousal */}
-            <p className={classes.similarmovies} style={{zIndex:'22'}}>Similar Movies</p>
-            <Stack className={classes.carousal}>
-                <SimilarMovies/>
-            </Stack>
-
+                {/* Carousal */}
+                <p className={classes.similarmovies} style={{zIndex:'22',color:themeOptions.color.divider}}>Similar Movies</p>
+                <Stack className={classes.carousal}>
+                    <SimilarMovies similarMoviesData={similarMoviesData}/>
+                </Stack>
+            </div>
             {/* Footer */}
             <Stack bg={themeOptions.color.black} style={{zIndex:'20'}}>
                 <Footer />

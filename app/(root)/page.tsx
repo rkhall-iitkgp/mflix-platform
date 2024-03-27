@@ -17,12 +17,14 @@ export default function Home() {
       position: 'absolute',
       width: '100%',
       height: '100%',
+      zIndex: -1,
       backgroundColor: themeOptions.color.background,
     },
     backgroundOverlay: {
       position: 'absolute',
       width: '100%',
       height: '100%',
+      zIndex: 0,
       backgroundColor: 'linear-gradient(45, #580099 40%, #9441D0 60%, #580099 100%)',
     },
   }));

@@ -11,6 +11,8 @@ import Vector1 from '@/assets/images/vect-1.svg';
 import Vector2 from '@/assets/images/vect-2.svg';
 import { memo } from 'react';
 import { ScrollToPlugin } from 'gsap/all';
+import { useMediaQuery } from '@mantine/hooks';
+import { em } from '@mantine/core';
 gsap.registerPlugin(ScrollToPlugin);
 const HeroSection = () => {
   console.log('rendered');
@@ -19,6 +21,7 @@ const HeroSection = () => {
   const [showSearchSection, setShowSearchSection] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const flexRef = useRef(null);
+  const isMobile = useMediaQuery(`(max-width: ${1250}px)`);
   console.log(flexRef);
   useEffect(() => {
     const tl = gsap.timeline({ paused: true });
@@ -61,12 +64,14 @@ const HeroSection = () => {
         />
         <div className={classes.HeroImgOverlay}></div>
       </div>
-      <div className={classes.hero} style={{ gap: `${isTyping ? '0rem' : '4rem'}` }}>
+      <div className={cx(classes.hero)} style={{ gap: `${isTyping ? '0rem' : '4rem'}` }}>
         <div
           className={classes.leftSection}
           style={{ marginLeft: `${isTyping ? '0rem' : '0rem'}` }}
         >
-          <h1 className={classes.heading}>Cool Animated Text</h1>
+          <h1 className={classes.heading}>
+            Cool <br /> Animated Text
+          </h1>
           <SearchBar
             onTyping={handleTyping}
             input={input}
@@ -87,18 +92,22 @@ const HeroSection = () => {
             <MovieCard />
           </div>
         </div>
-        <div className={classes.flex} id="flex" ref={flexRef}>
+        <div
+          className={classes.searchContainer}
+          id="flex"
+          ref={flexRef}
+          style={{ display: `${!input ? 'none' : 'flex'}` }}
+        >
           <div className={classes.flex} id="flex">
             <div className={classes.flex1}>
-              <Image src={Vector1} alt="vector" className={classes.vec1Style} id="vec1" />
-              <Image src={Vector2} alt="vector" className={classes.vec2Style} id="vec2" />
+              <Image src={Vector1} alt="vector" id="vec1" />
+              <Image src={Vector2} alt="vector" id="vec2" />
             </div>
             <div
               className={cx(
                 classes.searchRightSection,
                 showSearchSection && classes.searchRightSectionVisible
               )}
-              style={{ height: `${isTyping ? '0px' : '0'}`, marginTop: '2rem' }}
             >
               <div className={classes.searchMovies}>
                 <SearchResultCard />
@@ -169,10 +178,20 @@ const useStyles = createStyles(() => ({
     opacity: 0.25,
     // zIndex: -20
   },
+  searchContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: '3.4%',
+    minWidth: '30%',
+    // transform:'scale(1) translateX(-10%)',
+    // transition:'transform 1s ease-in'
+    // width:'100px'
+  },
   flex: {
     display: 'flex',
     justifyContent: 'space-between',
-    // alignItems:'center'
+    alignItems: 'center',
     // transform:'scale(1) translateX(-10%)',
     // transition:'transform 1s ease-in'
     // width:'100px'
@@ -180,7 +199,9 @@ const useStyles = createStyles(() => ({
   flex1: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: '13rem',
+    height: '100%',
+    // flexDirection: 'column',
+    // marginTop: '13rem',
     // justifyContent:'space-between',
     // width:'100px'
   },
@@ -194,24 +215,26 @@ const useStyles = createStyles(() => ({
     // paddingTop: '6rem',
     width: '100%',
     display: 'flex',
-    flex: '2 1 auto',
-    justifyContent: 'flex-start',
+    // flex: '2 1 auto',
+    justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
     gap: '2rem',
-    marginLeft: '20%',
+    // marginLeft: '20%',
     height: '92vh',
   },
   leftSection: {
     marginTop: '2rem',
-    width: '35vw',
+    width: '50%',
     paddingBottom: '5rem',
     display: 'flex',
     flexDirection: 'column',
+    minWidth: `370px`,
+    paddingLeft: '2rem',
   },
 
   heading: {
-    fontSize: '4.2rem',
+    fontSize: `3.5rem`,
     margin: '0.5rem',
     textWrap: 'wrap',
     width: '100%',
@@ -228,18 +251,19 @@ const useStyles = createStyles(() => ({
     flexDirection: 'column',
     gap: '0.8rem',
     marginTop: '-2rem',
+    minWidth: '30%',
   },
   searchRightSection: {
     // overflow: 'hidden',
+    transform: 'translateX(-1px)',
+
     // gap: '0.8rem',
     // marginTop: '1.5rem',
     // transform: 'scale(0.8)',
     // transformOrigin: 'top right',
     // transition: 'transform 2s ease-in-out',
   },
-  searchRightSectionVisible: {
-    // transform: 'scale(1)',
-  },
+  searchRightSectionVisible: {},
   p: {
     marginBottom: '0.75rem',
     fontSize: '2rem',

@@ -19,7 +19,7 @@ import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
 import useLoginStore from '@/Stores/LoginStore';
 
-export function Login(props: PaperProps) {
+export default function Login() {
     const [userData, setUserData] = useState(null)
 
 
@@ -227,7 +227,7 @@ export function Login(props: PaperProps) {
                     </Box>
                     <Button
                         // className={classes.ButtonStyles}
-                        style={{ width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'n]=ormal', marginTop: '1.5rem' }}
+                        style={{ width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'normal', marginTop: '1.5rem' }}
                         type="submit" radius="xl" >Log In</Button>
 
                     <Divider label="Or " labelPosition="center" my="lg" style={{ color: 'white', width: '80%' }} styles={{
@@ -246,4 +246,4 @@ export function Login(props: PaperProps) {
     );
 }
 
-export default Login;
+// export default Login;

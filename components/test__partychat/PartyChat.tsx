@@ -12,6 +12,11 @@ type IMessage = {
   username?: string;
 };
 
+type User = {
+  clientId: string;
+  username: string;
+};
+
 const colors = {
   white: '#fff',
   dull_white: '#fff9',
@@ -124,7 +129,7 @@ export default function PartyChat() {
   const [activeTab, setActiveTab] = useState(0);
 
   const [messageChain, setMessageChain] = useState<IMessage[]>([]);
-  const [userList, setUserList] = useState<string[]>([]);
+  const [userList, setUserList] = useState<User[]>([]);
 
   return (
     <div style={{ display: 'flex' }}>

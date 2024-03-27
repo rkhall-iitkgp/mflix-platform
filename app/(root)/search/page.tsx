@@ -34,6 +34,7 @@ const useStyles = createStyles(() => ({
 }));
 
 export default function Search() {
+
     const searchParams = useSearchParams();
     const search = searchParams.get('q');
     const { classes } = useStyles();

@@ -13,15 +13,9 @@ import {
     TextInput,
     PasswordInput,
     Text,
-    Paper,
-    Group,
-    PaperProps,
     Button,
-    Divider,
-    Checkbox,
     Anchor,
-    Stack,
-    Flex, Box, useStyles
+    Flex, Box
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
 import Otp from '../verifyotp/page';
@@ -31,7 +25,7 @@ import { useState } from 'react';
 
 
 
-export function Register(props: PaperProps) {
+export default function Register() {
     const [showOtp, setshowOtp] = useState(0)
     const [formData, setFormData] = useState({})
 
@@ -73,14 +67,14 @@ export function Register(props: PaperProps) {
     };
     // const [type, toggle] = useToggle(['login', 'register'])
 
-    const useStyles = createStyles(() => ({
-        container: {
-            padding: '1rem',
-            position: 'relative',
-            background: 'linear-gradient(to right, red, purple)',
-            zIndex: 0,
-        },
-    }));
+    // const useStyles = createStyles(() => ({
+    //     container: {
+    //         padding: '1rem',
+    //         position: 'relative',
+    //         background: 'linear-gradient(to right, red, purple)',
+    //         zIndex: 0,
+    //     },
+    // }));
     
     const form = useForm({
         initialValues: {
@@ -395,4 +389,4 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
     );
 }
 
-export default Register;
+// export default Register;

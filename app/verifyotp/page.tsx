@@ -22,10 +22,10 @@ import { GoogleButton } from '../login/GoogleButton';
 import searchMsApiUrls from '../api/searchMsApi';
 
 
-export function Otp({ initialValues }: any) {
+export default function Otp({ initialValues = { otp: '' } }: any) {
     const [type, toggle] = useToggle(['login', 'register'])
     const [resendTime, setResendTime] = useState(60);
-    const [otpValue, setOtpValue] = useState(initialValues.otp);
+    const [otpValue, setOtpValue] = useState(initialValues?.otp || '');
 
     useEffect(() => {
         if (resendTime > 0) {
@@ -165,4 +165,4 @@ export function Otp({ initialValues }: any) {
     );
 }
 
-export default Otp;
+// export default Otp;

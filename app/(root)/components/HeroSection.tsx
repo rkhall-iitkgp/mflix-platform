@@ -43,7 +43,7 @@ const HeroSection = () => {
       tl.kill();
     };
   }, [isTyping]);
-  const handleTyping = (typing) => {
+  const handleTyping = (typing: string) => {
     console.log('func called');
     setIsTyping(typing !== '');
     console.log(isTyping);
@@ -71,7 +71,7 @@ const HeroSection = () => {
             onTyping={handleTyping}
             input={input}
             setInput={setInput}
-            isTyping={isTyping}
+            // isTyping={isTyping}
           />
           <p>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus

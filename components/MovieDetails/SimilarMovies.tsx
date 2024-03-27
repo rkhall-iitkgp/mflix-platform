@@ -6,12 +6,13 @@ import rArrow from '@/assets/icons/rarrow.svg';
 import { createStyles } from '@mantine/styles';
 
 export default function Trending() {
-    const scrollRef = useRef(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
     const [showLeftArrow, setShowFirstArrow] = useState(false);
     const [vis, setVis] = useState(false);
     useEffect(() => {
         const handleScroll = () => {
             // Check if the container is scrolled horizontally
+            if (!scrollRef.current) return;
             if (scrollRef.current.scrollLeft > 0) {
                 setShowFirstArrow(true);
             } else {
@@ -33,6 +34,7 @@ export default function Trending() {
     }, []);
 
     const handleScrollRight = () => {
+        if (!scrollRef.current) return;
         console.log("scrolling");
         setVis(true);
         scrollRef.current.scrollBy({
@@ -43,6 +45,7 @@ export default function Trending() {
     };
 
     const handleScrollLeft = () => {
+        if (!scrollRef.current) return;
         console.log("scrolling")
         scrollRef.current.scrollBy({
             top: 0,

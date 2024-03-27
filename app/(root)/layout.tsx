@@ -4,6 +4,7 @@ import Navbar from '@/app/(root)/components/Navbar'
 import React from 'react'
 import { createStyles } from '@mantine/styles'
 import { ScrollArea } from '@mantine/core'
+import Chatbot from './components/Chatbot'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const styles = createStyles(() => ({
@@ -18,6 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Navbar />
             <main className={classes.mainStyles}>
                 {children}
+                <Chatbot />
             </main>
             <Footer />
         </ScrollArea>

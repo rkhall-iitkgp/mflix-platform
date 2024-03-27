@@ -165,10 +165,10 @@ export default function Plan() {
             justifyContent: 'center',
         },
         QuestionTextBoxStyles: {
-            marginBottom: '3rem', textAlign: 'center'
+            marginBottom: '2rem', textAlign: 'center', width: '100vw'
         }
     }));
-
+ 
 
 
     const [planInner, setPlanInner] = useState([true, false, false]);
@@ -255,8 +255,8 @@ export default function Plan() {
                 <Box className={classes.QuestionTextBoxStyles}>
                     <Text style={{ fontSize: '2rem' }}>Questions?</Text>
                     <Text style={{}}>we got answers.</Text>
-                </Box>
                 <Questions2 />
+                </Box>
             </Box>
         </>
     );

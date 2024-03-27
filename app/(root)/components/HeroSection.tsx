@@ -144,6 +144,12 @@ const SearchResultCard = () => {
 };
 
 const useStyles = createStyles(() => ({
+    searchText:{
+        fontSize: '1.25rem',
+        lineHeight: '1.75rem',
+        marginTop: '0.5rem',
+        marginBottom: '1rem',
+    },
   HeroImgOverlay: {
     position: 'fixed',
     top: 0,
@@ -194,9 +200,8 @@ const useStyles = createStyles(() => ({
     alignItems: 'center',
     overflow: 'hidden',
     gap: '2rem',
-    marginBottom: '2.85rem',
     marginLeft: '20%',
-    height: '100vh',
+    height: '92vh',
   },
   leftSection: {
     marginTop: '2rem',

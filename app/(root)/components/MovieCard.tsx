@@ -8,44 +8,45 @@ import { createStyles } from '@mantine/styles';
 import { useState } from 'react';
 
 const useStyles = createStyles(() => ({
-  containerStyles: {
-    position: 'relative',
-    width: '220px',
-    height: '310px',
-    overflow: 'visible',
-    transition: 'box-shadow 0.3s ease, transform 0.3s ease',
-    '&:hover': {
-      // boxShadow: '-1px 1px 20px 10px rgba(209,209,209,0.5)',
-      transform: 'scale(1.05)',
-      // height: '430px',
-      // marginTop: '.5rem',
-      // marginBottom: '2rem',
-      // zIndex: 10,
-      // position: 'relativ',
+    containerStyles: {
+        position: 'relative',
+        width: '225px',
+        marginRight: '3rem',
+        height: '310px',
+        overflow: 'visible',
+        transition: 'box-shadow 0.3s ease, transform 0.3s ease',
+        '&:hover': {
+            // boxShadow: '-1px 1px 20px 10px rgba(209,209,209,0.5)',
+            transform: 'scale(1.05)',
+            // height: '430px',
+            // marginTop: '.5rem',
+            // marginBottom: '2rem',
+            // zIndex: 10,
+            // position: 'relativ',
+        },
     },
-  },
 
-  heartContainerStyles: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    position: 'absolute',
-    width: '13rem',
-    marginTop: '0.75rem',
-  },
-
-  heartImageStyles: {
-    fill: 'red',
-    alignSelf: 'flex-end',
-    backgroundColor: '#F3F4F6',
-    padding: '0.2rem',
-    left: '40px',
-    border: '2px solid',
-    borderRadius: '50%',
-    zIndex: 1,
-    cursor: 'pointer',
-  },
+    heartContainerStyles: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        flexDirection: 'row',
+        position: 'absolute',
+        width: '13rem',
+        marginTop: '0.75rem',
+    },
+    
+    heartImageStyles: {
+        fill: 'red',
+        alignSelf: 'flex-end',
+        backgroundColor: '#F3F4F6',
+        padding: '0.2rem',
+        left: '40px',
+        border: '2px solid',
+        borderRadius: '50%',
+        zIndex: 1,
+        cursor: 'pointer',
+    },
 
   posterStyles: {
     width: '13.75rem',

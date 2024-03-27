@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { createStyles } from '@mantine/styles';
 import Image from 'next/image';
+import { Drawer } from '@mantine/core';
 
 
 import profileIcon from '@/assets/icons/profile.svg';
@@ -43,12 +44,12 @@ const userProfiles: UserProfile[] = [
     {
         profileName: "Profile2",
         profileId: 2,
-        avatarUrl:  profileIcon,
+        avatarUrl: profileIcon,
     },
     {
         profileName: "Profile3",
         profileId: 3,
-        avatarUrl : profileIcon,
+        avatarUrl: profileIcon,
     },
 ];
 
@@ -78,22 +79,30 @@ const userSignedInInfos: UserSignedInInfo[] = [
 
 const useStyles = createStyles(() => ({
     containerStyle: {
+        backgroundColor: "red",
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        width: '100vw',
+        justifyContent: 'space-around',
+        minHeight: '100%',
+        width: '100%',
+        // backgroundColor: 'red'
+        // marginTop: 1000
         // border :'solid white 2px'
 
     },
+    // drawerStyle: {
+    //     // offsetPath: 'padding-box',
+    //     offset: 10
+    // },
     childStyle: {
-        width: '60%',
+        backgroundColor: 'green',
+        width: '70%',
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
         // border: '1px solid #ccc',
-        margin: '10px',
         padding: '2vw',
         textAlign: 'center',
         // height:'80vh'
@@ -103,12 +112,12 @@ const useStyles = createStyles(() => ({
         flexDirection: 'column',
         justifyContent: 'center',
         border: '3px solid white',
-        borderRadius:'8px',
+        borderRadius: '8px',
         width: '100%',
-        padding:'2vw',
+        padding: '2vw',
         // gap:'2rem',
-        marginLeft:'3vw',
-        marginRight:'3vw',
+        marginLeft: '3vw',
+        marginRight: '3vw',
     },
     profileContainer: {
         display: 'flex',
@@ -118,31 +127,33 @@ const useStyles = createStyles(() => ({
     profileItem: {
         display: 'flex',
         margin: '0.5vw',
+        flexDirection: 'row',
         // padding: '2vw',
         // marginLeft: '1vw',
         // marginRight: '1vw',
         // borderBottom: 'white 1px solid',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         width: '100%',
-        gap:'3vw',
+        gap: '3vw',
 
     },
 
-  
+
     userInfoItem: {
         display: 'flex',
         justifyContent: 'space-between',
         paddingLeft: '0',
         paddingRight: '0',
-        paddingTop:'1vw',
-        paddingBottom:'1vw',
-        borderBottom:'white solid 1px'
+        paddingTop: '1vw',
+        paddingBottom: '1vw',
+        borderBottom: 'white solid 1px'
     },
     userInfoInput: {
         border: 'none',
         backgroundColor: 'transparent',
         width: '40%',
         textAlign: 'right',
+        color: 'white'
     },
 
     editableInput: {
@@ -150,7 +161,7 @@ const useStyles = createStyles(() => ({
     },
 }));
 
-const UserProfile = () => {
+const UserDetails = () => {
     const { classes } = useStyles();
     const [userInfo, setUserInfo] = useState<UserInfo>(initialUserInfo);
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -203,20 +214,19 @@ const UserProfile = () => {
     const handleFieldFocus = (key: keyof UserInfo) => {
         setLastValidValues({ ...userInfo });
     };
-
     return (
-        <div className={classes.containerStyle}>
-            
-            <div className={classes.childStyle} style={{flexDirection:'column', alignItems:'center'}}>
-                
-                    <h1 style={{ color: 'white', marginBottom: '4vh' }}>User Profile</h1>
-                    <div style={{ width: '20vh', height: '20vh', borderRadius: '50%', overflow: 'hidden', border: '2px solid white' }}>
-                        <Image src="" alt="Profile" width={150} height={150} />
-                    </div>
-                
+
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', backgroundColor: 'red', justifyContent: 'space-between' }} >
+            <div style={{ backgroundColor: 'blue', display: 'flex', flexDirection: 'column' }}>
+
+                <h1 style={{ color: 'white' }}>User Profile</h1>
+                <div style={{ height: '20vh', width: '20vh', borderRadius: '50%', overflow: 'hidden', border: '0.2rem solid white' }}>
+                    <Image src="" alt="Profile" width={150} height={150} />
+                </div>
+
             </div>
-            <div className={classes.childStyle}>
-                <div className={classes.flexContainer}>
+            {/* <div className={classes.childStyle} >
+                <div className={classes.flexContainer} >
                     <div className={classes.userInfoItem}>
                         <h2 style={{ color: '#7011B6' }}>User Information</h2>
                         {editMode ? (
@@ -227,12 +237,13 @@ const UserProfile = () => {
                     </div>
                     {Object.entries(userInfo).map(([key, value], index) => (
                         <div key={index} className={classes.userInfoItem} style={{ borderBottom: index === Object.entries(userInfo).length - 1 ? 'none' : 'white solid 1px' }}>
-                            <div>{key}</div>
+                            <div style={{ color: 'white' }}>{key}</div>
                             {editMode && (key === 'name' || key === 'phoneNo') ? (
                                 <>
                                     {key === 'name' && nameError && <div style={{ color: 'red', alignContent: 'right' }}>{nameError}</div>}
                                     {key === 'phoneNo' && phoneError && <div style={{ color: 'red' }}>{phoneError}</div>}
                                     <input
+
                                         type="text"
                                         value={value}
                                         onChange={(event) => handleChange(event, key)}
@@ -241,46 +252,46 @@ const UserProfile = () => {
                                     />
                                 </>
                             ) : (
-                                <div>{value}</div>
+                                <div style={{ color: 'white' }}>{value}</div>
                             )}
                         </div>
                     ))}
                 </div>
-            </div>
-
-           
+            </div> */}
 
 
-            <div className={classes.childStyle}>
-                {/* Inner div for user profiles */}
+
+
+            {/* <div className={classes.childStyle} >
+     
                 <div className={classes.flexContainer}>
-                    <h2 style={{ color: '#7011B6', textAlign:'left' }}>Your Profiles</h2>
+                    <h2 style={{ color: '#7011B6', textAlign: 'left' }}>Your Profiles</h2>
                     <div className={classes.profileContainer}>
                         {userProfiles.map((profile, index) => (
                             <div key={index} className={classes.profileItem}>
-                                <Image  src={profile.avatarUrl} alt="prfl" width={50} height={50} />
-                                <div>{profile.profileName}</div>
-                                {/* <div>ID: {profile.profileId}</div> */}
+                                <Image src={profile.avatarUrl} alt="prfl" width={50} height={50} />
+                                <div style={{ color: 'white', paddingTop: '0.5rem' }}>{profile.profileName}</div>
                             </div>
                         ))}
                     </div>
                 </div>
-                {/* Inner div for user signed-in info */}
+               
                 <div className={classes.flexContainer}>
                     <h2 style={{ color: '#7011B6', textAlign: 'left' }}>User Signed-in Info</h2>
                     <div className={classes.profileContainer}>
                         {userSignedInInfos.map((info, index) => (
                             <div key={index} className={classes.profileItem}>
                                 <Image src={info.iconUrl} alt="prfl" width={50} height={50} />
-                                <><div>Device ID: {info.deviceId}</div>
-                                    <div> {info.deviceName}</div></>
+                                <><div style={{ color: 'white' }}>Device ID: {info.deviceId}</div>
+                                    <div style={{ color: 'white' }}> {info.deviceName}</div></>
                             </div>
                         ))}
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
+
     );
 }
 
-export default UserProfile;
+export default UserDetails;

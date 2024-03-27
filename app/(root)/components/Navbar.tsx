@@ -5,7 +5,7 @@ import React from 'react'
 import { createStyles } from "@mantine/styles";
 
 export default function Navbar() {
-    const {classes} = useStyles()
+    const { classes } = useStyles()
     return (
         <nav className={classes.container}>
             {/* Logo */}
@@ -36,7 +36,7 @@ export default function Navbar() {
 }
 
 const useStyles = createStyles(() => ({
-    container : {
+    container: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -44,7 +44,9 @@ const useStyles = createStyles(() => ({
         paddingLeft: '2rem',
         paddingRight: '2rem',
         width: '100%',
-        color: "white"
+        color: "white",
+        position: 'fixed',
+
     },
     logo: {
         height: '2rem',

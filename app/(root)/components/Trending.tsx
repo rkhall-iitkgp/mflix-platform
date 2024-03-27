@@ -62,7 +62,7 @@ export default function Trending({ title, image }) {
                     <MovieCard />
                     <MovieCard />
                 </div>
-                
+
                 <Image
                     src={rArrow}
                     alt='slider'
@@ -126,6 +126,7 @@ const useStyles = createStyles(() => ({
     },
 
     movieDiv: {
+        // background:'white',
         display: 'flex',
         position: 'relative',
         width: 'max-content',

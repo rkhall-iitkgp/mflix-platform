@@ -12,6 +12,8 @@ import Vector2 from '@/assets/images/vect-2.svg'
 import { memo } from 'react'
 import { ScrollToPlugin } from 'gsap/all';
 import { useVoice } from './UseVoice';
+import { useMediaQuery } from '@mantine/hooks'
+
 
 gsap.registerPlugin(ScrollToPlugin);
 const HeroSection = () => {
@@ -22,8 +24,11 @@ const HeroSection = () => {
     const [isTyping, setIsTyping] = useState(false);
     const flexRef = useRef(null);
     const { text, isListening, listen, voiceSupported, isTyping1 } = useVoice();
+    const matches = useMediaQuery('(min-width: 1705px)');
+    const vec1MarginTop = matches ? '-16.5rem' : '-9.5rem';
+    const searchMoviesMT = matches ? '-3.5rem' : '-0.5rem';
     console.log(flexRef);
-    
+
     useEffect(() => {
         const tl = gsap.timeline({ paused: true });
         tl.fromTo(
@@ -67,21 +72,21 @@ const HeroSection = () => {
                     </div>
                 </div>
                 <div className={classes.flex} id='flex' ref={flexRef}>
-                    <div className={classes.flex} id='flex'>
+                    {/* <div className={classes.flex} id='flex'> */}
+                    <div className={cx(classes.searchRightSection, showSearchSection && classes.searchRightSectionVisible)} style={{ height: `${isTyping ? '28.85rem' : '0px'}`, marginTop: '2rem' }}>
                         <div className={classes.flex1}>
-                            <Image src={Vector1} alt='vector' className={classes.vec1Style} id='vec1' />
+                            <Image src={Vector1} alt='vector' className={classes.vec1Style} id='vec1' style={{ marginTop: vec1MarginTop }} />
                             <Image src={Vector2} alt='vector' className={classes.vec2Style} id='vec2' />
                         </div>
-                        <div className={cx(classes.searchRightSection, showSearchSection && classes.searchRightSectionVisible)} style={{ height: `${isTyping ? '0px' : '0'}`, marginTop: '2rem' }}>
-                            <div className={classes.searchMovies}>
-                                <SearchResultCard />
-                                <SearchResultCard />
-                                <SearchResultCard />
-                                <SearchResultCard />
-                                <SearchResultCard />
-                            </div>
+                        <div className={classes.searchMovies} style={{ marginTop: searchMoviesMT }}>
+                            <SearchResultCard />
+                            <SearchResultCard />
+                            <SearchResultCard />
+                            <SearchResultCard />
+                            <SearchResultCard />
                         </div>
                     </div>
+                    {/* </div> */}
                 </div>
             </div>
         </>
@@ -131,8 +136,8 @@ const useStyles = createStyles(() => ({
     },
     flex: {
         display: 'flex',
-        justifyContent: 'space-between',
-        // alignItems:'center'
+        justifyContent: 'center',
+        alignItems: 'center'
         // transform:'scale(1) translateX(-10%)',
         // transition:'transform 1s ease-in'
         // width:'100px'
@@ -157,7 +162,7 @@ const useStyles = createStyles(() => ({
         flex: '2 1 auto',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        overflow: 'hidden',
+        // overflow: 'hidden',
         gap: '2rem',
         marginBottom: '2.85rem',
         marginLeft: '20%'
@@ -168,6 +173,8 @@ const useStyles = createStyles(() => ({
         paddingBottom: '5rem',
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 
     heading: {
@@ -190,6 +197,9 @@ const useStyles = createStyles(() => ({
         marginTop: '-2rem'
     },
     searchRightSection: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
         // overflow: 'hidden',
         // gap: '0.8rem',
         // marginTop: '1.5rem',
@@ -219,7 +229,7 @@ const useStyles = createStyles(() => ({
         borderStyle: 'solid',
         borderWidth: '1px',
         borderRadius: '0.5rem',
-        marginTop: '0.5rem'
+        // marginTop: matches ? '0.5rem' : '',
     },
     movieCard: {
         backgroundColor: '#D9D9D926',

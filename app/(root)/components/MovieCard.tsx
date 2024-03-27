@@ -122,6 +122,7 @@ const useStyles = createStyles(() => ({
     },
     card:
     {
+        height: '-webkit-fill-available',
         position: 'absolute',
         boxShadow: '-1px 1px 10px 3px rgba(209,209,209,0.5)',
         '&:hover': {

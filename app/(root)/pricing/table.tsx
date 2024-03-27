@@ -77,7 +77,7 @@ const SubscriptionTable = ({ cardPlan }: { cardPlan: any}) => {
                 <thead>
                     <TableTr >
                         <TableTh className={classes.TableThFirstStyles}>What You will get</TableTh>
-                        <TableTh className={classes.TableThRestStyles} >Free</TableTh>
+                        <TableTh className={classes.TableThRestStyles}>Free</TableTh>
                         <TableTh className={classes.TableThRestStyles}>Basic</TableTh>
                         <TableTh className={classes.TableThRestStyles}>Premium</TableTh>
                         <TableTh className={classes.TableThRestStyles}>Family</TableTh>

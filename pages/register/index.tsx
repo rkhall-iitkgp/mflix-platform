@@ -7,24 +7,17 @@ import { DateInput } from '@mantine/dates';
 import '@mantine/dates/styles.css';
 // import Link from 'next/link';
 import { NumberInput } from '@mantine/core';
-import {
-    TextInput,
-    PasswordInput,
-    Text,
-    Button,
-    Anchor,
-    Flex, Box
-} from '@mantine/core';
+import { TextInput, PasswordInput, Text, Button, Anchor, Flex, Box } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
-import Otp from '../verifyotp/page';
+import Otp from '../verifyotp';
 // import { TwitterButton } from './TwitterButton';
 import searchMsApiUrls from '../api/searchMsApi';
 import { useState } from 'react';
 import { createStyles } from '@mantine/styles';
 
 export default function Register() {
-    const [showOtp, setshowOtp] = useState(0)
-    const [formData, setFormData] = useState({})
+  const [showOtp, setshowOtp] = useState(0);
+  const [formData, setFormData] = useState({});
 
   // const router = useRouter();
   const handleRegister = async (values: any) => {
@@ -63,27 +56,27 @@ export default function Register() {
   };
   // const [type, toggle] = useToggle(['login', 'register'])
 
-    // const useStyles = createStyles(() => ({
-    //     container: {
-    //         padding: '1rem',
-    //         position: 'relative',
-    //         background: 'linear-gradient(to right, red, purple)',
-    //         zIndex: 0,
-    //     },
-    // }));
-    
-    const form = useForm({
-        initialValues: {
-            name: '',
-            dob: '',
-            phone: '',
-            email: '',
-            password: '',
-            confPassword: '',
-            terms: true,
-            otp: '',
-            flag: 0
-        },
+  // const useStyles = createStyles(() => ({
+  //     container: {
+  //         padding: '1rem',
+  //         position: 'relative',
+  //         background: 'linear-gradient(to right, red, purple)',
+  //         zIndex: 0,
+  //     },
+  // }));
+
+  const form = useForm({
+    initialValues: {
+      name: '',
+      dob: '',
+      phone: '',
+      email: '',
+      password: '',
+      confPassword: '',
+      terms: true,
+      otp: '',
+      flag: 0,
+    },
 
     validate: {
       name: (val) => (!val ? 'Required' : null),

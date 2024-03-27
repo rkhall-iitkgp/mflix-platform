@@ -1,5 +1,3 @@
-'use client';
-
 import { useForm } from '@mantine/form';
 import { createStyles } from '@mantine/styles';
 import {

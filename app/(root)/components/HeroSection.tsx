@@ -144,18 +144,17 @@ const SearchResultCard = () => {
 };
 
 const useStyles = createStyles(() => ({
-    searchText:{
-        fontSize: '1.25rem',
-        lineHeight: '1.75rem',
-        marginTop: '0.5rem',
-        marginBottom: '1rem',
-    },
+  searchText: {
+    fontSize: '1.25rem',
+    lineHeight: '1.75rem',
+    marginTop: '0.5rem',
+    marginBottom: '1rem',
+  },
   HeroImgOverlay: {
     position: 'fixed',
     top: 0,
     width: '100%',
     height: '100vh',
-    zIndex: -5,
     background: 'linear-gradient(45deg, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 0) 60%)',
   },
   bgContainer: {

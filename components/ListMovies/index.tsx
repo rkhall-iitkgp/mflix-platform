@@ -1,8 +1,9 @@
-import MovieCard from '@/app/(root)/components/MovieCard';
 import { Divider } from '@mantine/core';
 import { createStyles } from '@mantine/styles';
 import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
+import MovieCards from '../MovieDetails/MovieCards';
+import MovieCard from '../MovieDetails/MovieCards';
 
 const ListMovies = () => {
   const useStyles = createStyles(() => ({
@@ -11,7 +12,7 @@ const ListMovies = () => {
       width: 'calc(98vw)',
       justifyContent: 'space-between',
       alignItems: 'center',
-      height: '350px',
+      height: '550px',
       overflow: 'hidden',
       margin: 'auto',
     },
@@ -19,13 +20,13 @@ const ListMovies = () => {
       display: 'flex',
       justifyContent: 'space-between',
       //   width: '100%',
-      height: '350px',
+      height: '550px',
     },
     MovieListBox: {
       position: 'relative',
       display: 'flex',
       alignItems: 'center',
-      height: '350px',
+      height: '550px',
       width: 'max-content',
       gap: '2rem',
       transform: 'translateX(100px)',

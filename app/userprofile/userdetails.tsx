@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { createStyles } from '@mantine/styles';
 import Image from 'next/image';
-import { Drawer } from '@mantine/core';
+import { Button, Drawer } from '@mantine/core';
 
 
 import profileIcon from '@/assets/icons/profile.svg';
@@ -11,6 +11,7 @@ import tabletIcon from '@/assets/icons/tablet.svg';
 import laptopIcon from '@/assets/icons/laptop.svg';
 import editIcon from '@/assets/icons/editProfile.svg';
 import saveIcon from '@/assets/icons/save.svg';
+import themeOptions from '@/utils/colors';
 
 
 type UserInfo = {
@@ -111,8 +112,8 @@ const useStyles = createStyles(() => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        border: '3px solid white',
-        borderRadius: '8px',
+        border: '0.1rem solid white',
+        borderRadius: '0.8em',
         width: '100%',
         padding: '2vw',
         // gap:'2rem',
@@ -216,18 +217,40 @@ const UserDetails = () => {
     };
     return (
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', backgroundColor: 'red', justifyContent: 'space-between' }} >
-            <div style={{ backgroundColor: 'blue', display: 'flex', flexDirection: 'column' }}>
-
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'space-between' }} >
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <h1 style={{ color: 'white' }}>User Profile</h1>
                 <div style={{ height: '20vh', width: '20vh', borderRadius: '50%', overflow: 'hidden', border: '0.2rem solid white' }}>
                     <Image src="" alt="Profile" width={150} height={150} />
                 </div>
-
             </div>
-            {/* <div className={classes.childStyle} >
-                <div className={classes.flexContainer} >
-                    <div className={classes.userInfoItem}>
+            <div style={{
+                width: '70%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                // border: '1px solid #ccc',
+                padding: '2vw',
+                textAlign: 'center',
+            }}> {/* child style*/}
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    border: '0.1rem solid white',
+                    borderRadius: '0.8rem',
+                    width: '100%',
+                    padding: '2vw',
+                    // gap:'2rem',
+                }} > {/* flex container*/}
+                    <div style={{
+                        height: '4rem',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                    }} > {/* user info item*/}
                         <h2 style={{ color: '#7011B6' }}>User Information</h2>
                         {editMode ? (
                             <Image src={saveIcon} alt="Save" width={40} height={40} onClick={handleSaveClick} />
@@ -237,7 +260,7 @@ const UserDetails = () => {
                     </div>
                     {Object.entries(userInfo).map(([key, value], index) => (
                         <div key={index} className={classes.userInfoItem} style={{ borderBottom: index === Object.entries(userInfo).length - 1 ? 'none' : 'white solid 1px' }}>
-                            <div style={{ color: 'white' }}>{key}</div>
+                            <div style={{ color: 'white', fontWeight: 'bold' }}>{key}:</div>
                             {editMode && (key === 'name' || key === 'phoneNo') ? (
                                 <>
                                     {key === 'name' && nameError && <div style={{ color: 'red', alignContent: 'right' }}>{nameError}</div>}
@@ -257,38 +280,103 @@ const UserDetails = () => {
                         </div>
                     ))}
                 </div>
-            </div> */}
+            </div>
 
 
 
 
-            {/* <div className={classes.childStyle} >
-     
-                <div className={classes.flexContainer}>
-                    <h2 style={{ color: '#7011B6', textAlign: 'left' }}>Your Profiles</h2>
-                    <div className={classes.profileContainer}>
-                        {userProfiles.map((profile, index) => (
-                            <div key={index} className={classes.profileItem}>
-                                <Image src={profile.avatarUrl} alt="prfl" width={50} height={50} />
-                                <div style={{ color: 'white', paddingTop: '0.5rem' }}>{profile.profileName}</div>
-                            </div>
-                        ))}
+            <div style={{
+                width: '72%',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                // border: '1px solid #ccc',
+                textAlign: 'center',
+            }} >{/*child style*/}
+
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    border: '0.1rem solid white',
+                    borderRadius: '0.8rem',
+                    width: '100%',
+
+                    // gap:'2rem',
+                    marginLeft: '3vw',
+                    marginRight: '3vw',
+                    height: '25rem'
+
+
+                }}>{/*flex container*/}
+                    <div style={{ display: 'flex', flexDirection: 'column', borderRadius: '0.8rem ', paddingLeft: '4%', paddingRight: '4%' }}>
+                        <h2 style={{ color: '#7011B6', textAlign: 'left' }}>Your Profiles</h2>
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}>{/*profile container*/}
+                            {userProfiles.map((profile, index) => (
+                                <div key={index} style={{
+                                    display: 'flex',
+                                    marginTop: '0.3vw',
+                                    marginBottom: '0.3vw',
+                                    flexDirection: 'row',
+                                    width: '100%',
+                                    paddingBottom: '1vw',
+                                    gap: '2vw',
+                                    borderBottom: '0.1rem white solid'
+
+                                }}>{/*profile item*/}
+                                    <Image src={profile.avatarUrl} alt="prfl" width={50} height={50} />
+                                    <div style={{ color: 'white', paddingTop: '0.5rem' }}>{profile.profileName}</div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
+                    <button style={{ borderRadius: '0.8rem', color: 'white', height: '10%', width: '100%', backgroundColor: themeOptions.color.button }}>Manage Profile</button>
                 </div>
-               
-                <div className={classes.flexContainer}>
-                    <h2 style={{ color: '#7011B6', textAlign: 'left' }}>User Signed-in Info</h2>
-                    <div className={classes.profileContainer}>
-                        {userSignedInInfos.map((info, index) => (
-                            <div key={index} className={classes.profileItem}>
-                                <Image src={info.iconUrl} alt="prfl" width={50} height={50} />
-                                <><div style={{ color: 'white' }}>Device ID: {info.deviceId}</div>
-                                    <div style={{ color: 'white' }}> {info.deviceName}</div></>
-                            </div>
-                        ))}
+
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    border: '0.1rem solid white',
+                    borderRadius: '0.8rem',
+                    width: '100%',
+                    // gap:'2rem',
+                    marginLeft: '3vw',
+                    marginRight: '3vw',
+                    height: '25rem'
+                }}>{/*flex container*/}
+                    <div >
+                        <div style={{
+                            paddingRight: '1vw',
+                            paddingLeft: '1vw',
+                        }}>
+                            <h2 style={{ color: '#7011B6', textAlign: 'left' }}>User Signed-in Info</h2>
+                            <h5 style={{ color: 'white', textAlign: 'left' }}>When You are signed in</h5>
+                        </div>
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            paddingRight: '1vw',
+                            paddingLeft: '1vw',
+                        }}>{/*profile container*/}
+                            {userSignedInInfos.map((info, index) => (
+                                <div key={index} className={classes.profileItem}>{/*profile item*/}
+                                    <Image src={info.iconUrl} alt="prfl" width={50} height={50} />
+                                    <><div style={{ color: 'white' }}>Device ID: {info.deviceId}</div>
+                                        <div style={{ color: 'white' }}> {info.deviceName}</div></>
+                                </div>
+                            ))}
+                        </div>
                     </div>
+                    <button style={{ borderRadius: '0.8rem', color: 'white', height: '10%', width: '100%', backgroundColor: themeOptions.color.button }}>Manage Devices</button>
                 </div>
-            </div> */}
+            </div>
         </div>
 
     );

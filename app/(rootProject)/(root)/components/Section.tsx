@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { createStyles } from '@mantine/styles';
 import themeOptions from '@/utils/colors';
 
-const Section = ({ title, image , movieData}: { title: string; image: string ;movieData : any}) => {
+const Section = ({ title, image, movieData }: { title: string; image: string; movieData: any }) => {
   const useStyles = createStyles(() => ({
     SectionHeading: {
       display: 'flex',
@@ -31,8 +31,8 @@ const Section = ({ title, image , movieData}: { title: string; image: string ;mo
         <span className={titleStyles}>{title}</span>
         <Image src={image} alt="icon" />
       </div>
-      <div style={{position:"relative"}}>
-      <ListMovies movieData = {movieData}/>
+      <div style={{ position: 'relative' }}>
+        <ListMovies movieData={movieData} />
       </div>
     </div>
   );

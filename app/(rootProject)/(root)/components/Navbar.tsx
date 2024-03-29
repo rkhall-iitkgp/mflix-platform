@@ -33,27 +33,26 @@ export default function Navbar() {
 
   const handleCloseClick = () => {
     setIsSearchOpen(false); // Close the search box
-    setInput(''); // Clear input when closing search box
   };
 
   // const handleTyping = (typing) => {
   //     setIsTyping(typing);
   // };
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (searchBoxRef.current && !searchBoxRef.current.contains(event.target as Node)) {
-      // Click occurred outside the search box, so close it
-      setIsSearchOpen(false);
-      setInput(''); // Clear input when closing search box
-    }
-  };
+  // const handleClickOutside = (event: MouseEvent) => {
+  //   if (searchBoxRef.current && !searchBoxRef.current.contains(event.target as Node)) {
+  //     // Click occurred outside the search box, so close it
+  //     setIsSearchOpen(false);
+  //     setInput(''); // Clear input when closing search box
+  //   }
+  // };
 
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener('click', handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener('click', handleClickOutside);
+  //   };
+  // }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -100,7 +99,7 @@ export default function Navbar() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      height: '3.8rem',
+      height: '10vh',
       // padding: '1rem',
       paddingLeft: '2rem',
       paddingRight: '2rem',
@@ -298,8 +297,17 @@ export default function Navbar() {
                       <ActionIcon size={30} variant="transparent" onClick={handleCloseClick} style={{ marginRight: '5px' }}>
                         <IoCloseOutline color={themeOptions.color.divider} size={30} />
                       </ActionIcon>
-                      <div style={{zIndex: '40'}} className={classes.navsearch}>
-                        <NavSearch input={input} setInput={setInput} />
+                      <div
+                        style={{
+                          marginLeft: '-31rem',
+                          marginTop: '-70px',
+                          width: '30rem',
+                          height: '20px',
+                          position: 'absolute',
+                          zIndex: '40',
+                        }}
+                      >
+                        <NavSearch />
                       </div>
                     </div>
                   </>

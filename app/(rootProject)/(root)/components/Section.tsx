@@ -3,8 +3,9 @@ import React from 'react';
 import Trend from '@/assets/icons/trends.svg';
 import Image from 'next/image';
 import { createStyles } from '@mantine/styles';
+import themeOptions from '@/utils/colors';
 
-const Section = ({ title, image }: { title: string; image: string }) => {
+const Section = ({ title, image, movieData }: { title: string; image: string; movieData: any }) => {
   const useStyles = createStyles(() => ({
     SectionHeading: {
       display: 'flex',
@@ -14,6 +15,7 @@ const Section = ({ title, image }: { title: string; image: string }) => {
       marginTop: 20,
     },
     titleStyles: {
+      color: themeOptions.color.divider,
       fontSize: '3rem',
       lineHeight: '5.5rem',
       display: 'inline',
@@ -29,7 +31,9 @@ const Section = ({ title, image }: { title: string; image: string }) => {
         <span className={titleStyles}>{title}</span>
         <Image src={image} alt="icon" />
       </div>
-      <ListMovies />
+      <div style={{ position: 'relative' }}>
+        <ListMovies movieData={movieData} />
+      </div>
     </div>
   );
 };

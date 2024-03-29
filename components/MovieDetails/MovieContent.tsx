@@ -17,7 +17,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import { watch } from 'fs';
 
 //{url}/movies/573a1391f29313caabcd6d40
-export default function MovieContent({movieData}) {
+export default function MovieContent({movieData}:{movieData:Object}) {
     console.log(movieData);
     const [checked, setChecked] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width: 1200px)');
@@ -132,7 +132,7 @@ export default function MovieContent({movieData}) {
                     <Container>
                         <h1 className={classes.movieTitle}>{movieData.title}</h1>
                         <Flex className={classes.genreContainer}>
-                            {movieData.genres?.map((e, i) => <p className={classes.genre}>{e}</p>)}
+                            {movieData.genres?.map((genre, i) =>  <p className={classes.genre}>{genre}</p>)}
                         </Flex>
                         <Flex className={classes.otherDetailsContainer} justify='flex-start' gap={2}>
                             <Flex className={classes.details} align='center' gap={4}>

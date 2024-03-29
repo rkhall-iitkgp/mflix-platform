@@ -51,11 +51,13 @@ export function Otp({ initialValues }: any) {
             body: JSON.stringify({
                 ...initialValues,
             }),
+            credentials: 'include'
         })
         let jsonData = await res.json();
         if (!res.ok) {
             console.log(jsonData.message);
             // router.push('/verifyotp')
+            setOtpValue("");
         }
         //   setLoading(false);
         else {
@@ -65,14 +67,13 @@ export function Otp({ initialValues }: any) {
                 useLoginStore.getState().updateUser(jsonData.account);
                 const state = useLoginStore.getState();
                 console.log(state);
-
-            } else {
+                // router.push('/userprogfile')
+            } else if (initialValues.type == 'forget') {
                 router.push('/login')
+            } else if (initialValues.type == 'change') {
+                router.push('/userprofile');
             }
-
         }
-
-
     }
     const handleOtpChange = (value: any) => {
         const newOtp = value;
@@ -140,6 +141,8 @@ export function Otp({ initialValues }: any) {
                 align="center" gap={{ sm: 'lg' }}>
                 <Text size="1.4rem" c={'white'}  >An OTP has been sent to your email
                 </Text>
+                <Text size="1rem" style={{ color: '#9441D0', marginBottom: '1rem' }}>Resend OTP in {resendTime} seconds</Text>
+                {/* <a href="/login" style={{ color: '#9441D0' }}>Log In</a> */}
                 <Button
                 disabled={resendTime > 0} // Disable button if resend timer is active
                 onClick={handleResendOtp}
@@ -147,19 +150,36 @@ export function Otp({ initialValues }: any) {
             >
                 {resendTime === 0 ? "Resend OTP" : `Resend OTP in ${resendTime} seconds`}
             </Button>
-
             </Flex>
             <Box style={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
-                border: '1px solid #ccc', width: '30rem',marginBottom: '5rem', borderRadius: '15px',
+                border: '1px solid #ccc', width: '30rem', marginBottom: '5rem', borderRadius: '15px',
                 backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '0.5rem'
             }}>
                 {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
+                <div style={{ marginTop: "2rem", display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
+                {/*  <TextInput
+                    required
+                    label="OTP"
+                    placeholder="Enter OTP"
+                    value={form.values.name}
+                    onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
+                    error={form.errors.name && 'Required'}
+                    radius="md"
+                    size="lg"
+                    style={{ width: '45%', color: 'white' }}
+                    styles={{
+                        input: {
+                            background: 'transparent',
+                            color: 'white',
+                            borderColor: 'purple',
+                        },
+                    }}
+                /> */}
                 <div style={{ marginTop: "2rem",display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
-                    
                     <PinInput size="xl" placeholder='_' type="number"
                         value={otpValue}
                         length={6}
@@ -167,9 +187,9 @@ export function Otp({ initialValues }: any) {
                 </div>
 
                 <Button style={{ marginTop: '2rem', width: '50%', height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem',marginBottom: '1.5rem' }} onClick={() => { handleOtp() }}  >Verify</Button>
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", paddingBottom: "1.5%" }}>
+                  {/*<div style={{ display: "flex", flexDirection: "column", justifyContent: "center", paddingBottom: "1.5%" }}>
 
-                </div>
+                </div> */} 
 
 
             </Box>

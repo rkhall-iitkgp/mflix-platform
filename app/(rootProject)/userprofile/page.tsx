@@ -310,7 +310,7 @@
 "use client"
 import { AppShell, Box, Burger, Container, Divider, Group, Skeleton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
+// import { MantineLogo } from '@mantinex/mantine-logo';
 import Navbar from '../(root)/components/Navbar';
 import UserDetails from './userdetails';
 import { Button } from '@mantine/core';
@@ -340,10 +340,13 @@ export function UserProfile() {
         >
             <AppShell.Header style={{ backgroundColor: 'black' }}>
                 {/* <Group h="100%" px="md">
-                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
                     <MantineLogo size={30} />
                 </Group> */}
-                <Navbar />
+                <Group h="100%" px="md">
+                    <Navbar />
+                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" style={{ color: 'white', marginTop: '2rem' }} />
+                </Group>
+
             </AppShell.Header>
             <AppShell.Navbar style={{
                 backgroundColor: themeOptions.color.button
@@ -393,7 +396,7 @@ export function UserProfile() {
                         height: '2.8rem'
                         , backgroundColor: themeOptions.color.button,
                         fontSize: themeOptions.fontSize.s
-                    }} ><GoPencil style={{ marginRight: '0.5rem', fontSize: themeOptions.fontSize.s }} />Reset Password </Button>
+                    }} ><GoPencil style={{ marginRight: '0.5rem', fontSize: themeOptions.fontSize.s }} /><a href="/resetpassword" style={{ color: 'inherit', textDecoration: 'none' }}>Reset Password</a> </Button>
                     <Button variant="filled" style={{
                         height: '2.8rem'
                         , backgroundColor: themeOptions.color.button,

@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
-import { UnstyledButton, Menu, Group } from '@mantine/core';
+import { UnstyledButton, Menu, Group, MantineProvider } from '@mantine/core';
 import { IconChevronDown } from '@tabler/icons-react';
 import { createStyles } from '@mantine/styles';
 import themeOptions from '../../../utils/colors';
 
 const useStyles = createStyles(() => ({
+        menuitem: {
+            backgroundColor: '#000 !important', // Use smallBox color from themeOptions
+        },
         control: {
             boxSizing: 'border-box',
             borderRadius: 'var(--mantine-radius-md)', // Use radius from themeOptions
@@ -75,7 +78,7 @@ export function TypeButton({ value, data }: { value: string, data: string[] }) {
         return () => clearTimeout(timer); // Clear timeout on component unmount
     }, [opened]);
     const items = data.map((item) => (
-        <Menu.Item onClick={() => setSelected(item)} key={item}>
+        <Menu.Item color='#fff' onClick={() => setSelected(item)} key={item}>
             {item}
         </Menu.Item>
     ));
@@ -87,19 +90,23 @@ export function TypeButton({ value, data }: { value: string, data: string[] }) {
           radius="md"
           width="target"
           withinPortal
+          shadow="md"
+        //   color="#fff"
         >
-            <Menu.Target>
+            <Menu.Target >
                 <div className={` ${classes.control} ${visible ? classes.visible : classes.hidden} `}>
                     <UnstyledButton className={classes.control} data-expanded={opened || undefined}>
-                        <Group gap="xs">
+                        <Group gap="xs" justify="space-between">
                             <span className={classes.type}>{value}:</span>
                             <span className={classes.type2}>{selected}</span>
                         </Group>
-                        <IconChevronDown size="1rem" className={classes.icon} stroke={1.5} />
+                        <IconChevronDown color={themeOptions.color.smallBox} size="1rem" className={classes.icon} stroke={1.5} />
                     </UnstyledButton>
                 </div>
             </Menu.Target>
-            <Menu.Dropdown>{items}</Menu.Dropdown>
+            <MantineProvider defaultColorScheme="dark">
+                <Menu.Dropdown >{items}</Menu.Dropdown>
+            </MantineProvider>
         </Menu>
     );
 }

@@ -7,7 +7,10 @@ const themeOptions = {
         textColorNormal: '#9441D0',
         insideTextColor: '#828282',
         normalTextColor: '#FFFFFF',
+        dimmed: '#9CA3AF',
         background: '#0B0212',
+        black:'rgba(0,0,0,0.7)',
+        categories:'#0A0315'
     },
     fontSize: {
         xs: '0.75rem',

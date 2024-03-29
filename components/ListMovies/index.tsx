@@ -4,8 +4,11 @@ import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import MovieCards from '../MovieDetails/MovieCards';
 import MovieCard from '../MovieDetails/MovieCards';
+import themeOptions from '@/utils/colors';
 
-const ListMovies = () => {
+
+const ListMovies = ({movieData}:{movieData : Array<any>}) => {
+  // console.log("movies",movieData);
   const useStyles = createStyles(() => ({
     MovieListContainer: {
       display: 'flex',
@@ -32,6 +35,7 @@ const ListMovies = () => {
       transform: 'translateX(100px)',
     },
     MovieListLeftArrow: {
+      color:themeOptions.color.divider,
       position: 'absolute',
       left: 0,
       width: '50px',
@@ -43,6 +47,7 @@ const ListMovies = () => {
       alignItems: 'center',
     },
     MovieListRightArrow: {
+      color:themeOptions.color.divider,
       position: 'absolute',
       //   left: '100%',
       right: 0,
@@ -107,18 +112,12 @@ const ListMovies = () => {
   return (
     <div className={MovieListContainer} ref={scrollRef} onScroll={handleScroll}>
       <div className={MovieListBox}>
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
+        {movieData.map((movie,i)=>
+        {
+          // console.log(movie)
+          return <MovieCard data={movie}/>   
+        }
+        )}
       </div>
       <div className={MovieListNavigation}>
         {showFirstArrow ? (

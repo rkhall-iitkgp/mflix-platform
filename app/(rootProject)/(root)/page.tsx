@@ -11,7 +11,7 @@ import Section from './components/Section';
 import { createStyles } from '@mantine/styles';
 import themeOptions from '@/utils/colors';
 
-export default function Home() {
+export default async function Home() {
   const useStyle = createStyles(() => ({
     background: {
       position: 'absolute',
@@ -35,6 +35,11 @@ export default function Home() {
     image: images[index],
   }));
   const { classes } = useStyle();
+
+  const TrendingMovies = await fetch(
+    'https://971edtce1a.execute-api.ap-south-1.amazonaws.com/search/fuzzy?query=&start=2024&end=2024&low=9&high=10&language=&country=&genre=&type=movie'
+  );
+
   return (
     <>
       <HeroSection />
@@ -43,7 +48,7 @@ export default function Home() {
         <div className={classes.background}></div>
         <div className={classes.backgroundOverlay}></div>
         {trendingData.map(({ title, image }) => (
-          <Section title={title} image={image} />
+          <Section title={title} image={image} movies={TrendingMovies} />
         ))}
       </div>
     </>

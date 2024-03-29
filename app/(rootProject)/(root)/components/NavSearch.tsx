@@ -9,13 +9,15 @@ import { useState } from 'react'
 const url = "http://localhost:5000"
 
 interface SearchBarProps {
+    input:string;
+    setInput: React.Dispatch<React.SetStateAction<string>>;
     setSemanticSearchResults: React.Dispatch<React.SetStateAction<any[]>>;
     setFuzzySearchResults: React.Dispatch<React.SetStateAction<any[]>>;
     setLength: React.Dispatch<React.SetStateAction<number>>;
 }
-export default function SearchBar({ setSemanticSearchResults, setFuzzySearchResults, setLength }: SearchBarProps) {
+export default function SearchBar({input,setInput,setSemanticSearchResults, setFuzzySearchResults, setLength }: SearchBarProps) {
     const [suggestions, setSuggestions] = useState<string[]>([]);
-    const [input, setInput] = useState<string>('');
+    // const [input, setInput] = useState<string>('');
     const fetchAutocompleteSuggestions = async (query: string) => {
         // console.log(`${url}/search/autocomplete?query=${query}&count=2`)
 

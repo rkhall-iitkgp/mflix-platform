@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { createStyles } from '@mantine/styles';
+
 import themeOptions from '@/utils/colors';
 import { FaSearch } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
@@ -11,7 +12,9 @@ import { IoCloseOutline } from 'react-icons/io5';
 import NavSearch from '@/app/(root)/components/NavSearch';
 import { usePathname } from 'next/navigation';
 import searchMsApiUrls from '../../api/searchMsApi';
+
 import { useHover } from '@mantine/hooks';
+
 
 export default function Navbar() {
     const path = usePathname();

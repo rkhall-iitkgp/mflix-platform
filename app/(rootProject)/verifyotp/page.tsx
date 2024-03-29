@@ -24,27 +24,69 @@ import searchMsApiUrls from '../api/searchMsApi';
 import useLoginStore from '@/Stores/LoginStore';
 import { useRouter } from 'next/navigation';
 import Mixpanel from '@/components/Mixpanel';
-
 export function Otp({ initialValues }: any) {
   const router = useRouter();
   const [type, toggle] = useToggle(['login', 'register']);
   const [resendTime, setResendTime] = useState(60);
   const [otpValue, setOtpValue] = useState(initialValues?.otp || '');
-
   useEffect(() => {
     if (resendTime > 0) {
       const timer = setTimeout(() => {
         setResendTime((prevTime) => prevTime - 1); // Functional update to ensure correct value
       }, 1000);
-
       return () => clearTimeout(timer); // Cleanup function to clear the timer on unmount or state change
     }
   }, [resendTime]);
-
   const handleOtp = async () => {
     console.log(initialValues);
     const base_url = searchMsApiUrls();
     let res = await fetch(`${base_url}/auth/verifyOTP`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...initialValues,
+      }),
+      credentials: 'include',
+    });
+    let jsonData = await res.json();
+    if (!res.ok) {
+      console.log(jsonData.message);
+      // router.push('/verifyotp')
+      setOtpValue('');
+    }
+    //   setLoading(false);
+    else {
+      console.log(jsonData.message);
+      Mixpanel.track('User Register', {
+        name: jsonData.account.name,
+        email: jsonData.account.email,
+        dob: jsonData.account.dob,
+        phone: jsonData.account.phone,
+      });
+      console.log(jsonData);
+      if (initialValues.type == 'register') {
+        useLoginStore.getState().updateUser(jsonData.account);
+        const state = useLoginStore.getState();
+        console.log(state);
+        router.push('/userprofile');
+      } else if (initialValues.type == 'forget') {
+        router.push('/login');
+      } else if (initialValues.type == 'change') {
+        router.push('/userprofile');
+      }
+    }
+  };
+  const handleOtpChange = (value: any) => {
+    const newOtp = value;
+    setOtpValue(newOtp);
+    initialValues.otp = newOtp;
+  };
+  const handleResendOtp = async () => {
+    setResendTime(60);
+    const base_url = searchMsApiUrls();
+    let res = await fetch(`${base_url}/auth/resendOTP`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,57 +102,10 @@ export function Otp({ initialValues }: any) {
     }
     //   setLoading(false);
     else {
-      let x = {
-        _id: '66071c32871b365691e6f3b2',
-        name: 'Utkarsh',
-        email: 'utkarshbhatt6@gmail.com',
-        dob: '2024-03-05T00:00:00.000Z',
-        phone: 1231231231,
-        payments: [],
-        userProfiles: [
-          {
-            _id: '66071c32871b365691e6f3b3',
-            name: 'Utkarsh',
-            moviesWatched: [],
-            watchList: [],
-            favoriteMovies: [],
-            savedFilters: [],
-            searchHistory: [],
-            __v: 0,
-          },
-        ],
-        activeLogins: ['66071c32871b365691e6f3b6'],
-        __v: 0,
-      };
-
-      Mixpanel.track('User Register', {
-        name: jsonData.account.name,
-        email: jsonData.account.email,
-        dob: jsonData.account.dob,
-        phone: jsonData.account.phone,
-      });
-
-      if (initialValues.type == 'register') {
-        useLoginStore.getState().updateUser(jsonData.account);
-        const state = useLoginStore.getState();
-        console.log(state);
-        // router.push('/userprogfile')
-      } else {
-        router.push('/login');
-      }
-      // console.log(jsonData.account);
-      // console.log(jsonData);
-      // sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
-      // sessionStorage.setItem('token', jsonData.user.token);
+      console.log(jsonData.message);
+      console.log(jsonData);
     }
   };
-  const handleOtpChange = (value: any) => {
-    const newOtp = value;
-    setOtpValue(newOtp);
-    // Update the initialValues object's otp field
-    initialValues.otp = newOtp;
-  };
-
   const form = useForm({
     initialValues: {
       name: '',
@@ -122,13 +117,11 @@ export function Otp({ initialValues }: any) {
       terms: true,
       otp: '',
     },
-
     validate: {
       email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-      password: (val) => (val.length <= 6 ? 'Password should include at least 6 characters' : null),
+      password: (val) => (val.length < 6 ? 'Password should include at least 6 characters' : null),
     },
   });
-
   return (
     <Flex
       style={{
@@ -143,7 +136,6 @@ export function Otp({ initialValues }: any) {
       direction="column"
       wrap="wrap"
     >
-      {/* <BackgroundImage src='Group 18.png'> */}
       <Text size="2.5rem" c={'white'} p={'1rem'}>
         Verify OTP
       </Text>
@@ -151,10 +143,21 @@ export function Otp({ initialValues }: any) {
         <Text size="1.4rem" c={'white'}>
           An OTP has been sent to your email
         </Text>
-        <Text size="1rem" style={{ color: '#9441D0', marginBottom: '1rem' }}>
-          Resend OTP in {resendTime} seconds
-        </Text>
+        {/* <Text size="1rem" style={{ color: '#9441D0', marginBottom: '1rem' }}>Resend OTP in {resendTime} seconds</Text> */}
         {/* <a href="/login" style={{ color: '#9441D0' }}>Log In</a> */}
+        <Button
+          disabled={resendTime > 0} // Disable button if resend timer is active
+          onClick={handleResendOtp}
+          style={{
+            marginTop: '1rem',
+            width: 'fit-content',
+            background: 'none',
+            borderRadius: '1rem',
+            fontSize: '1rem',
+          }}
+        >
+          {resendTime === 0 ? 'Resend OTP' : `Resend OTP in ${resendTime} seconds`}
+        </Button>
       </Flex>
       <Box
         style={{
@@ -172,15 +175,8 @@ export function Otp({ initialValues }: any) {
         }}
       >
         {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
-        <div
-          style={{
-            marginTop: '2rem',
-            display: 'flex',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-          }}
-        >
-          {/* <TextInput
+        {/* <div style={{ marginTop: "2rem", display: "flex", justifyContent: "space-evenly", alignItems: "center" }}> */}
+        {/*  <TextInput
                     required
                     label="OTP"
                     placeholder="Enter OTP"
@@ -198,6 +194,14 @@ export function Otp({ initialValues }: any) {
                         },
                     }}
                 /> */}
+        <div
+          style={{
+            marginTop: '2rem',
+            display: 'flex',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+          }}
+        >
           <PinInput
             size="xl"
             placeholder="_"
@@ -207,16 +211,15 @@ export function Otp({ initialValues }: any) {
             onChange={(value) => handleOtpChange(value)}
           />
         </div>
-
-        {/* <Text style={{position:"absolute", paddingTop:"10rem"}} size="1rem" c={'white'} >Create new account</Text> */}
         <Button
           style={{
-            marginTop: '1rem',
+            marginTop: '2rem',
             width: '50%',
             height: '3rem',
             backgroundColor: '#9441D0',
             borderRadius: '1rem',
             fontSize: '1rem',
+            marginBottom: '1.5rem',
           }}
           onClick={() => {
             handleOtp();
@@ -224,22 +227,9 @@ export function Otp({ initialValues }: any) {
         >
           Verify
         </Button>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            paddingBottom: '1.5%',
-          }}
-        >
-          {/* <Divider label="Or continue with Google" labelPosition="center" my="lg" /> */}
-          {/* <h6 style={{height:"0px"}}>Or continue with Google</h6>
-               <GoogleButton radius="xl">Google</GoogleButton> */}
-        </div>
-        {/* </form> */}
+        {/*<div style={{ display: "flex", flexDirection: "column", justifyContent: "center", paddingBottom: "1.5%" }}>
+                </div> */}
       </Box>
     </Flex>
   );
 }
-
-// export default Otp;

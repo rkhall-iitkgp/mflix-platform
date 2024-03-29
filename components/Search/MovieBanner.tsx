@@ -49,7 +49,7 @@ const MovieBanner: React.FC<MovieBannerProps> = ({
     const [loading, setLoading] = useState(true);
 
     return (
-        <Group p={0} styles={{ root: { maxWidth: '80%', borderRadius: '20px', boxShadow: '14px 11px 6.699999809265137px 2px rgba(0, 0, 0, 0.47)' } }}>
+        <Group p={0} styles={{ root: { maxWidth: '80%', borderRadius: '5rem', boxShadow: '14px 11px 6.699999809265137px 2px rgba(0, 0, 0, 0.47)' } }}>
             <Stack
                 styles={{
                     root: {

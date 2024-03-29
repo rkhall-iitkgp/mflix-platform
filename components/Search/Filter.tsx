@@ -13,6 +13,8 @@ import { RatingButton } from './FilterButtons/RatingButton';
 import Createicon from '@/assets/create.svg'
 import Deleteicon from '@/assets/delete.svg'
 import Listicon from '@/assets/list.svg'
+
+
 const useStyles = createStyles(() =>
 //const child = getRef('child');
 
@@ -73,6 +75,7 @@ const useStyles = createStyles(() =>
 export default function Filter() {
     const { classes } = useStyles();
     const [isToggled, setIsToggled] = useState(false);
+    
 
     const handleToggle = () => {
         setIsToggled((prev) => !prev);

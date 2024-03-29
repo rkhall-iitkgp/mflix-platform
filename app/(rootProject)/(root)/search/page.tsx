@@ -120,7 +120,6 @@ export default function Search() {
                     <Grid.Col span={6} className={classes.moviecard}><MovieBanner {...(dummyBannerMovie())} /></Grid.Col>
                     <Grid.Col span={6} className={classes.moviecard}><MovieBanner {...(dummyBannerMovie())} /></Grid.Col>
                     <Grid.Col span={6} className={classes.moviecard}><MovieBanner {...(dummyBannerMovie())} /></Grid.Col>
-
                 </Grid>
             </Stack>
             <Space h="lg" />

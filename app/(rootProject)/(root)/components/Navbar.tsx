@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import React from 'react';
 import { createStyles } from '@mantine/styles';
-
 import themeOptions from '@/utils/colors';
 import { FaSearch } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
@@ -13,11 +12,12 @@ import NavSearch from '@/app/(rootProject)/(root)/components/NavSearch';
 import { usePathname } from 'next/navigation';
 import searchMsApiUrls from '../../api/searchMsApi';
 import { IoIosArrowDown } from "react-icons/io";
-import { useHover } from '@mantine/hooks';
+import { useHover, useMediaQuery } from '@mantine/hooks';
 
 export default function Navbar() {
   const path = usePathname();
   const [input, setInput] = React.useState('');
+  const isSmallScreen = useMediaQuery('(max-width: 1300px)');
   const [isTyping, setIsTyping] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -268,6 +268,14 @@ export default function Navbar() {
         textDecoration: 'none',
       },
     },
+    navsearch:{
+      marginLeft: isSmallScreen?'-1rem':'-31rem', 
+      marginTop: isSmallScreen?'-10px':'-70px', 
+      width: '30rem',
+      height: '20px', 
+      position:'absolute', 
+      
+    }
   }));
 
   const { classes } = useStyles();
@@ -294,7 +302,7 @@ export default function Navbar() {
                       <ActionIcon size={30} variant="transparent" onClick={handleCloseClick} style={{ marginRight: '5px' }}>
                         <IoCloseOutline color={themeOptions.color.divider} size={30} />
                       </ActionIcon>
-                      <div style={{ marginLeft: '-31rem', marginTop: '-70px', width: '30rem', height: '20px', position: 'absolute', zIndex: '40' }}>
+                      <div style={{zIndex: '40'}} className={classes.navsearch}>
                         <NavSearch input={input} setInput={setInput} />
                       </div>
                     </div>

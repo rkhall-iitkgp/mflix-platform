@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
-import { PinInput } from '@mantine/core';
+import { PinInput, darken } from '@mantine/core';
 import {
     TextInput,
     PasswordInput,
@@ -20,12 +20,17 @@ import {
 import { GoogleButton } from '../login/GoogleButton';
 // import { TwitterButton } from './TwitterButton';
 import searchMsApiUrls from '../api/searchMsApi';
+import useLoginStore from "@/Stores/LoginStore";
+import { useRouter } from "next/navigation";
+
+
 
 
 export function Otp({ initialValues }: any) {
+    const router = useRouter()
     const [type, toggle] = useToggle(['login', 'register'])
     const [resendTime, setResendTime] = useState(60);
-    const [otpValue, setOtpValue] = useState(initialValues.otp);
+    const [otpValue, setOtpValue] = useState(initialValues?.otp || '');
 
     useEffect(() => {
         if (resendTime > 0) {
@@ -38,6 +43,7 @@ export function Otp({ initialValues }: any) {
     }, [resendTime]);
 
     const handleOtp = async () => {
+
         console.log(initialValues)
         const base_url = searchMsApiUrls();
         let res = await fetch(`${base_url}/auth/verifyOTP`, {
@@ -57,7 +63,16 @@ export function Otp({ initialValues }: any) {
         //   setLoading(false);
         else {
             console.log(jsonData.message);
-            console.log(jsonData.user);
+            console.log(jsonData)
+            if (initialValues.type == 'register') {
+                useLoginStore.getState().updateUser(jsonData.account);
+                const state = useLoginStore.getState();
+                console.log(state);
+                // router.push('/userprogfile')
+            } else {
+                router.push('/login')
+            }
+            // console.log(jsonData.account);
             // console.log(jsonData);
             // sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
             // sessionStorage.setItem('token', jsonData.user.token);
@@ -108,9 +123,9 @@ export function Otp({ initialValues }: any) {
             <Text size="2.5rem" c={'white'} p={'1rem'}>Verify OTP</Text>
             <Flex direction="column" justify="centre"
                 align="center" gap={{ sm: 'lg' }}>
-                <Text size="1rem" c={'white'}  >An OTP has been sent to your email
+                <Text size="1.4rem" c={'white'}  >An OTP has been sent to your email
                 </Text>
-                <Text size="0.7rem" style={{ color: '#9441D0' }}>Resend OTP in {resendTime} seconds</Text>
+                <Text size="1rem" style={{ color: '#9441D0',marginBottom: '1rem' }}>Resend OTP in {resendTime} seconds</Text>
                 {/* <a href="/login" style={{ color: '#9441D0' }}>Log In</a> */}
             </Flex>
             <Box style={{
@@ -122,7 +137,7 @@ export function Otp({ initialValues }: any) {
                 backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '0.5rem'
             }}>
                 {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
-                <div style={{ marginTop: "2rem", width: "75%", display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
+                <div style={{ marginTop: "2rem",display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
                     {/* <TextInput
                     required
                     label="OTP"
@@ -165,4 +180,4 @@ export function Otp({ initialValues }: any) {
     );
 }
 
-export default Otp;
+// export default Otp;

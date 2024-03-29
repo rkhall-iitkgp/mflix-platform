@@ -5,7 +5,7 @@ import XMarkIcon from '@/assets/icons/xmark.svg'
 import MicIcon from '@/assets/icons/mic.svg'
 import Image from 'next/image'
 
-export default function SearchBar({ input, setInput, onTyping }: { input: string, setInput: React.Dispatch<SetStateAction<string>>, onTyping: void }) {
+export default function SearchBar({ input, setInput, onTyping }: { input: string, setInput: React.Dispatch<SetStateAction<string>>, onTyping: (value: string) => void }) {
     console.log("ontyping", onTyping);
     useEffect(() => {
         if (!input && typeof onTyping === 'function') {

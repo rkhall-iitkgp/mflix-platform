@@ -19,10 +19,8 @@ import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
 import useLoginStore from '@/Stores/LoginStore';
 
-export function Login(props: PaperProps) {
+export default function Login() {
     const [userData, setUserData] = useState(null)
-
-
     const submitLogin = async (values: any) => {
         const base_url = searchMsApiUrls()
         setUserData(values);
@@ -45,43 +43,42 @@ export function Login(props: PaperProps) {
         else {
             console.log("login successful");
             console.log(jsonData);
-            sessionStorage.setItem('accessToken', jsonData.user.accessToken);
-            useLoginStore.getState().updateUser(jsonData.user);
+            // sessionStorage.setItem('accessToken', jsonData.account.accessToken);
+            useLoginStore.getState().updateUser(jsonData.account);
             const state = useLoginStore.getState();
             console.log(state);
-            // sessionStorage.setItem('token', jsonData.user.token);
         }
 
-        if (!jsonData.user.userProfiles.length) {
-            console.log(jsonData.user)
-            console.log(jsonData.user.userProfiles.length)
-            const createData = {
-                "userName": jsonData.user.name,
-                "flag": 1,
-            }
-            console.log(createData)
-            const token = sessionStorage.getItem('accessToken');
-            res = await fetch(`${base_url}/user/create`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    ...createData,
-                }),
-            })
-            jsonData = await res.json();
-            if (!res.ok) {
-                console.log(jsonData);
-            }
-            else {
-                console.log("user Created successful");
-                console.log(jsonData);
+        // if (!jsonData.account.userProfiles.length) {
+        //     console.log(jsonData.account)
+        //     console.log(jsonData.account.userProfiles.length)
+        //     const createData = {
+        //         "userName": jsonData.account.name,
+        //         "flag": 1,
+        //     }
+        //     console.log(createData)
+        //     const token = sessionStorage.getItem('accessToken');
+        //     res = await fetch(`${base_url}/user/create`, {
+        //         method: "POST",
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //             "Authorization": `Bearer ${token}`
+        //         },
+        //         body: JSON.stringify({
+        //             ...createData,
+        //         }),
+        //     })
+        //     jsonData = await res.json();
+        //     if (!res.ok) {
+        //         console.log(jsonData);
+        //     }
+        //     else {
+        //         console.log("user Created successful");
+        //         console.log(jsonData);
 
-                // sessionStorage.setItem('token', jsonData.user.token);
-            }
-        }
+        //         // sessionStorage.setItem('token', jsonData.account.token);
+        //     }
+        // }
 
     };
 
@@ -138,7 +135,7 @@ export function Login(props: PaperProps) {
 
         validate: {
             email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-            password: (val) => (val.length <= 8 ? 'Password should include at least 8 characters' : null),
+            password: (val) => (val.length <= 5 ? 'Password should include at least 6 characters' : null),
         },
     });
 
@@ -152,7 +149,7 @@ export function Login(props: PaperProps) {
                 align="center" gap={{ sm: 'lg' }}>
                 <Text size="1.1rem" c={'white'}  >Don't have an account?
                 </Text>
-                <a href="/register" style={{ color: themeOptions.color.textColorNormal }}>Sign in</a>
+                <a href="/register" style={{ color: themeOptions.color.textColorNormal }}>Register</a>
             </Flex>
             <Box
                 className={classes.CentreBoxStyles}>
@@ -223,14 +220,14 @@ export function Login(props: PaperProps) {
                         {form.errors.password ? form.errors.password : ''}
                     </div>
                     <Box style={{ display: 'flex', flexDirection: 'row-reverse', width: '70%' }}>
-                        <a href="" style={{ color: 'white', fontSize: '0.8rem', fontWeight: 'normal', padding: '0.2rem' }} >Forget Password?</a>
+                        <a href="/forgetpassword" style={{ color: 'white', fontSize: '0.8rem', fontWeight: 'normal', padding: '0.2rem' }} >Forgot Password?</a>
                     </Box>
                     <Button
                         // className={classes.ButtonStyles}
-                        style={{ width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'n]=ormal', marginTop: '1.5rem' }}
+                        style={{ width: '70%', height: '3.5rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1.5rem', fontWeight: 'normal', marginTop: '1.5rem' }}
                         type="submit" radius="xl" >Log In</Button>
 
-                    <Divider label="Or " labelPosition="center" my="lg" style={{ color: 'white', width: '80%' }} styles={{
+                    {/* <Divider label="Or " labelPosition="center" my="lg" style={{ color: 'white', width: '80%' }} styles={{
 
                         label: {
                             color: 'white',
@@ -239,11 +236,11 @@ export function Login(props: PaperProps) {
                     <Box style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-evenly', width: '80%' }}>
                         <Text size="1.2rem" c={'white'} p={'1rem'} style={{ marginRight: '1rem' }}> Continue With:</Text>
                         <GoogleButton radius="xl" size='lg' style={{ marginBottom: '1rem' }}>Google</GoogleButton>
-                    </Box>
+                    </Box> */}
                 </form>
             </Box>
         </Box>
     );
 }
 
-export default Login;
+// export default Login;

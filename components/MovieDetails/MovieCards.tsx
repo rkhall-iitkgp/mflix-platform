@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Heart from '@/assets/icons/heart.svg';
 import Poster from '@/assets/icons/poster.jpeg';
 import Imdb from '@/assets/icons/imdb.png';
@@ -97,37 +98,39 @@ const useStyles = createStyles(() => ({
 }));
 
 export default function MovieCard({data}) {
-  console.log(data);
+  // console.log(data);
   const { classes, cx } = useStyles();
   const { hovered, ref } = useHover();
   return (
-    <div className={cx(classes.containerStyles, hovered && classes.Hovered)} ref={ref}>
-      {/* <div className={classes.heartContainerStyles}>
-        <Image src={Heart} width={30} height={30} alt="fav" className={classes.heartImageStyles} />
-      </div> */}
-      <Image src={data.poster} alt="poster" width={250} height={370} className={classes.posterStyles} />
-      <div style={{ padding: '10px' }}>
-        <span className={classes.countryStyles}>{data.countries[0]},{data.released.substr(0,4)}</span>
-        <h3 className={classes.titleStyles}>{data.title}</h3>
-        <div className={classes.ratingContainerStyles}>
-          <div className={classes.ratingItemStyles}>
-            <Image src={Imdb} width={35} height={17} alt="imdb" className={classes.img} />
-            <span className={classes.rating}>{data.imdb.rating}/10</span>
+    <Link href={`/movies/${data._id}`} style={{textDecoration:'none'}}>
+      <div className={cx(classes.containerStyles, hovered && classes.Hovered)} ref={ref}>
+        {/* <div className={classes.heartContainerStyles}>
+          <Image src={Heart} width={30} height={30} alt="fav" className={classes.heartImageStyles} />
+        </div> */}
+        <Image src={data.poster} alt="poster" width={250} height={370} className={classes.posterStyles} />
+        <div style={{ padding: '10px' }}>
+          <span className={classes.countryStyles}>{data.countries[0]},{data.released.substr(0,4)}</span>
+          <h3 className={classes.titleStyles}>{data.title}</h3>
+          <div className={classes.ratingContainerStyles}>
+            <div className={classes.ratingItemStyles}>
+              <Image src={Imdb} width={35} height={17} alt="imdb" className={classes.img} />
+              <span className={classes.rating}>{data.imdb.rating}/10</span>
+            </div>
+            <div className={classes.ratingItemStyles}>
+              <Image src={Tomato} alt="tomato" height={17} width={16} className={classes.tomatoImg} />
+              <span className={classes.tomatoScore}>{data.tomatoes?.viewer.rating}/5</span>
+            </div>
           </div>
-          <div className={classes.ratingItemStyles}>
-            <Image src={Tomato} alt="tomato" height={17} width={16} className={classes.tomatoImg} />
-            <span className={classes.tomatoScore}>{data.tomatoes?.viewer.rating}/5</span>
+          <div className={classes.genreStyles}>
+            {data.genres?.map((genre, i) => (
+              <>
+                <span>{genre}</span>
+                {i !== data.genres.length - 1 && <span>, </span>}
+              </>
+            ))}
           </div>
-        </div>
-        <div className={classes.genreStyles}>
-          {data.genres?.map((genre, i) => (
-            <>
-              <span>{genre}</span>
-              {i !== data.genres.length - 1 && <span>, </span>}
-            </>
-          ))}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

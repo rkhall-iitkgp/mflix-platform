@@ -15,14 +15,20 @@ import { useState } from 'react';
 import { IconBoxMargin } from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
 import { watch } from 'fs';
+import { CiHeart } from "react-icons/ci";
+import { FaHeart } from "react-icons/fa6";
+import { relative } from 'path';
+
 
 //{url}/movies/573a1391f29313caabcd6d40
-export default function MovieContent({movieData}:{movieData:Object}) {
+export default function MovieContent({movieData}) {
     console.log(movieData);
+
     const [checked, setChecked] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width: 1200px)');
     const isSmallerScreen = useMediaQuery('(max-width:1000px)');
     const [watchList,setWatchList] = useState("Add to Watchlist");
+    const [isFavourite,setIsFavourite] = useState(false);
     const TogglewatchListStatus = () =>{
         if(watchList === "Add to Watchlist") setWatchList("Added to Watchlist");
         else setWatchList("Add to Watchlist");
@@ -89,6 +95,7 @@ export default function MovieContent({movieData}:{movieData:Object}) {
             margin:'0 2.5rem 0 5rem',
             borderRadius:10,
         },
+        
         //Watch List button
         buttonContainer:{
             backgroundColor:checked? themeOptions.color.button:themeOptions.color.divider,
@@ -96,15 +103,16 @@ export default function MovieContent({movieData}:{movieData:Object}) {
             padding:'0.75rem 1rem',
             cursor:'pointer',
             borderRadius:10,
+            margin:'0 0.5rem 0 0',
             border: `0.15rem solid ${themeOptions.color.button}`
         },
         checkbox:{
             cursorType: 'pointer',
             '& +span':{
-                fontSize:'1.25rem',
+                fontSize: isSmallScreen ? '1rem' : '1.25rem',
                 fontWeight:500,
                 color: checked? themeOptions.color.divider: themeOptions.color.button,
-                margin:'0 1rem',
+                margin:'0 0.5rem',
             },
             '& .mantine-checkbox-inner': {
                 border:`1px solid ${themeOptions.color.button}`,
@@ -114,6 +122,14 @@ export default function MovieContent({movieData}:{movieData:Object}) {
         checkboxChecked: {
             backgroundColor: checked ? themeOptions.color.button : themeOptions.color.divider,
         },
+        fullHeart:{
+            fontSize:  isSmallScreen ? themeOptions.fontSize.md : themeOptions.fontSize.l,
+            color: isFavourite ? themeOptions.color.button : '#828282',
+            margin:' 0rem 1rem', 
+            position:'absolute',
+            top:'35%',
+            right: isSmallScreen ? '-25%' : '-20%',
+        }
     }))
     const { classes } = styles();
     return (
@@ -130,7 +146,10 @@ export default function MovieContent({movieData}:{movieData:Object}) {
             <Group >
                 <Flex justify='center' align='center'>
                     <Container>
-                        <h1 className={classes.movieTitle}>{movieData.title}</h1>
+                        <div style={{display:'flex',alignItems:'center',position: 'relative',width:'fit-content'}}>
+                            <h1 className={classes.movieTitle}>{movieData.title}</h1>
+                            <FaHeart className={classes.fullHeart} onClick={() => setIsFavourite(!isFavourite)}/>
+                        </div>
                         <Flex className={classes.genreContainer}>
                             {movieData.genres?.map((genre, i) =>  <p className={classes.genre}>{genre}</p>)}
                         </Flex>
@@ -158,20 +177,20 @@ export default function MovieContent({movieData}:{movieData:Object}) {
                         </Flex>
                         <Stack>
                             <p className={classes.plot}>{movieData.fullplot}</p>
-                            <Flex align='center' justify='space-around' onClick = {()=> setChecked(!checked)} className={`${classes.buttonContainer} ${checked ? classes.checkboxChecked : ''}`}>
-                                <Checkbox
-                                    className={classes.checkbox}
-                                    color='#7011B6'
-                                    mt="l"
-                                    checked={checked}
-                                    onChange={() => setChecked(!checked)}
-                                    radius="m"
-                                    styles={{input:{
-                                        color: !checked ? themeOptions.color.button : themeOptions.color.divider,
-                                    }}}
-                                />
-                                <span>Watch List</span>
-                            </Flex>
+                                <Flex align='center' justify='space-around' onClick = {()=> setChecked(!checked)} className={`${classes.buttonContainer} ${checked ? classes.checkboxChecked : ''}`}>
+                                    <Checkbox
+                                        className={classes.checkbox}
+                                        color='#7011B6'
+                                        mt="l"
+                                        checked={checked}
+                                        onChange={() => setChecked(!checked)}
+                                        radius="m"
+                                        styles={{input:{
+                                            color: !checked ? themeOptions.color.button : themeOptions.color.divider,
+                                        }}}
+                                    />
+                                    <span>Watch List</span>
+                                </Flex>
                         </Stack>
                     </Container>
                     <Stack justify="flex-start" gap="s">

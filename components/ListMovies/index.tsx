@@ -9,6 +9,10 @@ import themeOptions from '@/utils/colors';
 
 const ListMovies = ({movieData}:{movieData : Array<any>}) => {
   // console.log("movies",movieData);
+  movieData = movieData.slice(1);
+  const uniqueMovies = Array.from(new Set(movieData.map(movie => movie.title)))
+    .map(title => movieData.find(movie => movie.title === title));
+
   const useStyles = createStyles(() => ({
     MovieListContainer: {
       display: 'flex',
@@ -112,12 +116,9 @@ const ListMovies = ({movieData}:{movieData : Array<any>}) => {
   return (
     <div className={MovieListContainer} ref={scrollRef} onScroll={handleScroll}>
       <div className={MovieListBox}>
-        {movieData.map((movie,i)=>
-        {
-          // console.log(movie)
-          return <MovieCard data={movie}/>   
-        }
-        )}
+        {uniqueMovies.map((movie, i) => (
+          <MovieCard key={i} data={movie} />
+        ))}
       </div>
       <div className={MovieListNavigation}>
         {showFirstArrow ? (

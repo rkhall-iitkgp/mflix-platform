@@ -55,18 +55,18 @@ const useVoice = (): {
   const listen = () => {
     if (!speech) return;
 
-    if (!isListening) {
-      setIsListening(true);
-      speech.start();
-      setTimeout(() => {
-        setIsListening(false);
-        speech?.stop();
-      }, 3000);
-    } else {
+    // if (!isListening) {
+    //   setIsListening(true);
+    speech.start();
+    setTimeout(() => {
       setIsListening(false);
+      speech?.stop();
+    }, 3000);
+    // } else {
+    //   setIsListening(false);
 
-      speech.stop();
-    }
+    //   speech.stop();
+    // }
   };
 
   useEffect(() => {

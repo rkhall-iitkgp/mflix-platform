@@ -1,31 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import SearchIcon from '@/assets/icons/search.svg';
 import XMarkIcon from '@/assets/icons/xmark.svg';
-import MicIcon from '@/assets/icons/mic.svg';
-import { Button } from '@mantine/core';
+import { FaMicrophone } from 'react-icons/fa6';
 import Image from 'next/image';
 import { useVoice } from '@/components/VoiceSearchButton/UseVoice';
-import { FaMicrophone } from 'react-icons/fa6';
+import { useRouter } from 'next/router';
 
 export default function SearchBar() {
-  const [input, setInput] = React.useState('');
-  const { text, listen, isListening, voiceSupported } = useVoice();
+  const [input, setInput] = useState('');
+  const { text, listen, isListening } = useVoice();
   const [listeningFront, setIsListening] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (listeningFront && text !== '') {
       setInput(text);
     }
   }, [text]);
+
   const handleListening = () => {
     if (!listeningFront) {
       listen();
+      setIsTyping(false);
       setIsListening(true);
       setTimeout(() => {
         setIsListening(false);
       }, 5000);
     }
   };
+
+  const redirectToSearchPage = () => {
+    if (!isTyping && input.trim() !== '') {
+      router.push(`/search?q=${input}`);
+    }
+  };
+
+  useEffect(() => {
+    const typingTimer = setTimeout(redirectToSearchPage, 2000);
+    return () => clearTimeout(typingTimer);
+  }, [input, isTyping]);
+
   return (
     <div style={styles.container}>
       <label htmlFor="search" style={styles.searchLabel}>
@@ -37,7 +52,10 @@ export default function SearchBar() {
         placeholder="Search..."
         style={styles.input}
         value={input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={(e) => {
+          setInput(e.target.value);
+          setIsTyping(true);
+        }}
       />
       {input && <Image src={XMarkIcon} alt="X" style={styles.icon} onClick={() => setInput('')} />}
       <button style={styles.button} onClick={handleListening} type="button">
@@ -45,11 +63,8 @@ export default function SearchBar() {
           style={{
             ...styles.mic,
             backgroundColor: listeningFront ? '#7011B6' : 'transparent',
-            transition: 'background-color 0.3s ease',
-            borderRadius: '50%',
-            padding: '5px',
           }}
-          size={48}
+          size={24}
         />
       </button>
     </div>

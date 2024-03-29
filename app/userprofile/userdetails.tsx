@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { createStyles } from '@mantine/styles';
 import Image from 'next/image';
 import { Button, Drawer } from '@mantine/core';
+import { FaCamera } from "react-icons/fa";
 
 
 import profileIcon from '@/assets/icons/profile.svg';
@@ -12,7 +13,7 @@ import laptopIcon from '@/assets/icons/laptop.svg';
 import editIcon from '@/assets/icons/editProfile.svg';
 import saveIcon from '@/assets/icons/save.svg';
 import themeOptions from '@/utils/colors';
-
+import { MdDelete } from "react-icons/md";
 
 type UserInfo = {
     name: string;
@@ -135,7 +136,7 @@ const useStyles = createStyles(() => ({
         // borderBottom: 'white 1px solid',
         justifyContent: 'space-between',
         width: '100%',
-        gap: '3vw',
+        gap: '1vw',
 
     },
 
@@ -162,16 +163,24 @@ const useStyles = createStyles(() => ({
     },
 }));
 
-const UserDetails = () => {
+const UserDetails = ({ opened }: any) => {
     const { classes } = useStyles();
     const [userInfo, setUserInfo] = useState<UserInfo>(initialUserInfo);
     const [editMode, setEditMode] = useState<boolean>(false);
     const [nameError, setNameError] = useState<string>('');
     const [phoneError, setPhoneError] = useState<string>('');
     const [lastValidValues, setLastValidValues] = useState<UserInfo>(initialUserInfo);
+    const [manageProfile, setManageProfile] = useState(0);
+    const [manageDevice, setManageDevice] = useState(0);
 
     const handleEditClick = () => {
         setEditMode(!editMode);
+    };
+    const toggleManageProfile = () => {
+        setManageProfile(prevState => (prevState === 0 ? 1 : 0));
+    };
+    const toggleManageDevice = () => {
+        setManageDevice(prevState => (prevState === 0 ? 1 : 0));
     };
 
     const handleSaveClick = () => {
@@ -220,8 +229,16 @@ const UserDetails = () => {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'space-between' }} >
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <h1 style={{ color: 'white' }}>User Profile</h1>
-                <div style={{ height: '20vh', width: '20vh', borderRadius: '50%', overflow: 'hidden', border: '0.2rem solid white' }}>
-                    <Image src="" alt="Profile" width={150} height={150} />
+                <div style={{ height: '20vh', width: '20vh', borderRadius: '50%', overflow: 'hidden', border: '0.2rem solid white', position: 'relative' }}>
+                    <Image src="" alt="Profile" width={150} height={150} /> {/* Replace src with actual image URL */}
+
+                    {/* Camera Icon */}
+
+                </div>
+                <div style={{ position: 'relative', left: '45%', transform: 'translate(-50%, -50%)', marginTop: '-10%' }}>
+                    <div style={{ backgroundColor: themeOptions.color.button, borderRadius: '50%', height: '3rem', width: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <FaCamera style={{ color: 'white' }} />
+                    </div>
                 </div>
             </div>
             <div style={{
@@ -323,19 +340,26 @@ const UserDetails = () => {
                                     marginTop: '0.3vw',
                                     marginBottom: '0.3vw',
                                     flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
                                     width: '100%',
-                                    paddingBottom: '1vw',
+                                    paddingBottom: '0.5vw',
                                     gap: '2vw',
-                                    borderBottom: '0.1rem white solid'
+                                    borderBottom: '0.1rem white solid',
 
                                 }}>{/*profile item*/}
-                                    <Image src={profile.avatarUrl} alt="prfl" width={50} height={50} />
-                                    <div style={{ color: 'white', paddingTop: '0.5rem' }}>{profile.profileName}</div>
+                                    <div style={{ display: 'flex', flexDirection: 'row', gap: '2vw' }}>
+                                        <Image src={profile.avatarUrl} alt="prfl" width={50} height={50} />
+                                        <div style={{ color: 'white', paddingTop: '0.5rem' }}>{profile.profileName}</div>
+                                    </div>
+                                    <div style={{ paddingRight: '1vw' }}>
+                                        {manageProfile ? <MdDelete style={{ color: 'white', fontSize: '1.5rem', cursor: 'pointer' }} onClick={() => { console.log('clicker') }} /> : null}
+                                    </div>
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <button style={{ borderRadius: '0.8rem', color: 'white', height: '10%', width: '100%', backgroundColor: themeOptions.color.button }}>Manage Profile</button>
+                    <button style={{ borderRadius: '0.8rem', color: 'white', height: '10%', width: '100%', backgroundColor: themeOptions.color.button, cursor: 'pointer' }} onClick={() => { toggleManageProfile() }}>Manage Profile</button>
                 </div>
 
                 <div style={{
@@ -356,7 +380,6 @@ const UserDetails = () => {
                             paddingLeft: '1vw',
                         }}>
                             <h2 style={{ color: '#7011B6', textAlign: 'left' }}>User Signed-in Info</h2>
-                            <h5 style={{ color: 'white', textAlign: 'left' }}>When You are signed in</h5>
                         </div>
                         <div style={{
                             display: 'flex',
@@ -367,14 +390,19 @@ const UserDetails = () => {
                         }}>{/*profile container*/}
                             {userSignedInInfos.map((info, index) => (
                                 <div key={index} className={classes.profileItem}>{/*profile item*/}
-                                    <Image src={info.iconUrl} alt="prfl" width={50} height={50} />
                                     <><div style={{ color: 'white' }}>Device ID: {info.deviceId}</div>
-                                        <div style={{ color: 'white' }}> {info.deviceName}</div></>
+                                        <div style={{ color: 'white' }}> {info.deviceName}</div>
+                                        <div style={{ paddingRight: '1vw' }}>
+                                            {manageDevice ? <MdDelete style={{ color: 'white', fontSize: '1.5rem', cursor: 'pointer' }} onClick={() => { console.log('clicker') }} /> : null}
+                                        </div>
+                                    </>
+
                                 </div>
+
                             ))}
                         </div>
                     </div>
-                    <button style={{ borderRadius: '0.8rem', color: 'white', height: '10%', width: '100%', backgroundColor: themeOptions.color.button }}>Manage Devices</button>
+                    <button style={{ borderRadius: '0.8rem', color: 'white', height: '10%', width: '100%', backgroundColor: themeOptions.color.button, cursor: 'pointer' }} onClick={() => { toggleManageDevice() }}>Manage Devices</button>
                 </div>
             </div>
         </div>

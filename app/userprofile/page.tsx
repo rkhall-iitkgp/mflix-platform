@@ -323,18 +323,20 @@ import { GoPencil } from "react-icons/go";
 import { CiPower } from "react-icons/ci";
 import { useState } from 'react';
 import History from './history';
+import Favorites from './favourites';
+import WatchList from './watchlist';
 // import { CIcon } from '@coreui/icons-react';
 // import { cilList, cilHistory } from '@coreui/icons';
 export function UserProfile() {
     const [opened, { toggle }] = useDisclosure();
     const [page, setPage] = useState(1);
-
     return (
         <AppShell
             header={{ height: 90 }}
             navbar={{ width: '18%', breakpoint: 'sm', collapsed: { mobile: !opened } }}
             aside={{ width: 0, breakpoint: 'md', collapsed: { desktop: false, mobile: true } }}
             padding="md"
+            withBorder={false}
         >
             <AppShell.Header style={{ backgroundColor: 'black' }}>
                 {/* <Group h="100%" px="md">
@@ -347,7 +349,7 @@ export function UserProfile() {
                 backgroundColor: themeOptions.color.button
                 , display: 'flex', flexDirection: 'column', justifyContent: 'space-between'
             }}>
-                <Box style={{ display: 'flex', flexDirection: 'column' }}>
+                <Box style={{ display: 'flex', flexDirection: 'column', padding: "20px", paddingRight: "0" }}>
                     <Button variant="filled" style={{
                         height: '2.8rem'
                         , backgroundColor: page == 1 ? '#29113B' : themeOptions.color.button,
@@ -401,7 +403,14 @@ export function UserProfile() {
             </AppShell.Navbar>
             <AppShell.Main>
                 <Box style={{ height: '100%', width: '100%', marginTop: '-1.2rem' }}>
-                    {page === 1 ? <UserDetails></UserDetails> : (page === 2 ? <History></History> : null)}
+                    {
+                        page === 1 ? <UserDetails /> :
+                            page === 2 ? <History /> :
+                                page === 3 ? <Favorites /> :
+                                    page === 4 ? <WatchList /> :
+                                        null
+                    }
+                    {/* {page === 1 ? <UserDetails></UserDetails> : (page === 2 ? <History></History> : null)} */}
                 </Box>
             </AppShell.Main>
             {/* <AppShell.Aside p="md">Aside</AppShell.Aside> */}

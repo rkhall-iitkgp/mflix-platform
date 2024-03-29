@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchIcon from '@/assets/icons/search.svg';
 import XMarkIcon from '@/assets/icons/xmark.svg';
 import MicIcon from '@/assets/icons/mic.svg';
@@ -9,18 +9,23 @@ import { FaMicrophone } from 'react-icons/fa6';
 
 export default function SearchBar() {
   const [input, setInput] = React.useState('');
-  const { text, isListening, listen, voiceSupported } = useVoice();
+  const { text, listen, isListening, voiceSupported } = useVoice();
+  const [listeningFront, setIsListening] = useState(false);
 
   useEffect(() => {
-    if (text !== '') {
+    if (listeningFront && text !== '') {
       setInput(text);
     }
   }, [text]);
-
-  useEffect(() => {
-    console.log('isListening', isListening);
-  }, [isListening]);
-
+  const handleListening = () => {
+    if (!listeningFront) {
+      listen();
+      setIsListening(true);
+      setTimeout(() => {
+        setIsListening(false);
+      }, 5000);
+    }
+  };
   return (
     <div style={styles.container}>
       <label htmlFor="search" style={styles.searchLabel}>
@@ -35,11 +40,11 @@ export default function SearchBar() {
         onChange={(e) => setInput(e.target.value)}
       />
       {input && <Image src={XMarkIcon} alt="X" style={styles.icon} onClick={() => setInput('')} />}
-      <button style={styles.button} onClick={listen} type="button">
+      <button style={styles.button} onClick={handleListening} type="button">
         <FaMicrophone
           style={{
             ...styles.mic,
-            backgroundColor: isListening ? '#7011B6' : 'transparent',
+            backgroundColor: listeningFront ? '#7011B6' : 'transparent',
             transition: 'background-color 0.3s ease',
             borderRadius: '50%',
             padding: '5px',

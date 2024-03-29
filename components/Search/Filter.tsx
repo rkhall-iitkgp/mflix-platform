@@ -19,9 +19,9 @@ const useStyles = createStyles(() =>
 ({
     filter: {
         //  fontFamily: 'Poppins',
-        fontSize: '30px',
+        fontSize: '20px',
         fontWeight: 600,
-        lineHeight: '45px',
+        lineHeight: '30px',
         letterSpacing: '0em',
         textAlign: 'left',
         color: themeOptions.color.textColorNormal,
@@ -34,7 +34,7 @@ const useStyles = createStyles(() =>
     },
 
     inner: {
-        height: '84px',
+        // height: '80px',
         display: 'flex',
         alignItems: 'center',
         cursor: 'pointer',
@@ -42,17 +42,29 @@ const useStyles = createStyles(() =>
 
     },
     outer: {
+        position: 'absolute',
+        top: '100%',
+        left:0,
+        width: '100%',
+        background: 'rgba(0, 0, 0, 0.8)',
         height: 'fit-content',
         display: 'flex',
         alignItems: 'center',
         cursor: 'pointer',
         transform: 'translateY(0)', // Move down to its original position
-        transition: 'transform 0.8s ease-out',
+        transition: 'transform 0.5s ease-out, backround 0.5 ease-out',
+        zIndex: 200,
+        padding: '10px',
 
     },
     body: {
         display: 'flex',
         flexDirection: 'column',
+        position: 'relative',
+    },
+    FilterIcon: {
+        width: '24px',
+        height: '24px',
     },
 
 })
@@ -80,7 +92,7 @@ export default function Filter() {
         <header className={classes.header}>
             <div className={classes.body}>
                 <div onClick={handleToggle} className={classes.inner}>
-                    <Image src={FilterIcon} alt='' />
+                    <Image src={FilterIcon} className={classes.FilterIcon} alt='' />
                     <div className={classes.filter}>Filter</div>
                 </div>
                 {isToggled &&

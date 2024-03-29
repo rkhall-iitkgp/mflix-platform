@@ -80,6 +80,7 @@ const userSignedInInfos: UserSignedInInfo[] = [
     }
 ];
 
+
 const useStyles = createStyles(() => ({
     containerStyle: {
         backgroundColor: "red",
@@ -129,13 +130,13 @@ const useStyles = createStyles(() => ({
     },
     profileItem: {
         display: 'flex',
-        margin: '0.5vw',
         flexDirection: 'row',
         // padding: '2vw',
         // marginLeft: '1vw',
         // marginRight: '1vw',
         // borderBottom: 'white 1px solid',
         justifyContent: 'space-between',
+        alignItems: 'center',
         width: '100%',
         gap: '1vw',
 
@@ -164,6 +165,7 @@ const useStyles = createStyles(() => ({
     },
 }));
 import searchMsApiUrls from '../api/searchMsApi';
+import { Tooltip } from '@mantine/core';
 
 const UserDetails = ({ opened }: any) => {
     const { classes } = useStyles();
@@ -176,6 +178,8 @@ const UserDetails = ({ opened }: any) => {
     const [manageDevice, setManageDevice] = useState(0);
     const state = useLoginStore.getState();
     const [userDetails, setUserDetails] = useState({});
+    const [activeLogins, setActiveLogins] = useState([{}]);
+    const [flag, setFlag] = useState(true);
 
     const getActiveUsers = async () => {
         const base_url = searchMsApiUrls();
@@ -204,16 +208,20 @@ const UserDetails = ({ opened }: any) => {
         } else {
             console.log(jsonData);
             setUserDetails(jsonData);
+            setActiveLogins(jsonData.account.activeLogins);
             // useLoginStore.getState().updateUser(jsonData.account);
-
         }
 
     }
 
+    // useEffect(() => {
+    //     getActiveUsers();
+    // }, [activeLogins]);
+
     useEffect(() => {
         getActiveUsers();
-
     }, []);
+
 
     const getUserDetails = () => {
         const UserDetails: UserInfo = {
@@ -227,10 +235,6 @@ const UserDetails = ({ opened }: any) => {
         console.log(userDetails);
         setUserInfo(UserDetails);
     }
-
-    useEffect(() => {
-        getUserDetails();
-    }, []);
 
     useEffect(() => {
         getUserDetails();
@@ -290,6 +294,47 @@ const UserDetails = ({ opened }: any) => {
     const handleFieldFocus = (key: keyof UserInfo) => {
         setLastValidValues({ ...userInfo });
     };
+    // const call = useEffect(() => {
+    const handleDeviceDelete = async (id: any) => {
+        const base_url = searchMsApiUrls();
+        console.log("device delete")
+        console.log(activeLogins[id]._id);
+        const user_id = state._id;
+        // console.log(state);
+        const values =
+        {
+            "loginId": activeLogins[id]._id,
+        }
+        let res = await fetch(`${base_url}/auth/removeActiveLogin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                ...values,
+            }),
+        });
+        let jsonData = await res.json();
+        if (!res.ok) {
+            console.log(jsonData);
+        } else {
+            console.log("user Deleted");
+            console.log(jsonData);
+            // var filtered = activeLogins.filter(item => item !== id);
+            // console.log(filtered);
+            // var newActiveLogins = activeLogins.splice(id, 1);
+            setActiveLogins((prev) => prev.filter(item => item !== id));
+            // useLoginStore.getState().updateUser(jsonData.account);
+        }
+
+    }
+    useEffect(() => {
+        if (flag) {
+            getActiveUsers();
+            setFlag(false);
+        }
+    }, [flag]);
     return (
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'space-between' }} >
@@ -389,7 +434,7 @@ const UserDetails = ({ opened }: any) => {
                     // gap:'2rem',
                     marginLeft: '3vw',
                     marginRight: '3vw',
-                    height: '25rem'
+                    height: '45rem'
 
 
                 }}>{/*flex container*/}
@@ -438,7 +483,7 @@ const UserDetails = ({ opened }: any) => {
                     // gap:'2rem',
                     marginLeft: '3vw',
                     marginRight: '3vw',
-                    height: '25rem'
+                    height: '45rem'
                 }}>{/*flex container*/}
                     <div >
                         <div style={{
@@ -453,13 +498,19 @@ const UserDetails = ({ opened }: any) => {
                             alignItems: 'center',
                             paddingRight: '1vw',
                             paddingLeft: '1vw',
+                            marginTop: '-2rem'
                         }}>{/*profile container*/}
-                            {userSignedInInfos.map((info, index) => (
+                            {activeLogins.map((info, index) => (
                                 <div key={index} className={classes.profileItem}>{/*profile item*/}
-                                    <><div style={{ color: 'white' }}>Device ID: {info.deviceId}</div>
-                                        <div style={{ color: 'white' }}> {info.deviceName}</div>
+                                    <>
+                                        <Tooltip label={info._id}>
+                                            <p style={{ color: 'white', }}>Device ID: {info._id}...</p>
+                                        </Tooltip>
+                                        <p style={{ color: 'white' }}>{new Date(info.loginTime).toLocaleString()} </p>
+                                        {/* <div style={{ color: 'white' }}>
+                                        </div> */}
                                         <div style={{ paddingRight: '1vw' }}>
-                                            {manageDevice ? <MdDelete style={{ color: 'white', fontSize: '1.5rem', cursor: 'pointer' }} onClick={() => { console.log('clicker') }} /> : null}
+                                            {manageDevice ? <MdDelete style={{ color: 'white', fontSize: '1.5rem', cursor: 'pointer' }} onClick={() => { handleDeviceDelete(index) }} /> : null}
                                         </div>
                                     </>
 

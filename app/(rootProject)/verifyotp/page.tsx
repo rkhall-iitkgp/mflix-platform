@@ -67,7 +67,7 @@ export function Otp({ initialValues }: any) {
                 useLoginStore.getState().updateUser(jsonData.account);
                 const state = useLoginStore.getState();
                 console.log(state);
-                // router.push('/userprogfile')
+                router.push('/userprofile');
             } else if (initialValues.type == 'forget') {
                 router.push('/login')
             } else if (initialValues.type == 'change') {

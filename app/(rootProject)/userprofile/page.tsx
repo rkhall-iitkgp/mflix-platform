@@ -325,12 +325,46 @@ import { useState } from 'react';
 import History from './history';
 import Favorites from './favourites';
 import WatchList from './watchlist';
-// import { CIcon } from '@coreui/icons-react';
-// import { cilList, cilHistory } from '@coreui/icons';
+import useLoginStore from '@/Stores/LoginStore';
+import searchMsApiUrls from '../api/searchMsApi';
+import { useRouter } from "next/navigation";
+
 export function UserProfile() {
     const [opened, { toggle }] = useDisclosure();
     const [page, setPage] = useState(1);
-    const handleLogout = () => {
+
+    //
+    const router = useRouter()
+
+    const handleLogout = async () => {
+        const base_url = searchMsApiUrls();
+
+        const state = useLoginStore.getState();
+        const values = {
+            "email": state.email,
+        }
+        let res = await fetch(`${base_url}/auth/logout`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                ...values,
+            }),
+        });
+
+        let jsonData = await res.json();
+        if (!res.ok) {
+            console.log(jsonData);
+        } else {
+            console.log(jsonData);
+            console.log('logout successful');
+            localStorage.clear();
+            useLoginStore.getState().clearState();
+            console.log(useLoginStore.getState().clearState());
+            router.push('/login')
+        }
 
     }
     return (

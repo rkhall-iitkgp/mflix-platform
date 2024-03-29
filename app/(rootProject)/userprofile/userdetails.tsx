@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createStyles } from '@mantine/styles';
 import Image from 'next/image';
 import { Button, Drawer } from '@mantine/core';
@@ -14,11 +14,12 @@ import editIcon from '@/assets/icons/editProfile.svg';
 import saveIcon from '@/assets/icons/save.svg';
 import themeOptions from '@/utils/colors';
 import { MdDelete } from "react-icons/md";
+import useLoginStore from '@/Stores/LoginStore';
 
 type UserInfo = {
     name: string;
     email: string;
-    phoneNo: string;
+    phoneNo: number;
     dob: string;
     plan: string;
 }
@@ -26,7 +27,7 @@ type UserInfo = {
 const initialUserInfo: UserInfo = {
     name: "John Doe",
     email: "john@example.com",
-    phoneNo: "1234567890",
+    phoneNo: 1234567890,
     dob: "01/01/1990",
     plan: "Basic"
 };
@@ -162,6 +163,7 @@ const useStyles = createStyles(() => ({
         borderBottom: '1px solid white',
     },
 }));
+import searchMsApiUrls from '../api/searchMsApi';
 
 const UserDetails = ({ opened }: any) => {
     const { classes } = useStyles();
@@ -172,6 +174,68 @@ const UserDetails = ({ opened }: any) => {
     const [lastValidValues, setLastValidValues] = useState<UserInfo>(initialUserInfo);
     const [manageProfile, setManageProfile] = useState(0);
     const [manageDevice, setManageDevice] = useState(0);
+    const state = useLoginStore.getState();
+    const [userDetails, setUserDetails] = useState({});
+
+    const getActiveUsers = async () => {
+        const base_url = searchMsApiUrls();
+
+        // const UserDetails: UserInfo = {
+        //     name: state.name,
+        //     email: state.email,
+        //     phoneNo: state.phone,
+        //     dob: state.dob.substring(0, 10),
+        //     plan: "Basic"
+        // };
+        // setUserInfo(UserDetails);
+        const user_id = state._id;
+        console.log(state);
+        let res = await fetch(`${base_url}/user/details/${user_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        });
+
+        let jsonData = await res.json();
+        if (!res.ok) {
+            console.log(jsonData);
+        } else {
+            console.log(jsonData);
+            setUserDetails(jsonData);
+            // useLoginStore.getState().updateUser(jsonData.account);
+
+        }
+
+    }
+
+    useEffect(() => {
+        getActiveUsers();
+
+    }, []);
+
+    const getUserDetails = () => {
+        const UserDetails: UserInfo = {
+            name: state.name,
+            email: state.email,
+            phoneNo: state.phone,
+            dob: state.dob.substring(0, 10),
+            // plan: userDetails.subscriptionTier.tier.name
+            plan: state.subscriptionTier.tier.name,
+        };
+        console.log(userDetails);
+        setUserInfo(UserDetails);
+    }
+
+    useEffect(() => {
+        getUserDetails();
+    }, []);
+
+    useEffect(() => {
+        getUserDetails();
+    }, [state]);
+
 
     const handleEditClick = () => {
         setEditMode(!editMode);
@@ -194,7 +258,7 @@ const UserDetails = ({ opened }: any) => {
             setNameError('');
         }
 
-        if (!/^\d{10}$/.test(userInfo.phoneNo)) {
+        if (!/^\d{10}$/.test(userInfo.phoneNo.toString())) {
             setPhoneError('Phone number must be 10 digits long and contain only numbers');
             phoneValid = false;
         } else {
@@ -211,6 +275,8 @@ const UserDetails = ({ opened }: any) => {
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, key: keyof UserInfo) => {
+        const state = useLoginStore.getState();
+        console.log(state);
         const { value } = event.target;
         setUserInfo({ ...userInfo, [key]: value });
 

@@ -1,5 +1,5 @@
 'use client';
-import SearchBar from '@/app/(root)/components/SearchBar';
+import SearchBar from '@/app/(rootProject)/(root)/components/SearchBar';
 import Image from 'next/image';
 import React from 'react';
 import { gsap } from 'gsap';

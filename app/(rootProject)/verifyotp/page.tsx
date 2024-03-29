@@ -69,8 +69,10 @@ export function Otp({ initialValues }: any) {
                 const state = useLoginStore.getState();
                 console.log(state);
                 // router.push('/userprogfile')
-            } else {
+            } else if (initialValues.type == 'forget') {
                 router.push('/login')
+            } else if (initialValues.type == 'change') {
+                router.push('/userprofile');
             }
             // console.log(jsonData.account);
             // console.log(jsonData);
@@ -125,7 +127,7 @@ export function Otp({ initialValues }: any) {
                 align="center" gap={{ sm: 'lg' }}>
                 <Text size="1.4rem" c={'white'}  >An OTP has been sent to your email
                 </Text>
-                <Text size="1rem" style={{ color: '#9441D0',marginBottom: '1rem' }}>Resend OTP in {resendTime} seconds</Text>
+                <Text size="1rem" style={{ color: '#9441D0', marginBottom: '1rem' }}>Resend OTP in {resendTime} seconds</Text>
                 {/* <a href="/login" style={{ color: '#9441D0' }}>Log In</a> */}
             </Flex>
             <Box style={{
@@ -133,11 +135,11 @@ export function Otp({ initialValues }: any) {
                 flexDirection: 'column',
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
-                border: '1px solid #ccc', width: '30rem',marginBottom: '5rem', borderRadius: '15px',
+                border: '1px solid #ccc', width: '30rem', marginBottom: '5rem', borderRadius: '15px',
                 backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '0.5rem'
             }}>
                 {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
-                <div style={{ marginTop: "2rem",display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
+                <div style={{ marginTop: "2rem", display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
                     {/* <TextInput
                     required
                     label="OTP"

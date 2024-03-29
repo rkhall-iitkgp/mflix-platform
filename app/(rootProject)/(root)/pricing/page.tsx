@@ -70,7 +70,41 @@ import React from "react";
 import Banner from "./banner";
 import Plan from "./Plan";
 import { Box } from "@mantine/core";
+import { createStyles } from "@mantine/styles";
+import { Button, Text } from "@mantine/core";
+import themeOptions from '@/utils/colors';
+
+
 const Pricing = () => {
+
+    
+    const useStyles = createStyles(() => ({
+                BannerOuterStyles: {
+                    display: 'flex', flexDirection: 'row', height: '80vh'
+                },
+                ImageBoxStyles: {
+                    height: '100%',
+                    backgroundImage: "url('gradient.png')",
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    width: '30%'
+                },
+                BannerTextStyles: {
+                    width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '1.5rem', marginTop: '20%', marginLeft: '4rem'
+                },
+                ImageBackgroundStyles: {
+                    width: '70%', backgroundColor: 'black', height: '100%',
+                    backgroundImage: "url('pricing.png'),url('gradient.png')",
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                },
+        
+        
+        
+            }));
+            const { classes } = useStyles();
     return (
         <Box>
             <Box className={classes.BannerOuterStyles} >

@@ -4,9 +4,11 @@ import { useEffect, useRef } from 'react';
 import style from './PartyChat.module.css';
 import { Switch } from '@mantine/core';
 import UserListItem from './UserListItem';
+import usePlayerStore from '@/Stores/PlayerStore';
 
 const SettingsTab = () => {
   const linkRef = useRef<HTMLInputElement>(null);
+  const { users } = usePlayerStore();
   useEffect(() => {
     if (linkRef.current) {
       linkRef.current.value = 'https://meet.google.com/abc-defg-hij';
@@ -16,6 +18,7 @@ const SettingsTab = () => {
   const copyLink = () => {
     if (linkRef.current) navigator.clipboard.writeText(linkRef.current.value);
   };
+
   return (
     <>
       <>
@@ -34,12 +37,9 @@ const SettingsTab = () => {
         <div className={style.details}>
           <h3 className={style.heading}>Details</h3>
           <div className={style.userlist}>
-            <UserListItem isCreator={true} user={{ username: 'Rohan', clientId: 'id_rohan' }} />
-            <UserListItem isCreator={false} user={{ username: 'Tejas', clientId: 'id_tejas' }} />
-            <UserListItem
-              isCreator={false}
-              user={{ username: 'Shaukat', clientId: 'id_shaukat' }}
-            />
+            {users.map((user) => {
+              return <UserListItem isCreator={false} user={user} />;
+            })}
           </div>
         </div>
         <div className={style.endparty}>

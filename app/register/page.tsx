@@ -24,7 +24,7 @@ import {
     Flex, Box, useStyles
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
-import Otp from '../verifyotp/page';
+import { Otp } from '../verifyotp/page';
 // import { TwitterButton } from './TwitterButton';
 import searchMsApiUrls from '../api/searchMsApi';
 import { useState } from 'react';
@@ -100,7 +100,7 @@ export function Register(props: PaperProps) {
             dob: (val) => (!val ? 'Required' : null),
             phone: (val) => (val.toString().length < 10 ? 'Invalid Phone No.' : null),
             email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-            newPassword: (val) => (val.length <= 6 ? 'Password should include at least 6 characters' : null),
+            newPassword: (val) => (val.length < 6 ? 'Password should include at least 6 characters' : null),
             confPassword: (val, values) => (val != values.newPassword ? 'Password does not match' : null),
 
         },
@@ -149,19 +149,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
               flexDirection: 'column',
               justifyContent: 'space-evenly',
               alignItems: 'center',
-              // border: '3px solid #ccc ',
-              // borderImageSource: 'linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%)',
-              // borderImageSlice: 1,
               border: '1px solid white',
-              // padding: '10px', // Adjust padding as needed
-              // backgroundImageSource: 'linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%)',
-              // backgroundOrigin: 'border-box',
-              // backgroundClip: 'content-box, border-box',
-              // borderRadius: '1rem',
-              // borderImage:"linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%)"
-              // background: 'linear-gradient(166.93deg, #AFAFAF 3.24%, rgba(96, 96, 96, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.95%)',
-              // backgroundOrigin: 'border-box',
-              // backgroundClip: 'content-box, border-box',
               padding: '1rem', // Adjust padding as per your requirement
               width: '45rem',
               borderRadius: '15px',
@@ -170,9 +158,8 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
               marginTop: '0.5rem',
             }}
           >
-            {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
-            {/* <Otp></Otp> */}
-            <form
+            
+            {/* <form
               onSubmit={form.onSubmit((values) => {
                 handleRegister(values);
               })}
@@ -182,7 +169,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                 flexDirection: 'column',
                         borderRadius: '15px',
                         backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '0.5rem'
-                    }}>
+                    }}> */}
                         {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
                         {/* <Otp></Otp> */}
                         <form onSubmit={form.onSubmit((values) => { handleRegister(values) })} style={{
@@ -244,24 +231,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                 paddingTop: "0.5rem",
                                 width: "75%", display: "flex", justifyContent: "space-evenly", alignItems: "center"
                             }}>
-                                {/* <TextInput
-                                    required
-                                    label="Date of Birth"
-                                    placeholder="Enter Your Date of Birth"
-                                    value={form.values.dob}
-                                    onChange={(event) => form.setFieldValue('dob', event.currentTarget.value)}
-                                    // error={form.errors.dob && 'Required'}
-                                    radius="md"
-                                    size="lg"
-                                    style={{ width: '45%', color: 'white' }}
-                                    styles={{
-                                        input: {
-                                            background: 'transparent',
-                                            color: 'white',
-                                            borderColor: 'purple',
-                                        },
-                                    }}
-                                /> */}
+
                                 <DateInput
                                     required
                                     label="Date of Birth"
@@ -292,24 +262,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                     marginTop: "16%", left: "17%", color: "red"
                                 }}>
                                     {form.errors.dob}</p>
-                                {/* <TextInput
-                                    required
-                                    label="Mobile Number"
-                                    placeholder="Enter Your Mobile No."
-                                    value={form.values.phone}
-                                    onChange={(event) => form.setFieldValue('phone', event.currentTarget.value)}
-                                    // error={form.errors.phone && 'Invalid Mobile No.'}
-                                    radius="md"
-                                    size="lg"
-                                    style={{ width: '45%', color: 'white' }}
-                                    styles={{
-                                        input: {
-                                            background: 'transparent',
-                                            color: 'white',
-                                            borderColor: 'purple',
-                                        },
-                                    }}
-                                /> */}
+                                
                                 <NumberInput label="Mobile Number" placeholder="Enter Your Mobile No." hideControls
                                     value={form.values.phone}
                                     onChange={handlePhoneNumberChange}
@@ -383,19 +336,13 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                 href="/verifyotp">
                                 {/* {/* <Link style={{ textDecoration:"none", marginTop:'0rem', marginLeft:"35%", width: '70%', height: '3rem'}}href="/verifyotp">  */}
                                 <Button onClick={() => { console.log("clicked") }}
-                                    type='submit' style={{
-                                        marginTop: '1rem', width: '50%',
+                                    type='submit' style={{ width: '50%',
                                         height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem'
                                     }} >Sign Up
                                 </Button>
                                 {/* </Link> */}
                             </Anchor>
-                            {/* <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "space-between", paddingBottom: "1%", paddingTop: "20px" }}>
-                                <Divider label="Or continue with Google" labelPosition="center" my="lg" />
-                                <h5 style={{ height: "0px", paddingRight: "15px", top: "50%", left: "28%", color: 'white' }}>Or continue with Google</h5>
-
-                                <GoogleButton radius="xl" style={{ marginTop: '5%' }}>Google</GoogleButton>
-                            </div> */}
+                            
 
                         </form>
 

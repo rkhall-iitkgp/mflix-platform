@@ -133,7 +133,7 @@ export function Otp({ initialValues }: any) {
                 flexDirection: 'column',
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
-                border: '1px solid #ccc', width: '30rem', height: '50%', borderRadius: '15px',
+                border: '1px solid #ccc', width: '30rem',marginBottom: '5rem', borderRadius: '15px',
                 backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '0.5rem'
             }}>
                 {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}

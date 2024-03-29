@@ -5,7 +5,7 @@ import { createStyles } from '@mantine/styles';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { MovieCardSpace } from '@/components/Search/MovieCard';
-import MovieCard from '../../(root)/components/MovieCard'
+import MovieCard from '../components/MovieCard'
 import MovieBanner from '@/components/Search/MovieBanner';
 import Carousel from '@/components/Search/Carousel';
 import themeOptions from '@/utils/colors';
@@ -67,7 +67,6 @@ const dummyCardMovie = () => ({
 const initCard = Array.from({ length: 8 }).map(() => dummyCardMovie());
 
 export default function Search() {
-
     const searchParams = useSearchParams();
     const search = searchParams.get('q');
     const { classes } = useStyles();
@@ -106,7 +105,7 @@ export default function Search() {
     }, []);
 
     return (
-        <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="1rem">
+        <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
             <div className={classes.bg}></div>
             <Filter />
             {/* top results part, needs more work */}

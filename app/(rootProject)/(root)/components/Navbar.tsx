@@ -99,7 +99,7 @@ export default function Navbar() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      height: '3.8rem',
+      height: '10vh',
       // padding: '1rem',
       paddingLeft: '2rem',
       paddingRight: '2rem',

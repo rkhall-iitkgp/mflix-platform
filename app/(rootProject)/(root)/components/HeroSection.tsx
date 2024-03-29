@@ -86,7 +86,11 @@ const HeroSection = () => {
         </div>
         <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
           <p className={classes.p}>Recent Searches:</p>
-          <div className={classes.movies}>
+          <div 
+          className={classes.movies}
+          style={{
+            padding: "6px"
+          }}>
             <MovieCard />
             <MovieCard />
             <MovieCard />

@@ -27,15 +27,19 @@ interface MovieProps {
 }
 
 const Loader: React.FC = () => (
-    <Stack ml="6%" gap="xs" mr="lg" w="80%">
-        <Skeleton width="50%" height={40} mt={9.5} radius="xl" />
-        <Group gap="6%" w="85%">
-            {[1.2, 0.8, 1].map((e, index) => <Skeleton key={index} height={34.8} width={`${e * 25}%`} radius={13} />)}
-        </Group>
-        <Group mt={5} justify="space-between" gap={themeOptions.fontSize.md} style={{ rowGap: '10px' }}>
-            {[1.75, 1, 1.8, 2, 1.5].map((e, index) => <Skeleton key={index} height={18.5} width={`${e * 10}%`} radius="xl" />)}
-        </Group>
-    </Stack>
+  <Stack ml="6%" gap="xs" mr="lg" w="80%">
+    <Skeleton width="50%" height={40} mt={9.5} radius="xl" />
+    <Group gap="6%" w="85%">
+      {[1.2, 0.8, 1].map((e, index) => (
+        <Skeleton key={index} height={34.8} width={`${e * 25}%`} radius={13} />
+      ))}
+    </Group>
+    <Group mt={5} justify="space-between" gap={themeOptions.fontSize.md} style={{ rowGap: '10px' }}>
+      {[1.75, 1, 1.8, 2, 1.5].map((e, index) => (
+        <Skeleton key={index} height={18.5} width={`${e * 10}%`} radius="xl" />
+      ))}
+    </Group>
+  </Stack>
 );
 
 const MovieBanner: React.FC<MovieProps> = (props) => {

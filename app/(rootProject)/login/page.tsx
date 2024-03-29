@@ -4,6 +4,7 @@
 
 import { useForm } from '@mantine/form';
 import { createStyles } from '@mantine/styles';
+import { useRouter } from 'next/navigation';
 import {
   TextInput,
   PasswordInput,
@@ -19,8 +20,11 @@ import themeOptions from '../../../assets/themes/colors';
 import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
 import useLoginStore from '@/Stores/LoginStore';
+import Image from 'next/image';
+import LeftArrowIcon from '@/assets/icons/leftArrow.svg';
 
 export default function Login() {
+  const router = useRouter();
   const [userData, setUserData] = useState(null);
   const submitLogin = async (values: any) => {
     const base_url = searchMsApiUrls();
@@ -113,7 +117,16 @@ export default function Login() {
       backgroundColor: 'rgba(0, 0, 0, 0.1)',
       marginTop: '1.6rem',
     },
-
+    backButton: {
+      position: 'absolute',
+      margin: "1.5rem",
+      top: 0,
+      left: 0,
+      cursor: "pointer",
+      "&:hover": {
+        opacity: 0.7,
+      },
+    },
     FormStyles: {
       width: '100%',
       display: 'flex',
@@ -155,6 +168,7 @@ export default function Login() {
 
   return (
     <Box className={classes.OuterBoxStyles}>
+      <Image src={LeftArrowIcon} alt="logo" width={25} height={25} className={classes.backButton} onClick={() => router.back()} />
       <Text size="2.5rem" c={'white'} p={'1rem'}>
         Login your account
       </Text>
@@ -252,10 +266,10 @@ export default function Login() {
             // className={classes.ButtonStyles}
             style={{
               width: '70%',
-              height: '3.5rem',
+              height: '3rem',
               backgroundColor: '#9441D0',
               borderRadius: '1rem',
-              fontSize: '1.5rem',
+              fontSize: '1.1rem',
               fontWeight: 'normal',
               marginTop: '1.5rem',
             }}

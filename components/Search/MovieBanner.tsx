@@ -109,7 +109,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                     <Loader />
                     :
                     <Stack ml="3vw" gap="xs" mr="lg">
-                        <Text fz={themeOptions.fontSize.l} w="25vw">{title}</Text>
+                        <Text fz={themeOptions.fontSize.l} w="max(25vw, 400px)">{title}</Text>
                         <Group gap="6%" w="90%" grow preventGrowOverflow={false}>
                             {genres?.map((e, i) =>
                                 <Paper
@@ -131,7 +131,6 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                                   component={NextImage}
                                   alt="imdb"
                                   h={17}
-                                  unoptimized
                                 />
                                 <Text fz={themeOptions.fontSize.xs}>{imdb.rating} / 10</Text>
                             </Group>
@@ -141,7 +140,6 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                                   component={NextImage}
                                   alt="tomato"
                                   h={17}
-                                  unoptimized
                                 />
                                 <Text fz={themeOptions.fontSize.xs}>
                                     {tomatoes?.viewer?.meter ? tomatoes?.viewer?.meter : 75}%

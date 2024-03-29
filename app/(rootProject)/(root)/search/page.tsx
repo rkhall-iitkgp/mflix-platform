@@ -81,24 +81,17 @@ export default function Search() {
 
     const [recommended, setRecommended] = useState<Array<MovieProps>>([]);
     const [notFound, setNotFound] = useState<boolean>(false);
-    const [topRes, setTopRes] = useState<Array<MovieProps>>(initDetails(4));
+    const [topRes, setTopRes] = useState<Array<MovieProps>>();
     const [moreResults, setMoreResults] = useState<Array<MovieProps>>([]);
     const [page, setPage] = useState<number>(1);
     const [loaded, setLoaded] = useState<boolean>(false);
     const [hasNext, setHasNext] = useState(true);
-    const { ref, inViewport } = useInViewport();
 
-    // useEffect(() => {
-    //     console.log(inViewport);
-    //     if (inViewport) setPage(() => (page + 1));
-    //     console.log(page);
-    // }, [inViewport]);
     const nextPage = () => {
         if (hasNext) setPage(page+1);
     }
 
     useEffect(() => {
-        console.log(page);
         if (page !== 1) getData(page);
     }, [page]);
 
@@ -146,6 +139,7 @@ export default function Search() {
                 if (!res.hasNext) break;
             }
             console.log(data);
+            if (!data.length) return setNotFound(true);
             setTopRes(data.slice(0, 4));
             if (data.length >= 14) {
                 setRecommended(data.slice(14));
@@ -178,7 +172,7 @@ export default function Search() {
         };
     }, []);
 
-    return (
+    return notFound ? <Center>Not Found</Center> : (
         <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
             <div className={classes.bg}></div>
             <Filter />
@@ -189,6 +183,7 @@ export default function Search() {
                     <Text span inherit c={themeOptions.color.textColorNormal}>{search}</Text>
                 </Text>
                 {/* <Skeleton visible={!loaded}> */}
+                { topRes ?
                     <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
                         <Group style={{ rowGap: '30px' }} grow gap="6vw" preventGrowOverflow={false} align="stretch">
                             <MovieBanner {...(topRes[0])} />
@@ -199,6 +194,9 @@ export default function Search() {
                             <MovieBanner {...(topRes[3])} />
                         </Group>
                     </Stack>
+                :
+                    null
+                }
                 {/* </Skeleton> */}
             </Stack>
             <Space h="lg" />
@@ -238,7 +236,7 @@ export default function Search() {
                             {recommended?.map((data, index) => <MovieCard key={index} {...data} />)}
                             { hasNext ?
                             <MovieCardSpace>
-                                <Center ref={ref} h="100%">
+                                <Center h="100%">
                                     <Loader color="gray" type="dots" size={100} />
                                 </Center>
                             </MovieCardSpace>

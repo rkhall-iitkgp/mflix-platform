@@ -6,8 +6,7 @@ import MovieCards from '../MovieDetails/MovieCards';
 import MovieCard from '../MovieDetails/MovieCards';
 import themeOptions from '@/utils/colors';
 
-
-const ListMovies = ({movieData}:{movieData : Array<any>}) => {
+const ListMovies = ({ movieData }: { movieData: Array<any> }) => {
   // console.log("movies",movieData);
   const useStyles = createStyles(() => ({
     MovieListContainer: {
@@ -15,7 +14,7 @@ const ListMovies = ({movieData}:{movieData : Array<any>}) => {
       width: 'calc(98vw)',
       justifyContent: 'space-between',
       alignItems: 'center',
-      height: '550px',
+      height: movieData.length === 0 ? 'auto' : '550px',
       overflow: 'hidden',
       margin: 'auto',
     },
@@ -23,19 +22,19 @@ const ListMovies = ({movieData}:{movieData : Array<any>}) => {
       display: 'flex',
       justifyContent: 'space-between',
       //   width: '100%',
-      height: '550px',
+      height: movieData.length === 0 ? 'auto' : '550px',
     },
     MovieListBox: {
       position: 'relative',
       display: 'flex',
       alignItems: 'center',
-      height: '550px',
+      height: movieData.length === 0 ? 'auto' : '550px',
       width: 'max-content',
       gap: '2rem',
       transform: 'translateX(100px)',
     },
     MovieListLeftArrow: {
-      color:themeOptions.color.divider,
+      color: themeOptions.color.divider,
       position: 'absolute',
       left: 0,
       width: '50px',
@@ -47,7 +46,7 @@ const ListMovies = ({movieData}:{movieData : Array<any>}) => {
       alignItems: 'center',
     },
     MovieListRightArrow: {
-      color:themeOptions.color.divider,
+      color: themeOptions.color.divider,
       position: 'absolute',
       //   left: '100%',
       right: 0,
@@ -112,27 +111,39 @@ const ListMovies = ({movieData}:{movieData : Array<any>}) => {
   return (
     <div className={MovieListContainer} ref={scrollRef} onScroll={handleScroll}>
       <div className={MovieListBox}>
-        {movieData.map((movie,i)=>
-        {
-          // console.log(movie)
-          return <MovieCard data={movie}/>   
-        }
-        )}
+        {movieData.map((movie, i) => {
+          return <MovieCard data={movie} />;
+        })}
       </div>
-      <div className={MovieListNavigation}>
-        {showFirstArrow ? (
-          <div onClick={handleScrollLeft} className={MovieListLeftArrow}>
-            <FaChevronLeft style={{ height: '50px', width: '100px' }} />
-          </div>
-        ) : (
-          <div></div>
-        )}
-        {showSecondArrow && (
-          <div onClick={handleScrollRight} className={MovieListRightArrow}>
-            <FaChevronRight style={{ height: '50px', width: '100px' }} />
-          </div>
-        )}
-      </div>
+      {movieData.length === 0 ? (
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            textAlign: 'center',
+            // display: 'flex',
+            alignItems: 'center',
+            justifyItems: 'center',
+          }}
+        >
+          No Movies Yet
+        </div>
+      ) : (
+        <div className={MovieListNavigation}>
+          {showFirstArrow ? (
+            <div onClick={handleScrollLeft} className={MovieListLeftArrow}>
+              <FaChevronLeft style={{ height: '50px', width: '100px' }} />
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {showSecondArrow && (
+            <div onClick={handleScrollRight} className={MovieListRightArrow}>
+              <FaChevronRight style={{ height: '50px', width: '100px' }} />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

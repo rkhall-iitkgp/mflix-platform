@@ -6,12 +6,22 @@ import MicIcon from '@/assets/icons/mic.svg'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import searchMsApiUrls from '@/app/api/searchMsApi';
-import { Menu, UnstyledButton } from '@mantine/core'
+import { Menu } from '@mantine/core'
+import { useEventListener } from '@mantine/hooks'
 
 
 export default function SearchBar() {
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [input, setInput] = useState<string>('');
+    
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            if (input.length > 2) {
+                window.location.href = `/search?query=${input}`;
+            }
+        }
+    };
+    const ref = useEventListener('click', handleKeyPress);
 
     const fetchAutocompleteSuggestions = async (query: string) => {
         try {
@@ -36,6 +46,7 @@ export default function SearchBar() {
         setInput(value);
         fetchAutocompleteSuggestions(value);
     };
+    
     return (
         <Menu opened={suggestions.length !== 0} offset={0} width='target' trapFocus={false} closeOnClickOutside={true}>
             <Menu.Target>
@@ -51,6 +62,7 @@ export default function SearchBar() {
                         value={input}
                         onChange={handleInputChange}
                         autoComplete='off'
+                        onKeyPress={handleKeyPress}
                     />
                     {input && <Image src={XMarkIcon} alt="X" style={styles.icon} onClick={() => {setInput(''); setSuggestions([]);}} />}
                     <Image src={MicIcon} alt="Mic" style={styles.mic} />

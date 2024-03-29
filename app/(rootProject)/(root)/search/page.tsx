@@ -80,6 +80,7 @@ export default function Search() {
     const [justify, setJustify] = useState<'space-between' | 'space-evenly'>('space-between');
 
     const [recommended, setRecommended] = useState<Array<MovieProps>>([]);
+    const [notFound, setNotFound] = useState<boolean>(false);
     const [topRes, setTopRes] = useState<Array<MovieProps>>(initDetails(4));
     const [moreResults, setMoreResults] = useState<Array<MovieProps>>([]);
     const [page, setPage] = useState<number>(1);
@@ -87,13 +88,17 @@ export default function Search() {
     const [hasNext, setHasNext] = useState(true);
     const { ref, inViewport } = useInViewport();
 
-    useEffect(() => {
-        console.log(inViewport);
-        if (inViewport) setPage(() => (page + 1));
-        console.log(page);
-    }, [inViewport]);
+    // useEffect(() => {
+    //     console.log(inViewport);
+    //     if (inViewport) setPage(() => (page + 1));
+    //     console.log(page);
+    // }, [inViewport]);
+    const nextPage = () => {
+        if (hasNext) setPage(page+1);
+    }
 
     useEffect(() => {
+        console.log(page);
         if (page !== 1) getData(page);
     }, [page]);
 
@@ -223,26 +228,30 @@ export default function Search() {
             <Space h="lg" />
 
             {/* Carousel Part */}
-            {/* {recommended.length ?
+            {recommended.length ?
                 <>
                     <Stack>
                         <Text fw={500} fz={themeOptions.fontSize.xl}>
                             Recommendations Based on Search Results
                         </Text>
-                        <Carousel>
+                        <Carousel nextPage={nextPage}>
                             {recommended?.map((data, index) => <MovieCard key={index} {...data} />)}
+                            { hasNext ?
                             <MovieCardSpace>
-                                <Center h="100%" ref={ref}>
+                                <Center ref={ref} h="100%">
                                     <Loader color="gray" type="dots" size={100} />
                                 </Center>
                             </MovieCardSpace>
+                            :
+                            null
+                            }
                         </Carousel>
                     </Stack>
                     <Space h="lg" />
                 </>
             :
-            null
-            } */}
+                null
+            }
         </Stack>
     );
 }

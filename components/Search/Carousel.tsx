@@ -7,9 +7,10 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 
 interface CarouselProps {
     children: React.ReactNode;
+    nextPage?: any;
 }
 
-const Carousel: React.FC<CarouselProps> = ({ children }) => {
+const Carousel: React.FC<CarouselProps> = ({ children, nextPage }) => {
     const viewport = useRef<HTMLDivElement>(null);
     const { ref, height } = useElementSize();
     const [showLeftButton, setShowLeftButton] = useState(false);
@@ -36,6 +37,10 @@ const Carousel: React.FC<CarouselProps> = ({ children }) => {
     useEffect(() => {
         handleScroll();
     }, [children]); // Call handleScroll whenever children change
+
+    useEffect(() => {
+        if (!showRightButton) nextPage()
+    }, [showRightButton])
 
     return (
         <Group align="center" wrap="nowrap" ref={ref} maw="calc(100vw - 10vw)">

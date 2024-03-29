@@ -54,10 +54,9 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
     const [src, setSrc] = useState<string | StaticImageData>(poster);
     const { hovered, ref } = useHover();
 
-
-    const format = (time) => {
-        const hrs = Math.floor(runtime / 60);
-        const mins = runtime % 60;
+    const format = (time: number) => {
+        const hrs = Math.floor(time / 60);
+        const mins = time % 60;
         return (hrs && hrs + ` hr${hrs === 1 ? '' : 's'}`) + ' ' + (mins && mins + ` min${mins === 1 ? '' : 's'}`);
     }
 
@@ -70,7 +69,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                 minWidth: '400px',
                 borderRadius: '20px',
                 transition: 'all 0.5s',
-                transform: hovered ? 'scale(1.05)' : 'scale(1)',
+                transform: hovered ? 'scale(1.02)' : 'scale(1)',
                 boxShadow: hovered ? '0 0 10px 0 rgba(256, 256, 256, 0.2)' : '14px 11px 6.699999809265137px 2px rgba(0, 0, 0, 0.47)',
             }
           }}
@@ -92,7 +91,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                 <Flex>
                     <Skeleton visible={loading} width={107} height={158} radius={0} p={0}>
                         <NextImage
-                          src={src}
+                          src={src || noImage}
                           height={158}
                           width={107}
                           priority
@@ -116,6 +115,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                                   pt={5}
                                   pb={5}
                                   radius={13}
+                                  maw={200}
                                 >
                                     <Text ta="center">{e}</Text>
                                 </Paper>)}
@@ -131,7 +131,6 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                                 />
                                 <Text fz={themeOptions.fontSize.xs}>{imdb.rating} / 10</Text>
                             </Group>
-                            { tomatoes ?
                             <Group gap={themeOptions.fontSize.xs}>
                                 <Image
                                   src={TomatoImg}
@@ -140,18 +139,17 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                                   h={17}
                                   unoptimized
                                 />
-                                <Text fz={themeOptions.fontSize.xs}>{tomatoes.viewer.rating}%</Text>
+                                <Text fz={themeOptions.fontSize.xs}>
+                                    {tomatoes?.viewer?.meter ? tomatoes?.viewer?.meter : 75}%
+                                </Text>
                             </Group>
-                            :
-                            null
-                            }
                             <Group gap={themeOptions.fontSize.xs}>
                                 <FaRegHourglass size={17} />
                                 <Text fz={themeOptions.fontSize.xs}>{format(runtime)}</Text>
                             </Group>
                             <Group gap={themeOptions.fontSize.xs}>
                                 <PiCalendar size={17} />
-                                <Text fz={themeOptions.fontSize.xs}>{released.substr(0, 4)}</Text>
+                                <Text fz={themeOptions.fontSize.xs}>{released ? released.substr(0, 4) : 2011}</Text>
                             </Group>
                             <Group gap={themeOptions.fontSize.xs} style={{ maxWidth: 'max-content' }}>
                                 <GrLocation size={17} />

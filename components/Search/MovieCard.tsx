@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Card, Image, Text, Group, AspectRatio, ActionIcon, Skeleton } from '@mantine/core';
-import { useHover } from '@mantine/hooks';
 import NextImage, { StaticImageData } from 'next/image';
 import { HiHeart } from 'react-icons/hi';
 import noImage from '@/assets/images/no-image.jpg';
@@ -60,7 +59,6 @@ const MovieCard: React.FC<MovieProps> = (props) => {
     } = props;
     const [loading, setLoading] = useState(true);
     const [src, setSrc] = useState<string | StaticImageData>(poster);
-    const { hovered, ref } = useHover();
 
     return (
         <Card
@@ -71,18 +69,11 @@ const MovieCard: React.FC<MovieProps> = (props) => {
           c={themeOptions.color.normalTextColor}
           component="a"
           href={`/movies/${_id}`}
-          style={{
-            root: {
-                transition: 'all 0.5s',
-                transform: hovered ? 'scale(1.05)' : 'scale(1)',
-                boxShadow: hovered ? '0 0 10px 0 rgba(256, 256, 256, 0.2)' : '14px 11px 6.699999809265137px 2px rgba(0, 0, 0, 0.47)',
-            }
-          }}
         >
             <Skeleton visible={loading} radius={0}>
                 <AspectRatio ratio={250 / 370}>
                     <NextImage
-                      src={src}
+                      src={src|| noImage}
                       height={500}
                       width={320}
                       alt="sample"
@@ -98,7 +89,7 @@ const MovieCard: React.FC<MovieProps> = (props) => {
             :
             <>
                 <Text fz={themeOptions.fontSize.xs} c={themeOptions.color.dimmed} mt="xs" mb="xs">
-                    {countries[0]}, {released.substr(0, 4)} - Current
+                    {countries[0]}, {released ? released.substr(0, 4) : 2011} - Current
                 </Text>
 
                 <Text fz={themeOptions.fontSize.s} fw={500}>
@@ -115,7 +106,7 @@ const MovieCard: React.FC<MovieProps> = (props) => {
                             h={17}
                             unoptimized
                             />
-                            <Text fz={themeOptions.fontSize.xs}>{tomatoes.viewer.rating}/10</Text>
+                            <Text fz={themeOptions.fontSize.xs}>{imdb.rating} / 10</Text>
                         </Group>
                     :
                         null
@@ -128,7 +119,7 @@ const MovieCard: React.FC<MovieProps> = (props) => {
                           h={17}
                           unoptimized
                         />
-                        <Text fz={themeOptions.fontSize.xs}>{imdb.rating}%</Text>
+                        <Text fz={themeOptions.fontSize.xs}>{tomatoes?.viewer?.meter ? tomatoes?.viewer?.meter : 75}%</Text>
                     </Group>
                 </Group>
 

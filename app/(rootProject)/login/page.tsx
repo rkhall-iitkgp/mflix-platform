@@ -4,7 +4,6 @@
 
 import { useForm } from '@mantine/form';
 import { createStyles } from '@mantine/styles';
-import { useRouter } from 'next/navigation';
 import {
   TextInput,
   PasswordInput,
@@ -15,16 +14,16 @@ import {
   Flex,
   Box,
 } from '@mantine/core';
-import { GoogleButton } from './GoogleButton';
 import themeOptions from '../../../assets/themes/colors';
 import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
 import useLoginStore from '@/Stores/LoginStore';
 import Image from 'next/image';
-import LeftArrowIcon from '@/assets/icons/leftArrow.svg';
+import LeftArrowIcon from '@/assets/icons/leftArrow.svg'
+import { useRouter } from 'next/navigation'
 
 export default function Login() {
-  const router = useRouter();
+  const router = useRouter()
   const [userData, setUserData] = useState(null);
   const submitLogin = async (values: any) => {
     const base_url = searchMsApiUrls();
@@ -36,6 +35,7 @@ export default function Login() {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify({
         ...values,
       }),
@@ -47,10 +47,14 @@ export default function Login() {
     } else {
       console.log('login successful');
       console.log(jsonData);
-      // sessionStorage.setItem('accessToken', jsonData.account.accessToken);
       useLoginStore.getState().updateUser(jsonData.account);
+      const jsonDataString = JSON.stringify(jsonData.account);
+      localStorage.setItem('user', jsonDataString);
+      const local = localStorage.getItem('user');
       const state = useLoginStore.getState();
       console.log(state);
+      console.log(local);
+      router.push('/userprofile')
     }
 
     // if (!jsonData.account.userProfiles.length) {

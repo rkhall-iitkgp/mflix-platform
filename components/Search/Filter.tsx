@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Grid, Rating } from '@mantine/core';
+import { Button, Grid, Rating } from '@mantine/core';
 import Image from 'next/image';
 import { createStyles } from '@mantine/styles';
 import FilterIcon from '@/assets/icons/filtericon.svg';
@@ -13,6 +13,7 @@ import { RatingButton } from './FilterButtons/RatingButton';
 import Createicon from '@/assets/create.svg'
 import Deleteicon from '@/assets/delete.svg'
 import Listicon from '@/assets/list.svg'
+import { languages, types, countries, genres } from './filterOptions';
 const useStyles = createStyles(() =>
 //const child = getRef('child');
 
@@ -66,7 +67,17 @@ const useStyles = createStyles(() =>
         width: '24px',
         height: '24px',
     },
-
+    button: {
+        backgroundColor: themeOptions.color.smallBox,
+        color: '#fff',
+        padding: '0 10px',
+        borderRadius: '5px',
+        border: 'none',
+        cursor: 'pointer',
+        "&:hover": {
+            opacity: 0.7
+        }
+    }
 })
 );
 
@@ -103,15 +114,18 @@ export default function Filter() {
                                     <TypeButton value={key} data={Data[key as keyof typeof Data]} />
                                 </Grid.Col>
                             ))}
-                            <Grid.Col span={3}>
+                            {/* <Grid.Col span={3}>
                                 <RatingButton />
-                            </Grid.Col>
-                            <Grid.Col span={3}>
+                            </Grid.Col> */}
+                            {/* <Grid.Col span={3}>
                                 <YearButton />
+                            </Grid.Col> */}
+                            <Grid.Col span={3}>
                             </Grid.Col>
                             <Grid.Col span={3}>
                             </Grid.Col>
-                            <Grid.Col span={3} style={{ display: 'flex', paddingLeft: '18%', gap: '6px' }}>
+                            <Grid.Col span={3} style={{ display: 'flex', justifyContent: "flex-end", alignItems: "center", gap: '6px' }}>
+                                <button className={classes.button}>Apply</button>
                                 <Image src={Createicon} alt="" />
                                 <Image src={Listicon} alt="" onClick={toggleDropdown} />
                                 {showDropdown && (

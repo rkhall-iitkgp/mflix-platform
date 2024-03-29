@@ -97,15 +97,15 @@ export default function Plan() {
             flexDirection: 'column',
             borderRadius: '15px',
             // backgroundColor:"white",
-            // background: "linear-gradient(45deg, rgba(43,10,53,1) 10%, rgba(143,60,205,1) 80%, rgba(43,10,53,1) 95%)",
+            background: "linear-gradient(45deg, rgba(43,10,53,1) 5%, rgba(143,60,205,0.7) 100%, rgba(43,10,53,1) 10%)",
             border: '1.5px solid white',
             // backdropFilter:"blur(100px)",
-            // boxShadow: '1rem 1rem white'
+            boxShadow: '8px 8px 25px rgba(255, 255, 255, 0.7)',
         },
 
         PlanCardStylesClicked: {
-            background: "linear-gradient(to left bottom, #36005f, #522e6e, #4d246e, #4b1572, #3e1959)",
-            backdropFilter: "blur(10px)", opacity: "0.7",
+            // background: "linear-gradient(to left bottom, #36005f, #522e6e, #4d246e, #4b1572, #3e1959)",
+            // backdropFilter: "blur(10px)", opacity: "0.7",
             height: '88%',
             width: '25%',
             display: 'flex',
@@ -115,15 +115,14 @@ export default function Plan() {
             borderRadius: '15px',
             // backgroundColor:"white",
             // background: "linear-gradient(45deg, rgba(43,10,53,1) 10%, rgba(143,60,205,1) 80%, rgba(43,10,53,1) 95%)",
+            background: 'linear-gradient(45deg, rgba(43,10,53,1) 5%, rgba(143,60,205,0.7) 88%, rgba(43,10,53,1) 10%)',
             border: '1.5px solid white',
-            boxShadow: '0.8rem 0.8rem 0.8rem white'
+            boxShadow: '10px 10px 25px rgba(255, 255, 255, 0.7)',
 
             // backdropFilter:"blur(100px)",
         },
 
-        PlanNameStyles: {
-            paddingLeft: '1rem',
-        },
+        
 
         FormStyles: {
             width: '100%',

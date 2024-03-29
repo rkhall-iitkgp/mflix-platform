@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { createStyles } from '@mantine/styles';
 import FilterIcon from '@/assets/icons/filtericon.svg';
 import { TypeButton } from './FilterButtons/TypeButton';
-import Data from '@/app/(root)/search/components/data';
+import Data from '@/app/(rootProject)/(root)/search/components/data'
 import { YearButton } from './FilterButtons/YearButton';
 import themeOptions from '../../utils/colors';
 import { RatingButton } from './FilterButtons/RatingButton';
@@ -44,7 +44,7 @@ const useStyles = createStyles(() =>
     outer: {
         position: 'absolute',
         top: '100%',
-        left:0,
+        left: 0,
         width: '100%',
         background: 'rgba(0, 0, 0, 0.8)',
         height: 'fit-content',

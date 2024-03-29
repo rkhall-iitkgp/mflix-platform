@@ -23,7 +23,7 @@ const SubscriptionTable = ({ cardPlan }: any) => {
         },
         TableThRestStyles: {
 
-            textAlign: 'center', width: '15%', fontSize: '1.1rem ', backgroundColor: 'red'
+            textAlign: 'center !important', width: '15%', fontSize: '1.1rem '
         },
         FeatureStyles: {
             textAlign: 'left', fontSize: "1.1rem"

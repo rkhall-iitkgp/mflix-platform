@@ -330,6 +330,9 @@ import WatchList from './watchlist';
 export function UserProfile() {
     const [opened, { toggle }] = useDisclosure();
     const [page, setPage] = useState(1);
+    const handleLogout = () => {
+
+    }
     return (
         <AppShell
             header={{ height: 90 }}
@@ -401,7 +404,7 @@ export function UserProfile() {
                         height: '2.8rem'
                         , backgroundColor: themeOptions.color.button,
                         fontSize: themeOptions.fontSize.s
-                    }} ><CiPower style={{ marginRight: '0.5rem', fontSize: themeOptions.fontSize.s }} />Log out</Button>
+                    }} onClick={() => { handleLogout() }}  ><CiPower style={{ marginRight: '0.5rem', fontSize: themeOptions.fontSize.s }} />Log out</Button>
                 </Box>
             </AppShell.Navbar>
             <AppShell.Main>

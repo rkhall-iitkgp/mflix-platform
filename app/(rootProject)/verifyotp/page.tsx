@@ -141,15 +141,15 @@ export function Otp({ initialValues }: any) {
                 align="center" gap={{ sm: 'lg' }}>
                 <Text size="1.4rem" c={'white'}  >An OTP has been sent to your email
                 </Text>
-                <Text size="1rem" style={{ color: '#9441D0', marginBottom: '1rem' }}>Resend OTP in {resendTime} seconds</Text>
+                {/* <Text size="1rem" style={{ color: '#9441D0', marginBottom: '1rem' }}>Resend OTP in {resendTime} seconds</Text> */}
                 {/* <a href="/login" style={{ color: '#9441D0' }}>Log In</a> */}
                 <Button
-                disabled={resendTime > 0} // Disable button if resend timer is active
-                onClick={handleResendOtp}
-                style={{ marginTop: '1rem', width: 'fit-content', background: 'none', borderRadius: '1rem', fontSize: '1rem' }}
-            >
-                {resendTime === 0 ? "Resend OTP" : `Resend OTP in ${resendTime} seconds`}
-            </Button>
+                    disabled={resendTime > 0} // Disable button if resend timer is active
+                    onClick={handleResendOtp}
+                    style={{ marginTop: '1rem', width: 'fit-content', background: 'none', borderRadius: '1rem', fontSize: '1rem' }}
+                >
+                    {resendTime === 0 ? "Resend OTP" : `Resend OTP in ${resendTime} seconds`}
+                </Button>
             </Flex>
             <Box style={{
                 display: 'flex',
@@ -160,7 +160,7 @@ export function Otp({ initialValues }: any) {
                 backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0, 0, 0, 0.1)', marginTop: '0.5rem'
             }}>
                 {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
-                <div style={{ marginTop: "2rem", display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
+                {/* <div style={{ marginTop: "2rem", display: "flex", justifyContent: "space-evenly", alignItems: "center" }}> */}
                 {/*  <TextInput
                     required
                     label="OTP"
@@ -179,17 +179,17 @@ export function Otp({ initialValues }: any) {
                         },
                     }}
                 /> */}
-                <div style={{ marginTop: "2rem",display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
+                <div style={{ marginTop: "2rem", display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
                     <PinInput size="xl" placeholder='_' type="number"
                         value={otpValue}
                         length={6}
                         onChange={(value) => handleOtpChange(value)} />
                 </div>
 
-                <Button style={{ marginTop: '2rem', width: '50%', height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem',marginBottom: '1.5rem' }} onClick={() => { handleOtp() }}  >Verify</Button>
-                  {/*<div style={{ display: "flex", flexDirection: "column", justifyContent: "center", paddingBottom: "1.5%" }}>
+                <Button style={{ marginTop: '2rem', width: '50%', height: '3rem', backgroundColor: '#9441D0', borderRadius: '1rem', fontSize: '1rem', marginBottom: '1.5rem' }} onClick={() => { handleOtp() }}  >Verify</Button>
+                {/*<div style={{ display: "flex", flexDirection: "column", justifyContent: "center", paddingBottom: "1.5%" }}>
 
-                </div> */} 
+                </div> */}
 
 
             </Box>

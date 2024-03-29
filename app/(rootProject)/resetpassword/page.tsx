@@ -119,6 +119,7 @@ export default function ResetPassword() {
 
   const form = useForm({
     initialValues: {
+      // email: '',
       password: '',
       newPassword: '',
     },
@@ -153,34 +154,34 @@ export default function ResetPassword() {
               className={classes.FormStyles}
             >
               {/* <TextInput
-            required
-            label="Email address"
-            placeholder="Enter Your email address"
-            value={form.values.email}
-            onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-            // error={form.errors.email && 'Invalid email'}
-            radius="md"
-            size="lg"
-            style={{ width: '70%', color: 'white' }}
-            styles={{
-              input: {
-                background: 'transparent',
-                color: 'white',
-                borderColor: themeOptions.color.smallBox,
-              },
-              wrapper: {
-                marginTop: '0.1rem',
-              },
-              error: {
-                margin: '0rem',
-                padding: '0rem',
-              },
-              label: {
-                fontSize: '1rem',
-                fontWeight: 'normal',
-              },
-            }}
-          /> */}
+                required
+                label="Email address"
+                placeholder="Enter Your email address"
+                value={form.values.email}
+                onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+                // error={form.errors.email && 'Invalid email'}
+                radius="md"
+                size="lg"
+                style={{ width: '70%', color: 'white' }}
+                styles={{
+                  input: {
+                    background: 'transparent',
+                    color: 'white',
+                    borderColor: themeOptions.color.smallBox,
+                  },
+                  wrapper: {
+                    marginTop: '0.1rem',
+                  },
+                  error: {
+                    margin: '0rem',
+                    padding: '0rem',
+                  },
+                  label: {
+                    fontSize: '1rem',
+                    fontWeight: 'normal',
+                  },
+                }}
+              /> */}
               {/* <div className={classes.ErrorStyles}>{form.errors.email ? form.errors.email : ''}</div> */}
               <PasswordInput
                 required

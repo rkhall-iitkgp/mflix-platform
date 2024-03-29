@@ -1,6 +1,6 @@
 'use client';
 import SearchBar from '@/app/(rootProject)/(root)/components/SearchBar';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import React from 'react';
 import { gsap } from 'gsap';
 import { useState, useEffect, useRef } from 'react';
@@ -9,11 +9,9 @@ import { createStyles } from '@mantine/styles';
 import Poster from '@/assets/images/poster1.jpg';
 import Vector1 from '@/assets/images/vect-1.svg';
 import Vector2 from '@/assets/images/vect-2.svg';
-import { memo } from 'react';
+import noImage from '@/assets/images/no-image.jpg';
 import { ScrollToPlugin } from 'gsap/all';
 import { useMediaQuery } from '@mantine/hooks';
-import { RxCross2 } from "react-icons/rx";
-import { em } from '@mantine/core';
 import searchMsApiUrls from '../../api/searchMsApi';
 import themeOptions from '@/utils/colors';
 gsap.registerPlugin(ScrollToPlugin);
@@ -29,8 +27,14 @@ const HeroSection = () => {
   console.log(flexRef);
   const [searches, setSearches] = useState([]);
   const [history, setHistory] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [TrendingMovies, setTrendingMovies] = useState<any[]>([]);
+  
 
   useEffect(() => {
+    const userLoggedIn = checkLoginStatus();
+    setIsLoggedIn(userLoggedIn);
+
     const fetchData = async () => {
       const res = await (await fetch(
         `${searchMsApiUrls()}/user/history/6601d20081bc9671ef4364ee`,
@@ -40,11 +44,17 @@ const HeroSection = () => {
           },
         }
       )).json();
-      console.log(res,'Ankan');
+      console.log(res);
       setHistory(res);
     }
     fetchData();
   }, []);
+
+  const checkLoginStatus = () => {
+    const user = localStorage.getItem('user');
+    if(user) return true;
+    return false;
+  };
 
   useEffect(() => {
     const tl = gsap.timeline({ paused: true });
@@ -69,6 +79,7 @@ const HeroSection = () => {
       tl.kill();
     };
   }, [isTyping]);
+
   const handleTyping = (typing: string) => {
     console.log('func called');
     setIsTyping(typing !== '');
@@ -83,11 +94,29 @@ const HeroSection = () => {
           },
         }
       )).json();
-      console.log(res,'Saha');
+      console.log(res);
       setSearches(res.result);
     }
     fetchData();
   };
+
+  useEffect(() => {
+    const userLoggedIn = checkLoginStatus();
+    setIsLoggedIn(userLoggedIn);
+
+    fetch(
+      'https://971edtce1a.execute-api.ap-south-1.amazonaws.com/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=',
+      { method: 'POST' }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data', data);
+        setTrendingMovies(data.results);
+      });
+
+    return () => {};
+  }, []);
+
   return (
     <>
       <div className={classes.bgContainer}>
@@ -120,15 +149,25 @@ const HeroSection = () => {
             iusto atque iste quos qui, officiis obcaecati voluptatibus!
           </p>
         </div>
-        {history?.length > 0 && (
+        {isLoggedIn && history?.length > 0 && (
           <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
-            <p className={classes.p}>Recent Watch History:</p>
+            <p className={classes.p} style={{fontSize:isSmallScreen?'1.5rem':'2rem', top:isSmallScreen?'9%':'8%'}}>Recent Watch History:</p>
             <div className={classes.movies} style={{ width: isSmallScreen ? '18rem' : '25rem' }}>
               {history?.slice(-3).reverse().map((data, index) => (
                 <MovieCard props={data} key={index} />
               ))}
             </div>
           </div>
+        )}
+        {!isLoggedIn &&(
+          <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
+          <p className={classes.p} style={{fontSize:isSmallScreen?'1.5rem':'2rem', top:isSmallScreen?'9%':'8%'}}>Trending:</p>
+          <div className={classes.movies} style={{ width: isSmallScreen ? '18rem' : '25rem' }}>
+            {TrendingMovies?.slice(0,3).map((data, index) => (
+              <Trending props={data} key={index} />
+            ))}
+          </div>
+        </div>
         )}
         <div
           className={classes.searchContainer}
@@ -165,11 +204,26 @@ const MovieCard = ({ props }) => {
 
   return (
     <div className={cx(classes.movieCard)}>
-      <Image src={Poster} alt="poster" style={{ height: '5.25rem', width: '3.7rem' }} />
+      <Image src={Poster} alt="poster" style={{ height: '5.25rem', width: '3.7rem' }}/>
       <div className={classes.cardDescription}>
         <h2 className={classes.movieTitle}>{props.movie.title}</h2>
         <div className={classes.movieGenre}>{props.movie.genres.join(', ')}</div>
         <p className={classes.movieYear}>{props.movie.year}</p>
+      </div>
+    </div>
+  );
+};
+
+const Trending = ({ props }) => {
+  const { classes, cx } = useStyles();
+  const [src, setSrc] = useState<string | StaticImageData>(props.poster);
+  return (
+    <div className={cx(classes.movieCard)}>
+      <Image width={500} height={500} src={src} onError={() => setSrc(noImage)} alt="poster" style={{ height: '5.25rem', width: '3.7rem' }}/>
+      <div className={classes.cardDescription}>
+        <h2 className={classes.movieTitle}>{props.title}</h2>
+        <div className={classes.movieGenre}>{props.genres.join(', ')}</div>
+        <p className={classes.movieYear}>{props.year}</p> 
       </div>
     </div>
   );
@@ -276,16 +330,15 @@ const useStyles = createStyles(() => ({
   searchRightSectionVisible: {},
   p: {
     marginBottom: '0.75rem',
-    fontSize: '2rem',
     lineHeight: '1.75rem',
     position: 'absolute',
-    top: '10%',
+    transition:'0.3s ease',
   },
   movies: {
     display: 'flex',
     flexDirection: 'column',
     position: 'absolute',
-    top: '14%',
+    top: '12%',
     overflow: 'hidden',
     gap: '.6rem',
     transition: '0.5s ease',

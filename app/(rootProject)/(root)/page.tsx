@@ -32,7 +32,12 @@ export default function Home() {
   const [TrendingMovies, setTrendingMovies] = useState<any[]>([]);
   const [Award, setAward] = useState<any[]>([]);
   const [MyList, setMyList] = useState<any[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   useEffect(() => {
+    const userLoggedIn = checkLoginStatus();
+    setIsLoggedIn(userLoggedIn);
+
     fetch(
       'https://971edtce1a.execute-api.ap-south-1.amazonaws.com/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=',
       { method: 'POST' }
@@ -46,6 +51,12 @@ export default function Home() {
     return () => {};
   }, []);
 
+  const checkLoginStatus = () => {
+    const user = localStorage.getItem('user');
+    if(user) return true;
+    return false;
+  };
+
   return (
     <>
       <HeroSection />
@@ -55,7 +66,7 @@ export default function Home() {
         <div className={classes.backgroundOverlay}></div>
         <Section title={'Trending'} image={Trend} movieData={TrendingMovies || []} />
         <Section title={'Award Winniing Films'} image={AwardIcon} movieData={Award || []} />
-        <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />
+        {isLoggedIn && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
       </div>
     </>
   );

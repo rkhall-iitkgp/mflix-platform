@@ -25,7 +25,7 @@ import { relative } from 'path';
 //{url}/movies/573a1391f29313caabcd6d40
 export default function MovieContent({movieData}) {
     // console.log(movieData);
-    const id = movieData._id;
+    const id = movieData?._id;
     const state = useLoginStore.getState();
     const user_id = state.userProfiles[0]._id
     const url = searchMsApiUrls();
@@ -219,7 +219,7 @@ export default function MovieContent({movieData}) {
         <Flex className={classes.detailsContainer} align='center' justify='space-evenly' direction={isSmallerScreen ? 'column' : 'row'}>
             <div className={classes.imageContainer}>
                     <NextImage
-                        src={movieData.poster}
+                        src={movieData?.poster}
                         width={1000}
                         height={300}
                         className={classes.image}
@@ -230,28 +230,28 @@ export default function MovieContent({movieData}) {
                 <Flex justify='center' align='center'>
                     <Container>
                         <div style={{display:'flex',alignItems:'baseline',position: 'relative',width:'fit-content'}}>
-                            <h1 className={classes.movieTitle}>{movieData.title}</h1>
+                            <h1 className={classes.movieTitle}>{movieData?.title}</h1>
                             <FaHeart className={classes.fullHeart} onClick={() => setIsFavourite(!isFavourite)}/>
                         </div>
                         <Flex className={classes.genreContainer}>
-                            {movieData.genres?.map((genre, i) =>  <p className={classes.genre}>{genre}</p>)}
+                            {movieData?.genres?.map((genre, i) =>  <p className={classes.genre}>{genre}</p>)}
                         </Flex>
                         <Flex className={classes.otherDetailsContainer} justify='flex-start' gap={2}>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <Image src={ImdbImg} component={NextImage} alt="imdb" height={17} unoptimized />
-                                <p className={classes.detailsText}>{movieData.imdb?.rating}/10</p>
+                                <p className={classes.detailsText}>{movieData?.imdb?.rating}/10</p>
                             </Flex>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <Image src={TomatoImg} component={NextImage} alt="imdb" height={17} unoptimized />
-                                <p className={classes.detailsText}>{movieData.tomatoes?.viewer?.rating}/5</p>
+                                <p className={classes.detailsText}>{movieData?.tomatoes?.viewer?.rating}/5</p>
                             </Flex>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <FaRegHourglass color='white' fontSize={20}/>
-                                <p className={classes.detailsText}>{movieData.runtime}min</p>
+                                <p className={classes.detailsText}>{movieData?.runtime}min</p>
                             </Flex>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <PiCalendar color='white' fontSize={25}/>
-                                <p className={classes.detailsText}>{movieData.year}</p>
+                                <p className={classes.detailsText}>{movieData?.year}</p>
                             </Flex>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <GrLocation color='white' fontSize={30}/>
@@ -259,7 +259,7 @@ export default function MovieContent({movieData}) {
                             </Flex>
                         </Flex>
                         <Stack>
-                            <p className={classes.plot}>{movieData.fullplot}</p>
+                            <p className={classes.plot}>{movieData?.fullplot}</p>
                                 <Flex align='center' justify='space-around' onClick = {()=> setChecked(!checked)} className={`${classes.buttonContainer} ${checked ? classes.checkboxChecked : ''}`}>
                                     <Checkbox
                                         className={classes.checkbox}

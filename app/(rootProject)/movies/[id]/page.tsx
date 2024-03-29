@@ -17,46 +17,6 @@ import useLoginStore from '@/Stores/LoginStore';
 import Movies from '@/assets/icons/movies.svg';
 import Section from '@/app/(rootProject)/(root)/components/Section';
 
-//User profile
-// {
-//     "_id": "66071dcf871b365691e6f506",
-//     "name": "Adarsh Tadiparthi",
-//     "email": "adarshtadiparthi30@gmail.com",
-//     "dob": "2005-07-30T00:00:00.000Z",
-//     "phone": 9390004880,
-//     "payments": [],
-//     "userProfiles": [
-//         {
-//             "_id": "66071dcf871b365691e6f507",
-//             "name": "Adarsh Tadiparthi",
-//             "moviesWatched": [],
-//             "watchList": [],
-//             "favoriteMovies": [],
-//             "savedFilters": [],
-//             "searchHistory": [],
-//             "__v": 0
-//         }
-//     ],
-//     "activeLogins": [
-//         "66071dd0871b365691e6f50a",
-//         "66071e17871b365691e6f51f"
-//     ],
-//     "subscriptionTier": {
-//         "bill": "",
-//         "tier": {
-//             "description": "",
-//             "maxResolution": 0,
-//             "name": "",
-//             "partyWatch": false,
-//             "price": 0,
-//             "tier": "",
-//             "__v": 0,
-//             "_id": ""
-//         }
-//     },
-//     "__v": 0
-// }
-
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();
     const [loading, setLoading] = useState(true);
@@ -66,8 +26,16 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     console.log(state)
     useEffect(()=>{
         const id = params.id;
+        const user_id = state.userProfiles[0]._id;
         const getMovieDetails = async () => {
-            const res = await (await fetch (`${url}/movies/${id}`)).json();
+            const res = await (await fetch (`${url}/movies/${id}`, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({userId:user_id})
+            })).json();
             setMovieData(res.result);
             const similar_results_url=`${url}/search/semantic?query=${res.result.plot}`
             // console.log(final_url)
@@ -117,7 +85,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     }))
 
     const { classes } = styles();
-
+    console.log(movieData);
     return (
         <Stack
             justify="space-between"

@@ -21,6 +21,7 @@ export default function SearchBar({ input, setInput, onTyping }: { input: string
                 id='search'
                 type="text"
                 placeholder="Search"
+                autoComplete='off'
                 style={styles.input}
                 value={input as string}
                 onChange={(e) => onTyping(e.target.value)}

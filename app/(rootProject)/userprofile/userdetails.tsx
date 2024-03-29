@@ -195,6 +195,7 @@ const UserDetails = ({ opened }: any) => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
         });
 
         let jsonData = await res.json();
@@ -203,7 +204,7 @@ const UserDetails = ({ opened }: any) => {
         } else {
             console.log(jsonData);
             setUserDetails(jsonData);
-            useLoginStore.getState().updateUser(jsonData.account);
+            // useLoginStore.getState().updateUser(jsonData.account);
 
         }
 
@@ -220,8 +221,10 @@ const UserDetails = ({ opened }: any) => {
             email: state.email,
             phoneNo: state.phone,
             dob: state.dob.substring(0, 10),
-            plan: "Basic"
+            // plan: userDetails.subscriptionTier.tier.name
+            plan: state.subscriptionTier.tier.name,
         };
+        console.log(userDetails);
         setUserInfo(UserDetails);
     }
 

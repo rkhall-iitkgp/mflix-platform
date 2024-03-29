@@ -54,6 +54,7 @@ export function Otp({ initialValues }: any) {
             body: JSON.stringify({
                 ...initialValues,
             }),
+            credentials: 'include'
         })
         let jsonData = await res.json();
         if (!res.ok) {

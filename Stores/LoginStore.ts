@@ -9,6 +9,20 @@ type State = {
     payments: any[];
     userProfiles: any[];
     activeLogins: string[];
+    subscriptionTier: {
+        bill: string,
+        tier: {
+            description: string,
+            maxResolution: number,
+            name: string,
+            partyWatch: boolean,
+            price: number,
+            tier: string,
+            __v: number,
+            _id: string
+        }
+    }
+
 }
 type Action = {
     updateUser: (newUser: Partial<State>) => void;
@@ -22,6 +36,21 @@ const useLoginStore = create<State & Action>((set) => ({
     payments: [],
     userProfiles: [],
     activeLogins: [],
+    subscriptionTier: {
+        bill: "",
+        tier: {
+            description: "",
+            maxResolution: 0,
+            name: "",
+            partyWatch: false,
+            price: 0,
+            tier: "",
+            __v: 0,
+            _id: "",
+
+
+        }
+    },
     updateUser: (newUser) => set(() => ({ ...newUser })),
 
 }))

@@ -330,75 +330,36 @@ export default function Navbar() {
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Genres</p>
                   <div className={classes.category}>
-                    <p>
-                      <Link href="#">Drama</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Comedy</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Romance</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Crime</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Thriller</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Action</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Adventure</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Documentary</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Horror</Link>
-                    </p>
+                    <p><Link href="#">Drama</Link></p>
+                    <p><Link href="#">Comedy</Link></p>
+                    <p><Link href="#">Romance</Link></p>
+                    <p><Link href="#">Crime</Link></p>
+                    <p><Link href="#">Thriller</Link></p>
+                    <p><Link href="#">Action</Link></p>
+                    <p><Link href="#">Adventure</Link></p>
+                    <p><Link href="#">Documentary</Link></p>
+                    <p><Link href="#">Horror</Link></p>
                   </div>
                 </div>
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Languages</p>
                   <div className={classes.category}>
-                    <p>
-                      <Link href="#">English</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Hindi</Link>
-                    </p>
-                    <p>
-                      <Link href="#">French</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Spanish</Link>
-                    </p>
-                    <p>
-                      <Link href="#">German</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Italian</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Japanese</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Russian</Link>
-                    </p>
-                    <p>
-                      <Link href="#">Mandarin</Link>
-                    </p>
+                    <p><Link href="#">English</Link></p>
+                    <p><Link href="#">Hindi</Link></p>
+                    <p><Link href="#">French</Link></p>
+                    <p><Link href="#">Spanish</Link></p>
+                    <p><Link href="#">German</Link></p>
+                    <p><Link href="#">Italian</Link></p>
+                    <p><Link href="#">Japanese</Link></p>
+                    <p><Link href="#">Russian</Link></p>
+                    <p><Link href="#">Mandarin</Link></p>
                   </div>
                 </div>
               </div>
             </div>
           </li>
           <li>
-            <Link
-              href="/login"
-              className={`${classes.link} ${path === '/login' ? classes.activeLink : ''}`}
-            >
+            <Link href="/login" className={`${classes.link} ${path === '/login' ? classes.activeLink : ''}`}>
               Login
             </Link>
           </li>

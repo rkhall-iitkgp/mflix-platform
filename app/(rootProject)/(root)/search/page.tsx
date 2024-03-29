@@ -212,7 +212,7 @@ export default function Search() {
                   style={{
                       rowGap: themeOptions.fontSize.xl,
                   }}
-                  gap="2%"
+                  gap="1%"
                 >
                     {makeGroup(moreResults, elementsPerRow).map((data, index) => (
                         data ?

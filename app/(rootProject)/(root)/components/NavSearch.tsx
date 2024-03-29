@@ -70,7 +70,10 @@ export default function SearchBar() {
             </Menu.Target>
             <Menu.Dropdown>
                 {suggestions.map((item, index) => (
-                    <Menu.Item key={index} component='a' href={`/search?query=${item}`}>
+                    <Menu.Item key={index} component='a' href={`/search?query=${item}`} style={{
+                        // backgroundColor: 'black',
+                        // color: 'white',
+                    }}>
                         {item}
                     </Menu.Item>
             ))}

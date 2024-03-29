@@ -6,6 +6,22 @@ import noImage from '@/assets/images/no-image.jpg';
 import themeOptions from '@/utils/colors';
 import TomatoImg from '@/assets/icons/tomato.png';
 import ImdbImg from '@/assets/icons/imdb.png';
+import { createStyles } from '@mantine/styles';
+
+const useStyles = createStyles(() => ({
+  card: {
+    backgroundColor: 'transparent', // Base background
+    color: themeOptions.color.normalTextColor, // Base text color
+    transition: 'background-color 0.2s ease-in-out, color 0.2s ease-in-out', // Transition for hover
+    padding: '0px',
+    borderRadius: '16px',
+    '&:hover': { // Hover styles
+        transform: 'scale(1.1)', 
+        transition: 'transform 0.2s ease-in-out', // Transition for hover 
+      boxShadow: '0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(221, 221, 221, 0.388)', // Hover shadow
+    },
+  },
+}));
 
 interface MovieProps {
     _id: string;
@@ -42,7 +58,7 @@ const Favourite: React.FC<{ favourite?: boolean }> = ({ favourite }) => {
 };
 
 const MovieCardSpace: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
-    <Card p={0} radius={0} bg="transparent" w={250} h={490}>{children}</Card>
+    <Card p={0} radius="12px" bg="transparent" w={250} h={490}>{children}</Card>
 );
 
 const MovieCard: React.FC<MovieProps> = (props) => {
@@ -59,18 +75,22 @@ const MovieCard: React.FC<MovieProps> = (props) => {
     } = props;
     const [loading, setLoading] = useState(true);
     const [src, setSrc] = useState<string | StaticImageData>(poster);
+    const { classes } = useStyles();
+
 
     return (
         <Card
-          p={0}
-          radius={0}
+          radius="12px"
           bg="transparent"
-          w={250}
+          w={270}
           c={themeOptions.color.normalTextColor}
+          p="10px"
           component="a"
           href={`/movies/${_id}`}
+          className={classes.card}
+
         >
-            <Skeleton visible={loading} radius={0}>
+            <Skeleton visible={loading}>
                 <AspectRatio ratio={250 / 370}>
                     <NextImage
                       src={src|| noImage}

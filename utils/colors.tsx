@@ -9,7 +9,7 @@ const themeOptions = {
         normalTextColor: '#FFFFFF',
         dimmed: '#9CA3AF',
         background: '#0B0212',
-        black:'rgba(0,0,0,0.7)',
+        black:'rgba(0,0,0)',
         categories:'#0A0315'
     },
     fontSize: {

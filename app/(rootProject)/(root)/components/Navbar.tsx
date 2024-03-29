@@ -67,7 +67,7 @@ export default function Navbar() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [prevScrollPos, visible]);
+  }, [prevScrollPos]);
 
   const handleLogOut = async () => {
     const values = {
@@ -211,20 +211,21 @@ export default function Navbar() {
       fontSize: '1.25rem',
       padding: '0',
       // marginTop:'2rem',
-      display:'flex',
+      display: 'flex',
       height: '3rem',
-      span:{
-        marginTop:'0.3rem',
-        fontSize:'1.2rem',
-        marginLeft:'0.5rem',
-        transition:'0.2s ease'
+      width: '8rem',
+      span: {
+        marginTop: '0.3rem',
+        fontSize: '1.2rem',
+        marginLeft: '0.5rem',
+        transition: '0.2s ease'
       },
       '&:hover': {
         color: 'rgb(156, 163, 175)',
         cursor: 'pointer',
-        span:{
-          rotate:'180deg',
-          marginBottom:'1rem',
+        span: {
+          rotate: '180deg',
+          marginBottom: '1rem',
         }
       },
     },

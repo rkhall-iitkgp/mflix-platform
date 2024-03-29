@@ -43,7 +43,7 @@ export default function Home() {
         <div className={classes.background}></div>
         <div className={classes.backgroundOverlay}></div>
         {trendingData.map(({ title, image }) => (
-          <Section title={title} image={image} />
+          <Section title={title} image={image} movieData={[]}/>
         ))}
       </div>
     </>

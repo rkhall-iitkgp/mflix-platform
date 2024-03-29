@@ -1,6 +1,6 @@
 "use client"
 
-import { Group, Stack, Text, Space } from '@mantine/core';
+import { Stack,Skeleton} from '@mantine/core';
 import NextImage from 'next/image';
 import themeOptions from '@/utils/colors';
 import { createStyles } from '@mantine/styles';
@@ -14,11 +14,17 @@ import { ScrollArea } from '@mantine/core'
 import VideoPlayer from '@/components/VideoPlayer';
 import { useEffect , useState } from 'react';
 import useLoginStore from '@/Stores/LoginStore';
+import Movies from '@/assets/icons/movies.svg';
+import Section from '@/app/(rootProject)/(root)/components/Section';
+
+
+
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();
+    const [loading, setLoading] = useState(true);
     const [movieData,setMovieData] = useState({});
-    const [similarMoviesData,setSimilarMoviesData] = useState({});
+    const [similarMoviesData,setSimilarMoviesData] = useState([]);
     const state = useLoginStore.getState();
     console.log(state)
     useEffect(()=>{
@@ -52,10 +58,11 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
         },
         similarmovies:{
             paddingLeft:'80px',
+            margin:0,
             fontSize:themeOptions.fontSize.xl,
         },
         carousal: {
-            marginTop: '-100px',
+            // marginTop: '-100px',
         },
         bgContainer: {
             position: 'fixed',
@@ -102,17 +109,16 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
             <div style={{backgroundColor:themeOptions.color.background ,zIndex:1}}>
                 <MovieContent movieData = {movieData}/>
 
-                <Space h={"3rem"} />
+                {/* <Space h={"3rem"} /> */}
 
                 {/* Carousal */}
-                <p className={classes.similarmovies} style={{zIndex:'22',color:themeOptions.color.divider}}>Similar Movies</p>
-                <Stack className={classes.carousal}>
-                    <SimilarMovies similarMoviesData={similarMoviesData}/>
-                </Stack>
+                {/* <p className={classes.similarmovies} style={{zIndex:'22',color:themeOptions.color.divider}}>Similar Movies</p> */}
+                <Section title="Similar Movies" image={Movies} movieData = {similarMoviesData}/>
+                {/* <SimilarMovies similarMoviesData={similarMoviesData}/> */}
             </div>
             {/* Footer */}
             <Stack bg={themeOptions.color.black} style={{zIndex:'20'}}>
-                <Footer />
+                <Footer/>
             </Stack>
 
         </Stack>

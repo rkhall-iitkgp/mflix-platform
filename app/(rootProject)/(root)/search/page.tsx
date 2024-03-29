@@ -190,11 +190,11 @@ export default function Search() {
                 </Text>
                 {/* <Skeleton visible={!loaded}> */}
                     <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
-                        <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false}>
+                        <Group style={{ rowGap: '30px' }} grow gap="6vw" preventGrowOverflow={false} align="stretch">
                             <MovieBanner {...(topRes[0])} />
                             <MovieBanner {...(topRes[1])} />
                         </Group>
-                        <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false}>
+                        <Group style={{ rowGap: '30px' }} grow gap="6vw" preventGrowOverflow={false} align="stretch">
                             <MovieBanner {...(topRes[2])} />
                             <MovieBanner {...(topRes[3])} />
                         </Group>

@@ -1,6 +1,6 @@
 "use client"
 
-import { Group, Image, Stack,Flex,Container,Checkbox , UnstyledButton,Text} from '@mantine/core';
+import { Group, Image, Stack,Flex,Container,Checkbox , UnstyledButton,Text,Skeleton} from '@mantine/core';
 import { GrLocation } from 'react-icons/gr';
 import { FaRegHourglass } from 'react-icons/fa6';
 import { PiCalendar } from 'react-icons/pi';
@@ -8,13 +8,15 @@ import NextImage from 'next/image';
 import ImdbImg from '@/assets/icons/imdb.png';
 import TomatoImg from '@/assets/icons/tomato.png';
 import { FaPlus } from 'react-icons/fa';
+import searchMsApiUrls from '@/app/(rootProject)/api/searchMsApi';
 import themeOptions from '@/utils/colors';
 // import Sample from '@/assets/sample.png';
 import { createStyles } from '@mantine/styles';
-import { useState } from 'react';
+import { useState ,useEffect } from 'react';
 import { IconBoxMargin } from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
 import { watch } from 'fs';
+import useLoginStore from '@/Stores/LoginStore';
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa6";
 import { relative } from 'path';
@@ -22,17 +24,105 @@ import { relative } from 'path';
 
 //{url}/movies/573a1391f29313caabcd6d40
 export default function MovieContent({movieData}) {
-    console.log(movieData);
-
+    // console.log(movieData);
+    const id = movieData._id;
+    const state = useLoginStore.getState();
+    const user_id = state.userProfiles[0]._id
+    const url = searchMsApiUrls();
     const [checked, setChecked] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width: 1200px)');
     const isSmallerScreen = useMediaQuery('(max-width:1000px)');
     const [watchList,setWatchList] = useState("Add to Watchlist");
     const [isFavourite,setIsFavourite] = useState(false);
-    const TogglewatchListStatus = () =>{
-        if(watchList === "Add to Watchlist") setWatchList("Added to Watchlist");
-        else setWatchList("Add to Watchlist");
+
+    useEffect(() => {
+        if (checked) addToWatchList();
+        else removeFromWatchList();
+    }, [checked]);
+
+    useEffect(()=>{
+        if(isFavourite) addToFavourites();
+        else removeFromFavourites();
+    },[isFavourite])
+
+    const addToWatchList = async () => {
+        try {
+            const response = await fetch(`${url}/user/watchlist/${user_id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ movie: id })
+            });
+
+            if (response.ok) {
+                console.log('Movie added to watchlist successfully');
+            } else {
+                console.error('Failed to add movie to watchlist');
+            }
+        } catch (error) {
+            console.error('Error occurred while adding movie to watchlist:', error);
+        }
+    };
+
+    const removeFromWatchList = async () => {
+        try {
+            const response = await fetch(`${url}/user/watchlist/${user_id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ movie: id })
+            });
+
+            if (response.ok) {
+                console.log('Movie removed from watchlist successfully');
+            } else {
+                console.error('Failed to remove movie from watchlist');
+            }
+        } catch (error) {
+            console.error('Error occurred while removing movie from watchlist:', error);
+        }
+    };
+
+    const addToFavourites = async() =>{
+        try{
+            const response = await fetch(`${url}/user/favourites/${user_id}`, {
+                method:'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({movie:id})
+            })
+
+            if(response.ok) console.log('Movie added to favourites successfully');
+            else console.error('Failed to add movie to favourites');
+        }
+        catch(error){
+            console.error('Error occurred while adding movie to Favourites:', error);
+        }
     }
+
+    const removeFromFavourites = async() =>{
+       try{
+            const response = await fetch(`${url}/user/favourites/${user_id}`,{
+                method:'DELETE',
+                headers:{
+                    'Content-type' : 'application/json'
+                },
+                body: JSON.stringify({movie:id})
+            })
+
+            if(response.ok) console.log('Movie removed from favourites successfully');
+            else console.error('Failed to remove movie from favourites');
+       }
+       catch(error){
+            console.log('Error occured when deleting movie from favourites:' ,error);
+       } 
+    }
+
+    
+
     const styles = createStyles(() => ({
         detailsContainer:{
             margin:'5rem 0',
@@ -83,15 +173,11 @@ export default function MovieContent({movieData}) {
             fontSize: isSmallScreen ? themeOptions.fontSize.s : themeOptions.fontSize.md,
             color:themeOptions.color.divider
         },
-        plusIcon:{
-            transition:'0.3s',
-            display: watchList === "Added to Watchlist" ? 'none' : 'block',
-        },
         creatersContainer:{
             width: isSmallerScreen ? '11.5rem': '16.5rem',
             backgroundColor:"rgba(217,217,217,0.4)",
             color:themeOptions.color.divider,
-            padding:'0.5rem 0 0.5rem 2rem',
+            padding:'0.5rem 0 0.8rem 2rem',
             margin:'0 2.5rem 0 5rem',
             borderRadius:10,
         },
@@ -125,28 +211,25 @@ export default function MovieContent({movieData}) {
         fullHeart:{
             fontSize:  isSmallScreen ? themeOptions.fontSize.md : themeOptions.fontSize.l,
             color: isFavourite ? themeOptions.color.button : '#828282',
-            margin:' 0rem 1rem', 
-            position:'absolute',
-            top:'35%',
-            right: isSmallScreen ? '-25%' : '-20%',
+            margin:' 0rem 2rem', 
         }
     }))
     const { classes } = styles();
     return (
         <Flex className={classes.detailsContainer} align='center' justify='space-evenly' direction={isSmallerScreen ? 'column' : 'row'}>
             <div className={classes.imageContainer}>
-                <NextImage
-                    src={movieData.poster}
-                    width = "1000"
-                    height = "300"
-                    className={classes.image}
-                    alt="sample"
-                />
+                    <NextImage
+                        src={movieData.poster}
+                        width={1000}
+                        height={300}
+                        className={classes.image}
+                        alt="sample"
+                    />
             </div>
             <Group >
                 <Flex justify='center' align='center'>
                     <Container>
-                        <div style={{display:'flex',alignItems:'center',position: 'relative',width:'fit-content'}}>
+                        <div style={{display:'flex',alignItems:'baseline',position: 'relative',width:'fit-content'}}>
                             <h1 className={classes.movieTitle}>{movieData.title}</h1>
                             <FaHeart className={classes.fullHeart} onClick={() => setIsFavourite(!isFavourite)}/>
                         </div>
@@ -160,7 +243,7 @@ export default function MovieContent({movieData}) {
                             </Flex>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <Image src={TomatoImg} component={NextImage} alt="imdb" height={17} unoptimized />
-                                <p className={classes.detailsText}>{movieData.tomatoes?.viewer.rating}/5</p>
+                                <p className={classes.detailsText}>{movieData.tomatoes?.viewer?.rating}/5</p>
                             </Flex>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <FaRegHourglass color='white' fontSize={20}/>
@@ -180,14 +263,11 @@ export default function MovieContent({movieData}) {
                                 <Flex align='center' justify='space-around' onClick = {()=> setChecked(!checked)} className={`${classes.buttonContainer} ${checked ? classes.checkboxChecked : ''}`}>
                                     <Checkbox
                                         className={classes.checkbox}
-                                        color='#7011B6'
+                                        color='#00664A'
                                         mt="l"
                                         checked={checked}
                                         onChange={() => setChecked(!checked)}
                                         radius="m"
-                                        styles={{input:{
-                                            color: !checked ? themeOptions.color.button : themeOptions.color.divider,
-                                        }}}
                                     />
                                     <span>Watch List</span>
                                 </Flex>

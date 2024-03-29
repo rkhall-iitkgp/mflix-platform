@@ -4,21 +4,58 @@ import { Stack,Skeleton} from '@mantine/core';
 import NextImage from 'next/image';
 import themeOptions from '@/utils/colors';
 import { createStyles } from '@mantine/styles';
-import SimilarMovies from '@/components/MovieDetails/SimilarMovies';
+// import SimilarMovies from '@/components/MovieDetails/SimilarMovies';
 import Footer from '../../(root)/components/Footer';
 import Navbar from '../../(root)/components/Navbar';
 import searchMsApiUrls from '../../api/searchMsApi';
 import BgImage from '@/assets/images/bg-home.jpeg'
 import MovieContent from '@/components/MovieDetails/MovieContent';
-import { ScrollArea } from '@mantine/core'
+// import { ScrollArea } from '@mantine/core'
 import VideoPlayer from '@/components/VideoPlayer';
 import { useEffect , useState } from 'react';
 import useLoginStore from '@/Stores/LoginStore';
 import Movies from '@/assets/icons/movies.svg';
 import Section from '@/app/(rootProject)/(root)/components/Section';
 
-
-
+//User profile
+// {
+//     "_id": "66071dcf871b365691e6f506",
+//     "name": "Adarsh Tadiparthi",
+//     "email": "adarshtadiparthi30@gmail.com",
+//     "dob": "2005-07-30T00:00:00.000Z",
+//     "phone": 9390004880,
+//     "payments": [],
+//     "userProfiles": [
+//         {
+//             "_id": "66071dcf871b365691e6f507",
+//             "name": "Adarsh Tadiparthi",
+//             "moviesWatched": [],
+//             "watchList": [],
+//             "favoriteMovies": [],
+//             "savedFilters": [],
+//             "searchHistory": [],
+//             "__v": 0
+//         }
+//     ],
+//     "activeLogins": [
+//         "66071dd0871b365691e6f50a",
+//         "66071e17871b365691e6f51f"
+//     ],
+//     "subscriptionTier": {
+//         "bill": "",
+//         "tier": {
+//             "description": "",
+//             "maxResolution": 0,
+//             "name": "",
+//             "partyWatch": false,
+//             "price": 0,
+//             "tier": "",
+//             "__v": 0,
+//             "_id": ""
+//         }
+//     },
+//     "__v": 0
+// }
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();

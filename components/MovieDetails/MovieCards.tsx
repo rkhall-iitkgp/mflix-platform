@@ -101,7 +101,7 @@ const useStyles = createStyles(() => ({
 
 
 export default function MovieCard({ data }: { data: any }) {
-  console.log(data);
+  // console.log(data);
   const { classes, cx } = useStyles();
   const { hovered, ref } = useHover();
   return (

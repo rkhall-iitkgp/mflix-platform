@@ -10,6 +10,7 @@ import ListMovies from '@/components/ListMovies';
 import Section from './components/Section';
 import { createStyles } from '@mantine/styles';
 import themeOptions from '@/utils/colors';
+import useLoginStore from '@/Stores/LoginStore';
 
 export default function Home() {
   const useStyle = createStyles(() => ({
@@ -32,9 +33,11 @@ export default function Home() {
   const [TrendingMovies, setTrendingMovies] = useState<any[]>([]);
   const [Award, setAward] = useState<any[]>([]);
   const [MyList, setMyList] = useState<any[]>([]);
+  const id = useLoginStore((state) => state._id);
   useEffect(() => {
     fetch(
-      'https://971edtce1a.execute-api.ap-south-1.amazonaws.com/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=',
+      process.env.NEXT_PUBLIC_BASE_URL +
+        '/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=movie',
       { method: 'POST' }
     )
       .then((res) => res.json())
@@ -43,8 +46,38 @@ export default function Home() {
         setTrendingMovies(data.results);
       });
 
+    // fetch(process.env.NEXT_PUBLIC_BASE_URL + '/movies/awards', { method: 'GET' })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data', data);
+    //     const newdata = data.result.filter((item: any) => item.awards.wins > 0);
+    //     console.log('newdata', newdata);
+    //     const newdatawithawards = newdata.map((item: any) => {
+    //       return {
+    //         ...item,
+    //         award: item.awards.wins,
+    //         text: item.awards.text,
+    //       };
+    //     });
+    //     console.log('newdatawithawards', newdatawithawards);
+    //     const sortedData = newdatawithawards.sort((a: any, b: any) => a.award - b.award);
+    //     console.log('sortedData', sortedData);
+
+    //     setAward(sortedData);
+    //   });
+
     return () => {};
   }, []);
+  useEffect(() => {
+    if (id) {
+      fetch(process.env.NEXT_PUBLIC_BASE_URL + '/user/watchlist/' + id, { method: 'POST' })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log('data', data);
+          setMyList(data.results);
+        });
+    }
+  }, [id]);
 
   return (
     <>
@@ -55,7 +88,7 @@ export default function Home() {
         <div className={classes.backgroundOverlay}></div>
         <Section title={'Trending'} image={Trend} movieData={TrendingMovies || []} />
         <Section title={'Award Winniing Films'} image={AwardIcon} movieData={Award || []} />
-        <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />
+        {id && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
       </div>
     </>
   );

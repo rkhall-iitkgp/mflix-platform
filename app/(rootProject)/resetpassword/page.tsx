@@ -18,65 +18,43 @@ import {
 import themeOptions from '../../../assets/themes/colors';
 import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
+import { Otp } from '../verifyotp/page';
 
 export default function ResetPassword() {
   const [userData, setUserData] = useState(null);
+  const [showOtp, setshowOtp] = useState(0);
+  const [formData, setFormData] = useState({});
 
   const handleResetPassword = async (values: any) => {
     const base_url = searchMsApiUrls();
     setUserData(values);
-    values.flag = 0;
+    values.type = "change";
+    setFormData(values);
     console.log(values);
-    // let res = await fetch(`${base_url}/auth/login`, {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //         ...values,
-    //     }),
-    // })
 
-    // let jsonData = await res.json();
-    // if (!res.ok) {
-    //     console.log(jsonData);
-    // }
-    // else {
-    //     console.log("login successful");
-    //     console.log(jsonData);
-    //     sessionStorage.setItem('accessToken', jsonData.user.accessToken);
-    //     // sessionStorage.setItem('token', jsonData.user.token);
-    // }
-
-    // if (!jsonData.user.userProfiles.length) {
-    //     console.log(jsonData.user)
-    //     console.log(jsonData.user.userProfiles.length)
-    //     const createData = {
-    //         "userName": jsonData.user.name,
-    //         "flag": 1,
-    //     }
-    //     console.log(createData)
-    //     const token = sessionStorage.getItem('accessToken');
-    //     res = await fetch(`${base_url}/user/create`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": `Bearer ${token}`
-    //         },
-    //         body: JSON.stringify({
-    //             ...createData,
-    //         }),
-    //     })
-    //     jsonData = await res.json();
-    //     if (!res.ok) {
-    //         console.log(jsonData);
-    //     }
-    //     else {
-    //         console.log("user Created successful");
-    //         console.log(jsonData);
-    //         // sessionStorage.setItem('token', jsonData.user.token);
-    //     }
-    // }
+    let res = await fetch(`${base_url}/auth/sendOTP`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        ...values,
+      }),
+    });
+    let jsonData = await res.json();
+    if (!res.ok) {
+      console.log(jsonData.message);
+      // router.push('/verifyotp')
+    }
+    //   setLoading(false);
+    else {
+      setshowOtp(1);
+      console.log(jsonData.message);
+      // console.log(jsonData);
+      // sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
+      // sessionStorage.setItem('token', jsonData.user.token);
+    }
   };
 
   const useStyles = createStyles(() => ({
@@ -141,165 +119,173 @@ export default function ResetPassword() {
 
   const form = useForm({
     initialValues: {
-      email: '',
+      // email: '',
       password: '',
-      confPassword: '',
+      newPassword: '',
     },
 
     validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-      password: (val) => (val.length <= 8 ? 'Password should include at least 8 characters' : null),
-      confPassword: (val, values) => (val != values.password ? 'Password does not match' : null),
+      // email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
+      password: (val) => (val.length < 8 ? 'Password should include at least 8 characters' : null),
+      newPassword: (val) => (val.length < 8 ? 'Password should include at least 8 characters' : null),
     },
   });
 
   return (
-    <Box className={classes.OuterBoxStyles}>
-      <Text size="2.2rem" c={'white'} p={'1rem'}>
-        Reset Password
-      </Text>
-      <Flex direction="row" justify="centre" align="center" gap={{ sm: 'lg' }}>
-        <Text size="1.1rem" c={'white'}>
-          Remember Your Password
-        </Text>
-        <a href="/login" style={{ color: themeOptions.color.textColorNormal }}>
-          Sign in
-        </a>
-      </Flex>
-      <Box className={classes.CentreBoxStyles}>
-        <form
-          onSubmit={form.onSubmit((values) => {
-            handleResetPassword(values);
-          })}
-          className={classes.FormStyles}
-        >
-          <TextInput
-            required
-            label="Email address"
-            placeholder="Enter Your email address"
-            value={form.values.email}
-            onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-            // error={form.errors.email && 'Invalid email'}
-            radius="md"
-            size="lg"
-            style={{ width: '70%', color: 'white' }}
-            styles={{
-              input: {
-                background: 'transparent',
-                color: 'white',
-                borderColor: themeOptions.color.smallBox,
-              },
-              wrapper: {
-                marginTop: '0.1rem',
-              },
-              error: {
-                margin: '0rem',
-                padding: '0rem',
-              },
-              label: {
-                fontSize: '1rem',
-                fontWeight: 'normal',
-              },
-            }}
-          />
-          <div className={classes.ErrorStyles}>{form.errors.email ? form.errors.email : ''}</div>
-          <PasswordInput
-            required
-            label="Password"
-            placeholder="Enter your new password"
-            value={form.values.password}
-            onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
-            // error={form.errors.password && 'Password should include at least 8 characters'}
-            radius="md"
-            size="lg"
-            style={{ width: '70%', color: 'white', marginTop: '0rem' }}
-            styles={{
-              input: {
-                background: 'transparent',
-                color: 'white',
-                borderColor: themeOptions.color.smallBox,
-              },
-              wrapper: {
-                marginTop: '0.1rem',
-              },
-              error: {
-                margin: '0rem',
-                padding: '0rem',
-              },
-              label: {
-                fontSize: '1rem',
-                fontWeight: 'normal',
-              },
-            }}
-          />
-          <div className={classes.ErrorStyles}>
-            {form.errors.password ? form.errors.password : ''}
-          </div>
-          <PasswordInput
-            required
-            label="Confirm Password"
-            placeholder="Enter your confirmed password"
-            value={form.values.confPassword}
-            onChange={(event) => form.setFieldValue('confPassword', event.currentTarget.value)}
-            // error={form.errors.password && 'Password should include at least 8 characters'}
-            radius="md"
-            size="lg"
-            style={{ width: '70%', color: 'white', marginTop: '0rem' }}
-            styles={{
-              input: {
-                background: 'transparent',
-                color: 'white',
-                borderColor: themeOptions.color.smallBox,
-              },
-              wrapper: {
-                marginTop: '0.1rem',
-              },
-              error: {
-                margin: '0rem',
-                padding: '0rem',
-              },
-              label: {
-                fontSize: '1rem',
-                fontWeight: 'normal',
-              },
-            }}
-          />
-          <div className={classes.ErrorStyles}>
-            {form.errors.confPassword ? form.errors.confPassword : ''}
-          </div>
-          {/* <Box style={{ display: 'flex', flexDirection: 'row-reverse', width: '70%' }}>
+    <>
+      {!showOtp ? (
+        <Box className={classes.OuterBoxStyles}>
+          <Text size="2.2rem" c={'white'} p={'1rem'}>
+            Reset Password
+          </Text>
+          <Flex direction="row" justify="centre" align="center" gap={{ sm: 'lg' }}>
+            <Text size="1.1rem" c={'white'}>
+              Remember Your Password
+            </Text>
+            <a href="/login" style={{ color: themeOptions.color.textColorNormal }}>
+              Sign in
+            </a>
+          </Flex>
+          <Box className={classes.CentreBoxStyles}>
+            <form
+              onSubmit={form.onSubmit((values) => {
+                handleResetPassword(values);
+              })}
+              className={classes.FormStyles}
+            >
+              {/* <TextInput
+                required
+                label="Email address"
+                placeholder="Enter Your email address"
+                value={form.values.email}
+                onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+                // error={form.errors.email && 'Invalid email'}
+                radius="md"
+                size="lg"
+                style={{ width: '70%', color: 'white' }}
+                styles={{
+                  input: {
+                    background: 'transparent',
+                    color: 'white',
+                    borderColor: themeOptions.color.smallBox,
+                  },
+                  wrapper: {
+                    marginTop: '0.1rem',
+                  },
+                  error: {
+                    margin: '0rem',
+                    padding: '0rem',
+                  },
+                  label: {
+                    fontSize: '1rem',
+                    fontWeight: 'normal',
+                  },
+                }}
+              /> */}
+              {/* <div className={classes.ErrorStyles}>{form.errors.email ? form.errors.email : ''}</div> */}
+              <PasswordInput
+                required
+                label="Password"
+                placeholder="Enter your old password"
+                value={form.values.password}
+                onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
+                // error={form.errors.password && 'Password should include at least 8 characters'}
+                radius="md"
+                size="lg"
+                style={{ width: '70%', color: 'white', marginTop: '0rem' }}
+                styles={{
+                  input: {
+                    background: 'transparent',
+                    color: 'white',
+                    borderColor: themeOptions.color.smallBox,
+                  },
+                  wrapper: {
+                    marginTop: '0.1rem',
+                  },
+                  error: {
+                    margin: '0rem',
+                    padding: '0rem',
+                  },
+                  label: {
+                    fontSize: '1rem',
+                    fontWeight: 'normal',
+                  },
+                }}
+              />
+              <div className={classes.ErrorStyles}>
+                {form.errors.password ? form.errors.password : ''}
+              </div>
+              <PasswordInput
+                required
+                label="New Password"
+                placeholder="Enter your new password"
+                value={form.values.newPassword}
+                onChange={(event) => form.setFieldValue('newPassword', event.currentTarget.value)}
+                // error={form.errors.password && 'Password should include at least 8 characters'}
+                radius="md"
+                size="lg"
+                style={{ width: '70%', color: 'white', marginTop: '0rem' }}
+                styles={{
+                  input: {
+                    background: 'transparent',
+                    color: 'white',
+                    borderColor: themeOptions.color.smallBox,
+                  },
+                  wrapper: {
+                    marginTop: '0.1rem',
+                  },
+                  error: {
+                    margin: '0rem',
+                    padding: '0rem',
+                  },
+                  label: {
+                    fontSize: '1rem',
+                    fontWeight: 'normal',
+                  },
+                }}
+              />
+              <div className={classes.ErrorStyles}>
+                {form.errors.newPassword ? form.errors.newPassword : ''}
+              </div>
+              {/* <Box style={{ display: 'flex', flexDirection: 'row-reverse', width: '70%' }}>
                         <a href="" style={{ color: 'white', fontSize: '0.8rem', fontWeight: 'normal', padding: '0.2rem' }} >Forget Password?</a>
                     </Box> */}
-          <Button
-            // className={classes.ButtonStyles}
-            style={{
-              width: '70%',
-              height: '3.5rem',
-              backgroundColor: '#9441D0',
-              borderRadius: '1rem',
-              fontSize: '1.5rem',
-              fontWeight: 'normal',
-              marginTop: '1.5rem',
-            }}
-            type="submit"
-            radius="xl"
-          >
-            Send OTP
-          </Button>
+              <Button
+                // className={classes.ButtonStyles}
+                style={{
+                  width: '70%',
+                  height: '3.5rem',
+                  backgroundColor: '#9441D0',
+                  borderRadius: '1rem',
+                  fontSize: '1.5rem',
+                  fontWeight: 'normal',
+                  marginTop: '1.5rem',
+                }}
+                type="submit"
+                radius="xl"
+              >
+                Send OTP
+              </Button>
 
-          {/* <Divider label="Or " labelPosition="center" my="lg" style={{ color: 'white', width: '80%' }} styles={{
+              {/* <Divider label="Or " labelPosition="center" my="lg" style={{ color: 'white', width: '80%' }} styles={{
 
                         label: {
                             color: 'white',
                         },
                     }} /> */}
-          {/* <Box style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-evenly', width: '80%' }}> */}
-          {/* <Text size="1.2rem" c={'white'} p={'1rem'} style={{ marginRight: '1rem' }}> Continue With:</Text> */}
-          {/* <GoogleButton radius="xl" size='lg' style={{ marginBottom: '1rem' }}>Google</GoogleButton> */}
-          {/* </Box> */}
-        </form>
-      </Box>
-    </Box>
+              {/* <Box style={{ display: 'flex', flexDirection: "row", justifyContent: 'space-evenly', width: '80%' }}> */}
+              {/* <Text size="1.2rem" c={'white'} p={'1rem'} style={{ marginRight: '1rem' }}> Continue With:</Text> */}
+              {/* <GoogleButton radius="xl" size='lg' style={{ marginBottom: '1rem' }}>Google</GoogleButton> */}
+              {/* </Box> */}
+            </form>
+          </Box>
+        </Box>
+      ) : (
+        <Otp initialValues={formData}></Otp>
+      )}
+
+
+    </>
   );
 }
 

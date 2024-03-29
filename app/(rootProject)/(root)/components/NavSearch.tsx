@@ -4,7 +4,7 @@ import XMarkIcon from '@/assets/icons/xmark.svg'
 import MicIcon from '@/assets/icons/mic.svg'
 import Image from 'next/image'
 
-export default function SearchBar({input,setInput}:{input: string, setInput: React.Dispatch<SetStateAction<string>>}) {
+export default function SearchBar({ input, setInput }: { input: string, setInput: React.Dispatch<SetStateAction<string>> }) {
     return (
         <div style={styles.container}>
             <label htmlFor="search" style={styles.searchLabel}>
@@ -42,7 +42,7 @@ const styles = {
         color: 'rgb(55, 65, 81)',
         width: '100%',
         border: 'none',
-        fontSize:'1.25rem'
+        fontSize: '1.25rem'
     },
     icon: {
         width: '2rem',

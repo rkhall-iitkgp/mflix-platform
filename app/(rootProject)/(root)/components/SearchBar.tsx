@@ -7,13 +7,20 @@ import Image from 'next/image'
 import { createStyles } from '@mantine/styles';
 
 
-export default function SearchBar({ input, setInput, onTyping }: { input: string, setInput: React.Dispatch<SetStateAction<string>>, onTyping: (value: string) => void }) {
+export default function SearchBar({ input, setInput, onTyping, onSearch }: { input: string, setInput: React.Dispatch<SetStateAction<string>>, onTyping: (value: string) => void, onSearch: (input: string) => void }) {
     console.log("ontyping", onTyping);
     useEffect(() => {
         if (!input && typeof onTyping === 'function') {
             onTyping('');
         }
     }, [input, onTyping]);
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            if (input.length > 2) {
+                onSearch(input);
+            }
+        }
+    };
     const { classes, cx } = useStyles();
     return (
         <div style={styles.container}>
@@ -28,6 +35,7 @@ export default function SearchBar({ input, setInput, onTyping }: { input: string
                 style={styles.input}
                 value={input as string}
                 onChange={(e) => onTyping(e.target.value)}
+                onKeyPress={handleKeyPress}
             />
             {input && <Image src={XMarkIcon} alt="X" style={styles.icon} onClick={() => {
                 setInput('');

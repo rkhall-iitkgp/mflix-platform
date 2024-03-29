@@ -14,6 +14,7 @@ import { ScrollToPlugin } from 'gsap/all';
 import { useMediaQuery } from '@mantine/hooks';
 import searchMsApiUrls from '../../api/searchMsApi';
 import themeOptions from '@/utils/colors';
+import { UnstyledButton } from '@mantine/core';
 gsap.registerPlugin(ScrollToPlugin);
 const HeroSection = () => {
 
@@ -141,6 +142,7 @@ const HeroSection = () => {
             onTyping={handleTyping}
             input={input}
             setInput={setInput}
+            onSearch={(input) => {location.href = `/search?query=${input}`;}}
           // isTyping={isTyping}
           />
           <p>
@@ -233,9 +235,9 @@ const SearchResultCard = ({props}) => {
   const { classes, cx } = useStyles();
   return (
     <div className={cx(classes.searchCard)}>
-      <div className={classes.cardDescription}>
+      <UnstyledButton w="100%" pl="1rem" component='a' href={`/search?query=${props.title}`}>
         <h2 className={classes.movieTitle}>{props.title}</h2>
-      </div>
+      </UnstyledButton>
     </div>
   );
 };

@@ -40,8 +40,7 @@ export default function Home() {
     setIsLoggedIn(userLoggedIn);
 
     fetch(
-      process.env.NEXT_PUBLIC_BASE_URL +
-        '/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=movie',
+      'https://971edtce1a.execute-api.ap-south-1.amazonaws.com/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=',
       { method: 'POST' }
     )
       .then((res) => res.json())
@@ -50,38 +49,18 @@ export default function Home() {
         setTrendingMovies(data.results);
       });
 
-    // fetch(process.env.NEXT_PUBLIC_BASE_URL + '/movies/awards', { method: 'GET' })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log('data', data);
-    //     const newdata = data.result.filter((item: any) => item.awards.wins > 0);
-    //     console.log('newdata', newdata);
-    //     const newdatawithawards = newdata.map((item: any) => {
-    //       return {
-    //         ...item,
-    //         award: item.awards.wins,
-    //         text: item.awards.text,
-    //       };
-    //     });
-    //     console.log('newdatawithawards', newdatawithawards);
-    //     const sortedData = newdatawithawards.sort((a: any, b: any) => a.award - b.award);
-    //     console.log('sortedData', sortedData);
-
-    //     setAward(sortedData);
-    //   });
-
     return () => {};
   }, []);
-  useEffect(() => {
-    if (id) {
-      fetch(process.env.NEXT_PUBLIC_BASE_URL + '/user/watchlist/' + id, { method: 'POST' })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log('data', data);
-          setMyList(data.results);
-        });
-    }
-  }, [id]);
+  // useEffect(() => {
+  //   if (id) {
+  //     fetch(process.env.NEXT_PUBLIC_BASE_URL + '/user/watchlist/' + id, { method: 'POST' })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log('data', data);
+  //         setMyList(data.results);
+  //       });
+  //   }
+  // }, [id]);
 
   const checkLoginStatus = () => {
     const user = localStorage.getItem('user');

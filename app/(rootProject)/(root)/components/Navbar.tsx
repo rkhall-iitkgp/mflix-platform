@@ -207,7 +207,7 @@ export default function Navbar() {
       fontSize: '1.25rem',
       padding: '0',
       display: 'flex',
-      height: '3rem',
+      height: '3.5rem',
       width: '8rem',
       span: {
         marginTop: '0.3rem',
@@ -220,7 +220,7 @@ export default function Navbar() {
         cursor: 'pointer',
         span: {
           rotate: '180deg',
-          marginBottom: '1.1rem',
+          marginBottom: '1.6rem',
         }
       },
     },

@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import React from 'react';
 import { createStyles } from '@mantine/styles';
-
 import themeOptions from '@/utils/colors';
 import { FaSearch } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
@@ -12,12 +11,13 @@ import { IoCloseOutline } from 'react-icons/io5';
 import NavSearch from '@/app/(rootProject)/(root)/components/NavSearch';
 import { usePathname } from 'next/navigation';
 import searchMsApiUrls from '../../api/searchMsApi';
-
-import { useHover } from '@mantine/hooks';
+import { IoIosArrowDown } from "react-icons/io";
+import { useHover, useMediaQuery } from '@mantine/hooks';
 
 export default function Navbar() {
   const path = usePathname();
   const [input, setInput] = React.useState('');
+  const isSmallScreen = useMediaQuery('(max-width: 1300px)');
   const [isTyping, setIsTyping] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -67,7 +67,7 @@ export default function Navbar() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [prevScrollPos, visible]);
+  }, [prevScrollPos]);
 
   const handleLogOut = async () => {
     const values = {
@@ -107,8 +107,7 @@ export default function Navbar() {
       paddingTop: '0rem',
       width: '100%',
       color: 'white',
-      background: themeOptions.color.black,
-      // opacity:'1',
+      backgroundColor: themeOptions.color.black,
       position: 'fixed',
       transition: 'top 0.3s ease-in-out',
       // marginBottom:'500px',
@@ -162,7 +161,6 @@ export default function Navbar() {
       alignItems: 'center',
     },
     premium: {
-      marginLeft: '1.5rem',
       marginRight: '1.5rem',
       height: '2.3rem',
       width: '7rem',
@@ -181,7 +179,7 @@ export default function Navbar() {
     link2: {
       textDecoration: 'none',
       fontSize: '1.25rem',
-      marginLeft: '0.6rem',
+      marginLeft: '0.8rem',
       // marginTop:'3rem',
       color: themeOptions.color.divider,
     },
@@ -199,7 +197,7 @@ export default function Navbar() {
       padding: '1rem',
       borderRadius: '8px',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-      height: '18rem',
+      height: '20rem',
       width: '40rem',
       top: '100%',
       // left: 0,
@@ -212,11 +210,22 @@ export default function Navbar() {
       fontSize: '1.25rem',
       padding: '0',
       // marginTop:'2rem',
+      display: 'flex',
       height: '3rem',
+      width: '8rem',
+      span: {
+        marginTop: '0.3rem',
+        fontSize: '1.2rem',
+        marginLeft: '0.5rem',
+        transition: '0.2s ease'
+      },
       '&:hover': {
         color: 'rgb(156, 163, 175)',
         cursor: 'pointer',
-        // display:'block',
+        span: {
+          rotate: '180deg',
+          marginBottom: '1rem',
+        }
       },
     },
     inside: {
@@ -231,13 +240,16 @@ export default function Navbar() {
       flexDirection: 'column',
       flexWrap: 'wrap',
       overflow: 'hidden',
-      width: '20rem',
+      width: '18rem',
       listStyle: 'none',
       alignItems: 'left',
       p: {
         margin: '0.3rem',
-        paddingInline: '0.2rem',
-        width: '8rem',
+        paddingLeft: '0.6rem',
+        paddingTop: '0.2rem',
+        paddingBottom: '0.2rem',
+        paddingRight: '0.3rem',
+        // width: '9rem',
         // paddingInline:'1rem',
         transition: '0.1s ease',
         '&:hover': {
@@ -255,6 +267,14 @@ export default function Navbar() {
         textDecoration: 'none',
       },
     },
+    navsearch:{
+      marginLeft: isSmallScreen?'-1rem':'-31rem', 
+      marginTop: isSmallScreen?'-10px':'-70px', 
+      width: '30rem',
+      height: '20px', 
+      position:'absolute', 
+      
+    }
   }));
 
   const { classes } = useStyles();
@@ -278,24 +298,10 @@ export default function Navbar() {
                 {isSearchOpen ? (
                   <>
                     <div>
-                      <ActionIcon
-                        size={30}
-                        variant="transparent"
-                        onClick={handleCloseClick}
-                        style={{ marginRight: '5px' }}
-                      >
+                      <ActionIcon size={30} variant="transparent" onClick={handleCloseClick} style={{ marginRight: '5px' }}>
                         <IoCloseOutline color={themeOptions.color.divider} size={30} />
                       </ActionIcon>
-                      <div
-                        style={{
-                          marginLeft: '-31rem',
-                          marginTop: '-70px',
-                          width: '30rem',
-                          height: '20px',
-                          position: 'absolute',
-                          zIndex: '40',
-                        }}
-                      >
+                      <div style={{zIndex: '40'}} className={classes.navsearch}>
                         <NavSearch input={input} setInput={setInput} />
                       </div>
                     </div>
@@ -314,6 +320,7 @@ export default function Navbar() {
           <li>
             <div className={classes.genre} ref={dropdownRef}>
               Categories
+              <span><IoIosArrowDown /></span>
               <div className={classes.dropdown} ref={categoryRef}>
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Genres</p>

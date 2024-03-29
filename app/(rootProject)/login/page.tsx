@@ -19,66 +19,103 @@ import themeOptions from '../../../assets/themes/colors';
 import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
 import useLoginStore from '@/Stores/LoginStore';
+import Mixpanel from '@/components/Mixpanel';
 
 export default function Login() {
   const [userData, setUserData] = useState(null);
   const submitLogin = async (values: any) => {
-    const base_url = searchMsApiUrls();
-    setUserData(values);
-    values.flag = 0;
-    console.log(values);
-    let res = await fetch(`${base_url}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ...values,
-      }),
-    });
+    try {
+      const base_url = searchMsApiUrls();
+      setUserData(values);
+      values.flag = 0;
+      console.log(values);
+      let res = await fetch(`${base_url}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...values,
+        }),
+      });
 
-    let jsonData = await res.json();
-    if (!res.ok) {
-      console.log(jsonData);
-    } else {
-      console.log('login successful');
-      console.log(jsonData);
-      // sessionStorage.setItem('accessToken', jsonData.account.accessToken);
-      useLoginStore.getState().updateUser(jsonData.account);
-      const state = useLoginStore.getState();
-      console.log(state);
+      let jsonData = await res.json();
+      if (!res.ok) {
+        console.log(jsonData);
+      } else {
+        console.log('login successful');
+        console.log(jsonData);
+        // sessionStorage.setItem('accessToken', jsonData.account.accessToken);
+        useLoginStore.getState().updateUser(jsonData.account);
+        const state = useLoginStore.getState();
+        console.log(state);
+
+        Mixpanel.identify(jsonData.account._id);
+        Mixpanel.register({
+          $name: jsonData.account.name,
+          $email: jsonData.account.email,
+          $dob: jsonData.account.dob,
+          $phone: jsonData.account.phone,
+          $subscriptionTier: {
+            tierId: jsonData.account.subscriptionTier.tier._id,
+            $name: jsonData.account.subscriptionTier.tier.name,
+          },
+        });
+        Mixpanel.track('Successful Login', {
+          $name: jsonData.account.name,
+          $email: jsonData.account.email,
+          $dob: jsonData.account.dob,
+          $phone: jsonData.account.phone,
+          $subscriptionTier: {
+            tierId: jsonData.account.subscriptionTier.tier._id,
+            $name: jsonData.account.subscriptionTier.tier.name,
+          },
+        });
+        Mixpanel.people.set({
+          $name: jsonData.account.name,
+          $email: jsonData.account.email,
+          $dob: jsonData.account.dob,
+          $phone: jsonData.account.phone,
+          $subscriptionTier: {
+            tierId: jsonData.account.subscriptionTier.tier._id,
+            $name: jsonData.account.subscriptionTier.tier.name,
+          },
+        });
+      }
+
+      // if (!jsonData.account.userProfiles.length) {
+      //     console.log(jsonData.account)
+      //     console.log(jsonData.account.userProfiles.length)
+      //     const createData = {
+      //         "userName": jsonData.account.name,
+      //         "flag": 1,
+      //     }
+      //     console.log(createData)
+      //     const token = sessionStorage.getItem('accessToken');
+      //     res = await fetch(`${base_url}/user/create`, {
+      //         method: "POST",
+      //         headers: {
+      //             "Content-Type": "application/json",
+      //             "Authorization": `Bearer ${token}`
+      //         },
+      //         body: JSON.stringify({
+      //             ...createData,
+      //         }),
+      //     })
+      //     jsonData = await res.json();
+      //     if (!res.ok) {
+      //         console.log(jsonData);
+      //     }
+      //     else {
+      //         console.log("user Created successful");
+      //         console.log(jsonData);
+
+      //         // sessionStorage.setItem('token', jsonData.account.token);
+      //     }
+      // }
+    } catch (err: any) {
+      console.log(err.message);
     }
-
-    // if (!jsonData.account.userProfiles.length) {
-    //     console.log(jsonData.account)
-    //     console.log(jsonData.account.userProfiles.length)
-    //     const createData = {
-    //         "userName": jsonData.account.name,
-    //         "flag": 1,
-    //     }
-    //     console.log(createData)
-    //     const token = sessionStorage.getItem('accessToken');
-    //     res = await fetch(`${base_url}/user/create`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": `Bearer ${token}`
-    //         },
-    //         body: JSON.stringify({
-    //             ...createData,
-    //         }),
-    //     })
-    //     jsonData = await res.json();
-    //     if (!res.ok) {
-    //         console.log(jsonData);
-    //     }
-    //     else {
-    //         console.log("user Created successful");
-    //         console.log(jsonData);
-
-    //         // sessionStorage.setItem('token', jsonData.account.token);
-    //     }
-    // }
   };
 
   const useStyles = createStyles(() => ({

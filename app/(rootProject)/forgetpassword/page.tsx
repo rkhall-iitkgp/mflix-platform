@@ -20,6 +20,7 @@ import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
 import { Otp } from '../verifyotp/page';
 import exp from 'constants';
+import Mixpanel from '@/components/Mixpanel';
 
 const ForgetPassword = (props: PaperProps) => {
   const [userData, setUserData] = useState(null);
@@ -42,6 +43,7 @@ const ForgetPassword = (props: PaperProps) => {
       }),
     });
     let jsonData = await res.json();
+    Mixpanel.track('Forgot Password', {});
     if (!res.ok) {
       console.log(jsonData.message);
       // router.push('/verifyotp')

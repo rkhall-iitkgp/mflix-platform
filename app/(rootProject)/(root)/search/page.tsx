@@ -97,7 +97,7 @@ export default function Search() {
 
     const getData = async (page: number) => {
         const res = await (await fetch(
-            `${searchMsApiUrls()}search/${search.trim().split(' ').length >= 5 ? 'semantic' : 'fuzzy'}?query=${search}&page=${page}`,
+            `${searchMsApiUrls()}search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page}`,
             {
                 method: 'POST',
                 headers: {
@@ -124,7 +124,7 @@ export default function Search() {
             const data: Array<MovieProps> = [];
             for (let page = 0; page < 2; page++) {
                 const res = await (await fetch(
-                    `${searchMsApiUrls()}search/${search.trim().split(' ').length >= 5 ? 'semantic' : 'fuzzy'}?query=${search}&page=${page + 1}`,
+                    `${searchMsApiUrls()}search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page + 1}`,
                     {
                         method: 'POST',
                         headers: {
@@ -135,11 +135,11 @@ export default function Search() {
                         }),
                     }
                 )).json();
+                if (!res.results) return setNotFound(true);
                 data.push(...res.results);
                 if (!res.hasNext) break;
             }
             console.log(data);
-            if (!data.length) return setNotFound(true);
             setTopRes(data.slice(0, 4));
             if (data.length >= 14) {
                 setRecommended(data.slice(14));
@@ -172,7 +172,15 @@ export default function Search() {
         };
     }, []);
 
-    return notFound ? <Center>Not Found</Center> : (
+    return notFound ?
+    <Stack h="100vh">
+        <div className={classes.bg}></div>
+        <Center h="100%">
+            <Text fz={themeOptions.fontSize.xl} c={themeOptions.color.textColorNormal}>Not Found</Text>
+        </Center>
+    </Stack>
+    :
+    (
         <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
             <div className={classes.bg}></div>
             <Filter />

@@ -5,6 +5,7 @@ import Bot from '@/assets/images/bot.png'
 import { createStyles } from '@mantine/styles'
 import SendIcon from '@/assets/icons/send.svg'
 import DownIcon from '@/assets/icons/down.svg'
+import { useRef } from 'react'
 
 export default function Chatbot() {
     const { classes, cx } = styles();
@@ -15,20 +16,23 @@ export default function Chatbot() {
         type: 'sent' | 'received'
     }[]>([]);
 
-    // React.useEffect(() => {
-    //     function sendOnEnter(e: KeyboardEvent) {
-    //         if (e.key === 'Enter') {
-    //             sendMessage()
-    //         }
-    //     }
-
-    //     document.addEventListener("keypress", sendOnEnter)
-
-    //     return () => {
-    //         document.removeEventListener("keypress", sendOnEnter)
-    //     }
-
-    // }, [])
+    const inputRef = useRef(null);
+    React.useEffect(() => {
+        const input = inputRef.current;
+        if (input) {
+          const handleKeyPress = (event) => {
+            if (event.key === 'Enter' && input.value.trim() !== '') {
+              sendMessage();
+              event.preventDefault(); // Prevent default form submission
+            }
+          };
+    
+          input.addEventListener('keypress', handleKeyPress);
+    
+          // Cleanup function to remove the event listener on unmount
+          return () => input.removeEventListener('keypress', handleKeyPress);
+        }
+      }, [sendMessage]); 
 
     React.useEffect(() => {
         document.getElementById("messages")?.scrollTo(0, document.getElementById("messages")?.scrollHeight!);
@@ -37,6 +41,7 @@ export default function Chatbot() {
     async function sendMessage() {
         setMessages(messages => [...messages, { message: input, type: 'sent' }])
         setInput('')
+        inputRef.current.value = '';
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chatbot/message`, {
                 method: 'POST',
@@ -51,6 +56,7 @@ export default function Chatbot() {
             setMessages(messages => [...messages, { message: 'Sorry, I am not able to process your request at the moment.', type: 'received' }])
         }
     }
+    
 
     return (
         <Container className={classes.chatbot}>
@@ -73,7 +79,8 @@ export default function Chatbot() {
                         {messages.map((msg, i) => <p key={i} className={cx(classes[msg.type])} dangerouslySetInnerHTML={{ __html: msg.message }} />)}
                     </div>
                     <Group className={classes.messageInput}>
-                        <input type="text" placeholder='Enter your message...' className={classes.input} value={input} onChange={e => setInput((e.target as HTMLInputElement).value)} id="messageInput" />
+                        <input type="text" placeholder='Enter your message...' className={classes.input} value={input} onChange={e => setInput((e.target as HTMLInputElement).value)} ref={inputRef}// Assign the ref to the input element
+        id="messageInput" />
                         <Container className={classes.sendIcon} onClick={sendMessage} >
                             <Image src={SendIcon} alt="Send" width={22} height={22} />
                         </Container>
@@ -116,7 +123,6 @@ const styles = createStyles((theme) => ({
         }
     },
     messageInput: {
-        padding: "0 0.5rem 0 0",
         borderTop: "1px solid #ADADAD",
     },
     body: {

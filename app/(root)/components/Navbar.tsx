@@ -11,111 +11,17 @@ import { IoCloseOutline } from 'react-icons/io5';
 import NavSearch from '@/app/(root)/components/NavSearch';
 import { usePathname } from 'next/navigation';
 import searchMsApiUrls from '../../api/searchMsApi';
+import { useHover } from '@mantine/hooks';
 
 export default function Navbar() {
-  const useStyles = createStyles(() => ({
-    container: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      height: '50px',
-      // padding: '1rem',
-      paddingLeft: '2rem',
-      paddingRight: '2rem',
-      paddingTop: '0rem',
-      width: '100%',
-      color: 'white',
-      background: themeOptions.color.black,
-      opacity: '1',
-      position: 'fixed',
-      transition: 'top 0.3s ease-in-out',
-      // marginBottom:'500px',
-    },
-    search: {
-      height: '20px',
-      width: '50px',
-      marginTop: '5px',
-      '&:hover': {
-        color: 'gray',
-        cursor: 'pointer',
-      },
-    },
-    icon: {
-      width: '2rem',
-      height: '1rem',
-      color: themeOptions.color.divider,
-      marginRight: '0.5rem',
-    },
-    logo: {
-      height: '2rem',
-      marginLeft: '1rem',
-      marginRight: '3rem',
-    },
-    logoDiv: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: '1rem',
-    },
-    activeLink: {
-      fontWeight: 'bold',
-    },
-    links: {
-      display: 'flex',
-      padding: '1rem',
-      marginLeft: '1rem',
-      marginRight: '1rem',
-      listStyle: 'none',
-    },
-    link: {
-      padding: '1rem',
-      marginLeft: '1.5rem',
-      marginRight: '1.5rem',
-      textDecoration: 'none',
-      fontSize: '1.25rem',
-      color: 'white',
-      '&:hover': {
-        color: 'rgb(156, 163, 175)',
-      },
-      alignItems: 'center',
-    },
-    premium: {
-      marginLeft: '1.5rem',
-      marginRight: '1.5rem',
-      height: '2.3rem',
-      width: '7rem',
-      display: 'flex',
-      transition: '0.3s',
-      alignItems: 'center',
-      '&:hover': {
-        background: themeOptions.color.button,
-        cursor: 'pointer',
-      },
-      border: '2px solid',
-      borderRadius: '8px',
-      borderColor: themeOptions.color.smallBox,
-      color: themeOptions.color.smallBox,
-    },
-    link2: {
-      textDecoration: 'none',
-      fontSize: '1.25rem',
-      marginLeft: '0.6rem',
-      color: themeOptions.color.divider,
-    },
-    visible: {
-      top: 0,
-    },
-    hidden: {
-      top: '-50px',
-    },
-  }));
-
-  const path = usePathname();
-  const { classes } = useStyles();
-  const [input, setInput] = React.useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [visible, setVisible] = useState(true);
-  const [isSearchOpen, setIsSearchOpen] = useState(false); // Rename state to indicate whether search is open
+    const path = usePathname();
+    const [input, setInput] = React.useState('');
+    const [isTyping, setIsTyping] = useState(false);
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [visible, setVisible] = useState(true);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const { hovered: categoryHovered, ref: categoryRef } = useHover();
+    const { hovered: dropdownHovered, ref: dropdownRef } = useHover();
 
   const searchBoxRef = useRef<HTMLDivElement>(null); // UseRef with HTMLDivElement type
 
@@ -161,36 +67,196 @@ export default function Navbar() {
     };
   }, [prevScrollPos, visible]);
 
-  const handleLogOut = async () => {
-    const values = {
-      flag: 1,
-    };
-    const base_url = searchMsApiUrls();
-    const token = sessionStorage.getItem('accessToken');
-    await fetch(`${base_url}/auth/logout`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        ...values,
-      }),
-    }).then(async (res) => {
-      let jsonData = await res.json();
-      if (!res.ok) {
-        console.log(jsonData);
-      }
-      //   setLoading(false);
-      else {
-        sessionStorage.removeItem('accessToken');
-        console.log('Logout successful');
-        // console.log(jsonData);
-        // sessionStorage.setItem('accessToken', jsonData.user.accessToken);
-        // sessionStorage.setItem('token', jsonData.user.token);
-      }
-    });
-  };
+    const handleLogOut = async () => {
+        const values = {
+            "flag": 1,
+        }
+        const base_url = searchMsApiUrls()
+        const token = sessionStorage.getItem('accessToken');
+        await fetch(`${base_url}/auth/logout`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`
+            }, body: JSON.stringify({
+                ...values,
+            }),
+        }).then(async (res) => {
+            let jsonData = await res.json();
+            if (!res.ok) {
+                console.log(jsonData);
+            }
+            else {
+                sessionStorage.removeItem('accessToken');
+                console.log("Logout successful");
+            }
+        });
+    }
+
+    const useStyles = createStyles(() => ({
+        container: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: '3.8rem',
+            // padding: '1rem',
+            paddingLeft: '2rem',
+            paddingRight: '2rem',
+            paddingTop: '0rem',
+            width: '100%',
+            color: "white",
+            background: themeOptions.color.black,
+            // opacity:'1',
+            position: 'fixed',
+            transition: 'top 0.3s ease-in-out',
+            // marginBottom:'500px',
+        },
+        search: {
+            height: '20px',
+            width: '50px',
+            marginTop: '5px',
+            '&:hover': {
+                color: 'gray',
+                cursor: 'pointer',
+            }
+        },
+        icon: {
+            width: '2rem',
+            height: '1rem',
+            color: themeOptions.color.divider,
+            marginRight: '0.5rem'
+        },
+        logo: {
+            height: '2rem',
+            marginLeft: '1rem',
+            marginRight: '3rem',
+        },
+        logoDiv: {
+            display: 'flex',
+            alignItems: 'center',
+            padding: '1rem'
+        },
+        activeLink: {
+            fontWeight: 'bold',
+        },
+        links: {
+            display: 'flex',
+            padding: '1rem',
+            marginLeft: '1rem',
+            marginRight: '1rem',
+            marginTop: '2rem',
+            listStyle: 'none',
+        },
+        link: {
+            padding: '1rem',
+            marginLeft: '1.5rem',
+            marginRight: '1.5rem',
+            textDecoration: 'none',
+            fontSize: '1.25rem',
+            color: 'white',
+            '&:hover': {
+                color: 'rgb(156, 163, 175)'
+            },
+            alignItems: 'center',
+        },
+        premium: {
+            marginLeft: '1.5rem',
+            marginRight: '1.5rem',
+            height: '2.3rem',
+            width: '7rem',
+            display: 'flex',
+            transition: '0.3s',
+            alignItems: 'center',
+            '&:hover': {
+                background: themeOptions.color.button,
+                cursor: 'pointer',
+            },
+            border: '2px solid',
+            borderRadius: '8px',
+            borderColor: themeOptions.color.smallBox,
+            color: themeOptions.color.smallBox,
+        },
+        link2: {
+            textDecoration: 'none',
+            fontSize: '1.25rem',
+            marginLeft: '0.6rem',
+            // marginTop:'3rem',
+            color: themeOptions.color.divider,
+        },
+        visible: {
+            top: 0,
+        },
+        hidden: {
+            top: '-4rem',
+        },
+        dropdown: {
+            display: categoryHovered || dropdownHovered ? 'flex' : 'none',
+            position: 'absolute',
+            background: themeOptions.color.categories,
+            // backgroundColor: '#f8f8f8',
+            padding: '1rem',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+            height: '18rem',
+            width: '40rem',
+            top: '100%',
+            // left: 0,
+            zIndex: 1000,
+            marginLeft: '-15rem',
+            // padding:'1rem',
+            justifyContent: 'space-around',
+        },
+        genre: {
+            fontSize: '1.25rem',
+            padding: '0',
+            // marginTop:'2rem',
+            height: '3rem',
+            '&:hover': {
+                color: 'rgb(156, 163, 175)',
+                cursor: 'pointer',
+                // display:'block',
+            }
+        },
+        inside: {
+            display: 'grid',
+            // gap: '1rem',
+            textDecoration:'none',
+            color:'white',
+        },
+        category:{
+            borderRadius: '8px',
+            display:'flex',
+            flexDirection:'column',
+            flexWrap:'wrap',
+            overflow: 'hidden',
+            width:'20rem',
+            listStyle:'none',
+            alignItems:'left',
+            p: {
+                margin: '0.3rem',
+                paddingInline:'0.2rem',
+                width:'8rem',
+                // paddingInline:'1rem',
+                transition:'0.1s ease',
+                '&:hover':{
+                    background:'white',
+                    borderRadius:'0.5rem',
+                    cursor:'pointer',
+                    a:{
+                        color:'black',
+                    }
+                }
+            },
+            a:{
+                color:themeOptions.color.normalTextColor,
+                opacity:'0.75',
+                textDecoration:'none',
+            }
+        }
+
+    }))
+
+    const { classes } = useStyles();
 
   return (
     <nav>
@@ -203,63 +269,83 @@ export default function Navbar() {
           <img src="/logo.svg" alt="Logo" className={classes.logo} />
         </div>
 
-        {/* Links */}
-        <ul className={classes.links}>
-          <li>
-            {path !== '/' && ( // Check if current path is not the home page
-              <div>
-                {isSearchOpen ? (
-                  <>
-                    <div>
-                      <ActionIcon
-                        size={30}
-                        variant="transparent"
-                        onClick={handleCloseClick}
-                        style={{ marginRight: '5px' }}
-                      >
-                        <IoCloseOutline color={themeOptions.color.divider} size={30} />
-                      </ActionIcon>
-                      <div
-                        style={{
-                          marginLeft: '-630px',
-                          marginTop: '-70px',
-                          width: '600px',
-                          height: '20px',
-                          position: 'absolute',
-                          zIndex: '40',
-                        }}
-                      >
-                        <NavSearch input={input} setInput={setInput} />
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <FaSearch className={classes.search} onClick={handleSearchClick} />
-                )}
-              </div>
-            )}
-          </li>
-          <li>
-            <Link href="/" className={`${classes.link} ${path === '/' ? classes.activeLink : ''}`}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/login"
-              className={`${classes.link} ${path === '/login' ? classes.activeLink : ''}`}
-            >
-              Login
-            </Link>
-          </li>
-          <li className={classes.premium}>
-            <Link href="#" className={classes.link2}>
-              Premium
-            </Link>
-          </li>
-        </ul>
-      </div>
-      <div style={{ width: '100%', height: '50px' }}></div>
-    </nav>
-  );
+                {/* Links */}
+                <ul className={classes.links}>
+                    <li>
+                        {path !== '/' && (
+                            <div>
+                                {isSearchOpen ? (
+                                    <>
+                                        <div>
+                                            <ActionIcon size={30} variant='transparent' onClick={handleCloseClick} style={{ marginRight: '5px' }}>
+                                                <IoCloseOutline color={themeOptions.color.divider} size={30} />
+                                            </ActionIcon>
+                                            <div style={{ marginLeft: '-31rem', marginTop: '-70px', width: '30rem', height: '20px', position: 'absolute', zIndex: '40' }}>
+                                                <NavSearch input={input} setInput={setInput} />
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <FaSearch className={classes.search} onClick={handleSearchClick} />
+                                )}
+                            </div>
+                        )}
+                    </li>
+                    <li>
+                        <Link href="/" className={`${classes.link} ${path === '/' ? classes.activeLink : ''}`}>
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                        <div className={classes.genre} ref={dropdownRef}>
+                            Categories
+                            <div className={classes.dropdown} ref={categoryRef}>
+                                <div className={classes.inside}>
+                                    <p style={{margin:'1rem', marginTop:'0', marginLeft:'0.5rem'}}>Genres</p>
+                                    <div className={classes.category}>
+                                        <p><Link href="#">Drama</Link></p>
+                                        <p><Link href="#">Comedy</Link></p>
+                                        <p><Link href="#">Romance</Link></p>
+                                        <p><Link href="#">Crime</Link></p>
+                                        <p><Link href="#">Thriller</Link></p>
+                                        <p><Link href="#">Action</Link></p>
+                                        <p><Link href="#">Adventure</Link></p>
+                                        <p><Link href="#">Documentary</Link></p>
+                                        <p><Link href="#">Horror</Link></p>
+                                    </div>
+                                </div>
+                                <div className={classes.inside} >
+                                    <p style={{margin:'1rem', marginTop:'0', marginLeft:'0.5rem'}}>Languages</p>
+                                    <div className={classes.category}>
+                                        <p><Link href="#">English</Link></p>
+                                        <p><Link href="#">Hindi</Link></p>
+                                        <p><Link href="#">French</Link></p>
+                                        <p><Link href="#">Spanish</Link></p>
+                                        <p><Link href="#">German</Link></p>
+                                        <p><Link href="#">Italian</Link></p>
+                                        <p><Link href="#">Japanese</Link></p>
+                                        <p><Link href="#">Russian</Link></p>
+                                        <p><Link href="#">Mandarin</Link></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <Link href="/login" className={`${classes.link} ${path === '/login' ? classes.activeLink : ''}`}>
+                            Login
+                        </Link>
+                    </li>
+                    <li className={classes.premium} >
+                        <Link href="#" className={classes.link2}>
+                            Premium
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+            <div style={{ width: '100%', height: '50px' }}>
+
+            </div>
+        </nav>
+    )
 }

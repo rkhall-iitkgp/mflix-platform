@@ -176,6 +176,7 @@ const HeroSection = () => {
               style={{
                 fontSize: isSmallScreen ? '1.5rem' : '2rem',
                 top: isSmallScreen ? '9%' : '8%',
+                margin: '0.5rem',
               }}
             >
               Trending:

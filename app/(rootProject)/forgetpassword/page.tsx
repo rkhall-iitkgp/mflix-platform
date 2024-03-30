@@ -28,7 +28,7 @@ const ForgetPassword = (props: PaperProps) => {
   const handleForgetPassword = async (values: any) => {
     const base_url = searchMsApiUrls();
     setUserData(values);
-    values.type = "forget";
+    values.type = "forgot";
     setFormData(values);
     console.log(values);
     setshowOtp(1);

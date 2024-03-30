@@ -14,6 +14,9 @@ import saveIcon from '@/assets/icons/save.svg';
 import themeOptions from '@/utils/colors';
 import { MdDelete } from 'react-icons/md';
 import useLoginStore from '@/Stores/LoginStore';
+import { useRouter } from 'next/navigation'
+
+const icon = profileIcon;
 
 type UserInfo = {
   name: string;
@@ -163,6 +166,7 @@ import searchMsApiUrls from '../api/searchMsApi';
 import { Tooltip } from '@mantine/core';
 
 const UserDetails = ({ opened }: any) => {
+  const router = useRouter()
   const { classes } = useStyles();
   const [userInfo, setUserInfo] = useState<UserInfo>(initialUserInfo);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -174,9 +178,13 @@ const UserDetails = ({ opened }: any) => {
   const state = useLoginStore.getState();
   const [userDetails, setUserDetails] = useState({});
   const [activeLogins, setActiveLogins] = useState([{}]);
-  const [flag, setFlag] = useState(true);
+  const [profiles, setProfiles] = useState([{}]);
+  const [flag1, setFlag1] = useState(true);
+
+
 
   const getActiveUsers = async () => {
+
     const base_url = searchMsApiUrls();
 
     // const UserDetails: UserInfo = {
@@ -188,6 +196,10 @@ const UserDetails = ({ opened }: any) => {
     // };
     // setUserInfo(UserDetails);
     const user_id = state._id;
+    if (!user_id) {
+      router.push('/login');
+
+    }
     console.log(state);
     let res = await fetch(`${base_url}/user/details/${user_id}`, {
       method: 'GET',
@@ -200,10 +212,12 @@ const UserDetails = ({ opened }: any) => {
     let jsonData = await res.json();
     if (!res.ok) {
       console.log(jsonData);
+      router.push('/login');
     } else {
       console.log(jsonData);
       setUserDetails(jsonData);
       setActiveLogins(jsonData.account.activeLogins);
+      setProfiles(jsonData.account.userProfiles)
       // useLoginStore.getState().updateUser(jsonData.account);
     }
   };
@@ -227,6 +241,7 @@ const UserDetails = ({ opened }: any) => {
     };
     console.log(userDetails);
     setUserInfo(UserDetails);
+    // setProfiles(state.userProfiles);
   };
 
   useEffect(() => {
@@ -319,12 +334,45 @@ const UserDetails = ({ opened }: any) => {
       // useLoginStore.getState().updateUser(jsonData.account);
     }
   };
-  useEffect(() => {
-    if (flag) {
-      getActiveUsers();
-      setFlag(false);
+  const handleProfileDelete = async (id: any) => {
+    const base_url = searchMsApiUrls();
+    console.log(profiles[id]._id);
+    const user_id = state._id;
+    // console.log(state);
+    const values = {
+      userId: profiles[id]._id,
+    };
+    let res = await fetch(`${base_url}/user/delete`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        ...values,
+      }),
+    });
+    let jsonData = await res.json();
+    if (!res.ok) {
+      console.log(jsonData);
+    } else {
+      console.log('user Profile Deleted');
+      console.log(jsonData);
+
+      // var filtered = activeLogins.filter(item => item !== id);
+      // console.log(filtered);
+      // var newActiveLogins = activeLogins.splice(id, 1);
+      setProfiles((prev) => prev.filter((_, index) => index !== id));
+      // useLoginStore.getState().updateUser(jsonData.account);
     }
-  }, [flag]);
+  };
+
+  useEffect(() => {
+    if (flag1) {
+      getActiveUsers();
+      setFlag1(false);
+    }
+  }, [flag1]);
   return (
     <div
       style={{
@@ -459,7 +507,7 @@ const UserDetails = ({ opened }: any) => {
           width: '72%',
           display: 'flex',
           flexDirection: 'row',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           justifyContent: 'center',
           // border: '1px solid #ccc',
           textAlign: 'center',
@@ -479,7 +527,6 @@ const UserDetails = ({ opened }: any) => {
             // gap:'2rem',
             marginLeft: '3vw',
             marginRight: '3vw',
-            height: '45rem',
           }}
         >
           {/*flex container*/}
@@ -487,6 +534,7 @@ const UserDetails = ({ opened }: any) => {
             style={{
               display: 'flex',
               flexDirection: 'column',
+              alignItems: 'start',
               borderRadius: '0.8rem ',
               paddingLeft: '4%',
               paddingRight: '4%',
@@ -497,31 +545,29 @@ const UserDetails = ({ opened }: any) => {
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
+
               }}
             >
               {/*profile container*/}
-              {userProfiles.map((profile, index) => (
+              {profiles.map((profile, index) => (
                 <div
                   key={index}
                   style={{
                     display: 'flex',
-                    marginTop: '0.3vw',
-                    marginBottom: '0.3vw',
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     width: '100%',
                     paddingBottom: '0.5vw',
-                    gap: '2vw',
-                    borderBottom: '0.1rem white solid',
+                    marginBottom: '2rem',
+                    // borderBottom: '0.1rem white solid',
                   }}
                 >
                   {/*profile item*/}
                   <div style={{ display: 'flex', flexDirection: 'row', gap: '2vw' }}>
-                    <Image src={profile.avatarUrl} alt="prfl" width={50} height={50} />
+                    <Image src={icon} alt="prfl" width={50} height={50} />
                     <div style={{ color: 'white', paddingTop: '0.5rem' }}>
-                      {profile.profileName}
+                      {profile.name}
                     </div>
                   </div>
                   <div style={{ paddingRight: '1vw' }}>
@@ -529,7 +575,7 @@ const UserDetails = ({ opened }: any) => {
                       <MdDelete
                         style={{ color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}
                         onClick={() => {
-                          console.log('clicker');
+                          handleProfileDelete(index);
                         }}
                       />
                     ) : null}
@@ -566,7 +612,7 @@ const UserDetails = ({ opened }: any) => {
             // gap:'2rem',
             marginLeft: '3vw',
             marginRight: '3vw',
-            height: '45rem',
+            // height: '25rem',
           }}
         >
           {/*flex container*/}
@@ -575,6 +621,7 @@ const UserDetails = ({ opened }: any) => {
               style={{
                 paddingRight: '1vw',
                 paddingLeft: '1vw',
+
               }}
             >
               <h2 style={{ color: '#7011B6', textAlign: 'left' }}>User Signed-in Info</h2>
@@ -583,10 +630,10 @@ const UserDetails = ({ opened }: any) => {
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
+                alignItems: 'start',
                 paddingRight: '1vw',
                 paddingLeft: '1vw',
-                marginTop: '-2rem',
+                marginTop: '-1.5rem',
               }}
             >
               {/*profile container*/}
@@ -595,7 +642,7 @@ const UserDetails = ({ opened }: any) => {
                   {/*profile item*/}
                   <>
                     <Tooltip label={info._id}>
-                      <p style={{ color: 'white' }}>Device ID: {info._id}...</p>
+                      <p style={{ color: 'white' }}>Device ID: {info?._id?.slice(0, 8)}...</p>
                     </Tooltip>
                     <p style={{ color: 'white' }}>{new Date(info.loginTime).toLocaleString()} </p>
                     {/* <div style={{ color: 'white' }}>
@@ -619,7 +666,7 @@ const UserDetails = ({ opened }: any) => {
             style={{
               borderRadius: '0.8rem',
               color: 'white',
-              height: '10%',
+              height: '2rem',
               width: '100%',
               backgroundColor: themeOptions.color.button,
               cursor: 'pointer',
@@ -632,7 +679,7 @@ const UserDetails = ({ opened }: any) => {
           </button>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

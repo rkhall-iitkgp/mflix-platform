@@ -86,7 +86,6 @@ export default function Search() {
     const [page, setPage] = useState<number>(1);
     const [loaded, setLoaded] = useState<boolean>(false);
     const [hasNext, setHasNext] = useState(true);
-
     const nextPage = () => {
         if (hasNext) setPage(page+1);
     }

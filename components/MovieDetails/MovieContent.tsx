@@ -28,7 +28,12 @@ export default function MovieContent({movieData}) {
     // console.log(movieData);
     const id = movieData?._id;
     const state = useLoginStore.getState();
-    const user_id = state.userProfiles[0]._id
+    // const user_id = state.userProfiles[0]._id
+    if (state.userProfiles.length > 0) {
+            var user_id = state.userProfiles[0]._id;
+        } else {
+            var user_id = null;
+        }
     const url = searchMsApiUrls();
     const [checked, setChecked] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width: 1200px)');

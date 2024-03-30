@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-
+import { loadStripe } from "@stripe/stripe-js";
 import {
     TextInput,
     PasswordInput,
@@ -21,6 +21,7 @@ import Questions2 from './questions2';
 import SubscriptionTables from './table';
 import { List } from '@mantine/core';
 import { SlArrowRight } from "react-icons/sl";
+import useLoginStore from '@/Stores/LoginStore';
 import { IconPoint, IconPointFilled } from '@tabler/icons-react';
 
 
@@ -100,7 +101,7 @@ export default function Plan() {
             // backgroundColor:"white",
             background: "linear-gradient(45deg, rgba(43,10,53,1) 5%, rgba(143,60,205,0.7) 100%, rgba(43,10,53,1) 10%)",
             border: '1.5px solid white',
-            padding:'1rem',
+            padding: '1rem',
             // backdropFilter:"blur(100px)",
             boxShadow: '8px 8px 25px rgba(255, 255, 255, 0)',
         },
@@ -125,7 +126,7 @@ export default function Plan() {
             // backdropFilter:"blur(100px)",
         },
 
-        
+
 
         FormStyles: {
             width: '100%',
@@ -172,14 +173,8 @@ export default function Plan() {
             marginBottom: '2rem', textAlign: 'center', width: '100vw'
         }
     }));
- 
-    const containerRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-      // Scroll to the container when the component mounts
-      if (containerRef.current) {
-        containerRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, []);
+
+
 
     const [planInner, setPlanInner] = useState([true, false, false]);
     const [cardPlan, setCardPlan] = useState([false, true, false]);
@@ -199,6 +194,57 @@ export default function Plan() {
         updatedCardPlan[index] = true;
         setCardPlan(updatedCardPlan);
     };
+    const handlePayment = async () => {
+        const user = useLoginStore.getState(); // Get the user state using the custom hook
+        const stripe = await loadStripe(
+            "pk_test_51OwRpwSASkdZxsIqXKWoP1T43rb18l2uzbTTyRVir3EqBfEmPtYPdnAbdVJhYMS1J2tI6fcsL0ONXci5ASXFooH5000LfOfEKr"
+        );
+        if (user.email) {
+            //const authToken = localStorage.getItem('authToken');
+
+            // Make the API call with the authentication token in the headers
+            const response = await fetch(`${process.env.URL}/payment/create-checkout-session`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    // Include any other required data in the request body
+                    user: {
+                        id: user._id,
+                        email: user.email
+                    },
+                    product: {
+                        renewalType: "MONTHLY",
+                        tierId: "kjwnfkjnslk",
+
+                    },
+                    redirectURL: process.env.FRONTEND_URL,
+                }),
+            });
+
+            // const data = await response.json();
+
+            if (response.ok) {
+                const session = await response.json();
+                console.log("session id", session);
+                const result = await stripe?.redirectToCheckout({
+                    sessionId: session.session.id,
+                });
+
+                if (result?.error) {
+                    console.log(result?.error, 'error with response');
+                }
+            } else {
+                // Handle error response
+                console.error('Error:');
+            }
+        } else {
+            // User does not exist, handle this case
+            // For demonstration purposes, I'm just logging a message here
+            alert('User does not exist. Cannot process payment.');
+        }
+    }
     const subscriptionTablesRef = useRef(null);
 
 
@@ -213,12 +259,12 @@ export default function Plan() {
                         <Box
                             key={`planInner${index}`}
                             onClick={() => handlePlanInner(index)}
-                            style={{ cursor: 'pointer' }} 
+                            style={{ cursor: 'pointer' }}
                             className={
                                 planInner[index] ? classes.PlanInnerBoxStylesClicked : classes.PlanInnerBoxStyles
                             }
                         >
-                            <Text style={{ fontSize: '1.5rem', textAlign: 'center'}}>{label}</Text>
+                            <Text style={{ fontSize: '1.5rem', textAlign: 'center' }}>{label}</Text>
                         </Box>
                     ))}
                 </Box>
@@ -235,8 +281,8 @@ export default function Plan() {
                             onClick={() => handleCardPlan(index)}
                             className={cardPlan[index] ? classes.PlanCardStylesClicked : classes.PlanCardStyles}
                         >
-                            <Box >
-                                <Text style={{ fontSize: '1.8rem', textAlign: 'center'}} size="xl" fw={700}>
+                            <Box className={classes.PlanNameStyles}>
+                                <Text style={{ fontSize: '1.8rem', textAlign: 'center' }} size="xl" fw={700}>
                                     {name}
                                 </Text>
                             </Box>
@@ -245,16 +291,16 @@ export default function Plan() {
                                 <h3 style={{ marginTop: '2rem' }} >{planInner[0] ? 'month' : planInner[1] ? 'quarter' : 'year'}</h3>
                             </Box>
                             <Box className={classes.SubscriptionDetailsStyles}>
-                            
-                                <Text style={{ fontSize: '120%' , alignItems:'center', display:'flex' , margin:'0.5rem' }}><IconPointFilled></IconPointFilled>{name === 'Basic' ? 'Access to Free Movies only' : name === 'Premium' ? 'Access to All movies' : 'Access to All Movies'} </Text>
-                                <Text style={{ fontSize: '120%' , alignItems:'center', display:'flex' , margin:'0.5rem' }}><IconPointFilled></IconPointFilled>{name === 'Basic' ? 'Streaming quality: 720p' : name === 'Premium' ? 'Streaming quality: 1080p HD' : 'Streaming quality : 2140p 4K'} </Text>
-                                <Text style={{ fontSize: '120%' , alignItems:'center', display:'flex' , margin:'0.5rem' }}><IconPointFilled></IconPointFilled>{name === 'Basic' ? 'Party watch not available' : name === 'Premium' ? 'Can Binge Watch with Friends' : 'Can Binge Watch with Friends'} </Text>
+
+                                <Text style={{ fontSize: '120%', alignItems: 'center', display: 'flex', margin: '0.5rem' }}><IconPointFilled></IconPointFilled>{name === 'Basic' ? 'Access to Free Movies only' : name === 'Premium' ? 'Access to All movies' : 'Access to All Movies'} </Text>
+                                <Text style={{ fontSize: '120%', alignItems: 'center', display: 'flex', margin: '0.5rem' }}><IconPointFilled></IconPointFilled>{name === 'Basic' ? 'Streaming quality: 720p' : name === 'Premium' ? 'Streaming quality: 1080p HD' : 'Streaming quality : 2140p 4K'} </Text>
+                                <Text style={{ fontSize: '120%', alignItems: 'center', display: 'flex', margin: '0.5rem' }}><IconPointFilled></IconPointFilled>{name === 'Basic' ? 'Party watch not available' : name === 'Premium' ? 'Can Binge Watch with Friends' : 'Can Binge Watch with Friends'} </Text>
 
                             </Box>
                         </Box>
                     ))}
                 </Box>
-                <Button style={{ color: 'white', background: '#5e2787', height: '3.6rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem', }}>
+                <Button style={{ color: 'white', background: '#5e2787', height: '3.6rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem', }} onClick={handlePayment}>
                     Continue with Plan <SlArrowRight className={classes.ArrowStyles}></SlArrowRight>
                 </Button>
             </Box>
@@ -266,7 +312,7 @@ export default function Plan() {
                 <Box className={classes.QuestionTextBoxStyles}>
                     <Text style={{ fontSize: '2rem' }}>Questions?</Text>
                     <Text style={{}}>we got answers.</Text>
-                <Questions2 />
+                    <Questions2 />
                 </Box>
             </Box>
         </>

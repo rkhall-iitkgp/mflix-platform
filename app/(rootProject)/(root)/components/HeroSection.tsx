@@ -176,6 +176,7 @@ const HeroSection = () => {
               style={{
                 fontSize: isSmallScreen ? '1.5rem' : '2rem',
                 top: isSmallScreen ? '9%' : '8%',
+                margin: '0.5rem',
               }}
             >
               Trending:
@@ -194,10 +195,10 @@ const HeroSection = () => {
           style={{ display: `${!input ? 'none' : 'flex'}` }}
         >
           <div className={classes.flex} id="flex">
-            <div className={classes.flex1}>
+            {/* <div className={classes.flex1}>
               <Image src={Vector1} alt="vector" id="vec1" />
               <Image src={Vector2} alt="vector" id="vec2" />
-            </div>
+            </div> */}
             <div
               className={cx(
                 classes.searchRightSection,
@@ -349,6 +350,7 @@ const useStyles = createStyles(() => ({
   },
   searchRightSection: {
     transform: 'translateX(-1px)',
+    marginLeft: '10px'
   },
   searchRightSectionVisible: {},
   p: {

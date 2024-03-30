@@ -299,8 +299,8 @@ export default function Navbar() {
                       </ActionIcon>
                       <div
                         style={{
-                          marginLeft: '-31rem',
-                          marginTop: '-70px',
+                          marginLeft: isSmallScreen?'-11rem':'-31rem',
+                          marginTop: isSmallScreen?'-20px':'-70px',
                           width: '30rem',
                           height: '20px',
                           position: 'absolute',
@@ -330,29 +330,65 @@ export default function Navbar() {
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Genres</p>
                   <div className={classes.category}>
-                    <p><Link href="#">Drama</Link></p>
-                    <p><Link href="#">Comedy</Link></p>
-                    <p><Link href="#">Romance</Link></p>
-                    <p><Link href="#">Crime</Link></p>
-                    <p><Link href="#">Thriller</Link></p>
-                    <p><Link href="#">Action</Link></p>
-                    <p><Link href="#">Adventure</Link></p>
-                    <p><Link href="#">Documentary</Link></p>
-                    <p><Link href="#">Horror</Link></p>
+                    <p>
+                      <Link href="/search?genre=Drama">Drama</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?genre=Comedy">Comedy</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?genre=Romance">Romance</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?genre=Crime">Crime</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?genre=Thriller">Thriller</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?genre=Action">Action</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?genre=Adventure">Adventure</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?genre=Documentary">Documentary</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?genre=Horror">Horror</Link>
+                    </p>
                   </div>
                 </div>
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Languages</p>
                   <div className={classes.category}>
-                    <p><Link href="#">English</Link></p>
-                    <p><Link href="#">Hindi</Link></p>
-                    <p><Link href="#">French</Link></p>
-                    <p><Link href="#">Spanish</Link></p>
-                    <p><Link href="#">German</Link></p>
-                    <p><Link href="#">Italian</Link></p>
-                    <p><Link href="#">Japanese</Link></p>
-                    <p><Link href="#">Russian</Link></p>
-                    <p><Link href="#">Mandarin</Link></p>
+                  <p>
+                      <Link href="/search?language=English">English</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=Hindi">Hindi</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=French">French</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=Spanish">Spanish</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=German">German</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=Italian">Italian</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=Japanese">Japanese</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=Russian">Russian</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=Mandarin">Mandarin</Link>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -364,7 +400,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li className={classes.premium}>
-            <Link href="#" className={classes.link2}>
+            <Link href="/pricing" className={classes.link2}>
               Premium
             </Link>
           </li>

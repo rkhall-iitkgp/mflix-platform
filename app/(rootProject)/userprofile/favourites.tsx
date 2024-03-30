@@ -84,7 +84,7 @@ const Favorites = () => {
             <div className={classes.FavouritesCards}>
                 {movies.map(movie => (
                     // <MovieCard
-                    <MovieCard key={movie.id} movie={movie} />
+                    <MovieCard key={movie.id} data={movie} />
                 ))}
 
             </div>

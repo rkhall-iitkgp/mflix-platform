@@ -101,11 +101,11 @@ export default function Filter({ fetchData }: { fetchData(searchTerm: string, fi
             genres: selectedGenres,
             type: selectedTypes.length === 1 ? selectedTypes[0] : "",
             rating: {
-                low: selectedRatings.map(rating => parseInt(rating.substring(0, 1)))[0],
+                low: selectedRatings.length > 0 ? selectedRatings.map(rating => parseInt(rating.substring(0, 1)))[0] : 0,
                 high: 10
             }
         };
-        await fetchData(search, body);
+        await fetchData(search ? search : "", body);
     }
 
     // const handleToggle = async () => {

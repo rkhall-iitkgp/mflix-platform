@@ -24,7 +24,7 @@ import { relative } from 'path';
 
 
 //{url}/movies/573a1391f29313caabcd6d40
-export default function MovieContent({movieData}) {
+export default function MovieContent({movieData}: {movieData: any}) {
     // console.log(movieData);
     const id = movieData?._id;
     const state = useLoginStore.getState();
@@ -250,7 +250,7 @@ export default function MovieContent({movieData}) {
                             <FaHeart className={classes.fullHeart} onClick={() => !isFavourite}/>
                         </div>
                         <Flex className={classes.genreContainer}>
-                            {movieData?.genres?.map((genre, i) =>  <p className={classes.genre}>{genre}</p>)}
+                            {movieData?.genres?.map((genre:string, i:number) =>  <p className={classes.genre}>{genre}</p>)}
                         </Flex>
                         <Flex className={classes.otherDetailsContainer} justify='flex-start'>
                             <Flex className={classes.details} align='center' gap={4}>
@@ -296,15 +296,15 @@ export default function MovieContent({movieData}) {
                     <Stack justify="flex-start" gap="s">
                         {!movieData.directors || movieData.directors.length === 0 ? <></> : <Stack className={classes.creatersContainer} justify="flex-start" gap="xs">
                             <p style={{fontSize: isSmallScreen ? themeOptions.fontSize.s : themeOptions.fontSize.md, margin:'0 2px',fontWeight:'500'}}> Directors </p>   
-                            {movieData.directors?.map((e, i) => <p style={{margin:'0',fontSize: isSmallScreen ? themeOptions.fontSize.xs : themeOptions.fontSize.s}}>{e}</p>)}
+                            {movieData.directors?.map((e:string) => <p style={{margin:'0',fontSize: isSmallScreen ? themeOptions.fontSize.xs : themeOptions.fontSize.s}}>{e}</p>)}
                         </Stack>}
                         {!movieData.writers|| movieData.writers.length === 0 ? <></> : <Stack className={classes.creatersContainer} justify="flex-start" gap="xs">
                             <p style={{fontSize: isSmallScreen ? themeOptions.fontSize.s : themeOptions.fontSize.md, margin:'0 2px',fontWeight:'500'}}> Writers </p>   
-                            {movieData.writers?.map((e, i) => <p style={{margin:'0',fontSize: isSmallScreen ? themeOptions.fontSize.xs : themeOptions.fontSize.s}}>{e}</p>)}
+                            {movieData.writers?.map((e:string) => <p style={{margin:'0',fontSize: isSmallScreen ? themeOptions.fontSize.xs : themeOptions.fontSize.s}}>{e}</p>)}
                         </Stack>}
                         {!movieData.cast|| movieData.cast.length === 0 ? <></> : <Stack className={classes.creatersContainer} justify="flex-start" gap="xs">
                             <p style={{fontSize: isSmallScreen ? themeOptions.fontSize.s : themeOptions.fontSize.md, margin:'0 2px',fontWeight:'500'}}> Cast </p>   
-                            {movieData.cast?.map((e, i) => <p style={{margin:'0',fontSize: isSmallScreen ? themeOptions.fontSize.xs : themeOptions.fontSize.s}}>{e}</p>)}
+                            {movieData.cast?.map((e:string) => <p style={{margin:'0',fontSize: isSmallScreen ? themeOptions.fontSize.xs : themeOptions.fontSize.s}}>{e}</p>)}
                         </Stack>}
                     </Stack>
                 </Flex>

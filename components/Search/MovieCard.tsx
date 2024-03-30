@@ -16,7 +16,7 @@ const useStyles = createStyles(() => ({
     padding: '0px',
     borderRadius: '16px',
     '&:hover': { // Hover styles
-        transform: 'scale(1.1)', 
+        transform: 'scale(1.02)', 
         transition: 'transform 0.2s ease-in-out', // Transition for hover 
       boxShadow: '0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(221, 221, 221, 0.388)', // Hover shadow
     },

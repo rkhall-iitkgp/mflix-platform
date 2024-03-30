@@ -72,16 +72,6 @@ export default function Home() {
 
     return () => {};
   }, []);
-  // useEffect(() => {
-  //   if (id) {
-  //     fetch(process.env.NEXT_PUBLIC_BASE_URL + '/user/watchlist/' + id, { method: 'POST' })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log('data', data);
-  //         setMyList(data.results);
-  //       });
-  //   }
-  // }, [id]);
 
   const checkLoginStatus = () => {
     const user = localStorage.getItem('user');
@@ -99,7 +89,6 @@ export default function Home() {
         <Section title={'Trending'} image={Trend} movieData={TrendingMovies || []} />
         <Section title={'Award Winniing Films'} image={AwardIcon} movieData={Award || []} />
         {isLoggedIn && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
-        {/* {id && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />} */}
       </div>
     </>
   );

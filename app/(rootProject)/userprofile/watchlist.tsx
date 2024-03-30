@@ -3,14 +3,12 @@
 import react, { useState, useEffect } from "react";
 import { createStyles } from '@mantine/styles';
 import MovieCard from "@/components/MovieDetails/MovieCards";
-import searchMsApiUrls from "../api/searchMsApi";
 import useLoginStore from "@/Stores/LoginStore";
 
 
 
 export default function WatchList() {
 
-    const base_url = searchMsApiUrls();
 
     const [movies, setMovies] = useState([
         {
@@ -45,7 +43,7 @@ export default function WatchList() {
         const state = useLoginStore.getState();
         const user_id = state.userProfiles[0]._id;
         console.log(user_id);
-        fetch(`${base_url}/user/watchlist/${user_id}`)
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/watchlist/${user_id}`)
             .then(response => response.json())
             .then(data => { setMovies(data); console.log(data) })
             .catch(error => console.error("Error fetching data:", error));

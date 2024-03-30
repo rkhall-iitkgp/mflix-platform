@@ -20,7 +20,6 @@ import {
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
 // import { TwitterButton } from './TwitterButton';
-import searchMsApiUrls from '../api/searchMsApi';
 import useLoginStore from '@/Stores/LoginStore';
 import { useRouter } from 'next/navigation';
 
@@ -42,8 +41,7 @@ export default function Otp({ initialValues }: any) {
 
   const handleOtp = async () => {
     console.log(initialValues);
-    const base_url = searchMsApiUrls();
-    let res = await fetch(`${base_url}/auth/verifyOTP`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/verifyOTP`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -83,8 +81,7 @@ export default function Otp({ initialValues }: any) {
 
   const handleResendOtp = async () => {
     setResendTime(60);
-    const base_url = searchMsApiUrls();
-    let res = await fetch(`${base_url}/auth/resendOTP`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/resendOTP`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -17,7 +17,6 @@ import {
 // import { GoogleButton } from './GoogleButton';
 import themeOptions from '../../../assets/themes/colors';
 import { useState } from 'react';
-import searchMsApiUrls from '../api/searchMsApi';
 import Otp from '../verifyotp/page';
 
 export default function ResetPassword() {
@@ -26,13 +25,12 @@ export default function ResetPassword() {
   const [formData, setFormData] = useState({});
 
   const handleResetPassword = async (values: any) => {
-    const base_url = searchMsApiUrls();
     setUserData(values);
     values.type = 'change';
     setFormData(values);
     console.log(values);
 
-    let res = await fetch(`${base_url}/auth/sendOTP`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/sendOTP`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

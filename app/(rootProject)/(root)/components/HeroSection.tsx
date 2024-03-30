@@ -12,7 +12,6 @@ import Vector2 from '@/assets/images/vect-2.svg';
 import noImage from '@/assets/images/no-image.jpg';
 import { ScrollToPlugin } from 'gsap/all';
 import { useMediaQuery } from '@mantine/hooks';
-import searchMsApiUrls from '../../api/searchMsApi';
 import themeOptions from '@/utils/colors';
 import { UnstyledButton } from '@mantine/core';
 gsap.registerPlugin(ScrollToPlugin);
@@ -37,7 +36,7 @@ const HeroSection = () => {
 
     const fetchData = async () => {
       const res = await (
-        await fetch(`${searchMsApiUrls()}/user/history/6601d20081bc9671ef4364ee`, {
+        await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/history/6601d20081bc9671ef4364ee`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -86,7 +85,7 @@ const HeroSection = () => {
     setInput(typing);
     const fetchData = async () => {
       const res = await (
-        await fetch(`${searchMsApiUrls()}/search/autocomplete?query=${input}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search/autocomplete?query=${input}`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -108,7 +107,7 @@ const HeroSection = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log('data', data);
+        console.log('Trending', data);
         setTrendingMovies(data.results);
       });
 

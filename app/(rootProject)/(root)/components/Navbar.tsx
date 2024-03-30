@@ -10,7 +10,6 @@ import { ActionIcon, Divider } from '@mantine/core';
 import { IoCloseOutline } from 'react-icons/io5';
 import NavSearch from '@/app/(rootProject)/(root)/components/NavSearch';
 import { usePathname } from 'next/navigation';
-import searchMsApiUrls from '../../api/searchMsApi';
 import { IoIosArrowDown } from "react-icons/io";
 import { useHover, useMediaQuery } from '@mantine/hooks';
 
@@ -72,9 +71,9 @@ export default function Navbar() {
     const values = {
       flag: 1,
     };
-    const base_url = searchMsApiUrls();
+
     const token = sessionStorage.getItem('accessToken');
-    await fetch(`${base_url}/auth/logout`, {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

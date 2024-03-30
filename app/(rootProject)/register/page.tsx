@@ -27,7 +27,6 @@ import {
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
 import Otp from '../verifyotp/page';
-import searchMsApiUrls from '../api/searchMsApi';
 import { useState } from 'react';
 
 export default function Register(props: any) {
@@ -37,7 +36,6 @@ export default function Register(props: any) {
   // const router = useRouter();
   const handleRegister = async (values: any) => {
     setshowOtp(1);
-    const base_url = searchMsApiUrls();
     // setUserData(values);
     console.log(values);
     setFormData(values);
@@ -46,7 +44,7 @@ export default function Register(props: any) {
       type: 'register',
     };
     console.log(userData);
-    let res = await fetch(`${base_url}/auth/sendOTP`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/sendOTP`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

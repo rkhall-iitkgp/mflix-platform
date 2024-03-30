@@ -8,7 +8,6 @@ import NextImage from 'next/image';
 import ImdbImg from '@/assets/icons/imdb.png';
 import TomatoImg from '@/assets/icons/tomato.png';
 import { FaPlus } from 'react-icons/fa';
-import searchMsApiUrls from '@/app/(rootProject)/api/searchMsApi';
 import themeOptions from '@/utils/colors';
 // import Sample from '@/assets/sample.png';
 import { createStyles } from '@mantine/styles';
@@ -34,7 +33,6 @@ export default function MovieContent({movieData}) {
         } else {
             var user_id = null;
         }
-    const url = searchMsApiUrls();
     const [checked, setChecked] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width: 1200px)');
     const isSmallerScreen = useMediaQuery('(max-width:1000px)');
@@ -53,7 +51,7 @@ export default function MovieContent({movieData}) {
 
     const addToWatchList = async () => {
         try {
-            const response = await fetch(`${url}/user/watchlist/${user_id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/watchlist/${user_id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -73,7 +71,7 @@ export default function MovieContent({movieData}) {
 
     const removeFromWatchList = async () => {
         try {
-            const response = await fetch(`${url}/user/watchlist/${user_id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/watchlist/${user_id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -93,7 +91,7 @@ export default function MovieContent({movieData}) {
 
     const addToFavourites = async() =>{
         try{
-            const response = await fetch(`${url}/user/favourites/${user_id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/favourites/${user_id}`, {
                 method:'POST',
                 headers:{
                     'Content-Type': 'application/json'
@@ -111,7 +109,7 @@ export default function MovieContent({movieData}) {
 
     const removeFromFavourites = async() =>{
        try{
-            const response = await fetch(`${url}/user/favourites/${user_id}`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/favourites/${user_id}`,{
                 method:'DELETE',
                 headers:{
                     'Content-type' : 'application/json'

@@ -40,17 +40,17 @@ export default function Home() {
     setIsLoggedIn(userLoggedIn);
 
     fetch(
-      process.env.NEXT_PUBLIC_BASE_URL +
+      process.env.NEXT_PUBLIC_BACKEND_URL +
         '/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=movie',
       { method: 'POST' }
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log('data', data);
+        console.log('Trending Here', data);
         setTrendingMovies(data.results);
       });
 
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/movies/awards', { method: 'GET' })
+    fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/movies/awards', { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
         console.log('data', data);
@@ -74,7 +74,7 @@ export default function Home() {
   }, []);
   // useEffect(() => {
   //   if (id) {
-  //     fetch(process.env.NEXT_PUBLIC_BASE_URL + '/user/watchlist/' + id, { method: 'POST' })
+  //     fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/user/watchlist/' + id, { method: 'POST' })
   //       .then((res) => res.json())
   //       .then((data) => {
   //         console.log('data', data);

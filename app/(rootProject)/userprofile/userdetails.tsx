@@ -163,7 +163,6 @@ const useStyles = createStyles(() => ({
         borderBottom: '1px solid white',
     },
 }));
-import searchMsApiUrls from '../api/searchMsApi';
 
 const UserDetails = ({ opened }: any) => {
     const { classes } = useStyles();
@@ -178,7 +177,6 @@ const UserDetails = ({ opened }: any) => {
     const [userDetails, setUserDetails] = useState({});
 
     const getActiveUsers = async () => {
-        const base_url = searchMsApiUrls();
 
         // const UserDetails: UserInfo = {
         //     name: state.name,
@@ -190,7 +188,7 @@ const UserDetails = ({ opened }: any) => {
         // setUserInfo(UserDetails);
         const user_id = state._id;
         console.log(state);
-        let res = await fetch(`${base_url}/user/details/${user_id}`, {
+        let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/details/${user_id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

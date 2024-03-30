@@ -16,7 +16,6 @@ import {
 } from '@mantine/core';
 import themeOptions from '../../../assets/themes/colors';
 import { useState } from 'react';
-import searchMsApiUrls from '../api/searchMsApi';
 import useLoginStore from '@/Stores/LoginStore';
 import Image from 'next/image';
 import LeftArrowIcon from '@/assets/icons/leftArrow.svg'
@@ -26,11 +25,10 @@ export default function Login() {
   const router = useRouter()
   const [userData, setUserData] = useState(null);
   const submitLogin = async (values: any) => {
-    const base_url = searchMsApiUrls();
     setUserData(values);
     values.flag = 0;
     console.log(values);
-    let res = await fetch(`${base_url}/auth/login`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

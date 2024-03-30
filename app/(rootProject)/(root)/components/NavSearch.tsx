@@ -25,7 +25,7 @@ export default function SearchBar() {
 
     const fetchAutocompleteSuggestions = async (query: string) => {
         try {
-            const response = await fetch(`${searchMsApiUrls()}search/autocomplete?query=${query}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search/autocomplete?query=${query}`);
             if (response.ok) {
                 const data = await response.json();
                 // Assuming 'result' is the key containing the array of suggestions

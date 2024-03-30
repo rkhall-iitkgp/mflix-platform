@@ -17,7 +17,6 @@ import {
 // import { GoogleButton } from './GoogleButton';
 import themeOptions from '../../../assets/themes/colors';
 import { useState } from 'react';
-import searchMsApiUrls from '../api/searchMsApi';
 import Otp from '../verifyotp/page';
 import exp from 'constants';
 
@@ -26,13 +25,12 @@ const ForgetPassword = (props: any) => {
   const [formData, setFormData] = useState({});
 
   const handleForgetPassword = async (values: any) => {
-    const base_url = searchMsApiUrls();
     setUserData(values);
     values.type = 'forget';
     setFormData(values);
     console.log(values);
     setshowOtp(1);
-    let res = await fetch(`${base_url}/auth/sendOTP`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/sendOTP`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

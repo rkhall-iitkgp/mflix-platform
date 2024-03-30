@@ -7,7 +7,6 @@ import { createStyles } from '@mantine/styles';
 // import SimilarMovies from '@/components/MovieDetails/SimilarMovies';
 import Footer from '../../(root)/components/Footer';
 import Navbar from '../../(root)/components/Navbar';
-import searchMsApiUrls from '../../api/searchMsApi';
 import BgImage from '@/assets/images/bg-home.jpeg'
 import MovieContent from '@/components/MovieDetails/MovieContent';
 // import { ScrollArea } from '@mantine/core'
@@ -18,7 +17,6 @@ import Movies from '@/assets/icons/movies.svg';
 import Section from '@/app/(rootProject)/(root)/components/Section';
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
-    const url = searchMsApiUrls();
     const [loading, setLoading] = useState(true);
     const [movieData,setMovieData] = useState({});
     const [similarMoviesData,setSimilarMoviesData] = useState([]);
@@ -33,7 +31,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
             var user_id = null;
         }
         const getMovieDetails = async () => {
-            const res = await (await fetch (`${url}/movies/${id}`, {
+            const res = await (await fetch (`${process.env.NEXT_PUBLIC_BACKEND_URL}/movies/${id}`, {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
@@ -42,7 +40,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                 body: JSON.stringify({userId:user_id})
             })).json();
             setMovieData(res.result);
-            const similar_results_url=`${url}/search/fuzzy?semantic=${res.result.plot}`
+            const similar_results_url=`${process.env.NEXT_PUBLIC_BACKEND_URL}/search/fuzzy?semantic=${res.result.plot}`
             // console.log(final_url)
             const res2 = await fetch(similar_results_url, {
                 method: 'POST',

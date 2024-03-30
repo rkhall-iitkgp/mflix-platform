@@ -11,7 +11,6 @@ import MovieBanner from '@/components/Search/MovieBanner';
 import Carousel from '@/components/Search/Carousel';
 import themeOptions from '@/utils/colors';
 import Filter from '@/components/Search/Filter';
-import searchMsApiUrls from '@/app/api/searchMsApi';
 import noImage from '@/assets/images/no-image.jpg';
 import { Grid } from '@mantine/core'
 
@@ -96,7 +95,7 @@ export default function Search() {
 
     const getData = async (page: number) => {
         const res = await (await fetch(
-            `${searchMsApiUrls()}search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page}`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page}`,
             {
                 method: 'POST',
                 headers: {
@@ -116,7 +115,7 @@ export default function Search() {
         const data: Array<MovieProps> = [];
         for (let page = 0; page < 2; page++) {
             const res = await (await fetch(
-                `${searchMsApiUrls()}search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page + 1}`,
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page + 1}`,
                 {
                     method: 'POST',
                     headers: {

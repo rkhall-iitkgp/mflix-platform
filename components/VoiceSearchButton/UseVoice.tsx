@@ -21,6 +21,9 @@ interface SpeechRecognitionAlternative {
 }
 
 type SpeechRecognition = {
+  onend: (event: any) => void;
+  onstart: () => void;
+  interimResults: boolean;
   continuous: boolean;
   start: () => void;
   stop: () => void;
@@ -38,7 +41,10 @@ const useVoice = (): {
   if (typeof window !== 'undefined' && (window as any).webkitSpeechRecognition) {
     const SpeechRecognition = (window as any).webkitSpeechRecognition;
     speech = new SpeechRecognition();
-    if (speech) speech.continuous = true;
+    if (speech) {
+      speech.continuous = true;
+      speech.interimResults = false;
+    }
   } else {
     speech = null;
   }
@@ -47,34 +53,37 @@ const useVoice = (): {
   const [isListening, setIsListening] = useState<boolean>(false);
 
   const listen = () => {
-    setIsListening(!isListening);
-    if (isListening) {
+    if (!speech) return;
+
+    // if (!isListening) {
+    //   setIsListening(true);
+    speech.start();
+    setTimeout(() => {
+      setIsListening(false);
       speech?.stop();
-    } else {
-      
-      speech?.start();
-    }
+    }, 3000);
+    // } else {
+    //   setIsListening(false);
+
+    //   speech.stop();
+    // }
   };
 
   useEffect(() => {
-    if (!speech) {
-      return;
-    }
+    if (!speech) return;
 
     speech.onresult = (event) => {
-      console.log(event.results[event.results.length - 1][0].transcript)
+      console.log(event.results[event.results.length - 1][0].transcript);
       setText(event.results[event.results.length - 1][0].transcript);
       setIsListening(false);
-      if (speech) speech.stop();
     };
 
-    // Cleanup function
     return () => {
       if (speech) {
         speech.stop();
       }
     };
-  }, [speech]);
+  }, [isListening, speech]);
 
   return {
     text,

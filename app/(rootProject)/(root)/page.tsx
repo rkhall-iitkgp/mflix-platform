@@ -26,7 +26,7 @@ export default function Home() {
       width: '100%',
       height: '100%',
       zIndex: 0,
-      backgroundColor: 'linear-gradient(45, #580099 40%, #9441D0 60%, #580099 100%)',
+      backgroundColor: 'linear-gradient(45, #00664A 40%, #77C895 60%, #00664A 100%)',
     },
   }));
   const { classes } = useStyle();

@@ -17,7 +17,7 @@ import themeOptions from '@/utils/colors';
 import { UnstyledButton } from '@mantine/core';
 gsap.registerPlugin(ScrollToPlugin);
 const HeroSection = () => {
-  console.log('rendered');
+  // console.log('rendered');
   const { classes, cx } = useStyles();
   const [input, setInput] = React.useState('' as string);
   const [showSearchSection, setShowSearchSection] = useState(false);
@@ -25,7 +25,7 @@ const HeroSection = () => {
   const [searchHistory, setSearchHistory] = useState([]);
   const flexRef = useRef(null);
   const isSmallScreen = useMediaQuery('(max-width: 1200px)');
-  console.log(flexRef);
+  // console.log(flexRef);
   const [searches, setSearches] = useState([]);
   const [history, setHistory] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,7 +43,7 @@ const HeroSection = () => {
           },
         })
       ).json();
-      console.log(res);
+      // console.log(res);
       setHistory(res);
     };
     fetchData();
@@ -80,9 +80,9 @@ const HeroSection = () => {
   }, [isTyping]);
 
   const handleTyping = (typing: string) => {
-    console.log('func called');
+    // console.log('func called');
     setIsTyping(typing !== '');
-    console.log(isTyping);
+    // console.log(isTyping);
     setInput(typing);
     const fetchData = async () => {
       const res = await (
@@ -92,7 +92,7 @@ const HeroSection = () => {
           },
         })
       ).json();
-      console.log(res);
+      // console.log(res);
       setSearches(res.result);
     };
     fetchData();

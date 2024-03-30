@@ -5,10 +5,11 @@ import XMarkIcon from '@/assets/icons/xmark.svg'
 import MicIcon from '@/assets/icons/mic.svg'
 import Image from 'next/image'
 import { createStyles } from '@mantine/styles';
+import themeOptions from '@/utils/colors'
 
 
 export default function SearchBar({ input, setInput, onTyping, onSearch }: { input: string, setInput: React.Dispatch<SetStateAction<string>>, onTyping: (value: string) => void, onSearch: (input: string) => void }) {
-    console.log("ontyping", onTyping);
+    // console.log("ontyping", onTyping);
     useEffect(() => {
         if (!input && typeof onTyping === 'function') {
             onTyping('');
@@ -52,7 +53,7 @@ const useStyles = createStyles(() => ({
     height: '2.5rem',
     color: 'rgb(156, 163, 175)',
     marginRight: '0.5rem',
-    backgroundColor: '#7011B6',
+    backgroundColor: themeOptions.color.button,
     padding: '0.5rem',
     borderRadius: '50%',
     cursor: 'pointer',

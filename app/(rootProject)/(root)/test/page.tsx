@@ -1,6 +1,6 @@
 'use client'
 import Switch from 'react-switch';
-import themeOptions from '@/utils/themes'
+import themeOptions from '@/utils/colors'
 import { Box, Button, Divider, Flex, Group, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import React, { useState } from 'react'
 

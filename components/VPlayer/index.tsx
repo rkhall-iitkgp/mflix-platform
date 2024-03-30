@@ -18,7 +18,7 @@ import { useHover } from "@mantine/hooks";
 import usePlayerStore from "@/Stores/PlayerStore";
 import useForwardRef from "@/utils/useForwardRef";
 import useLoginStore from "@/Stores/LoginStore";
-
+import { useRouter } from "next/navigation";
 type Props = { ws: WebSocket; videoSrc: string; Mp4: boolean; tier: string };
 
 const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
@@ -47,9 +47,18 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
         const [quality, setQuality] = useState<string>("auto");
         const [playbackRate, setPlaybackRate] = useState(1);
         const Usertier = useLoginStore(
-            (state) => state.subscriptionTier.tier.tier,
+            (state) => state.subscriptionTier.tier.name,
         );
-
+        
+        const router = useRouter();
+        console.log("UserTier: ",Usertier)
+        const handlePartyWatchClick = () => {
+            if (Usertier  === 'Premium' || Usertier  === 'Family') {
+                toggleChat(undefined);
+            } else {
+               router.push('/pricing');
+            }
+        };
         const { hovered, ref: volContainerRef } = useHover();
         // Zustand states
         const {
@@ -222,19 +231,19 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
                     });
                     hls.on(Hls.Events.LEVELS_UPDATED, function (event, data) {
                         console.log("data,Usertier", data, Usertier);
-                        if (Usertier === "free" || Usertier === "") {
+                        if (Usertier === "Free" || Usertier === "") {
                             setLevels(
                                 data.levels.filter(
                                     (level) => level.height <= 480,
                                 ),
                             );
-                        } else if (Usertier === "basic") {
+                        } else if (Usertier === "Basic") {
                             setLevels(
                                 data.levels.filter(
                                     (level) => level.height <= 720,
                                 ),
                             );
-                        } else if (Usertier === "standard") {
+                        } else if (Usertier === "Premium") {
                             setLevels(
                                 data.levels.filter(
                                     (level) => level.height <= 1080,
@@ -268,15 +277,15 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
         useEffect(() => {
             if (hls) {
                 console.log("Usertier", Usertier);
-                if (Usertier === "free" || Usertier === "") {
+                if (Usertier === "Free" || Usertier === "") {
                     setLevels(
                         hls.levels.filter((level) => level.height <= 480),
                     );
-                } else if (Usertier === "basic") {
+                } else if (Usertier === "Basic") {
                     setLevels(
                         hls.levels.filter((level) => level.height <= 720),
                     );
-                } else if (Usertier === "standard") {
+                } else if (Usertier === "Premium") {
                     setLevels(
                         hls.levels.filter((level) => level.height <= 1080),
                     );
@@ -610,7 +619,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
                                 }}
                             >
                                 <button
-                                    onClick={() => toggleChat(undefined)}
+                                    onClick={handlePartyWatchClick}
                                     className={style.partyWatch}
                                 >
                                     <Image

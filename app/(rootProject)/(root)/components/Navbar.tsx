@@ -299,8 +299,8 @@ export default function Navbar() {
                       </ActionIcon>
                       <div
                         style={{
-                          marginLeft: '-31rem',
-                          marginTop: '-70px',
+                          marginLeft: isSmallScreen?'-11rem':'-31rem',
+                          marginTop: isSmallScreen?'-20px':'-70px',
                           width: '30rem',
                           height: '20px',
                           position: 'absolute',

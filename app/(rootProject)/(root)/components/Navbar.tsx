@@ -32,11 +32,40 @@ export default function Navbar() {
   const { hovered: categoryHovered, ref: categoryRef } = useHover();
   const { hovered: dropdownHovered, ref: dropdownRef } = useHover();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   const searchBoxRef = useRef<HTMLDivElement>(null);
   const state = useLoginStore.getState();
-  const [profiles, setProfiles] = useState<any[]>(state.userProfiles);
+  const [currentProfile, setCurrentProfile] = useState<any[]>(state.userProfiles);
+
   // setProfiles(state.userProfiles);
+  const getActiveUsers = async () => {
+    const base_url = searchMsApiUrls();
+    const user_id = state._id;
+    console.log(base_url);
+    let res = await fetch(`${base_url}/user/details`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+    let jsonData = await res.json();
+    if (!res.ok) {
+      console.log(jsonData);
+    } else {
+      console.log(jsonData);
+      setCurrentProfile(jsonData.account.userProfiles);
+    }
+    // console.log('userprofiles', jsonData.account.userProfiles);
+  };
+  // }, []);
+
+  useEffect(()=>{
+   getActiveUsers() 
+  }, [])
+
+  useEffect(()=>{
+    console.log("Current Profile", currentProfile)
+  }, [currentProfile])
 
   const handleSearchClick = () => {
     setIsSearchOpen(true);
@@ -120,7 +149,8 @@ export default function Navbar() {
     search: {
       height: '20px',
       width: '50px',
-      marginTop: '5px',
+      marginRight: '1rem',
+      marginTop: '7px',
       '&:hover': {
         color: 'gray',
         cursor: 'pointer',
@@ -155,7 +185,7 @@ export default function Navbar() {
     },
     link: {
       padding: '1rem',
-      marginRight: '1.5rem',
+      marginRight: '1.9rem',
       textDecoration: 'none',
       fontSize: '1.25rem',
       color: 'white',
@@ -166,7 +196,7 @@ export default function Navbar() {
     },
     premium: {
       height: '2.3rem',
-      marginRight:'-2rem',
+      marginRight: '-2rem',
       width: '7rem',
       display: 'flex',
       transition: '0.3s',
@@ -276,33 +306,14 @@ export default function Navbar() {
       position: 'absolute',
     },
     profile: {
-      fontSize: '1.25rem',
-      padding: '0',
-      display: 'flex',
-      height: '3.5rem',
-      marginLeft: '1rem',
-      marginRight: '-2rem',
-      width: '8rem',
       '&:hover': {
         color: 'rgb(156, 163, 175)',
         cursor: 'pointer',
       },
     },
-    profdown: {
-      display: categoryHovered || dropdownHovered ? 'block' : 'none',
-      position: 'absolute',
-      background: themeOptions.color.categories,
-      padding: '1rem',
-      borderRadius: '8px',
-      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-      cursor: 'default',
-      top: '100%',
-      zIndex: 1000,
-      marginLeft: '-1rem',
-      listStyle: 'none',
-      justifyContent: 'space-around',
-      p: {
-        textDecoration: 'none',
+    logout:{
+      '&hover':{
+        background:'black'
       }
     }
 
@@ -334,12 +345,12 @@ export default function Navbar() {
                       </ActionIcon>
                       <div
                         style={{
-                          marginLeft: isSmallScreen ? '-11rem' : '-31rem',
+                          marginLeft: isSmallScreen ? '-6rem' : '-31rem',
                           marginTop: isSmallScreen ? '-20px' : '-70px',
                           width: '30rem',
                           height: '20px',
                           position: 'absolute',
-                          zIndex: '40',
+                          zIndex: '4000000',
                         }}
                       >
                         <NavSearch />
@@ -419,22 +430,24 @@ export default function Navbar() {
             ) : (
               <Menu trigger="hover" openDelay={100} closeDelay={50} >
                 <Menu.Target>
-                  <Button bg={'none'} size={'20'} mr={15} style={{ fontWeight: '400' }}>Profile</Button>
+                  <Button bg={'none'} size={'20'} mr={25} mt={3} style={{ fontWeight: '400' }} className={classes.profile}>Profile</Button>
                 </Menu.Target>
 
-                <Menu.Dropdown bg={themeOptions.color.categories} style={{ borderRadius: '1rem', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
-                  {profiles.map((profile, i) => (
-                    <Menu.Item
-                      key={i}
-                      leftSection={<IconUserCircle style={{ width: '2rem', height: '2rem' }} />}
-                    >
-                      {profile.name}
-                    </Menu.Item>
-                  ))}
-                  <Menu.Item leftSection={<IconSettings style={{ width: '2rem', height: '2rem' }} />}>
-                    <Link href="/userprofile" style={{ textDecoration: 'none', color: 'white', opacity: '0.8' }}>User Profile</Link>
+                <Menu.Dropdown bg={'white'} style={{ borderRadius: '1rem', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+                  {/* {currentProfile.map((profile, i) => {
+                    console.log("profile", profile)
+                    return (
+                      <Menu.Item
+                        key={i}
+                        leftSection={<IconUserCircle style={{ width: '2rem', height: '2rem' }} />}
+                      >
+                        {profile.name}
+                      </Menu.Item>)
+                  })} */}
+                  <Menu.Item className={classes.logout} leftSection={<IconSettings style={{ width: '2rem', height: '2rem', color:'black', opacity:'0.8' }} />}>
+                    <Link href="/userprofile" style={{ textDecoration: 'none', color: 'black', opacity: '0.8' }}>User Profile</Link>
                   </Menu.Item>
-                  <Menu.Item leftSection={<IconLogout style={{ width: '2rem', height: '2rem' }} />} onClick={handleLogOut}>
+                  <Menu.Item style={{color:'black', opacity:'0.8'}} leftSection={<IconLogout style={{ width: '2rem', height: '2rem', color:'black', opacity:'0.8' }} />} onClick={handleLogOut}>
                     Logout
                   </Menu.Item>
                 </Menu.Dropdown>

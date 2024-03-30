@@ -73,12 +73,7 @@ export default function Login() {
                 position: "top-center",
             });
             router.push("/selectprofile");
-            Mixpanel.identify(jsonData.account._id, {
-                name: jsonData.account.name,
-                $email: jsonData.account.email,
-                dob: jsonData.account.dob,
-                phone: jsonData.account.phone,
-            });
+            Mixpanel.identify(jsonData.account._id);
             Mixpanel.track("Successful Login", {
                 name: jsonData.account.name,
                 $email: jsonData.account.email,

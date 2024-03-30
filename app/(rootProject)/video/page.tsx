@@ -126,7 +126,7 @@ const page = () => {
       </div>
 
       <div style={{ display: 'flex', width: '100%' }}>
-        <VideoPlayer ref={playerRef} ws={ws} />
+        <VideoPlayer ref={playerRef} ws={ws} Mp4={false} tier={""} videoSrc={""}/>
         {activeChat && <PartyChat ws={ws} />}
       </div>
     </div>

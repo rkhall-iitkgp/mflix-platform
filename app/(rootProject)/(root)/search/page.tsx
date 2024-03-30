@@ -120,7 +120,7 @@ export default function Search() {
     useEffect(() => {
         if (!notFound) setLoaded(false);
     }, [notFound])
-    
+
     useEffect(() => {
         if (searchParams.get("genre")) {
             fetchData(search!, {
@@ -232,6 +232,7 @@ export default function Search() {
                 Mixpanel.track("Search Movie", { query: search });
                 if (user._id) {
                     Mixpanel.people.append(user._id, "Search History", {
+                    // @ts-ignore
                         Query: search,
                         Timestamp: new Date().toISOString(),
                     });

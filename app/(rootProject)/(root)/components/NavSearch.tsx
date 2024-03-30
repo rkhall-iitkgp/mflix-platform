@@ -17,7 +17,7 @@ export default function SearchBar() {
     const { text, listen, isListening } = useVoice();
     const [listeningFront, setIsListening] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
-    console.log('search-bar')
+   
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             if (input.length > 2) {
@@ -40,7 +40,7 @@ export default function SearchBar() {
           }, 5000);
         }
         else if (text !== '') {
-            console.log("text")
+            console.log("text: ",text)
             console.log("voice: autocomplete")
             fetchAutocompleteSuggestions(text);
         }
@@ -66,6 +66,7 @@ export default function SearchBar() {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setInput(value);
+     
         fetchAutocompleteSuggestions(value);
     };
     const { classes} = useStyles();
@@ -101,8 +102,7 @@ export default function SearchBar() {
             <Menu.Dropdown>
                 {suggestions.map((item, index) => (
                     <Menu.Item key={index} component='a' href={`/search?query=${item}`} style={{
-                        // backgroundColor: 'black',
-                        // color: 'white',
+                       
                     }}>
                         {item}
                     </Menu.Item>

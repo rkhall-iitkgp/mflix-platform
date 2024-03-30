@@ -353,7 +353,8 @@ const useStyles = createStyles(() => ({
   p: {
     marginBottom: '0.75rem',
     lineHeight: '1.75rem',
-    position: 'absolute',
+    marginTop:"20%",
+    // position: 'absolute',
     transition: '0.3s ease',
   },
   movies: {
@@ -361,7 +362,7 @@ const useStyles = createStyles(() => ({
     paddingBottom: "1rem",
     display: 'flex',
     flexDirection: 'column',
-    position: 'absolute',
+    // position: 'absolute',
     top: '14%',
     overflow: 'hidden',
     gap: '.6rem',

@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import {
     TextInput,
@@ -21,6 +21,7 @@ import Questions2 from './questions2';
 import SubscriptionTables from './table';
 import { List } from '@mantine/core';
 import { SlArrowRight } from "react-icons/sl";
+import { IconPoint, IconPointFilled } from '@tabler/icons-react';
 
 
 
@@ -99,15 +100,17 @@ export default function Plan() {
             // backgroundColor:"white",
             background: "linear-gradient(45deg, rgba(43,10,53,1) 5%, rgba(143,60,205,0.7) 100%, rgba(43,10,53,1) 10%)",
             border: '1.5px solid white',
+            padding:'1rem',
             // backdropFilter:"blur(100px)",
-            boxShadow: '8px 8px 25px rgba(255, 255, 255, 0.7)',
+            boxShadow: '8px 8px 25px rgba(255, 255, 255, 0)',
         },
 
         PlanCardStylesClicked: {
             // background: "linear-gradient(to left bottom, #36005f, #522e6e, #4d246e, #4b1572, #3e1959)",
             // backdropFilter: "blur(10px)", opacity: "0.7",
-            height: '88%',
+            height: '90%',
             width: '25%',
+            padding: '1rem',
             display: 'flex',
             justifyContent: 'space-evenly',
             alignItems: 'left',
@@ -117,7 +120,7 @@ export default function Plan() {
             // background: "linear-gradient(45deg, rgba(43,10,53,1) 10%, rgba(143,60,205,1) 80%, rgba(43,10,53,1) 95%)",
             background: 'linear-gradient(45deg, rgba(43,10,53,1) 5%, rgba(143,60,205,0.7) 88%, rgba(43,10,53,1) 10%)',
             border: '1.5px solid white',
-            boxShadow: '10px 10px 25px rgba(255, 255, 255, 0.7)',
+            boxShadow: '10px 10px 25px rgba(150, 150, 255, 0.5)',
 
             // backdropFilter:"blur(100px)",
         },
@@ -170,7 +173,13 @@ export default function Plan() {
         }
     }));
  
-
+    const containerRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+      // Scroll to the container when the component mounts
+      if (containerRef.current) {
+        containerRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, []);
 
     const [planInner, setPlanInner] = useState([true, false, false]);
     const [cardPlan, setCardPlan] = useState([false, true, false]);
@@ -199,11 +208,12 @@ export default function Plan() {
         <>
             <SubscriptionTables ref={subscriptionTablesRef} cardPlan={cardPlan} />
             <Box className={classes.OuterBoxStyles}>
-                <Box className={classes.PlanBoxStyles}>
+                <Box className={classes.PlanBoxStyles} ref={containerRef}>
                     {['Monthly', 'Quarterly', 'Annually'].map((label, index) => (
                         <Box
                             key={`planInner${index}`}
                             onClick={() => handlePlanInner(index)}
+                            style={{ cursor: 'pointer' }} 
                             className={
                                 planInner[index] ? classes.PlanInnerBoxStylesClicked : classes.PlanInnerBoxStyles
                             }
@@ -220,6 +230,7 @@ export default function Plan() {
                         ['Family', 200],
                     ].map(([name, price], index) => (
                         <Box
+                            style={{ cursor: 'pointer' }}
                             key={`cardPlan${index}`}
                             onClick={() => handleCardPlan(index)}
                             className={cardPlan[index] ? classes.PlanCardStylesClicked : classes.PlanCardStyles}
@@ -234,13 +245,10 @@ export default function Plan() {
                                 <h3 style={{ marginTop: '2rem' }} >{planInner[0] ? 'month' : planInner[1] ? 'quarter' : 'year'}</h3>
                             </Box>
                             <Box className={classes.SubscriptionDetailsStyles}>
-                                <Text style={{ fontSize: '120%' }}>. Lorem ipsum dolor sit amet</Text>
-                                <Text style={{ fontSize: '120%' }}>. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
-                                <Text style={{ fontSize: '120%' }} >
-                                    . quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute{' '}
-                                </Text>
-                                <Text style={{ fontSize: '120%' }} >. cillum dolore eu fugiat nulla pariatur</Text>
+                            
+                                <Text style={{ fontSize: '120%' , alignItems:'center', display:'flex' , margin:'0.5rem' }}><IconPointFilled></IconPointFilled>{name === 'Basic' ? 'Access to Free Movies only' : name === 'Premium' ? 'Access to All movies' : 'Access to All Movies'} </Text>
+                                <Text style={{ fontSize: '120%' , alignItems:'center', display:'flex' , margin:'0.5rem' }}><IconPointFilled></IconPointFilled>{name === 'Basic' ? 'Streaming quality: 720p' : name === 'Premium' ? 'Streaming quality: 1080p HD' : 'Streaming quality : 2140p 4K'} </Text>
+                                <Text style={{ fontSize: '120%' , alignItems:'center', display:'flex' , margin:'0.5rem' }}><IconPointFilled></IconPointFilled>{name === 'Basic' ? 'Party watch not available' : name === 'Premium' ? 'Can Binge Watch with Friends' : 'Can Binge Watch with Friends'} </Text>
 
                             </Box>
                         </Box>

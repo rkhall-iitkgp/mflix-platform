@@ -16,6 +16,7 @@ import { useEffect , useState } from 'react';
 import useLoginStore from '@/Stores/LoginStore';
 import Movies from '@/assets/icons/movies.svg';
 import Section from '@/app/(rootProject)/(root)/components/Section';
+import Mixpanel from '@/components/Mixpanel';
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();
@@ -42,6 +43,17 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                 body: JSON.stringify({userId:user_id})
             })).json();
             setMovieData(res.result);
+            Mixpanel.track('Look Movie Details', {
+                title: res.result.title,
+                genres: res.result.genres,
+                cast: res.result.cast,
+                released: res.result.released,
+                languages: res.result.languages,
+                directors: res.result.directors,
+                writers: res.result.writers,
+                year: res.result.year,
+                tier: res.result.tier,
+              });
             const similar_results_url=`${url}/search/fuzzy?semantic=${res.result.plot}`
             // console.log(final_url)
             const res2 = await fetch(similar_results_url, {

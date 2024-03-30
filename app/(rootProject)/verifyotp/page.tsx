@@ -8,25 +8,26 @@ import { PinInput, darken } from '@mantine/core';
 import UserProfile from '../userprofile/page';
 
 import {
-  TextInput,
-  PasswordInput,
+  // TextInput,
+  // PasswordInput,
   Text,
-  Paper,
-  Group,
-  PaperProps,
+  // Paper,
+  // Group,
+  // PaperProps,
   Button,
-  Divider,
-  Checkbox,
-  Anchor,
-  Stack,
+  // Divider,
+  // Checkbox,
+  // Anchor,
+  // Stack,
   Flex,
   Box,
 } from '@mantine/core';
-import { GoogleButton } from '../login/GoogleButton';
+// import { GoogleButton } from '../login/GoogleButton';
 // import { TwitterButton } from './TwitterButton';
 import searchMsApiUrls from '../api/searchMsApi';
 import useLoginStore from '@/Stores/LoginStore';
 import { useRouter } from 'next/navigation';
+import Mixpanel from '@/components/Mixpanel';
 
 export default function Otp({ initialValues }: any) {
   const router = useRouter();
@@ -74,6 +75,12 @@ export default function Otp({ initialValues }: any) {
         position:"top-center"
       })
       // router.push('/userprofile');
+      Mixpanel.track('User Register', {
+        name: jsonData.account.name,
+        email: jsonData.account.email,
+        dob: jsonData.account.dob,
+        phone: jsonData.account.phone,
+      });
       if (initialValues.type == 'register') {
         useLoginStore.getState().updateUser(jsonData.account);
         const jsonDataString = JSON.stringify(jsonData.account);

@@ -173,7 +173,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     }, []);
 
     useEffect(() => {
-        let socket = new WebSocket("ws://127.0.0.1:5000");
+        let socket = new WebSocket(`ws://${process.env.NEXT_PUBLIC_STREAMING_IP}`);
         setWS(socket);
 
         socket.onopen = () => {

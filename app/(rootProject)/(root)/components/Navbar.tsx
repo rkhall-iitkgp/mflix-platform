@@ -433,13 +433,13 @@ export default function Navbar() {
             ) : (
               <Menu trigger="hover" openDelay={100} closeDelay={50} >
                 <Menu.Target>
-                  <Button bg={'none'} size={'20'} style={{ fontWeight: '400' }}>Profile</Button>
+                  <Button bg={'none'} size={'20'} mr={15} style={{ fontWeight: '400' }}>Profile</Button>
                 </Menu.Target>
 
                 <Menu.Dropdown bg={themeOptions.color.categories} style={{ borderRadius: '1rem', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
-                  {profiles.map((profile, index) => (
+                  {profiles.map((profile, i) => (
                     <Menu.Item
-                      key={index}
+                      key={i}
                       leftSection={<IconUserCircle style={{ width: '2rem', height: '2rem' }} />}
                     >
                       {profile.name}

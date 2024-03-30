@@ -7,7 +7,7 @@ import SendIcon from '@/assets/icons/send.svg'
 import DownIcon from '@/assets/icons/down.svg'
 import { useRef } from 'react'
 import { KeyboardEvent } from 'react';
-
+import Link from 'next/link'
 
 export default function Chatbot() {
     const { classes, cx } = styles();
@@ -39,7 +39,7 @@ export default function Chatbot() {
     React.useEffect(() => {
         document.getElementById("messages")?.scrollTo(0, document.getElementById("messages")?.scrollHeight!);
     }, [messages])
-
+   
     async function sendMessage() {
         setMessages(messages => [...messages, { message: input, type: 'sent' }])
         setInput('')
@@ -53,8 +53,29 @@ export default function Chatbot() {
                 body: JSON.stringify({ message: input })
             })
             const data = await response.json()
-            setMessages(messages => [...messages, { message: (data.message as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'), type: 'received' }])
+            const titleMatch = data.message.match(/\*\*(.*?)\*\*/);
+
+        let linkMessage = ''; // Initialize linkMessage to an empty string
+
+        if (titleMatch) {
+            const movieTitle = titleMatch[1];
+            const searchUrl = `/search?query=${encodeURIComponent(movieTitle)}`;
+            
+            // linkMessage = `<a id="searchLink" href="${searchUrl}" ">find more about "${titleMatch[1]}"</a>`;
+            linkMessage = `<a href="${searchUrl}" target="_blank">find more about "${titleMatch[1]}"</a>`;
+        }
+        const formattedMessage = (data.message as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      
+        // Add a line break between the formatted message and link message
+        const finalMessage = `${formattedMessage}<br>${linkMessage}`;
+            console.log("link: ",linkMessage)
+            console.log("final Message: ",finalMessage)
+            // setMessages(messages => [...messages, { message: data.message, type: 'received' }])
+            setMessages(messages => [...messages, { message: finalMessage, type: 'received' }])
+           
+            // setMessages(messages => [...messages, { message: (data.message as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'), type: 'received' }])
         } catch (error) {
+            console.log("error: ",error)
             setMessages(messages => [...messages, { message: 'Sorry, I am not able to process your request at the moment.', type: 'received' }])
         }
     }

@@ -40,7 +40,7 @@ export default function Home() {
     setIsLoggedIn(userLoggedIn);
 
     fetch(
-      process.env.NEXT_PUBLIC_BASE_URL +
+      process.env.NEXT_PUBLIC_BACKEND_URL +
         '/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=movie',
       { method: 'POST' }
     )
@@ -50,7 +50,7 @@ export default function Home() {
         setTrendingMovies(data.results);
       });
 
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/movies/awards', { method: 'GET' })
+    fetch( process.env.NEXT_PUBLIC_BACKEND_URL + '/movies/awards', { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
         console.log('data', data);

@@ -19,6 +19,7 @@ import { watch } from 'fs';
 import useLoginStore from '@/Stores/LoginStore';
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa6";
+import { FaCrown } from "react-icons/fa6";
 import { relative } from 'path';
 
 
@@ -159,6 +160,7 @@ export default function MovieContent({movieData}) {
             backgroundColor:themeOptions.color.button,
         },
         otherDetailsContainer:{
+            flex:'wrap',
             width:'fit-content',
         },
         details:{
@@ -174,7 +176,7 @@ export default function MovieContent({movieData}) {
             color:themeOptions.color.divider
         },
         creatersContainer:{
-            width: isSmallerScreen ? '11.5rem': '16.5rem',
+            width: isSmallScreen ? '11.5rem': '16.5rem',
             backgroundColor:"rgba(217,217,217,0.4)",
             color:themeOptions.color.divider,
             padding:'0.5rem 0 0.8rem 2rem',
@@ -236,7 +238,7 @@ export default function MovieContent({movieData}) {
                         <Flex className={classes.genreContainer}>
                             {movieData?.genres?.map((genre, i) =>  <p className={classes.genre}>{genre}</p>)}
                         </Flex>
-                        <Flex className={classes.otherDetailsContainer} justify='flex-start' gap={2}>
+                        <Flex className={classes.otherDetailsContainer} justify='flex-start'>
                             <Flex className={classes.details} align='center' gap={4}>
                                 <Image src={ImdbImg} component={NextImage} alt="imdb" height={17} unoptimized />
                                 <p className={classes.detailsText}>{movieData?.imdb?.rating}/10</p>
@@ -257,6 +259,10 @@ export default function MovieContent({movieData}) {
                                 <GrLocation color='white' fontSize={30}/>
                                 <p className={classes.detailsText}>{movieData?.countries}</p>
                             </Flex>
+                            {movieData.tier!= "Free" ? <Flex className={classes.details} align='center' gap={4}>
+                                <FaCrown color='white' fontSize={30}/>
+                                <p className={classes.detailsText}>{movieData?.tier}</p>
+                            </Flex> : <></>}
                         </Flex>
                         <Stack>
                             <p className={classes.plot}>{movieData?.fullplot}</p>

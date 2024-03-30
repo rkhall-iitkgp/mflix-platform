@@ -6,9 +6,7 @@ import MovieCards from '../MovieDetails/MovieCards';
 import MovieCard from '../MovieDetails/MovieCards';
 import themeOptions from '@/utils/colors';
 
-const ListMovies = ({ movieData }: { movieData: Array<any> }) => {
-  // console.log("movies",movieData);
-  movieData = movieData.slice(1);
+const ListMovies = ({ movieData }: { movieData: Array<any> }) => {  
   const uniqueMovies = Array.from(new Set(movieData.map(movie => movie.title)))
     .map(title => movieData.find(movie => movie.title === title));
 

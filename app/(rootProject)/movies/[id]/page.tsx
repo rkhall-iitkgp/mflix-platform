@@ -37,7 +37,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                 body: JSON.stringify({userId:user_id})
             })).json();
             setMovieData(res.result);
-            const similar_results_url=`${url}/search/semantic?query=${res.result.plot}`
+            const similar_results_url=`${url}/search/fuzzy?semantic=${res.result.plot}`
             // console.log(final_url)
             const res2 = await fetch(similar_results_url, {
                 method: 'POST',

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card, Image, Text, Group, AspectRatio, ActionIcon, Skeleton } from '@mantine/core';
+import { Card, Image, Text, Group, AspectRatio, ActionIcon, Skeleton, Badge } from '@mantine/core';
 import NextImage, { StaticImageData } from 'next/image';
 import { HiHeart } from 'react-icons/hi';
 import noImage from '@/assets/images/no-image.jpg';
@@ -12,8 +12,6 @@ const useStyles = createStyles(() => ({
   card: {
     backgroundColor: 'transparent', // Base background
     color: themeOptions.color.normalTextColor, // Base text color
-    transition: 'background-color 0.2s ease-in-out, color 0.2s ease-in-out', // Transition for hover
-    padding: '0px',
     borderRadius: '16px',
     '&:hover': { // Hover styles
         transform: 'scale(1.05)', 
@@ -34,6 +32,7 @@ interface MovieProps {
     tomatoes: any;
     countries: Array<string>;
     score: number;
+    tier: string;
 }
 
 const DataLoader: React.FC = () => (
@@ -72,6 +71,7 @@ const MovieCard: React.FC<MovieProps> = (props) => {
         imdb,
         tomatoes,
         countries,
+        tier,
     } = props;
     const [loading, setLoading] = useState(true);
     const [src, setSrc] = useState<string | StaticImageData>(poster);
@@ -142,10 +142,11 @@ const MovieCard: React.FC<MovieProps> = (props) => {
                 </Group>
 
                     <Text fz={themeOptions.fontSize.xs} c={themeOptions.color.dimmed}>
-                        {genres.join(', ')}
+                        {genres?.length ? genres.join(', ') : 'Comedy'}
                     </Text>
-
+                    
                     {/* <Favourite favourite={favourite} /> */}
+                    <Badge color={themeOptions.color.smallBox} size="xl" pos="absolute" left={20} top={20}>{tier}</Badge>
                 </>}
         </Card>
     );

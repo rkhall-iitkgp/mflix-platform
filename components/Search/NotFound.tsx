@@ -97,7 +97,7 @@ const NotFound: React.FC<{ search: string | null }> = ({ search }) => {
 				<UnstyledButton  fz={themeOptions.fontSize.md} onClick={() => setValue('')}>Cancel</UnstyledButton>
 				<Button radius={12} ml={20} size="lg" pl={45} pr={45} bg={themeOptions.color.smallBox} p={10}>Submit</Button>
 			</Group>
-			<Space h={themeOptions.fontSize.xxl}/>
+			<Space h={themeOptions.fontSize.l}/>
 			<Text fz={themeOptions.fontSize.xl}>You may also like:</Text>
 			{trending.length ?
 			<Carousel nextPage={nextPage}>

@@ -11,35 +11,7 @@ import { theme } from "@/theme";
 import themeOptions from "@/utils/colors";
 const Favorites = () => {
     const base_url = searchMsApiUrls();
-    const [movies, setMovies] = useState([
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-    ]);
+    const [movies, setMovies] = useState([])
     useEffect(() => {
         const state = useLoginStore.getState();
         const user_id = state.userProfiles[0]._id;
@@ -93,12 +65,19 @@ const Favorites = () => {
             </div> */}
             <div className={classes.FavouritesCards}>
 
-                {movies.length !== 0 ? (
+                {/* {movies.length !== 0 ? (
                     movies.map(movie => (
                         <MovieCard key={movie.id} data={movie} />
                     ))
                 ) : (
-                    <h1 style={{ color: themeOptions.color.button, margin: 'auto' }}>No favourites found</h1>
+                    
+                )} */}
+                {movies && movies.length !== 0 ? (
+                    movies.map((movie: any) => (
+                        <MovieCard key={movie.id} data={movie} />
+                    ))
+                ) : (
+                    < h1 style={{ color: themeOptions.color.button, margin: 'auto' }}>No favourites found</h1>
                 )}
             </div>
         </div>

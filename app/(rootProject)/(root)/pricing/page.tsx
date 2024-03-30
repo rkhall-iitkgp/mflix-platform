@@ -48,7 +48,7 @@ const Pricing = () => {
                     <Box className={classes.BannerTextStyles} >
                         <Text style={{ color: 'white', fontSize: '3.5rem', fontWeight: 'bold', lineHeight: '4.0rem', maxWidth: '30rem' }} >Watch without limits.</Text>
                         <Text style={{ color: themeOptions.color.textColorNormal, fontSize: '1.6rem', width: '80%' }} >Try our premium plans starting at just $5</Text>
-                        <Button style={{ backgroundColor: themeOptions.color.smallBox, maxWidth: '8rem' }} >View All Plans</Button>
+                        <Button style={{ backgroundColor: themeOptions.color.smallBox, maxWidth: '8rem' }}  ><a style={{ textDecoration: 'none', color: 'white' }} href="#pricing">View All Plans</a> </Button>
                         <Text size="0.6rem" c={'white'} >*Terms and Condition applied</Text>
                     </Box>
                 </Box>

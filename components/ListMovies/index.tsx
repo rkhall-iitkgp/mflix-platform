@@ -6,8 +6,10 @@ import MovieCards from '../MovieDetails/MovieCards';
 import MovieCard from '../MovieDetails/MovieCards';
 import themeOptions from '@/utils/colors';
 
-const ListMovies = ({ movieData }: { movieData: Array<any> }) => {
-  // console.log("movies",movieData);
+const ListMovies = ({ movieData }: { movieData: Array<any> }) => {  
+  const uniqueMovies = Array.from(new Set(movieData.map(movie => movie.title)))
+    .map(title => movieData.find(movie => movie.title === title));
+
   const useStyles = createStyles(() => ({
     MovieListContainer: {
       display: 'flex',
@@ -111,9 +113,23 @@ const ListMovies = ({ movieData }: { movieData: Array<any> }) => {
   return (
     <div className={MovieListContainer} ref={scrollRef} onScroll={handleScroll}>
       <div className={MovieListBox}>
-        {movieData.map((movie, i) => {
-          return <MovieCard data={movie} />;
-        })}
+        {uniqueMovies.map((movie, i) => (
+          <MovieCard key={i} data={movie} />
+        ))}
+      </div>
+      <div className={MovieListNavigation}>
+        {showFirstArrow ? (
+          <div onClick={handleScrollLeft} className={MovieListLeftArrow}>
+            <FaChevronLeft style={{ height: '50px', width: '100px' }} />
+          </div>
+        ) : (
+          <div></div>
+        )}
+        {showSecondArrow && (
+          <div onClick={handleScrollRight} className={MovieListRightArrow}>
+            <FaChevronRight style={{ height: '50px', width: '100px' }} />
+          </div>
+        )}
       </div>
       {movieData.length === 0 ? (
         <div

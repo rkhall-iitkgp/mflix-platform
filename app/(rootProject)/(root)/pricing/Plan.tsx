@@ -3,6 +3,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { loadStripe } from "@stripe/stripe-js";
+import Mixpanel from '@/components/Mixpanel';
 import {
     TextInput,
     PasswordInput,
@@ -282,6 +283,15 @@ export default function Plan() {
                 if (result?.error) {
                     console.log(result?.error, 'error with response');
                 }
+                Mixpanel.track("New Payment", {
+                    renewalType: renewal[time],
+                    tierId: pricing[3 - selected]._id,
+                    userid: user._id,
+                    email: user.email,
+                    PaymentMethod: "Credit Card",
+
+                });
+
             } else {
                 // Handle error response
                 console.error('Error:');

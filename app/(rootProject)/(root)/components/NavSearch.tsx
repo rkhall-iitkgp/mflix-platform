@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import searchMsApiUrls from '@/app/api/searchMsApi';
 import { Menu } from '@mantine/core'
 import { useEventListener } from '@mantine/hooks'
+import themeOptions from '@/utils/colors'
 
 
 export default function SearchBar() {
@@ -67,7 +68,7 @@ export default function SearchBar() {
                     <Image src={MicIcon} alt="Mic" style={styles.mic} />
                 </div>
             </Menu.Target>
-            <Menu.Dropdown>
+            <Menu.Dropdown bg={themeOptions.color.categories}>
                 {suggestions.map((item, index) => (
                     <Menu.Item key={index} component='a' href={`/search?query=${item}`} style={{
                         // backgroundColor: 'black',

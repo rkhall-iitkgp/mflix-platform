@@ -21,10 +21,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { classes } = styles();
   return (
     <ScrollArea type='hover'>
-      <SearchBar
-        setSemanticSearchResults={setSemanticSearchResults}
-        setFuzzySearchResults={setFuzzySearchResults}
-        setLength={setLength}
+      <Navbar
+        // setSemanticSearchResults={setSemanticSearchResults}
+        // setFuzzySearchResults={setFuzzySearchResults}
+        // setLength={setLength}
       />
       <main className={classes.mainStyles}>
         {children}

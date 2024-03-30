@@ -55,7 +55,7 @@ export default function Login() {
       toast.success("LogIn Successful!",{
         position:"top-center"
       })
-      router.push("/userprofile");
+      router.push("/selectprofile");
       Mixpanel.identify(jsonData.account._id);
       Mixpanel.register({
         $name: jsonData.account.name,
@@ -90,7 +90,7 @@ export default function Login() {
       const state = useLoginStore.getState();
       console.log(state);
       console.log(local);
-      router.push('/userprofile')
+      router.push('/selectprofile')
     }
 
     // if (!jsonData.account.userProfiles.length) {

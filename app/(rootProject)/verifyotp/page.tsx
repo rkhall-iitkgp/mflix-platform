@@ -89,13 +89,13 @@ export default function Otp({ initialValues }: any) {
         const state = useLoginStore.getState();
         console.log(state);
         console.log(local);
-        router.push('/userprofile')
+        router.push('/selectprofile')
       } 
       // else if (initialValues.type == 'forget') {
       //   router.push('/login');
       // } 
       else if (initialValues.type == 'change') {
-        router.push('/userprofile'); 
+        router.push('/selectprofile'); 
       }
     }
   };

@@ -27,6 +27,7 @@ interface MovieProps {
     tomatoes: Object;
     countries: Array<string>;
     score: number;
+    tier: string;
 }
 
 const useStyles = createStyles(() => ({
@@ -47,8 +48,6 @@ const useStyles = createStyles(() => ({
             transform: 'scale(1.1)', // Adjust as needed
         },
     }
-
-
 }));
 
 const dummyCardMovie = () => ({
@@ -68,6 +67,7 @@ const dummyCardMovie = () => ({
             rating: 4
         }
     },
+    tier: "Free",
 });
 
 const initDetails = (n: number) =>
@@ -101,18 +101,19 @@ export default function Search() {
     useEffect(() => {
         if (!notFound) setLoaded(false);
     }, [notFound])
-    // useEffect(() => {
-    //     if (searchParams.get("genre")) {
-    //         fetchData(search!, {
-    //             genres: [searchParams.get("genre")!.charAt(0).toUpperCase() + searchParams.get("genre")!.slice(1)],
-    //         });
-    //     }
-    //     else if (searchParams.get("language")) {
-    //         fetchData(search!, {
-    //             languages: [searchParams.get("language")!.charAt(0).toUpperCase() + searchParams.get("language")!.slice(1)],
-    //         });
-    //     }
-    // }, [searchParams])
+    
+    useEffect(() => {
+        if (searchParams.get("genre")) {
+            fetchData(search!, {
+                genres: [searchParams.get("genre")!.charAt(0).toUpperCase() + searchParams.get("genre")!.slice(1)],
+            });
+        }
+        else if (searchParams.get("language")) {
+            fetchData(search!, {
+                languages: [searchParams.get("language")!.charAt(0).toUpperCase() + searchParams.get("language")!.slice(1)],
+            });
+        }
+    }, [searchParams])
 
     const getData = async (page: number) => {
         const res = await (await fetch(
@@ -138,7 +139,6 @@ export default function Search() {
         arr.length % n === 0 ? arr : arr.concat(Array(n - (arr.length % n)).fill(null));
 
     const fetchData = async (search: string, filters: any = {}) => {
-        setLoaded(false);
         setFilters(filters);
         const data: Array<MovieProps> = [];
         for (let page = 0; page < 2; page++) {
@@ -177,7 +177,8 @@ export default function Search() {
             }
         }
         console.log('here');
-        setLoaded((prev) => true);
+        setLoaded(true);
+        console.log(loaded);
     };
 
     useEffect(() => {

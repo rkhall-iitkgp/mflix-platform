@@ -8,6 +8,7 @@ import DownIcon from '@/assets/icons/down.svg'
 import { useRef } from 'react'
 import { KeyboardEvent } from 'react';
 import Link from 'next/link'
+import themeOptions from '@/utils/colors'
 
 export default function Chatbot() {
     const { classes, cx } = styles();
@@ -136,7 +137,8 @@ const styles = createStyles((theme) => ({
     },
     chatbotHeader: {
         padding: "1rem",
-        background: "linear-gradient(149.93deg, #580099 8.93%, #9441D0 50.35%, #580099 84.24%)",
+        // background: "linear-gradient(149.93deg, #00664A 8.93%, #163D24 50.35%, #00664A 84.24%)",
+        background: themeOptions.color.button,
         justifyContent: "space-between !important",
         p: {
             margin: 0,
@@ -149,7 +151,7 @@ const styles = createStyles((theme) => ({
         borderTop: "1px solid #ADADAD",
     },
     body: {
-        backgroundColor: "#333333",
+        backgroundColor: themeOptions.color.categories,
         width: "20rem",
     },
     input: {

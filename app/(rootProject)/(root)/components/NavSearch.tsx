@@ -5,7 +5,6 @@ import XMarkIcon from '@/assets/icons/xmark.svg'
 import MicIcon from '@/assets/icons/mic.svg'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import searchMsApiUrls from '@/app/api/searchMsApi';
 import { Menu } from '@mantine/core'
 import { useEventListener } from '@mantine/hooks'
 

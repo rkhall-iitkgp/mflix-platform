@@ -9,6 +9,7 @@ type State = {
     payments: any[];
     userProfiles: any[];
     activeLogins: string[];
+    activeUser: string,
     subscriptionTier: {
         bill: string,
         tier: {
@@ -37,6 +38,7 @@ const useLoginStore = create<State & Action>((set) => ({
     payments: [],
     userProfiles: [],
     activeLogins: [],
+    activeUser: "",
     subscriptionTier: {
         bill: "",
         tier: {
@@ -48,8 +50,6 @@ const useLoginStore = create<State & Action>((set) => ({
             tier: "",
             __v: 0,
             _id: "",
-
-
         }
     },
     updateUser: (newUser) => set(() => ({ ...newUser })),

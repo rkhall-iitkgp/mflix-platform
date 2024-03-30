@@ -86,7 +86,8 @@
     align-items: center;
     width: 100%;
     padding: 0rem 1rem;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(2px);
 }
 .durations {
     color: white;

@@ -26,8 +26,6 @@ interface User {
 }
 
 interface PlayerState {
-  ws: WebSocket | null;
-  setWS: () => void;
   activeChat: boolean;
   toggleChat: (newstate: boolean | undefined) => void;
   messageChain: Message[];
@@ -46,17 +44,18 @@ interface PlayerState {
 
   currentTime: number;
   setCurrentTime: (time: number) => void;
+
+  isHost: boolean;
+  setHost: (host: boolean) => void;
+
+  allowedControls: boolean;
+  setAllowedControls: (state: boolean) => void;
+
+  room: string | null;
+  setRoom: (str: string | null) => void;
 }
 
 const usePlayerStore = create<PlayerState>((set) => ({
-  ws: null,
-  setWS: () => {
-    let socket = new WebSocket('ws://127.0.0.1:5000');
-    socket.onopen = () => {
-      console.log('WebSocket connected');
-      set(() => ({ ws: socket }));
-    };
-  },
   activeChat: false,
   toggleChat: (newstate) =>
     set((state) => ({ activeChat: newstate !== undefined ? newstate : !state.activeChat })),
@@ -87,6 +86,21 @@ const usePlayerStore = create<PlayerState>((set) => ({
   currentTime: 0,
   setCurrentTime: (newtime) => {
     set(() => ({ currentTime: newtime }));
+  },
+
+  isHost: true,
+  setHost: (host) => {
+    set(() => ({ isHost: host }));
+  },
+
+  room: null,
+  setRoom: (str) => {
+    set(() => ({ room: str }));
+  },
+
+  allowedControls: true,
+  setAllowedControls: (state) => {
+    set(() => ({ allowedControls: state }));
   },
 }));
 

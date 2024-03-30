@@ -18,7 +18,7 @@ import { useHover } from '@mantine/hooks';
 import usePlayerStore from '@/Stores/PlayerStore';
 import useForwardRef from '@/utils/useForwardRef';
 
-type Props = { ws: WebSocket | null };
+type Props = { ws: WebSocket };
 const videoSrc = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
 
 const VideoPlayer = forwardRef<HTMLVideoElement, Props>(({ ws }: Props, ref) => {
@@ -51,6 +51,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(({ ws }: Props, ref) => 
   // Zustand states
   const {
     isChatFocused,
+    allowedControls,
     toggleChat,
     isPlaying,
     setIsPlaying,
@@ -58,6 +59,8 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(({ ws }: Props, ref) => 
     currentTime: storeCurrentTime,
     setCurrentTime: storeSetCurrentTime,
     appendMessage,
+    isHost,
+    room,
   } = usePlayerStore();
 
   const seekPlayerToLocation = (e: any) => {
@@ -69,7 +72,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(({ ws }: Props, ref) => 
       if (percentage > 100) percentage = 100;
       progressRef.current.style.width = `${percentage}%`;
       playerRef.current!.currentTime = (percentage / 100) * playerRef.current!.duration;
-      storeSetCurrentTime(playerRef.current!.currentTime);
+      ws.send(JSON.stringify({ type: 'seek', seekTime: playerRef.current!.currentTime }));
     }
   };
 
@@ -84,10 +87,14 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(({ ws }: Props, ref) => 
     }
   };
 
-  const togglePlayState = (state?: boolean) => {
+  const togglePlayState = (state: boolean) => {
     if (playerRef.current) {
-      setIsPlaying(!isPlaying);
-      ws?.send(JSON.stringify({ type: 'play_pause', isPlaying: !isPlaying }));
+      console.log({ isHost, allowedControls, room });
+      if (!isHost && !allowedControls) return;
+      if (isHost || allowedControls || !room) {
+        setIsPlaying(state);
+        ws.send(JSON.stringify({ type: 'play_pause', isPlaying: state }));
+      }
     }
   };
 
@@ -113,26 +120,24 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(({ ws }: Props, ref) => 
     if (!playerRef.current) return;
     playerRef.current.currentTime += 15;
     storeSetCurrentTime(playerRef.current!.currentTime);
-    ws?.send(
+    ws!.send(
       JSON.stringify({
         type: 'seek',
         username,
         seekTime: playerRef.current.currentTime,
-        currentTime: playerRef.current.currentTime,
       })
     );
   };
 
   const seekBackward = () => {
     if (!playerRef.current) return;
-    playerRef.current.currentTime;
+    playerRef.current.currentTime -= 15;
     storeSetCurrentTime(playerRef.current!.currentTime);
-    ws?.send(
+    ws!.send(
       JSON.stringify({
         type: 'seek',
         username,
-        seekTime: playerRef.current.currentTime - 15,
-        currentTime: playerRef.current.currentTime,
+        seekTime: playerRef.current.currentTime,
       })
     );
   };
@@ -207,7 +212,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(({ ws }: Props, ref) => 
     };
 
     const mouseUp = () => {
-      ws?.send(JSON.stringify({ type: 'seek', seekTime: playerRef.current.currentTime }));
+      if (ws) ws.send(JSON.stringify({ type: 'seek', seekTime: playerRef.current.currentTime }));
       setSeeking(false);
     };
 
@@ -388,7 +393,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(({ ws }: Props, ref) => 
                 height={25}
                 className={style.icon}
                 style={{ scale: 1.2 }}
-                onClick={() => togglePlayState()}
+                onClick={() => togglePlayState(false)}
               />
             ) : (
               <Image
@@ -398,7 +403,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(({ ws }: Props, ref) => 
                 height={25}
                 className={style.icon}
                 style={{ scale: 1.2 }}
-                onClick={() => togglePlayState()}
+                onClick={() => togglePlayState(true)}
               />
             )}
 

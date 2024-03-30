@@ -8,7 +8,7 @@ import usePlayerStore from '@/Stores/PlayerStore';
 
 const SettingsTab = () => {
   const linkRef = useRef<HTMLInputElement>(null);
-  const { users } = usePlayerStore();
+  const { users, allowedControls, setAllowedControls } = usePlayerStore();
   useEffect(() => {
     if (linkRef.current) {
       linkRef.current.value = 'https://meet.google.com/abc-defg-hij';
@@ -32,7 +32,15 @@ const SettingsTab = () => {
         </div>
         <div className={style.controls}>
           <h3 className={style.heading}>Watch Controls</h3>
-          <Switch labelPosition="left" color="purple" label="Anyone can pause video" />
+          <Switch
+            checked={allowedControls}
+            onChange={(e) => {
+              setAllowedControls(e.currentTarget.checked);
+            }}
+            labelPosition="left"
+            color="purple"
+            label="Anyone can pause video"
+          />
         </div>
         <div className={style.details}>
           <h3 className={style.heading}>Details</h3>

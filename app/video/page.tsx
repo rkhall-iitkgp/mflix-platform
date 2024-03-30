@@ -6,7 +6,16 @@ import VideoPlayer from '@/components/VPlayer';
 import { useEffect, useRef, useState } from 'react';
 
 const page = () => {
-  const { activeChat, setUsername, appendMessage, toggleChat, setIsPlaying } = usePlayerStore();
+  const {
+    activeChat,
+    setUsername,
+    appendMessage,
+    toggleChat,
+    username,
+    setIsPlaying,
+    setHost,
+    setRoom,
+  } = usePlayerStore();
   const [ws, setWS] = useState<WebSocket | null>(null);
   const playerRef = useRef<HTMLVideoElement>(null);
 
@@ -26,10 +35,11 @@ const page = () => {
       const data = JSON.parse(event.data);
       switch (data.type) {
         case 'room_created':
-          // TODO : Send Link to Email
           console.log({ room_created: data });
           alert(`Room created. Code: ${data.roomCode}`);
           toggleChat(true);
+          setHost(true);
+          setRoom(data.roomCode);
           console.log(activeChat);
           appendMessage({ type: 'notification', text: `Room has been created` });
           break;
@@ -37,7 +47,9 @@ const page = () => {
         case 'joined_room':
           console.log({ joined_room: data });
           appendMessage({ type: 'notification', text: `${data.username} joined the room` });
+          setHost(data.creator.username == username);
           toggleChat(true);
+          setRoom(data.roomCode);
           break;
 
         case 'play_pause':
@@ -84,6 +96,8 @@ const page = () => {
       setWS(null);
     };
   }, []);
+
+  if (!ws) return;
 
   return (
     <div style={{ display: 'flex' }}>

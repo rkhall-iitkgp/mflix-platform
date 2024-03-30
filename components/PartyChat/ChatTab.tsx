@@ -6,27 +6,9 @@ import style from './PartyChat.module.css';
 import { useEffect, useRef, useState } from 'react';
 // import { ws } from '@/Stores/WSStore';
 
-const ChatTab = () => {
+const ChatTab = ({ ws }: { ws: WebSocket }) => {
   const { messageChain, username, setChatFocus, isChatFocused } = usePlayerStore();
   const messageRef = useRef<HTMLInputElement>(null);
-  const [ws, setWS] = useState<WebSocket | null>(null);
-
-  useEffect(() => {
-    let socket = new WebSocket('ws://127.0.0.1:5000');
-
-    socket.onopen = () => {
-      console.log('WebSocket connected');
-      setWS(socket)
-    };
-
-    socket.onclose = () => {
-      console.log('WebSocket disconnected');
-    };
-
-    return () => {
-      socket.close();
-    };
-  }, []);
 
   return (
     <>

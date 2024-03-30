@@ -136,7 +136,7 @@ const styles = createStyles((theme) => ({
     },
     chatbotHeader: {
         padding: "1rem",
-        background: "linear-gradient(149.93deg, #580099 8.93%, #9441D0 50.35%, #580099 84.24%)",
+        background: "linear-gradient(149.93deg, #580099 8.93%, #00664A 50.35%, #580099 84.24%)",
         justifyContent: "space-between !important",
         p: {
             margin: 0,

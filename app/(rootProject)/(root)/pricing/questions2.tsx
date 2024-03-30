@@ -33,7 +33,7 @@ const Questions2 = () => {
           justifyContent: 'flex-start',
           alignItems: 'center',
           width: '80vw',
-        //  border: '1px solid #7012b6',
+        //  border: '1px solid #00664A',
         borderBottom: '1px solid black',
          background:'rgba(45 ,45 ,45 , 0.8)',
          padding: '0 ',
@@ -47,7 +47,7 @@ const Questions2 = () => {
           display: 'flex',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          border: '1.5px solid #7012b6',
+          border: '1.5px solid #00664A',
           width: '95%',
           padding: '1rem',
           color: theme.white,
@@ -116,7 +116,7 @@ const Questions2 = () => {
               <GoPlus
                 style={{
                   color: 'white',
-                  backgroundColor: '#7012b6',
+                  backgroundColor: '#00664A',
                   borderRadius:'.1rem',
                   padding:'1rem',
                   fontSize: '1.5rem',
@@ -129,7 +129,7 @@ const Questions2 = () => {
               <GoX
                 style={{
                   color: 'white',
-                  backgroundColor: '#7012b6',
+                  backgroundColor: '#00664A',
                   fontSize: '1rem',
                   borderRadius:'.1rem',
                   padding:'1rem',

@@ -177,7 +177,7 @@ export default function Login() {
     ButtonStyles: {
       width: '70%',
       height: '3.5rem',
-      backgroundColor: '#9441D0',
+      backgroundColor: '#00664A',
       borderRadius: '1rem',
       fontSize: '1.5rem',
       fontWeight: 'normal',
@@ -307,7 +307,7 @@ export default function Login() {
             style={{
               width: '70%',
               height: '3rem',
-              backgroundColor: '#9441D0',
+              backgroundColor: '#00664A',
               borderRadius: '1rem',
               fontSize: '1.1rem',
               fontWeight: 'normal',

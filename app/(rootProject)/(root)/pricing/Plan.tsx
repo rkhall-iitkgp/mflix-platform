@@ -50,7 +50,7 @@ export default function Plan() {
             flexDirection: 'row',
             justifyContent: 'space-around',
             alignItems: 'center',
-            border: '2.5px solid #7012b6',
+            border: '2.5px solid #00664A',
             width: '40%',
             height: '10%',
             borderRadius: '15px',
@@ -77,7 +77,7 @@ export default function Plan() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#7012b6',
+            backgroundColor: '#00664A',
         },
 
         CardOuterBoxStyles: {
@@ -149,7 +149,7 @@ export default function Plan() {
             display: 'flex',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            border: '1.5px solid #7012b6',
+            border: '1.5px solid #00664A',
             width: '90%',
             padding: '0.5rem',
         },
@@ -212,7 +212,7 @@ export default function Plan() {
 
     const getPlanDetails = async () => {
         console.log(process.env.URL)
-        let res = await fetch(`${process.env.NEXT_PUBLIC_URL}/payment/details`, {
+        let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/payment/details`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -251,7 +251,7 @@ export default function Plan() {
             //const authToken = localStorage.getItem('authToken');
 
             // Make the API call with the authentication token in the headers
-            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/payment/create-checkout-session`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/payment/create-checkout-session`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -266,7 +266,7 @@ export default function Plan() {
                         renewalType: renewal[time],
                         tierId: pricing[3 - selected]._id,
                     },
-                    redirectURL: process.env.FRONTEND_URL,
+                    redirectURL: process.env.NEXT_PUBLIC_BACKEND_URL,
                 }),
                 credentials: 'include',
             });
@@ -355,7 +355,7 @@ export default function Plan() {
                         </Box>
                     ))}
                 </Box>
-                <Button style={{ color: 'white', background: '#5e2787', height: '3.6rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem', }} onClick={() => { handlePayment() }}>
+                <Button style={{ color: 'white', background: '#00664A', height: '3.6rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem', }} onClick={() => { handlePayment() }}>
                     Continue with Plan <SlArrowRight className={classes.ArrowStyles}></SlArrowRight>
                 </Button>
             </Box>

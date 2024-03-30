@@ -101,7 +101,7 @@ const ForgetPassword = (props: any) => {
     ButtonStyles: {
       width: '70%',
       height: '3.5rem',
-      backgroundColor: '#9441D0',
+      backgroundColor: '#00664A',
       borderRadius: '1rem',
       fontSize: '1.5rem',
       fontWeight: 'normal',
@@ -262,7 +262,7 @@ const ForgetPassword = (props: any) => {
                 style={{
                   width: '70%',
                   height: '3.5rem',
-                  backgroundColor: '#9441D0',
+                  backgroundColor: '#00664A',
                   borderRadius: '1rem',
                   fontSize: '1.5rem',
                   fontWeight: 'n]=ormal',

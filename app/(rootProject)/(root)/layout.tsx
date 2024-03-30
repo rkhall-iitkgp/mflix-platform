@@ -7,6 +7,7 @@ import { ScrollArea } from '@mantine/core'
 import Search from './search/page'
 import SearchBar from './components/NavSearch'
 import { useState } from 'react'
+import Chatbot from './components/Chatbot'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [semanticSearchResults, setSemanticSearchResults] = useState<any[]>([]);
@@ -29,6 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Navbar/>
       <main className={classes.mainStyles}>
         {children}
+        <Chatbot />
       </main>
       <Footer />
     </ScrollArea>

@@ -66,7 +66,6 @@ const SubscriptionTable = ({ cardPlan }: any) => {
             premium: <CustomTickIcon />,
             family: <CustomTickIcon />,
         },
-        // Add more features here
     ];
     return (
         <Box style={{ marginTop: '1rem', backgroundColor: 'black', height: '25rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }} id='pricing'>

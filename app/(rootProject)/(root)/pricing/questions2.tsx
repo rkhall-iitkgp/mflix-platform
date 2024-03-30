@@ -4,6 +4,7 @@ import { GoPlus, GoX } from 'react-icons/go';
 import { createStyles } from '@mantine/styles';
 import plus from '@/assets/icons/plus.svg';
 import Image from 'next/image';
+import themeOptions from '@/utils/colors';
 const questions = [
   {
       value: '01',
@@ -116,7 +117,7 @@ const Questions2 = () => {
               <GoPlus
                 style={{
                   color: 'white',
-                  backgroundColor: '#7012b6',
+                  backgroundColor: themeOptions.color.button,
                   borderRadius:'.1rem',
                   padding:'1rem',
                   fontSize: '1.5rem',
@@ -129,7 +130,7 @@ const Questions2 = () => {
               <GoX
                 style={{
                   color: 'white',
-                  backgroundColor: '#7012b6',
+                  backgroundColor: themeOptions.color.button,
                   fontSize: '1rem',
                   borderRadius:'.1rem',
                   padding:'1rem',

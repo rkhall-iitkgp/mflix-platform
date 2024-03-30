@@ -22,7 +22,7 @@ import SubscriptionTables from './table';
 import { List } from '@mantine/core';
 import { SlArrowRight } from "react-icons/sl";
 import { IconPoint, IconPointFilled } from '@tabler/icons-react';
-
+import themeOptions from '@/utils/colors';
 
 
 export default function Plan() {
@@ -47,7 +47,7 @@ export default function Plan() {
             flexDirection: 'row',
             justifyContent: 'space-around',
             alignItems: 'center',
-            border: '2.5px solid #7012b6',
+            border: `2.5px solid ${themeOptions.color.button}`,
             width: '40%',
             height: '10%',
             borderRadius: '15px',
@@ -74,7 +74,7 @@ export default function Plan() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#7012b6',
+            backgroundColor: themeOptions.color.button,
         },
 
         CardOuterBoxStyles: {
@@ -85,7 +85,7 @@ export default function Plan() {
             justifyContent: 'space-evenly',
             alignItem: 'center',
             flexDirection: 'row',
-            color: 'white',
+            color: themeOptions.color.divider,
 
         },
 
@@ -98,7 +98,7 @@ export default function Plan() {
             flexDirection: 'column',
             borderRadius: '15px',
             // backgroundColor:"white",
-            background: "linear-gradient(45deg, rgba(43,10,53,1) 5%, rgba(143,60,205,0.7) 100%, rgba(43,10,53,1) 10%)",
+            background: "linear-gradient(45deg, #014331 5%, #0D8766 100%, #022B1F 10%)",
             border: '1.5px solid white',
             padding:'1rem',
             // backdropFilter:"blur(100px)",
@@ -118,7 +118,7 @@ export default function Plan() {
             borderRadius: '15px',
             // backgroundColor:"white",
             // background: "linear-gradient(45deg, rgba(43,10,53,1) 10%, rgba(143,60,205,1) 80%, rgba(43,10,53,1) 95%)",
-            background: 'linear-gradient(45deg, rgba(43,10,53,1) 5%, rgba(143,60,205,0.7) 88%, rgba(43,10,53,1) 10%)',
+            background: 'linear-gradient(45deg, #014331 5%, #0D8766 88%, #022B1F 10%)',
             border: '1.5px solid white',
             boxShadow: '10px 10px 25px rgba(150, 150, 255, 0.5)',
 
@@ -146,7 +146,7 @@ export default function Plan() {
             display: 'flex',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            border: '1.5px solid #7012b6',
+            border: `1.5px solid ${themeOptions.color.button}`,
             width: '90%',
             padding: '0.5rem',
         },
@@ -254,7 +254,7 @@ export default function Plan() {
                         </Box>
                     ))}
                 </Box>
-                <Button style={{ color: 'white', background: '#5e2787', height: '3.6rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem', }}>
+                <Button style={{ color: 'white', background: themeOptions.color.button, height: '3.6rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem', }}>
                     Continue with Plan <SlArrowRight className={classes.ArrowStyles}></SlArrowRight>
                 </Button>
             </Box>

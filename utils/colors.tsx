@@ -1,16 +1,16 @@
 const themeOptions = {
     color: {
-        button: '#7011B6',
+        button: '#00664A',
         divider: '#FFFFFF',
         largeBox: '#BFBFBF',
-        smallBox: '#9341D0',
-        textColorNormal: '#9441D0',
+        smallBox: '#00664A',
+        textColorNormal: '#00664A',
         insideTextColor: '#828282',
         normalTextColor: '#FFFFFF',
         dimmed: '#9CA3AF',
-        background: '#0B0212',
+        background: '#000D12',
         black:'rgba(0,0,0)',
-        categories:'#0A0315'
+        categories:'#081216'
     },
     fontSize: {
         xs: '0.75rem',

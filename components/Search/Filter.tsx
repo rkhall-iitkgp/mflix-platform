@@ -44,11 +44,11 @@ const useStyles = createStyles(() =>
 
     },
     outer: {
-        position: 'absolute',
+        // position: 'absolute',
         top: '100%',
         left: 0,
         width: '100%',
-        background: 'rgba(0, 0, 0, 0.8)',
+        // background: 'rgba(0, 0, 0, 0.8)',
         height: 'fit-content',
         display: 'flex',
         alignItems: 'center',
@@ -84,7 +84,7 @@ const useStyles = createStyles(() =>
 
 export default function Filter({ fetchData }: { fetchData(searchTerm: string, filters: any): Promise<void> }) {
     const { classes } = useStyles();
-    const [isToggled, setIsToggled] = useState(false);
+    // const [isToggled, setIsToggled] = useState(false);
     const searchParams = useSearchParams();
     const search = searchParams.get('query');
 
@@ -108,10 +108,10 @@ export default function Filter({ fetchData }: { fetchData(searchTerm: string, fi
         await fetchData(search, body);
     }
 
-    const handleToggle = async () => {
-        setIsToggled((prev) => !prev);
-        return await fetch("hey")
-    };
+    // const handleToggle = async () => {
+    //     setIsToggled((prev) => !prev);
+    //     return await fetch("hey")
+    // };
     const [showDropdown, setShowDropdown] = useState(false);
 
     const toggleDropdown = () => {
@@ -126,68 +126,66 @@ export default function Filter({ fetchData }: { fetchData(searchTerm: string, fi
     return (
         <header className={classes.header}>
             <div className={classes.body}>
-                <div onClick={handleToggle} className={classes.inner}>
+                {/* <div className={classes.inner}>
                     <Image src={FilterIcon} className={classes.FilterIcon} alt='' />
                     <div className={classes.filter}>Filter</div>
-                </div>
-                {isToggled &&
-                    <div className={classes.outer}>
-                        <Grid w="100%" justify="flexStart" align="stretch" overflow="hidden">
-                            {/* {Object.keys(Data).map((key, index) => ( // Iterate over the keys of Data
+                </div> */}
+                <div className={classes.outer}>
+                    <Grid w="100%" justify="flexStart" align="stretch" overflow="hidden">
+                        {/* {Object.keys(Data).map((key, index) => ( // Iterate over the keys of Data
                                 <Grid.Col key={index} span={3}>
                                     <TypeButton value={key} data={Data[key as keyof typeof Data]} />
                                 </Grid.Col>
                             ))} */}
-                            <Grid.Col span={3}>
-                                <TypeButton value='Language' data={Data["Language"]} selectedArray={selectedLanguages} setSelectedArray={setSelectedLanguages} />
-                            </Grid.Col>
-                            <Grid.Col span={3}>
-                                <TypeButton value='Type' data={Data["Type"]} selectedArray={selectedTypes} setSelectedArray={setSelectedTypes} />
-                            </Grid.Col>
-                            <Grid.Col span={3}>
-                                <TypeButton value='Country' data={Data["Country"]} selectedArray={selectedCountries} setSelectedArray={setSelectedCountries} />
-                            </Grid.Col>
-                            <Grid.Col span={3}>
-                                <TypeButton value='Genre' data={Data["Genre"]} selectedArray={selectedGenres} setSelectedArray={setSelectedGenres} />
-                            </Grid.Col>
-                            <Grid.Col span={3}>
-                                <TypeButton value='Rating' data={Data["Rating"]} selectedArray={selectedRatings} setSelectedArray={setSelectedRatings} />
-                            </Grid.Col>
+                        <Grid.Col span={3}>
+                            <TypeButton value='Language' data={Data["Language"]} selectedArray={selectedLanguages} setSelectedArray={setSelectedLanguages} />
+                        </Grid.Col>
+                        <Grid.Col span={3}>
+                            <TypeButton value='Type' data={Data["Type"]} selectedArray={selectedTypes} setSelectedArray={setSelectedTypes} />
+                        </Grid.Col>
+                        <Grid.Col span={3}>
+                            <TypeButton value='Country' data={Data["Country"]} selectedArray={selectedCountries} setSelectedArray={setSelectedCountries} />
+                        </Grid.Col>
+                        <Grid.Col span={3}>
+                            <TypeButton value='Genre' data={Data["Genre"]} selectedArray={selectedGenres} setSelectedArray={setSelectedGenres} />
+                        </Grid.Col>
+                        <Grid.Col span={3}>
+                            <TypeButton value='Rating' data={Data["Rating"]} selectedArray={selectedRatings} setSelectedArray={setSelectedRatings} />
+                        </Grid.Col>
 
 
-                            {/* <Grid.Col span={3}>
+                        {/* <Grid.Col span={3}>
                                 <RatingButton />
                             </Grid.Col> */}
-                            {/* <Grid.Col span={3}>
+                        {/* <Grid.Col span={3}>
                                 <YearButton />
                             </Grid.Col> */}
-                            <Grid.Col span={3}>
-                            </Grid.Col>
-                            <Grid.Col span={3}>
-                            </Grid.Col>
-                            <Grid.Col span={3} style={{ display: 'flex', justifyContent: "flex-end", alignItems: "center", gap: '6px' }}>
-                                <button className={classes.button} onClick={() => fetchResults()} >Apply</button>
-                                <Image src={Createicon} alt="" />
-                                <Image src={Listicon} alt="" onClick={toggleDropdown} />
-                                {showDropdown && (
-                                    <div style={{ position: 'absolute', top: '100%', right: 0, backgroundColor: '#333', zIndex: 999, borderRadius: '5px', padding: '5px' }}>
-                                        <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-                                            <li>
-                                                Filter 1
-                                                <Image src={Deleteicon} alt="Delete" style={{ paddingTop: '10px', paddingLeft: '4px' }} onClick={() => handleDelete('Filter 1')} />
-                                            </li>
-                                            <li>
-                                                Filter 2
-                                                <Image src={Deleteicon} alt="Delete" style={{ paddingTop: '10px', paddingLeft: '4px' }} onClick={() => handleDelete('Filter 2')} />
-                                            </li>
-                                            {/* Add more filters as needed */}
-                                        </ul>
-                                    </div>
-                                )}
-                            </Grid.Col>
-                        </Grid>
-                    </div>
-                }
+                        <Grid.Col span={3}>
+                        </Grid.Col>
+                        <Grid.Col span={3}>
+                        </Grid.Col>
+                        <Grid.Col span={3} style={{ display: 'flex', justifyContent: "flex-end", alignItems: "center", gap: '6px' }}>
+                            <button className={classes.button} onClick={() => fetchResults()} >Apply</button>
+                            <Image src={Createicon} alt="" />
+                            <Image src={Listicon} alt="" onClick={toggleDropdown} />
+                            {showDropdown && (
+                                <div style={{ position: 'absolute', top: '100%', right: 0, backgroundColor: '#333', zIndex: 999, borderRadius: '5px', padding: '5px' }}>
+                                    <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
+                                        <li>
+                                            Filter 1
+                                            <Image src={Deleteicon} alt="Delete" style={{ paddingTop: '10px', paddingLeft: '4px' }} onClick={() => handleDelete('Filter 1')} />
+                                        </li>
+                                        <li>
+                                            Filter 2
+                                            <Image src={Deleteicon} alt="Delete" style={{ paddingTop: '10px', paddingLeft: '4px' }} onClick={() => handleDelete('Filter 2')} />
+                                        </li>
+                                        {/* Add more filters as needed */}
+                                    </ul>
+                                </div>
+                            )}
+                        </Grid.Col>
+                    </Grid>
+                </div>
 
             </div>
 

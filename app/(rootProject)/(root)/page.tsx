@@ -40,7 +40,7 @@ export default function Home() {
     setIsLoggedIn(userLoggedIn);
 
     fetch(
-      process.env.NEXT_PUBLIC_BASE_URL +
+      process.env.NEXT_PUBLIC_BACKEND_URL +
         '/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=movie',
       { method: 'POST' }
     )
@@ -50,7 +50,7 @@ export default function Home() {
         setTrendingMovies(data.results);
       });
 
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/movies/awards', { method: 'GET' })
+    fetch( process.env.NEXT_PUBLIC_BACKEND_URL + '/movies/awards', { method: 'GET' })
       .then((res) => res.json())
       .then((data) => {
         console.log('data', data);
@@ -72,16 +72,6 @@ export default function Home() {
 
     return () => {};
   }, []);
-  // useEffect(() => {
-  //   if (id) {
-  //     fetch(process.env.NEXT_PUBLIC_BASE_URL + '/user/watchlist/' + id, { method: 'POST' })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log('data', data);
-  //         setMyList(data.results);
-  //       });
-  //   }
-  // }, [id]);
 
   const checkLoginStatus = () => {
     const user = localStorage.getItem('user');
@@ -99,7 +89,6 @@ export default function Home() {
         <Section title={'Trending'} image={Trend} movieData={TrendingMovies || []} />
         <Section title={'Award Winniing Films'} image={AwardIcon} movieData={Award || []} />
         {isLoggedIn && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
-        {/* {id && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />} */}
       </div>
     </>
   );

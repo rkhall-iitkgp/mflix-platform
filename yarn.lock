@@ -2345,9 +2345,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/core@npm:^7.6.2":
-  version: 7.7.0
-  resolution: "@mantine/core@npm:7.7.0"
+"@mantine/core@npm:^7.7.1":
+  version: 7.7.1
+  resolution: "@mantine/core@npm:7.7.1"
   dependencies:
     "@floating-ui/react": "npm:^0.26.9"
     clsx: "npm:2.1.0"
@@ -2356,10 +2356,10 @@ __metadata:
     react-textarea-autosize: "npm:8.5.3"
     type-fest: "npm:^4.12.0"
   peerDependencies:
-    "@mantine/hooks": 7.7.0
+    "@mantine/hooks": 7.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10c0/d2934192c92a5193431f56af473f50e06bed584aa4f1033038bf409444c608665814c072d064ad8c3fde4a5a3a3472f8a5363b3a095e6e8195e619c1d15032fc
+  checksum: 10c0/21a9cdb2ccf61a3ef1b1a39ded1af914b455d020a76152647fc5400dbde5a1c0e2a43693abc36d61839e219695a4db71deecf2c0e9b6689cbc3ae90c8680343f
   languageName: node
   linkType: hard
 
@@ -6690,7 +6690,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:2.1.0":
+"clsx@npm:2.1.0, clsx@npm:^2.1.0":
   version: 2.1.0
   resolution: "clsx@npm:2.1.0"
   checksum: 10c0/c09c00ad14f638366ca814097e6cab533dfa1972a358da5b557be487168acbb25b4c1395e89ffa842a8a61ba87a462d2b4885bc9d4f8410b598f3cb339599cdb
@@ -11422,7 +11422,7 @@ __metadata:
     "@coreui/icons": "npm:^3.0.1"
     "@coreui/icons-react": "npm:^2.2.1"
     "@emotion/react": "npm:^11.11.4"
-    "@mantine/core": "npm:^7.6.2"
+    "@mantine/core": "npm:^7.7.1"
     "@mantine/dates": "npm:^7.6.2"
     "@mantine/form": "npm:^7.6.2"
     "@mantine/hooks": "npm:^7.6.2"
@@ -11472,6 +11472,7 @@ __metadata:
     react-dom: "npm:18.2.0"
     react-icons: "npm:^5.0.1"
     react-switch: "npm:^7.0.0"
+    react-toastify: "npm:^10.0.5"
     storybook: "npm:^8.0.0"
     storybook-dark-mode: "npm:^3.0.3"
     stripe: "npm:^14.23.0"
@@ -13448,6 +13449,18 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/33d38a6d96cf584842695b50c341980944ece23a42155bf0bd1958f02396adb185c7720b88678dc677817fe111783059c0ebcdf7761644006892583b10e258ee
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:^10.0.5":
+  version: 10.0.5
+  resolution: "react-toastify@npm:10.0.5"
+  dependencies:
+    clsx: "npm:^2.1.0"
+  peerDependencies:
+    react: ">=18"
+    react-dom: ">=18"
+  checksum: 10c0/66c68ec3d6c017d9f32652d73bb925224921c6a80b629b9d481430d5b4fd504abb7a99995a64b9aef0fc31326c74f3cbe088b3287b978dd0c355079c4bbf4158
   languageName: node
   linkType: hard
 

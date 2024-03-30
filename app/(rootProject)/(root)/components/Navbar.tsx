@@ -155,7 +155,6 @@ export default function Navbar() {
     },
     link: {
       padding: '1rem',
-      marginLeft: '1.5rem',
       marginRight: '1.5rem',
       textDecoration: 'none',
       fontSize: '1.25rem',
@@ -166,8 +165,8 @@ export default function Navbar() {
       alignItems: 'center',
     },
     premium: {
-      marginRight: '1.5rem',
       height: '2.3rem',
+      marginRight:'-2rem',
       width: '7rem',
       display: 'flex',
       transition: '0.3s',
@@ -214,7 +213,7 @@ export default function Navbar() {
       padding: '0',
       display: 'flex',
       height: '3.5rem',
-      width: '8rem',
+      width: '9rem',
       span: {
         marginTop: '0.3rem',
         fontSize: '1.2rem',
@@ -380,15 +379,33 @@ export default function Navbar() {
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Languages</p>
                   <div className={classes.category}>
-                    <p><Link href="/search?language=English">English</Link></p>
-                    <p><Link href="/search?language=Hindi">Hindi</Link></p>
-                    <p><Link href="/search?language=French">French</Link></p>
-                    <p><Link href="/search?language=Spanish">Spanish</Link></p>
-                    <p><Link href="/search?language=German">German</Link></p>
-                    <p><Link href="/search?language=Italian">Italian</Link></p>
-                    <p><Link href="/search?language=Japanese">Japanese</Link></p>
-                    <p><Link href="/search?language=Russian">Russian</Link></p>
-                    <p><Link href="/search?language=Mandarin">Mandarin</Link></p>
+                    <p>
+                      <Link href="/search?language=English">English</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=Hindi">Hindi</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=French">French</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=Spanish">Spanish</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=German">German</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=Italian">Italian</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=Japanese">Japanese</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=Russian">Russian</Link>
+                    </p>
+                    <p>
+                      <Link href="/search?language=Mandarin">Mandarin</Link>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -402,13 +419,13 @@ export default function Navbar() {
             ) : (
               <Menu trigger="hover" openDelay={100} closeDelay={50} >
                 <Menu.Target>
-                  <Button bg={'none'} size={'20'} style={{ fontWeight: '400' }}>Profile</Button>
+                  <Button bg={'none'} size={'20'} mr={15} style={{ fontWeight: '400' }}>Profile</Button>
                 </Menu.Target>
 
                 <Menu.Dropdown bg={themeOptions.color.categories} style={{ borderRadius: '1rem', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
-                  {profiles.map((profile, index) => (
+                  {profiles.map((profile, i) => (
                     <Menu.Item
-                      key={index}
+                      key={i}
                       leftSection={<IconUserCircle style={{ width: '2rem', height: '2rem' }} />}
                     >
                       {profile.name}

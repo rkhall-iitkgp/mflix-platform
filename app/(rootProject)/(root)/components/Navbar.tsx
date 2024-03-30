@@ -6,13 +6,22 @@ import { createStyles } from '@mantine/styles';
 import themeOptions from '@/utils/colors';
 import { FaSearch } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
-import { ActionIcon, Divider } from '@mantine/core';
+import { ActionIcon, Divider, Menu, Button } from '@mantine/core';
 import { IoCloseOutline } from 'react-icons/io5';
 import NavSearch from '@/app/(rootProject)/(root)/components/NavSearch';
 import { usePathname } from 'next/navigation';
 import searchMsApiUrls from '../../api/searchMsApi';
 import { IoIosArrowDown } from "react-icons/io";
+import IconUserCircle from "@/assets/icons/profile.svg"
 import { useHover, useMediaQuery } from '@mantine/hooks';
+import {
+  IconSettings,
+  IconLogout,
+} from '@tabler/icons-react';
+
+import useLoginStore from '@/Stores/LoginStore';
+
+
 
 export default function Navbar() {
   const path = usePathname();
@@ -24,8 +33,12 @@ export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { hovered: categoryHovered, ref: categoryRef } = useHover();
   const { hovered: dropdownHovered, ref: dropdownRef } = useHover();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const searchBoxRef = useRef<HTMLDivElement>(null); // UseRef with HTMLDivElement type
+  const searchBoxRef = useRef<HTMLDivElement>(null);
+  const state = useLoginStore.getState();
+  const [profiles, setProfiles] = useState<any[]>(state.userProfiles);
+  // setProfiles(state.userProfiles);
 
   const handleSearchClick = () => {
     setIsSearchOpen(true);
@@ -35,24 +48,15 @@ export default function Navbar() {
     setIsSearchOpen(false); // Close the search box
   };
 
-  // const handleTyping = (typing) => {
-  //     setIsTyping(typing);
-  // };
+  const checkLoginStatus = () => {
+    const user = localStorage.getItem('user');
+    return !!user;
+    // return true;
+  };
 
-  // const handleClickOutside = (event: MouseEvent) => {
-  //   if (searchBoxRef.current && !searchBoxRef.current.contains(event.target as Node)) {
-  //     // Click occurred outside the search box, so close it
-  //     setIsSearchOpen(false);
-  //     setInput(''); // Clear input when closing search box
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener('click', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('click', handleClickOutside);
-  //   };
-  // }, []);
+  useEffect(() => {
+    setIsLoggedIn(checkLoginStatus()); // Update isLoggedIn state when component mounts
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -192,25 +196,22 @@ export default function Navbar() {
       display: categoryHovered || dropdownHovered ? 'flex' : 'none',
       position: 'absolute',
       background: themeOptions.color.categories,
-      // backgroundColor: '#f8f8f8',
       padding: '1rem',
       borderRadius: '8px',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
       height: '20rem',
       width: '40rem',
+      cursor: 'default',
       top: '100%',
-      // left: 0,
       zIndex: 1000,
       marginLeft: '-15rem',
-      // padding:'1rem',
       justifyContent: 'space-around',
     },
     genre: {
       fontSize: '1.25rem',
       padding: '0',
-      // marginTop:'2rem',
       display: 'flex',
-      height: '3rem',
+      height: '3.5rem',
       width: '8rem',
       span: {
         marginTop: '0.3rem',
@@ -223,7 +224,7 @@ export default function Navbar() {
         cursor: 'pointer',
         span: {
           rotate: '180deg',
-          marginBottom: '1rem',
+          marginBottom: '1.6rem',
         }
       },
     },
@@ -266,14 +267,44 @@ export default function Navbar() {
         textDecoration: 'none',
       },
     },
-    navsearch:{
-      marginLeft: isSmallScreen?'-1rem':'-31rem', 
-      marginTop: isSmallScreen?'-10px':'-70px', 
+    navsearch: {
+      marginLeft: isSmallScreen ? '-1rem' : '-31rem',
+      marginTop: isSmallScreen ? '-10px' : '-70px',
       width: '30rem',
-      height: '20px', 
-      position:'absolute', 
-      
+      height: '20px',
+      position: 'absolute',
+    },
+    profile: {
+      fontSize: '1.25rem',
+      padding: '0',
+      display: 'flex',
+      height: '3.5rem',
+      marginLeft: '1rem',
+      marginRight: '-2rem',
+      width: '8rem',
+      '&:hover': {
+        color: 'rgb(156, 163, 175)',
+        cursor: 'pointer',
+      },
+    },
+    profdown: {
+      display: categoryHovered || dropdownHovered ? 'block' : 'none',
+      position: 'absolute',
+      background: themeOptions.color.categories,
+      padding: '1rem',
+      borderRadius: '8px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      cursor: 'default',
+      top: '100%',
+      zIndex: 1000,
+      marginLeft: '-1rem',
+      listStyle: 'none',
+      justifyContent: 'space-around',
+      p: {
+        textDecoration: 'none',
+      }
     }
+
   }));
 
   const { classes } = useStyles();
@@ -302,8 +333,8 @@ export default function Navbar() {
                       </ActionIcon>
                       <div
                         style={{
-                          marginLeft: '-31rem',
-                          marginTop: '-70px',
+                          marginLeft: isSmallScreen ? '-11rem' : '-31rem',
+                          marginTop: isSmallScreen ? '-20px' : '-70px',
                           width: '30rem',
                           height: '20px',
                           position: 'absolute',
@@ -334,63 +365,63 @@ export default function Navbar() {
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Genres</p>
                   <div className={classes.category}>
                     <p>
-                      <Link href="#">Drama</Link>
+                      <Link href="/search?genre=Drama">Drama</Link>
                     </p>
                     <p>
-                      <Link href="#">Comedy</Link>
+                      <Link href="/search?genre=Comedy">Comedy</Link>
                     </p>
                     <p>
-                      <Link href="#">Romance</Link>
+                      <Link href="/search?genre=Romance">Romance</Link>
                     </p>
                     <p>
-                      <Link href="#">Crime</Link>
+                      <Link href="/search?genre=Crime">Crime</Link>
                     </p>
                     <p>
-                      <Link href="#">Thriller</Link>
+                      <Link href="/search?genre=Thriller">Thriller</Link>
                     </p>
                     <p>
-                      <Link href="#">Action</Link>
+                      <Link href="/search?genre=Action">Action</Link>
                     </p>
                     <p>
-                      <Link href="#">Adventure</Link>
+                      <Link href="/search?genre=Adventure">Adventure</Link>
                     </p>
                     <p>
-                      <Link href="#">Documentary</Link>
+                      <Link href="/search?genre=Documentary">Documentary</Link>
                     </p>
                     <p>
-                      <Link href="#">Horror</Link>
+                      <Link href="/search?genre=Horror">Horror</Link>
                     </p>
                   </div>
                 </div>
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Languages</p>
                   <div className={classes.category}>
-                    <p>
-                      <Link href="#">English</Link>
+                  <p>
+                      <Link href="/search?language=English">English</Link>
                     </p>
                     <p>
-                      <Link href="#">Hindi</Link>
+                      <Link href="/search?language=Hindi">Hindi</Link>
                     </p>
                     <p>
-                      <Link href="#">French</Link>
+                      <Link href="/search?language=French">French</Link>
                     </p>
                     <p>
-                      <Link href="#">Spanish</Link>
+                      <Link href="/search?language=Spanish">Spanish</Link>
                     </p>
                     <p>
-                      <Link href="#">German</Link>
+                      <Link href="/search?language=German">German</Link>
                     </p>
                     <p>
-                      <Link href="#">Italian</Link>
+                      <Link href="/search?language=Italian">Italian</Link>
                     </p>
                     <p>
-                      <Link href="#">Japanese</Link>
+                      <Link href="/search?language=Japanese">Japanese</Link>
                     </p>
                     <p>
-                      <Link href="#">Russian</Link>
+                      <Link href="/search?language=Russian">Russian</Link>
                     </p>
                     <p>
-                      <Link href="#">Mandarin</Link>
+                      <Link href="/search?language=Mandarin">Mandarin</Link>
                     </p>
                   </div>
                 </div>
@@ -398,15 +429,37 @@ export default function Navbar() {
             </div>
           </li>
           <li>
-            <Link
-              href="/login"
-              className={`${classes.link} ${path === '/login' ? classes.activeLink : ''}`}
-            >
-              Login
-            </Link>
+            {!isLoggedIn ? (
+              <Link href="/login" className={`${classes.link} ${path === '/login' ? classes.activeLink : ''}`}>
+                Login
+              </Link>
+            ) : (
+              <Menu trigger="hover" openDelay={100} closeDelay={50} >
+                <Menu.Target>
+                  <Button bg={'none'} size={'20'} style={{ fontWeight: '400' }}>Profile</Button>
+                </Menu.Target>
+
+                <Menu.Dropdown bg={themeOptions.color.categories} style={{ borderRadius: '1rem', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+                  {profiles.map((profile, index) => (
+                    <Menu.Item
+                      key={index}
+                      leftSection={<IconUserCircle style={{ width: '2rem', height: '2rem' }} />}
+                    >
+                      {profile.name}
+                    </Menu.Item>
+                  ))}
+                  <Menu.Item leftSection={<IconSettings style={{ width: '2rem', height: '2rem' }} />}>
+                    <Link href="/userprofile" style={{ textDecoration: 'none', color: 'white', opacity: '0.8' }}>User Profile</Link>
+                  </Menu.Item>
+                  <Menu.Item leftSection={<IconLogout style={{ width: '2rem', height: '2rem' }} />}>
+                    Logout
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            )}
           </li>
           <li className={classes.premium}>
-            <Link href="#" className={classes.link2}>
+            <Link href="/pricing" className={classes.link2}>
               Premium
             </Link>
           </li>

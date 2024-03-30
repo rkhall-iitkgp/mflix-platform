@@ -14,12 +14,14 @@ import {
   Flex,
   Box,
 } from '@mantine/core';
-import { GoogleButton } from './GoogleButton';
 import themeOptions from '../../../assets/themes/colors';
 import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
 import useLoginStore from '@/Stores/LoginStore';
+import Image from 'next/image';
+import LeftArrowIcon from '@/assets/icons/leftArrow.svg'
 import { useRouter } from 'next/navigation'
+import Mixpanel from '@/components/Mixpanel';
 
 export default function Login() {
   const router = useRouter()
@@ -46,6 +48,33 @@ export default function Login() {
     } else {
       console.log('login successful');
       console.log(jsonData);
+      Mixpanel.identify(jsonData.account._id);
+      Mixpanel.register({
+        $name: jsonData.account.name,
+        $email: jsonData.account.email,
+        $dob: jsonData.account.dob,
+        $phone: jsonData.account.phone,
+        $subscriptionTierId: jsonData.account.subscriptionTier.tier._id,
+        $subscriptionTiername: jsonData.account.subscriptionTier.tier.name,
+      });
+      Mixpanel.track('Successful Login', {
+        $name: jsonData.account.name,
+        $email: jsonData.account.email,
+        $dob: jsonData.account.dob,
+        $phone: jsonData.account.phone,
+        $subscriptionTierId: jsonData.account.subscriptionTier.tier._id,
+        $subscriptionTiername: jsonData.account.subscriptionTier.tier.name,
+      });
+      Mixpanel.people.set({
+        $name: jsonData.account.name,
+        $email: jsonData.account.email,
+        $dob: jsonData.account.dob,
+        $phone: jsonData.account.phone,
+        $subscriptionTier: {
+          tierId: jsonData.account.subscriptionTier.tier._id,
+          $name: jsonData.account.subscriptionTier.tier.name,
+        },
+      });
       useLoginStore.getState().updateUser(jsonData.account);
       const jsonDataString = JSON.stringify(jsonData.account);
       localStorage.setItem('user', jsonDataString);
@@ -120,7 +149,16 @@ export default function Login() {
       backgroundColor: 'rgba(0, 0, 0, 0.1)',
       marginTop: '1.6rem',
     },
-
+    backButton: {
+      position: 'absolute',
+      margin: "1.5rem",
+      top: 0,
+      left: 0,
+      cursor: "pointer",
+      "&:hover": {
+        opacity: 0.7,
+      },
+    },
     FormStyles: {
       width: '100%',
       display: 'flex',
@@ -162,6 +200,7 @@ export default function Login() {
 
   return (
     <Box className={classes.OuterBoxStyles}>
+      <Image src={LeftArrowIcon} alt="logo" width={25} height={25} className={classes.backButton} onClick={() => router.back()} />
       <Text size="2.5rem" c={'white'} p={'1rem'}>
         Login your account
       </Text>
@@ -259,10 +298,10 @@ export default function Login() {
             // className={classes.ButtonStyles}
             style={{
               width: '70%',
-              height: '3.5rem',
+              height: '3rem',
               backgroundColor: '#9441D0',
               borderRadius: '1rem',
-              fontSize: '1.5rem',
+              fontSize: '1.1rem',
               fontWeight: 'normal',
               marginTop: '1.5rem',
             }}

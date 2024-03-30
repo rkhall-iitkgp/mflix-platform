@@ -1,10 +1,10 @@
 import { Table, TableTd, TableTh, TableTr, Text, Box, Divider, Stack, Group } from '@mantine/core';
 import { TiTick } from "react-icons/ti";
-import CustomTickIcon from './customtickicon'; // 
+ 
 import themeOptions from '@/utils/colors';
 import React, { useRef } from 'react';
 import { createStyles } from '@mantine/styles';
-
+import CustomTickIcon from '@/app/(rootProject)/(root)/pricing/customtickicon'
 
 
 const SubscriptionTable = ({ cardPlan }: any) => {
@@ -23,7 +23,7 @@ const SubscriptionTable = ({ cardPlan }: any) => {
         },
         TableThRestStyles: {
 
-            textAlign: 'center !important', width: '15%', fontSize: '1.1rem '
+            textAlign: 'center', width: '15%', fontSize: '1.1rem '
         },
         FeatureStyles: {
             textAlign: 'left', fontSize: "1.1rem"
@@ -79,10 +79,10 @@ const SubscriptionTable = ({ cardPlan }: any) => {
                 <thead>
                     <TableTr >
                         <TableTh className={classes.TableThFirstStyles}>What You will get</TableTh>
-                        <TableTh className={classes.TableThRestStyles}>Free</TableTh>
-                        <TableTh className={classes.TableThRestStyles}>Basic</TableTh>
-                        <TableTh className={classes.TableThRestStyles}>Premium</TableTh>
-                        <TableTh className={classes.TableThRestStyles}>Family</TableTh>
+                        <TableTh className={classes.TableThRestStyles} style={{textAlign:"center"}}>Free</TableTh>
+                        <TableTh className={classes.TableThRestStyles} style={{textAlign:"center"}} >Basic</TableTh>
+                        <TableTh className={classes.TableThRestStyles} style={{textAlign:"center"}} >Premium</TableTh>
+                        <TableTh className={classes.TableThRestStyles} style={{textAlign:"center"}} >Family</TableTh>
                     </TableTr>
                 </thead>
                 <tbody>

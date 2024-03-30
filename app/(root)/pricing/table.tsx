@@ -1,6 +1,6 @@
 import { Table, TableTd, TableTh, TableTr, Text, Box, Divider, Stack, Group } from '@mantine/core';
 import { TiTick } from "react-icons/ti";
-import CustomTickIcon from './customtickicon'; // 
+import CustomTickIcon from '@/app/(rootProject)/(root)/pricing/customtickicon'
 import themeOptions from '@/utils/colors';
 import React, { useRef } from 'react';
 import { createStyles } from '@mantine/styles';

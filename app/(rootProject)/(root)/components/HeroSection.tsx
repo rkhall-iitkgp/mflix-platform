@@ -1,18 +1,20 @@
 'use client';
 import SearchBar from '@/app/(rootProject)/(root)/components/SearchBar';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import React from 'react';
 import { gsap } from 'gsap';
 import { useState, useEffect, useRef } from 'react';
 import BgImage from '@/assets/images/bg-home.jpeg';
 import { createStyles } from '@mantine/styles';
-import Poster from '@/assets/images/poster.png';
+import Poster from '@/assets/images/poster1.jpg';
 import Vector1 from '@/assets/images/vect-1.svg';
 import Vector2 from '@/assets/images/vect-2.svg';
-import { memo } from 'react';
+import noImage from '@/assets/images/no-image.jpg';
 import { ScrollToPlugin } from 'gsap/all';
 import { useMediaQuery } from '@mantine/hooks';
-import { em } from '@mantine/core';
+import searchMsApiUrls from '../../api/searchMsApi';
+import themeOptions from '@/utils/colors';
+import { UnstyledButton } from '@mantine/core';
 gsap.registerPlugin(ScrollToPlugin);
 const HeroSection = () => {
   console.log('rendered');
@@ -20,9 +22,39 @@ const HeroSection = () => {
   const [input, setInput] = React.useState('' as string);
   const [showSearchSection, setShowSearchSection] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [searchHistory, setSearchHistory] = useState([]);
   const flexRef = useRef(null);
-  const isMobile = useMediaQuery(`(max-width: ${1250}px)`);
+  const isSmallScreen = useMediaQuery('(max-width: 1200px)');
   console.log(flexRef);
+  const [searches, setSearches] = useState([]);
+  const [history, setHistory] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [TrendingMovies, setTrendingMovies] = useState<any[]>([]);
+
+  useEffect(() => {
+    const userLoggedIn = checkLoginStatus();
+    setIsLoggedIn(userLoggedIn);
+
+    const fetchData = async () => {
+      const res = await (
+        await fetch(`${searchMsApiUrls()}/user/history/6601d20081bc9671ef4364ee`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+      ).json();
+      console.log(res);
+      setHistory(res);
+    };
+    fetchData();
+  }, []);
+
+  const checkLoginStatus = () => {
+    const user = localStorage.getItem('user');
+    if (user) return true;
+    return false;
+  };
+
   useEffect(() => {
     const tl = gsap.timeline({ paused: true });
     tl.fromTo(
@@ -46,12 +78,43 @@ const HeroSection = () => {
       tl.kill();
     };
   }, [isTyping]);
+
   const handleTyping = (typing: string) => {
     console.log('func called');
     setIsTyping(typing !== '');
     console.log(isTyping);
     setInput(typing);
+    const fetchData = async () => {
+      const res = await (
+        await fetch(`${searchMsApiUrls()}/search/autocomplete?query=${input}`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+      ).json();
+      console.log(res);
+      setSearches(res.result);
+    };
+    fetchData();
   };
+
+  useEffect(() => {
+    const userLoggedIn = checkLoginStatus();
+    setIsLoggedIn(userLoggedIn);
+
+    fetch(
+      'https://971edtce1a.execute-api.ap-south-1.amazonaws.com/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=',
+      { method: 'POST' }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data', data);
+        setTrendingMovies(data.results);
+      });
+
+    return () => {};
+  }, []);
+
   return (
     <>
       <div className={classes.bgContainer}>
@@ -69,13 +132,16 @@ const HeroSection = () => {
           className={classes.leftSection}
           style={{ marginLeft: `${isTyping ? '0rem' : '0rem'}` }}
         >
-          <h1 className={classes.heading}>
+          <h1 className={classes.heading} style={{ fontSize: isSmallScreen ? '3rem' : '3.5rem' }}>
             Cool <br /> Animated Text
           </h1>
           <SearchBar
             onTyping={handleTyping}
             input={input}
             setInput={setInput}
+            onSearch={(input) => {
+              location.href = `/search?query=${input}`;
+            }}
             // isTyping={isTyping}
           />
           <p>
@@ -84,18 +150,43 @@ const HeroSection = () => {
             iusto atque iste quos qui, officiis obcaecati voluptatibus!
           </p>
         </div>
-        <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
-          <p className={classes.p}>Recent Searches:</p>
-          <div 
-          className={classes.movies}
-          style={{
-            padding: "6px"
-          }}>
-            <MovieCard />
-            <MovieCard />
-            <MovieCard />
+        {isLoggedIn && history?.length > 0 && (
+          <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
+            <p
+              className={classes.p}
+              style={{
+                fontSize: isSmallScreen ? '1.5rem' : '2rem',
+                top: isSmallScreen ? '9%' : '8%',
+              }}
+            >
+              Recent Watch History:
+            </p>
+            <div className={classes.movies} style={{ width: isSmallScreen ? '18rem' : '25rem' }}>
+              {history
+                ?.slice(-3)
+                .reverse()
+                .map((data, index) => <MovieCard props={data} key={index} />)}
+            </div>
           </div>
-        </div>
+        )}
+        {!isLoggedIn && (
+          <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
+            <p
+              className={classes.p}
+              style={{
+                fontSize: isSmallScreen ? '1.8rem' : '2rem',
+                top: isSmallScreen ? '20vh' : '18vh',
+              }}
+            >
+              Trending:
+            </p>
+            <div className={classes.movies} style={{ width: isSmallScreen ? '18rem' : '25rem' }}>
+              {TrendingMovies?.slice(0, 3).map((data, index) => (
+                <Trending props={data} key={index} />
+              ))}
+            </div>
+          </div>
+        )}
         <div
           className={classes.searchContainer}
           id="flex"
@@ -103,10 +194,10 @@ const HeroSection = () => {
           style={{ display: `${!input ? 'none' : 'flex'}` }}
         >
           <div className={classes.flex} id="flex">
-            <div className={classes.flex1}>
+            {/* <div className={classes.flex1}>
               <Image src={Vector1} alt="vector" id="vec1" />
               <Image src={Vector2} alt="vector" id="vec2" />
-            </div>
+            </div> */}
             <div
               className={cx(
                 classes.searchRightSection,
@@ -114,11 +205,7 @@ const HeroSection = () => {
               )}
             >
               <div className={classes.searchMovies}>
-                <SearchResultCard />
-                <SearchResultCard />
-                <SearchResultCard />
-                <SearchResultCard />
-                <SearchResultCard />
+                {searches?.map((data, index) => <SearchResultCard props={data} key={index} />)}
               </div>
             </div>
           </div>
@@ -128,30 +215,50 @@ const HeroSection = () => {
   );
 };
 
-const MovieCard = () => {
+const MovieCard = ({ props }: { props: any }) => {
   const { classes, cx } = useStyles();
+
   return (
     <div className={cx(classes.movieCard)}>
       <Image src={Poster} alt="poster" style={{ height: '5.25rem', width: '3.7rem' }} />
       <div className={classes.cardDescription}>
-        <h2 className={classes.movieTitle}>{'movie.title'}</h2>
-        <div className={classes.movieGenre}>{'movie.genre'}</div>
-        <span className={classes.movieYear}>Year</span>
+        <h2 className={classes.movieTitle}>{props.movie.title}</h2>
+        <div className={classes.movieGenre}>{props.movie.genres.join(', ')}</div>
+        <p className={classes.movieYear}>{props.movie.year}</p>
       </div>
     </div>
   );
 };
-const SearchResultCard = () => {
+
+const Trending = ({ props }: { props: any }) => {
+  const { classes, cx } = useStyles();
+  const [src, setSrc] = useState<string | StaticImageData>(props.poster);
+  return (
+    <div className={cx(classes.movieCard)}>
+      <Image
+        width={500}
+        height={500}
+        src={src}
+        onError={() => setSrc(noImage)}
+        alt="poster"
+        style={{ height: '5.25rem', width: '3.7rem' }}
+      />
+      <div className={classes.cardDescription}>
+        <h2 className={classes.movieTitle}>{props.title}</h2>
+        <div className={classes.movieGenre}>{props.genres.join(', ')}</div>
+        <p className={classes.movieYear}>{props.year}</p>
+      </div>
+    </div>
+  );
+};
+
+const SearchResultCard = ({ props }: { props: any }) => {
   const { classes, cx } = useStyles();
   return (
     <div className={cx(classes.searchCard)}>
-      <div className={classes.cardDescription}>
-        <h2 className={classes.movieTitle}>{'movie.title'}</h2>
-        <div className={classes.flex}>
-          <div className={classes.movieGenre}>{'movie.genre'}</div>
-          <span className={classes.movieYear}>Year</span>
-        </div>
-      </div>
+      <UnstyledButton w="100%" pl="1rem" component="a" href={`/search?query=${props.title}`}>
+        <h2 className={classes.movieTitle}>{props.title}</h2>
+      </UnstyledButton>
     </div>
   );
 };
@@ -180,7 +287,6 @@ const useStyles = createStyles(() => ({
   },
   bgImage: {
     opacity: 0.25,
-    // zIndex: -20
   },
   searchContainer: {
     display: 'flex',
@@ -188,26 +294,16 @@ const useStyles = createStyles(() => ({
     alignItems: 'center',
     marginTop: '3.4%',
     minWidth: '30%',
-    // transform:'scale(1) translateX(-10%)',
-    // transition:'transform 1s ease-in'
-    // width:'100px'
   },
   flex: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // transform:'scale(1) translateX(-10%)',
-    // transition:'transform 1s ease-in'
-    // width:'100px'
   },
   flex1: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    // flexDirection: 'column',
-    // marginTop: '13rem',
-    // justifyContent:'space-between',
-    // width:'100px'
   },
   vec1Style: {
     marginTop: '-9.5rem',
@@ -216,15 +312,12 @@ const useStyles = createStyles(() => ({
     // marginTop:'10rem'
   },
   hero: {
-    // paddingTop: '6rem',
     width: '100%',
     display: 'flex',
-    // flex: '2 1 auto',
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
     gap: '2rem',
-    // marginLeft: '20%',
     height: '92vh',
   },
   leftSection: {
@@ -238,7 +331,6 @@ const useStyles = createStyles(() => ({
   },
 
   heading: {
-    fontSize: `3.5rem`,
     margin: '0.5rem',
     textWrap: 'wrap',
     width: '100%',
@@ -247,8 +339,6 @@ const useStyles = createStyles(() => ({
   ptext: {
     fontSize: '1.35rem',
     lineHeight: '2rem',
-    // marginTop: '1rem',
-    // marginBottom: '1rem'
   },
   rightSection: {
     overflow: 'hidden',
@@ -258,32 +348,29 @@ const useStyles = createStyles(() => ({
     minWidth: '30%',
   },
   searchRightSection: {
-    // overflow: 'hidden',
     transform: 'translateX(-1px)',
-
-    // gap: '0.8rem',
-    // marginTop: '1.5rem',
-    // transform: 'scale(0.8)',
-    // transformOrigin: 'top right',
-    // transition: 'transform 2s ease-in-out',
+    marginLeft: '10px'
   },
   searchRightSectionVisible: {},
   p: {
     marginBottom: '0.75rem',
-    fontSize: '2rem',
     lineHeight: '1.75rem',
+    position: 'absolute',
+    transition: '0.3s ease',
   },
   movies: {
     display: 'flex',
     flexDirection: 'column',
+    position: 'absolute',
+    top: '28vh',
     overflow: 'hidden',
     gap: '.6rem',
+    transition: '0.5s ease',
   },
   searchMovies: {
     display: 'flex',
     flexDirection: 'column',
     overflow: 'hidden',
-    // gap: '.6rem',
     borderStyle: 'solid',
     borderWidth: '1px',
     borderRadius: '0.5rem',
@@ -292,18 +379,12 @@ const useStyles = createStyles(() => ({
   movieCard: {
     backgroundColor: '#D9D9D926',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    // padding: '0.8rem',
     display: 'flex',
     flexDirection: 'row',
-    // justifyContent: 'flex-start',
-    width: '25rem',
     borderStyle: 'solid',
-    // borderColor: '#FFFFFF',
-    // borderTopWidth: '1px',
     borderRadius: '.7rem',
     overflow: 'hidden',
     borderWidth: '0px',
-    // borderBottomWidth: '0px',
     height: '7rem',
     marginBottom: '0.6rem',
     gap: '1rem',
@@ -311,8 +392,14 @@ const useStyles = createStyles(() => ({
     opacity: 1,
     cursor: 'pointer',
     transition: 'transform 0.15s ease-in',
+    span: {
+      display: 'none',
+    },
     '&:hover': {
       transform: 'scale(1.02)',
+      span: {
+        display: 'block',
+      },
     },
   },
   searchCard: {
@@ -336,7 +423,6 @@ const useStyles = createStyles(() => ({
     paddingLeft: '1rem',
     display: 'flex',
     flexDirection: 'column',
-    // justifyContent: 'center'
     width: '100%',
   },
   movieTitle: {
@@ -348,10 +434,12 @@ const useStyles = createStyles(() => ({
   },
   movieGenre: {
     fontWeight: 100,
+    gap: '0.5rem',
   },
   movieYear: {
-    color: 'rgb(107, 114, 128)',
+    color: themeOptions.color.largeBox,
     marginRight: '0.5rem',
+    marginTop: '0',
     display: 'inline',
   },
 }));

@@ -88,11 +88,23 @@ export default function Search() {
     const [page, setPage] = useState<number>(1);
     const [loaded, setLoaded] = useState<boolean>(false);
     const [hasNext, setHasNext] = useState(true);
-
     const nextPage = () => {
         if (hasNext) setPage(page+1);
         console.log(page);
     }
+
+    useEffect(() => {
+        if (searchParams.get("genre")) {
+            fetchData(search!, {
+                genres: [searchParams.get("genre")!.charAt(0).toUpperCase() + searchParams.get("genre")!.slice(1)],
+            });
+        }
+        else if (searchParams.get("language")) {
+            fetchData(search!, {
+                languages: [searchParams.get("language")!.charAt(0).toUpperCase() + searchParams.get("language")!.slice(1)],
+            });
+        }
+    }, [searchParams])
 
     useEffect(() => {
         if (page >= 2) getData(page);
@@ -190,7 +202,7 @@ export default function Search() {
     (
         <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
             <div className={classes.bg}></div>
-            <Filter />
+            <Filter fetchData={fetchData} />
             {/* top results part, needs more work */}
             <Stack>
                 <Text fw={600} fz={themeOptions.fontSize.xl}>
@@ -227,7 +239,7 @@ export default function Search() {
                   style={{
                       rowGap: themeOptions.fontSize.xl,
                   }}
-                  gap="2%"
+                  gap="1%"
                 >
                     {makeGroup(moreResults, elementsPerRow).map((data, index) => (
                         data ?

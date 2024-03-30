@@ -4,21 +4,19 @@ import { Stack,Skeleton} from '@mantine/core';
 import NextImage from 'next/image';
 import themeOptions from '@/utils/colors';
 import { createStyles } from '@mantine/styles';
-import SimilarMovies from '@/components/MovieDetails/SimilarMovies';
+// import SimilarMovies from '@/components/MovieDetails/SimilarMovies';
 import Footer from '../../(root)/components/Footer';
 import Navbar from '../../(root)/components/Navbar';
 import searchMsApiUrls from '../../api/searchMsApi';
 import BgImage from '@/assets/images/bg-home.jpeg'
 import MovieContent from '@/components/MovieDetails/MovieContent';
-import { ScrollArea } from '@mantine/core'
+// import { ScrollArea } from '@mantine/core'
 import VideoPlayer from '@/components/VideoPlayer';
 import { useEffect , useState } from 'react';
 import useLoginStore from '@/Stores/LoginStore';
 import Movies from '@/assets/icons/movies.svg';
 import Section from '@/app/(rootProject)/(root)/components/Section';
-
-
-
+import Mixpanel from '@/components/Mixpanel';
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();
@@ -29,10 +27,34 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     console.log(state)
     useEffect(()=>{
         const id = params.id;
+        // const user_id = state.userProfiles[0]._id;
+        if (state.userProfiles.length > 0) {
+            var user_id = state.userProfiles[0]._id;
+        } else {
+            var user_id = null;
+        }
         const getMovieDetails = async () => {
-            const res = await (await fetch (`${url}/movies/${id}`)).json();
+            const res = await (await fetch (`${url}/movies/${id}`, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({userId:user_id})
+            })).json();
             setMovieData(res.result);
-            const similar_results_url=`${url}/search/semantic?query=${res.result.plot}`
+            Mixpanel.track('Look Movie Details', {
+                title: res.result.title,
+                genres: res.result.genres,
+                cast: res.result.cast,
+                released: res.result.released,
+                languages: res.result.languages,
+                directors: res.result.directors,
+                writers: res.result.writers,
+                year: res.result.year,
+                tier: res.result.tier,
+              });
+            const similar_results_url=`${url}/search/fuzzy?semantic=${res.result.plot}`
             // console.log(final_url)
             const res2 = await fetch(similar_results_url, {
                 method: 'POST',
@@ -80,7 +102,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     }))
 
     const { classes } = styles();
-
+    console.log(movieData);
     return (
         <Stack
             justify="space-between"

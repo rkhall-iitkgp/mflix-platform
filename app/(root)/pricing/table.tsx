@@ -1,12 +1,13 @@
 import { Table, TableTd, TableTh, TableTr, Text, Box, Divider, Stack, Group } from '@mantine/core';
 import { TiTick } from "react-icons/ti";
-import CustomTickIcon from './customtickicon'; // 
+import CustomTickIcon from '@/app/(rootProject)/(root)/pricing/customtickicon'
 import themeOptions from '@/utils/colors';
-import React from 'react';
+import React, { useRef } from 'react';
 import { createStyles } from '@mantine/styles';
 
 
-const SubscriptionTable = ({ cardPlan }: { cardPlan: any}) => {
+
+const SubscriptionTable = ({ cardPlan }: any) => {
     const useStyles = createStyles(() => ({
         OuterBoxStyles: {
             marginTop: '1rem', backgroundColor: 'black', height: '25rem', display: 'flex', flexDirection: 'column', alignItems: 'center'
@@ -68,7 +69,7 @@ const SubscriptionTable = ({ cardPlan }: { cardPlan: any}) => {
         // Add more features here
     ];
     return (
-        <Box style={{ marginTop: '1rem', backgroundColor: 'black', height: '25rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
+        <Box style={{ marginTop: '1rem', backgroundColor: 'black', height: '25rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }} id='pricing'>
             <Text size="2.8rem" c={'white'} p={'1rem'} style={{ fontWeight: '600', paddingTop: '3rem' }}>Feel the difference</Text>
             <Text size="1.2rem" c={'white'} style={{ fontWeight: '400' }}>Explore our different plans to enjoy your watch experience</Text>
             <Table classNames={{
@@ -77,7 +78,7 @@ const SubscriptionTable = ({ cardPlan }: { cardPlan: any}) => {
                 <thead>
                     <TableTr >
                         <TableTh className={classes.TableThFirstStyles}>What You will get</TableTh>
-                        <TableTh className={classes.TableThRestStyles} >Free</TableTh>
+                        <TableTh className={classes.TableThRestStyles}>Free</TableTh>
                         <TableTh className={classes.TableThRestStyles}>Basic</TableTh>
                         <TableTh className={classes.TableThRestStyles}>Premium</TableTh>
                         <TableTh className={classes.TableThRestStyles}>Family</TableTh>

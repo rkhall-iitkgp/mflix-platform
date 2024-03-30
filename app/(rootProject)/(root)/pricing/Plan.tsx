@@ -26,6 +26,7 @@ import { IconPoint, IconPointFilled } from '@tabler/icons-react';
 
 
 
+
 export default function Plan() {
     const useStyles = createStyles(() => ({
         OuterBoxStyles: {
@@ -175,11 +176,19 @@ export default function Plan() {
     }));
 
 
-
     const [planInner, setPlanInner] = useState([true, false, false]);
     const [cardPlan, setCardPlan] = useState([false, true, false]);
+    const [selected, setSelected] = useState(1);
+    const [time, setTime] = useState(0);
     const [isAccordion, setIsAccordion] = useState(false);
+    const [pricing, setPricing] = useState<any>([{}])
+    const [renewal, setRenewal] = useState(["MONTHLY", "QUATERLY", "ANNUALLY"]);
 
+    const [details, setDetails] = useState([[
+        ['Basic', 0],
+        ['Premium', 0],
+        ['Family', 0,]
+    ]]);
     const handleToggleAccordion = () => {
         setIsAccordion(!isAccordion);
     };
@@ -187,13 +196,51 @@ export default function Plan() {
         const updatedPlanInner = Array(3).fill(false);
         updatedPlanInner[index] = true;
         setPlanInner(updatedPlanInner);
+        setTime(index);
+        console.log(index);
     };
 
     const handleCardPlan = (index: number) => {
         const updatedCardPlan = Array(3).fill(false);
         updatedCardPlan[index] = true;
         setCardPlan(updatedCardPlan);
+        setSelected(index);
+        console.log(pricing[3 - index]._id)
+        console.log(index);
     };
+
+    const getPlanDetails = async () => {
+        console.log(process.env.URL)
+        let res = await fetch(`${process.env.NEXT_PUBLIC_URL}/payment/details`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        });
+
+        let jsonData = await res.json();
+        if (!res.ok) {
+            console.log(jsonData);
+        } else {
+            console.log(jsonData);
+            setPricing(jsonData);
+            const data = [
+                ['Basic', jsonData[3].price],
+                ['Premium', jsonData[2].price],
+                ['Family', jsonData[1].price],
+            ]
+            setDetails(data)
+            console.log(data);
+        }
+
+    }
+    useEffect(() => {
+        getPlanDetails();
+    }, []);
+
+
+
     const handlePayment = async () => {
         const user = useLoginStore.getState(); // Get the user state using the custom hook
         const stripe = await loadStripe(
@@ -203,7 +250,7 @@ export default function Plan() {
             //const authToken = localStorage.getItem('authToken');
 
             // Make the API call with the authentication token in the headers
-            const response = await fetch(`${process.env.URL}/payment/create-checkout-session`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/payment/create-checkout-session`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -215,12 +262,12 @@ export default function Plan() {
                         email: user.email
                     },
                     product: {
-                        renewalType: "MONTHLY",
-                        tierId: "kjwnfkjnslk",
-
+                        renewalType: renewal[time],
+                        tierId: pricing[3 - selected]._id,
                     },
                     redirectURL: process.env.FRONTEND_URL,
                 }),
+                credentials: 'include',
             });
 
             // const data = await response.json();
@@ -254,7 +301,8 @@ export default function Plan() {
         <>
             <SubscriptionTables ref={subscriptionTablesRef} cardPlan={cardPlan} />
             <Box className={classes.OuterBoxStyles}>
-                <Box className={classes.PlanBoxStyles} ref={containerRef}>
+                {/* <Box className={classes.PlanBoxStyles} ref={containerRef}> */}
+                <Box className={classes.PlanBoxStyles}>
                     {['Monthly', 'Quarterly', 'Annually'].map((label, index) => (
                         <Box
                             key={`planInner${index}`}
@@ -270,18 +318,15 @@ export default function Plan() {
                 </Box>
 
                 <Box className={classes.CardOuterBoxStyles}>
-                    {[
-                        ['Basic', 100],
-                        ['Premium', 150],
-                        ['Family', 200],
-                    ].map(([name, price], index) => (
+                    {details.map(([name, price], index) => (
                         <Box
                             style={{ cursor: 'pointer' }}
                             key={`cardPlan${index}`}
                             onClick={() => handleCardPlan(index)}
                             className={cardPlan[index] ? classes.PlanCardStylesClicked : classes.PlanCardStyles}
                         >
-                            <Box className={classes.PlanNameStyles}>
+                            {/* <Box className={classes.PlanNameStyles}> */}
+                            <Box >
                                 <Text style={{ fontSize: '1.8rem', textAlign: 'center' }} size="xl" fw={700}>
                                     {name}
                                 </Text>
@@ -292,15 +337,15 @@ export default function Plan() {
                             </Box>
                             <Box className={classes.SubscriptionDetailsStyles}>
 
-                                <Text style={{ fontSize: '120%', alignItems: 'center', display: 'flex', margin: '0.5rem' }}><IconPointFilled></IconPointFilled>{name === 'Basic' ? 'Access to Free Movies only' : name === 'Premium' ? 'Access to All movies' : 'Access to All Movies'} </Text>
-                                <Text style={{ fontSize: '120%', alignItems: 'center', display: 'flex', margin: '0.5rem' }}><IconPointFilled></IconPointFilled>{name === 'Basic' ? 'Streaming quality: 720p' : name === 'Premium' ? 'Streaming quality: 1080p HD' : 'Streaming quality : 2140p 4K'} </Text>
-                                <Text style={{ fontSize: '120%', alignItems: 'center', display: 'flex', margin: '0.5rem' }}><IconPointFilled></IconPointFilled>{name === 'Basic' ? 'Party watch not available' : name === 'Premium' ? 'Can Binge Watch with Friends' : 'Can Binge Watch with Friends'} </Text>
+                                <Text style={{ fontSize: '120%', alignItems: 'center', display: 'flex', margin: '0.5rem' }}><IconPointFilled></IconPointFilled>{String(name) === 'Basic' ? 'Access to Free Movies only' : String(name) === 'Premium' ? 'Access to All movies' : 'Access to All Movies'} </Text>
+                                <Text style={{ fontSize: '120%', alignItems: 'center', display: 'flex', margin: '0.5rem' }}><IconPointFilled></IconPointFilled>{String(name) === 'Basic' ? 'Streaming quality: 720p' : String(name) === 'Premium' ? 'Streaming quality: 1080p HD' : 'Streaming quality : 2140p 4K'} </Text>
+                                <Text style={{ fontSize: '120%', alignItems: 'center', display: 'flex', margin: '0.5rem' }}><IconPointFilled></IconPointFilled>{String(name) === 'Basic' ? 'Party watch not available' : String(name) === 'Premium' ? 'Can Binge Watch with Friends' : 'Can Binge Watch with Friends'} </Text>
 
                             </Box>
                         </Box>
                     ))}
                 </Box>
-                <Button style={{ color: 'white', background: '#5e2787', height: '3.6rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem', }} onClick={handlePayment}>
+                <Button style={{ color: 'white', background: '#5e2787', height: '3.6rem', width: '50%', borderRadius: '1.1rem', fontSize: '1.3rem', }} onClick={() => { handlePayment() }}>
                     Continue with Plan <SlArrowRight className={classes.ArrowStyles}></SlArrowRight>
                 </Button>
             </Box>

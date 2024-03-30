@@ -69,6 +69,13 @@ export default function Login() {
         jsonData.account.subscriptionTier = value;
       }
       console.log(jsonData.account);
+      useLoginStore.getState().updateUser(jsonData.account);
+      const jsonDataString = JSON.stringify(jsonData.account);
+      localStorage.setItem("user", jsonDataString);
+      const local = localStorage.getItem("user");
+      const state = useLoginStore.getState();
+      console.log(state);
+      console.log(local);
       toast.success("LogIn Successful!", {
         position: "top-center",
       });
@@ -81,14 +88,8 @@ export default function Login() {
         dob: jsonData.account.dob,
         phone: jsonData.account.phone,
       });
-      useLoginStore.getState().updateUser(jsonData.account);
-      const jsonDataString = JSON.stringify(jsonData.account);
-      localStorage.setItem("user", jsonDataString);
-      const local = localStorage.getItem("user");
-      const state = useLoginStore.getState();
-      console.log(state);
-      console.log(local);
-      router.push("/selectprofile");
+
+
     }
 
     // if (!jsonData.account.userProfiles.length) {

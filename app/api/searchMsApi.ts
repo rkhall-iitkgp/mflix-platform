@@ -1,6 +1,5 @@
-const searchMsApiUrls = () => {
-  // return 'https://971edtce1a.execute-api.ap-south-1.amazonaws.com';
-  return 'http://localhost:8000';
-};
+const searchMsApiUrls = () => (
+    'https://971edtce1a.execute-api.ap-south-1.amazonaws.com/'
+);
 
 export default searchMsApiUrls;

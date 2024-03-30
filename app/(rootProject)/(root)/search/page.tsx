@@ -91,12 +91,25 @@ export default function Search() {
     }
 
     useEffect(() => {
+        if (searchParams.get("genre")) {
+            fetchData(search, {
+                genres: [searchParams.get("genre")!.charAt(0).toUpperCase() + searchParams.get("genre")!.slice(1)],
+            });
+        }
+        else if (searchParams.get("language")) {
+            fetchData(search, {
+                languages: [searchParams.get("language")!.charAt(0).toUpperCase() + searchParams.get("language")!.slice(1)],
+            });
+        }
+    }, [searchParams])
+
+    useEffect(() => {
         if (page !== 1) getData(page);
     }, [page]);
 
     const getData = async (page: number) => {
         const res = await (await fetch(
-            `${searchMsApiUrls()}search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page}`,
+            `${searchMsApiUrls()}search/fuzzy?${search ? (search.trim().split(' ').length >= 5 ? 'semantic' : 'query') : "query"}=${search}&page=${page}`,
             {
                 method: 'POST',
                 headers: {
@@ -114,9 +127,10 @@ export default function Search() {
     
     const fetchData = async (search: string, filters: any = {}) => {
         const data: Array<MovieProps> = [];
+        console.log(search);
         for (let page = 0; page < 2; page++) {
             const res = await (await fetch(
-                `${searchMsApiUrls()}search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page + 1}`,
+                `${searchMsApiUrls()}search/fuzzy?${search ? (search.trim().split(' ').length >= 5 ? 'semantic' : 'query') : 'query' }=${search}&page=${page + 1}`,
                 {
                     method: 'POST',
                     headers: {

@@ -1,10 +1,10 @@
 import { Table, TableTd, TableTh, TableTr, Text, Box, Divider, Stack, Group } from '@mantine/core';
 import { TiTick } from "react-icons/ti";
- 
+import CustomTickIcon from '@/app/(rootProject)/(root)/pricing/customtickicon'
 import themeOptions from '@/utils/colors';
 import React, { useRef } from 'react';
 import { createStyles } from '@mantine/styles';
-import CustomTickIcon from '@/app/(rootProject)/(root)/pricing/customtickicon'
+
 
 
 const SubscriptionTable = ({ cardPlan }: any) => {
@@ -22,8 +22,7 @@ const SubscriptionTable = ({ cardPlan }: any) => {
             width: '30%', textAlign: 'left', color: themeOptions.color.textColorNormal, fontSize: '1.2rem'
         },
         TableThRestStyles: {
-
-            textAlign: 'center !important', width: '15%', fontSize: '1.1rem '
+            textAlign: 'center', width: '15%', fontSize: '1.1rem '
         },
         FeatureStyles: {
             textAlign: 'left', fontSize: "1.1rem"

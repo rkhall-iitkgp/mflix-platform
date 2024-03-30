@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Heart from '@/assets/icons/heart.svg';
 import Poster from '@/assets/icons/poster.jpeg';
 import Imdb from '@/assets/icons/imdb.png';
@@ -98,15 +99,15 @@ const useStyles = createStyles(() => ({
 }));
 
 export default function MovieCard({ data }: { data: any }) {
-  console.log(data);
+  // console.log(data);
   const { classes, cx } = useStyles();
   const { hovered, ref } = useHover();
   return (
-    <Link href={`/movies/${data?._id}`}>
+    <Link href={`/movies/${data._id}`} style={{ textDecoration: 'none' }}>
       <div className={cx(classes.containerStyles, hovered && classes.Hovered)} ref={ref}>
         {/* <div className={classes.heartContainerStyles}>
-        <Image src={Heart} width={30} height={30} alt="fav" className={classes.heartImageStyles} />
-      </div> */}
+          <Image src={Heart} width={30} height={30} alt="fav" className={classes.heartImageStyles} />
+        </div> */}
         <Image
           src={data?.poster || '/background.png'}
           alt="poster"

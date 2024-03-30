@@ -1,17 +1,57 @@
 'use client'
 // Import required modules
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import Image from 'next/image';
 import { createStyles } from '@mantine/styles';
+import useLoginStore from '@/Stores/LoginStore';
 
 // Import icons
 import avatarLogo1 from '@/assets/icons/profile1.svg';
 import avatarLogo2 from '@/assets/icons/profile2.svg';
 import avatarLogo3 from '@/assets/icons/profile3.svg';
 import addMoreLogo from '@/assets/icons/add-more.svg';
+import themeOptions from '@/utils/colors';
 
-// Define heading font size
-const headingFZ = '5vw';
+//User profile
+// {
+//     "_id": "66071dcf871b365691e6f506",
+//     "name": "Adarsh Tadiparthi",
+//     "email": "adarshtadiparthi30@gmail.com",
+//     "dob": "2005-07-30T00:00:00.000Z",
+//     "phone": 9390004880,
+//     "payments": [],
+//     "userProfiles": [
+//         {
+//             "_id": "66071dcf871b365691e6f507",
+//             "name": "Adarsh Tadiparthi",
+//             "moviesWatched": [],
+//             "watchList": [],
+//             "favoriteMovies": [],
+//             "savedFilters": [],
+//             "searchHistory": [],
+//             "__v": 0
+//         }
+//     ],
+//     "activeLogins": [
+//         "66071dd0871b365691e6f50a",
+//         "66071e17871b365691e6f51f"
+//     ],
+//     "subscriptionTier": {
+//         "bill": "",
+//         "tier": {
+//             "description": "",
+//             "maxResolution": 0,
+//             "name": "",
+//             "partyWatch": false,
+//             "price": 0,
+//             "tier": "",
+//             "__v": 0,
+//             "_id": ""
+//         }
+//     },
+//     "__v": 0
+// }
+
 
 // Define profile interface
 interface Profile {
@@ -49,17 +89,22 @@ const initialProfiles: Profile[] = [
     },
 ];
 
+const ImagesArray = [avatarLogo1,avatarLogo2,avatarLogo3];
+
 // Define component styles
 const useStyles = createStyles(() => ({
     containerStyle: {
         display: 'flex',
-        justifyContent: 'space-evenly',
+
+        justifyContent: 'space-between',
         alignItems: 'center',
         minWidth :'70vw',
+        maxWidth:'80vw',
+        margin:'0 auto',
     },
     headingStyle: {
-        padding: '2vw',
-        fontSize: '5vw',
+        margin: '2vw',
+        fontSize : themeOptions.fontSize.xl,
         fontWeight: 'bold',
         textAlign: 'center',
     },
@@ -72,8 +117,8 @@ const useStyles = createStyles(() => ({
         outline: '2px solid transparent',
     },
     avatarStyle: {
-        width: '10vw',
-        height: '10vw',
+        width: '15vw',
+        height: '15vw',
         marginBottom: '1rem',
         transition: 'border-color 0.3s',
         border: '2px solid transparent',
@@ -86,11 +131,19 @@ const useStyles = createStyles(() => ({
 // Define functional component
 const SelectProfile: React.FC = () => {
     // State for profiles
-    const [profiles, setProfiles] = useState<Profile[]>(initialProfiles);
+    const [profiles, setProfiles] = useState<Profile[]>([]);
+    const state = useLoginStore.getState();
+
+    useEffect(() => {
+        setProfiles(state.userProfiles);
+    }, []);
     // Get component styles
     const { classes } = useStyles();
     // Number of profiles per row
     const profilesPerRow = 5;
+    //Get user data
+
+    console.log(state.userProfiles);
 
     // Function to handle profile click
     const handleProfileClick = (link?: string) => {
@@ -101,40 +154,55 @@ const SelectProfile: React.FC = () => {
         }
     };
 
-    // Function to handle adding a new profile
-    const handleAddProfile = () => {
+   // Function to handle adding a new profile
+const handleAddProfile = () => {
+    if (profiles.length < 5) {
         const newProfileId = profiles.length + 1;
         const newProfile: Profile = {
             id: newProfileId,
             caption: `Profile${newProfileId - 1}`,
             link: '/',
-            image: avatarLogo1, // Example image, replace with actual path
+            image: ImagesArray[Math.floor(Math.random() * 3)], 
         };
 
         setProfiles([...profiles.slice(0, profiles.length - 1), newProfile, profiles[profiles.length - 1]]);
-    };
+    }
+    else if(profiles.length == 5) {
+        const newProfileId = profiles.length + 1;
+        const newProfile: Profile = {
+            id: newProfileId,
+            caption: `Profile${newProfileId - 1}`,
+            link: '/',
+            image: ImagesArray[Math.floor(Math.random() * 3)], 
+        };
+        const updatedInitialProfiles = profiles.slice(0, -1);
+        setProfiles([...updatedInitialProfiles , newProfile]);
+    }
+};
 
-    // Function to render profiles
-    const renderProfiles = () => {
-        const profileRows = [];
-        for (let i = 0; i < profiles.length; i += profilesPerRow) {
-            profileRows.push(
-                <div className={classes.containerStyle} key={i}>
-                    {profiles.slice(i, i + profilesPerRow).map((profile, index) => (
-                        <div key={index} className={classes.itemStyle} onClick={() => handleProfileClick(profile.link)}>
-                            <Image className={classes.avatarStyle} src={profile.image} alt={profile.caption} width={150} height={150} />
-                            <span style={{ textAlign: 'center', fontSize:'2vw' }}>{profile.caption}</span>
-                        </div>
-                    ))}
-                </div>
-            );
-        }
-        return profileRows;
-    };
 
+// Function to render profiles
+const renderProfiles = () => {
+    const profileRows = [];
+    
+    for (let i = 0; i < profiles.length; i += profilesPerRow) {
+        profileRows.push(
+            <div className={classes.containerStyle} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }} key={i}>
+                {profiles.slice(i, i + profilesPerRow).map((profile, index) => (
+                    <div key={index} className={classes.itemStyle} onClick={() => handleProfileClick(profile.link)}>
+                        <Image className={classes.avatarStyle} src={profile.image} alt={profile.caption} />
+                        <span style={{ textAlign: 'center', fontSize: themeOptions.fontSize.l }}>{profile.caption}</span>
+                    </div>
+                ))}
+            </div>
+        );
+    }
+    return profileRows;
+};
+    
     // Render component
     return (
-        <div style={{ backgroundColor: '#140320', minHeight: '100vh', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
+        <div style={{ backgroundColor: themeOptions.color.background, minHeight: '100vh', color: themeOptions.color.divider,padding:'10rem 0'}}>
             <div>
                 <div className={classes.headingStyle}>
                     Who's watching?

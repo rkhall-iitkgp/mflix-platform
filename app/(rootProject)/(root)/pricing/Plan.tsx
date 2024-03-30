@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import {
     TextInput,
@@ -170,7 +170,13 @@ export default function Plan() {
         }
     }));
  
-
+    const containerRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+      // Scroll to the container when the component mounts
+      if (containerRef.current) {
+        containerRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, []);
 
     const [planInner, setPlanInner] = useState([true, false, false]);
     const [cardPlan, setCardPlan] = useState([false, true, false]);
@@ -199,7 +205,7 @@ export default function Plan() {
         <>
             <SubscriptionTables ref={subscriptionTablesRef} cardPlan={cardPlan} />
             <Box className={classes.OuterBoxStyles}>
-                <Box className={classes.PlanBoxStyles}>
+                <Box className={classes.PlanBoxStyles} ref={containerRef}>
                     {['Monthly', 'Quarterly', 'Annually'].map((label, index) => (
                         <Box
                             key={`planInner${index}`}

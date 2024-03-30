@@ -364,7 +364,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li className={classes.premium}>
-            <Link href="#" className={classes.link2}>
+            <Link href="/pricing" className={classes.link2}>
               Premium
             </Link>
           </li>

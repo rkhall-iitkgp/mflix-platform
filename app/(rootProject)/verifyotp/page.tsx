@@ -31,7 +31,7 @@ import Mixpanel from '@/components/Mixpanel';
 
 export default function Otp({ initialValues }: any) {
   const router = useRouter();
-  const[checkReg, setCheckReg]= useState(false);
+  const [checkReg, setCheckReg] = useState(false);
   const [type, toggle] = useToggle(['login', 'register']);
   const [resendTime, setResendTime] = useState(60);
   const [otpValue, setOtpValue] = useState(initialValues?.otp || '');
@@ -50,7 +50,7 @@ export default function Otp({ initialValues }: any) {
     // const router = useRouter();
     console.log(initialValues);
     const base_url = searchMsApiUrls();
-    let res = await fetch(`${base_url}/auth/verifyOTP`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/verifyOTP`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export default function Otp({ initialValues }: any) {
     let jsonData = await res.json();
     if (!res.ok) {
       console.log(jsonData.message);
-     
+
       setOtpValue('');
     }
     //   setLoading(false);
@@ -72,7 +72,7 @@ export default function Otp({ initialValues }: any) {
       setCheckReg(true);
       console.log(jsonData);
       toast.success("User Registered Successfully!", {
-        position:"top-center"
+        position: "top-center"
       })
       // router.push('/userprofile');
       Mixpanel.track('User Sign Up', {
@@ -90,12 +90,12 @@ export default function Otp({ initialValues }: any) {
         console.log(state);
         console.log(local);
         router.push('/selectprofile')
-      } 
+      }
       // else if (initialValues.type == 'forget') {
       //   router.push('/login');
       // } 
       else if (initialValues.type == 'change') {
-        router.push('/selectprofile'); 
+        router.push('/selectprofile');
       }
     }
   };
@@ -108,7 +108,7 @@ export default function Otp({ initialValues }: any) {
   const handleResendOtp = async () => {
     setResendTime(60);
     const base_url = searchMsApiUrls();
-    let res = await fetch(`${base_url}/auth/resendOTP`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/resendOTP`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -261,6 +261,6 @@ export default function Otp({ initialValues }: any) {
 
                 </div> */}
       </Box>
-    </Flex> <ToastContainer/></>
+    </Flex> <ToastContainer /></>
   );
 }

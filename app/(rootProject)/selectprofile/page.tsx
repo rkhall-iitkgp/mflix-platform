@@ -134,6 +134,7 @@ const SelectProfile: React.FC = () => {
         state.updateUser(
             newProfile,
         );
+        localStorage.setItem('newProfile', JSON.stringify(newProfile));
         console.log(newProfile);
         router.push('/');
     }

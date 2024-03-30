@@ -17,6 +17,7 @@ import themeOptions from '@/assets/themes/colors';
 // Define heading font size
 const headingFZ = '5vw';
 const url = searchMsApiUrls();
+const [length,setLength] = useState(1)
 
 // {
 //     "success": true,
@@ -40,7 +41,8 @@ const AddProfile = async()=>{
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ "userName":"Profile" })
+            credentials: "include", 
+            body: JSON.stringify({ "userName":`Profile${length}` })
         })
         console.log(response);    
     }catch(error){
@@ -63,6 +65,7 @@ const SelectProfile: React.FC = () => {
     //Getting user data from backend
     const state = useLoginStore.getState();
     const array = state.userProfiles;
+    setLength(array.length+1);
 
     //changing type of profile
     const transformedArray = array.map((item, index) => ({

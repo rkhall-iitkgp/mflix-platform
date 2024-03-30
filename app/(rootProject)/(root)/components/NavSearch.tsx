@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import searchMsApiUrls from '@/app/api/searchMsApi';
 import { Menu } from '@mantine/core'
 import { useEventListener } from '@mantine/hooks'
+import themeOptions from '@/utils/colors'
 
 
 export default function SearchBar() {
@@ -29,7 +30,7 @@ export default function SearchBar() {
                 const data = await response.json();
                 // Assuming 'result' is the key containing the array of suggestions
                 const suggestions = data.result.map((item: { title: string }) => item.title);
-                console.log(suggestions);
+                // console.log(suggestions);
                 setSuggestions(suggestions);
             } else {
                 setSuggestions([]);
@@ -88,7 +89,7 @@ const styles = {
         alignItems: 'center',
         borderRadius: '0.375rem',
         overflow: 'hidden',
-        backgroundColor: 'rgb(243, 244, 246)',
+        backgroundColor: themeOptions.color.divider,
         padding: '0.5rem 0.5rem 0.5rem 1rem',
         marginTop: '2rem',
         marginBottom: '2rem',
@@ -111,9 +112,9 @@ const styles = {
     mic: {
         width: '2rem',
         height: '2rem',
-        color: 'rgb(156, 163, 175)',
+        color: themeOptions.color.divider,
         marginRight: '0.5rem',
-        backgroundColor: '#7011B6',
+        backgroundColor: themeOptions.color.button,
         padding: '0.125rem',
         borderRadius: '50%'
     },

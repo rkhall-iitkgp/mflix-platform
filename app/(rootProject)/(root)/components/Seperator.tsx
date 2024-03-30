@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, CSSProperties } from 'react';
 import gsap from 'gsap';
+import themeOptions from '@/utils/colors';
 
 const AnimatedLines = () => {
   // Refs for the DOM elements you want to animate
@@ -20,7 +21,7 @@ const AnimatedLines = () => {
     line: {
       position: 'absolute' as 'absolute',
       height: '2px',
-      backgroundColor: '#FFFFFF', // White line color
+      backgroundColor: themeOptions.color.divider, // White line color
       width: '0', // Start with 0 width to animate from
       top: '50%', // Centered vertically, but adjust as needed
       left: '0',

@@ -6,6 +6,7 @@ import Imdb from '@/assets/images/imdb.png';
 import Tomato from '@/assets/images/tomato.png';
 import { createStyles } from '@mantine/styles';
 import { useState } from 'react';
+import themeOptions from '@/assets/themes/colors';
 
 
 const useStyles = createStyles(() => ({
@@ -26,17 +27,17 @@ const useStyles = createStyles(() => ({
     marginTop: '0.75rem',
   },
 
-  heartImageStyles: {
-    fill: 'red',
-    alignSelf: 'flex-end',
-    backgroundColor: '#F3F4F6',
-    padding: '0.2rem',
-    left: '40px',
-    border: '2px solid',
-    borderRadius: '50%',
-    zIndex: 1,
-    cursor: 'pointer',
-  },
+  // heartImageStyles: {
+  //   fill: 'red',
+  //   alignSelf: 'flex-end',
+  //   backgroundColor: '#F3F4F6',
+  //   padding: '0.2rem',
+  //   left: '40px',
+  //   border: '2px solid',
+  //   borderRadius: '50%',
+  //   zIndex: 1,
+  //   cursor: 'pointer',
+  // },
 
   posterStyles: {
     width: '20.75rem',
@@ -50,7 +51,7 @@ const useStyles = createStyles(() => ({
   },
 
   titleStyles: {
-    color: '#fff',
+    color: themeOptions.color.divider,
     fontSize: '1.125rem',
     fontWeight: 'bold',
     marginTop: '0.0625rem',
@@ -72,7 +73,7 @@ const useStyles = createStyles(() => ({
 
   genreStyles: {
     marginTop: '0.0625rem',
-    color: '#fff',
+    color: themeOptions.color.divider,
     fontWeight: 'bold',
   },
 

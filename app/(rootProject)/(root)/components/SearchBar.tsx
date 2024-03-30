@@ -51,7 +51,7 @@ const useStyles = createStyles(() => ({
   mic: {
     width: '2.5rem',
     height: '2.5rem',
-    color: 'rgb(156, 163, 175)',
+    color: themeOptions.color.divider,
     marginRight: '0.5rem',
     backgroundColor: themeOptions.color.button,
     padding: '0.5rem',
@@ -65,7 +65,7 @@ const useStyles = createStyles(() => ({
   icon: {
     width: '2rem',
     height: '2rem',
-    color: 'rgb(156, 163, 175)',
+    color: themeOptions.color.divider,
     marginRight: '0.5rem',
     cursor: 'pointer',
     transition: 'transform 0.15s ease-in',
@@ -80,7 +80,7 @@ const styles = {
         alignItems: 'center',
         borderRadius: '0.375rem',
         overflow: 'hidden',
-        backgroundColor: 'rgb(243, 244, 246)',
+        backgroundColor: themeOptions.color.divider,
         padding: '0.5rem 0.5rem 0.5rem 1rem',
         marginTop: '2rem',
         marginBottom: '2rem',

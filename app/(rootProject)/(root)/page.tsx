@@ -7,6 +7,7 @@ import Trend from '@/assets/icons/trends.svg';
 import MyListIcon from '@/assets/icons/my-list.svg';
 import AwardIcon from '@/assets/icons/award.svg';
 import ListMovies from '@/components/ListMovies';
+import Chatbot from './components/Chatbot';
 import Section from './components/Section';
 import { createStyles } from '@mantine/styles';
 import themeOptions from '@/utils/colors';
@@ -89,6 +90,7 @@ export default function Home() {
         <Section title={'Trending'} image={Trend} movieData={TrendingMovies || []} />
         <Section title={'Award Winniing Films'} image={AwardIcon} movieData={Award || []} />
         {isLoggedIn && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
+        <Chatbot />
       </div>
     </>
   );

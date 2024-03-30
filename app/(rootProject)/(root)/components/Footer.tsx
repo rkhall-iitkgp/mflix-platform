@@ -3,6 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createStyles } from '@mantine/styles';
+import themeOptions from '@/utils/colors'
 
 // Styles for the footer sections
 
@@ -14,7 +15,7 @@ function Footer() {
       fontSize: '1.875rem',
       lineHeight: '2.25rem',
       fontWeight: 700,
-      color: 'white',
+      color: themeOptions.color.button,
       textDecorationLine: 'none',
       '&:hover': {
         color: 'gray',
@@ -172,7 +173,7 @@ function Footer() {
         padding: '2rem',
         paddingTop: '4rem',
         paddingBottom: '2rem',
-        background: '#0B0212'
+        background: themeOptions.color.background
       },
 
       divStyle: {

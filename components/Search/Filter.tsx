@@ -14,6 +14,7 @@ import Createicon from '@/assets/create.svg'
 import Deleteicon from '@/assets/delete.svg'
 import Listicon from '@/assets/list.svg'
 import { languages, types, countries, genres } from './filterOptions';
+import { useSearchParams } from 'next/navigation';
 const useStyles = createStyles(() =>
 //const child = getRef('child');
 
@@ -81,12 +82,35 @@ const useStyles = createStyles(() =>
 })
 );
 
-export default function Filter() {
+export default function Filter({ fetchData }: { fetchData(searchTerm: string, filters: any): Promise<void> }) {
     const { classes } = useStyles();
     const [isToggled, setIsToggled] = useState(false);
+    const searchParams = useSearchParams();
+    const search = searchParams.get('query');
 
-    const handleToggle = () => {
+    const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+    const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+    const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
+    const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+    const [selectedRatings, setSelectedRatings] = useState<string[]>([]);
+
+    const fetchResults = async () => {
+        const body = {
+            languages: selectedLanguages,
+            countries: selectedCountries,
+            genres: selectedGenres,
+            type: selectedTypes.length === 1 ? selectedTypes[0] : "",
+            rating: {
+                low: selectedRatings.map(rating => parseInt(rating.substring(0, 1)))[0],
+                high: 10
+            }
+        };
+        await fetchData(search, body);
+    }
+
+    const handleToggle = async () => {
         setIsToggled((prev) => !prev);
+        return await fetch("hey")
     };
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -109,11 +133,28 @@ export default function Filter() {
                 {isToggled &&
                     <div className={classes.outer}>
                         <Grid w="100%" justify="flexStart" align="stretch" overflow="hidden">
-                            {Object.keys(Data).map((key, index) => ( // Iterate over the keys of Data
+                            {/* {Object.keys(Data).map((key, index) => ( // Iterate over the keys of Data
                                 <Grid.Col key={index} span={3}>
                                     <TypeButton value={key} data={Data[key as keyof typeof Data]} />
                                 </Grid.Col>
-                            ))}
+                            ))} */}
+                            <Grid.Col span={3}>
+                                <TypeButton value='Language' data={Data["Language"]} selectedArray={selectedLanguages} setSelectedArray={setSelectedLanguages} />
+                            </Grid.Col>
+                            <Grid.Col span={3}>
+                                <TypeButton value='Type' data={Data["Type"]} selectedArray={selectedTypes} setSelectedArray={setSelectedTypes} />
+                            </Grid.Col>
+                            <Grid.Col span={3}>
+                                <TypeButton value='Country' data={Data["Country"]} selectedArray={selectedCountries} setSelectedArray={setSelectedCountries} />
+                            </Grid.Col>
+                            <Grid.Col span={3}>
+                                <TypeButton value='Genre' data={Data["Genre"]} selectedArray={selectedGenres} setSelectedArray={setSelectedGenres} />
+                            </Grid.Col>
+                            <Grid.Col span={3}>
+                                <TypeButton value='Rating' data={Data["Rating"]} selectedArray={selectedRatings} setSelectedArray={setSelectedRatings} />
+                            </Grid.Col>
+
+
                             {/* <Grid.Col span={3}>
                                 <RatingButton />
                             </Grid.Col> */}
@@ -125,7 +166,7 @@ export default function Filter() {
                             <Grid.Col span={3}>
                             </Grid.Col>
                             <Grid.Col span={3} style={{ display: 'flex', justifyContent: "flex-end", alignItems: "center", gap: '6px' }}>
-                                <button className={classes.button}>Apply</button>
+                                <button className={classes.button} onClick={() => fetchResults()} >Apply</button>
                                 <Image src={Createicon} alt="" />
                                 <Image src={Listicon} alt="" onClick={toggleDropdown} />
                                 {showDropdown && (
@@ -144,9 +185,6 @@ export default function Filter() {
                                     </div>
                                 )}
                             </Grid.Col>
-
-
-
                         </Grid>
                     </div>
                 }

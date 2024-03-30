@@ -112,45 +112,46 @@ export default function Search() {
         setRecommended(recommended.concat(data));
         if (!res.hasNext) setHasNext(false);
     };
-
+    
+    const fetchData = async (search: string, filters: any = {}) => {
+        const data: Array<MovieProps> = [];
+        for (let page = 0; page < 2; page++) {
+            const res = await (await fetch(
+                `${searchMsApiUrls()}search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page + 1}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                      },
+                    body: JSON.stringify({
+                        userId: '660076dfcc09ff618602257f',
+                        filters: JSON.stringify(filters),
+                    }),
+                }
+            )).json();
+            if (!res.results) return setNotFound(true);
+            data.push(...res.results);
+            if (!res.hasNext) break;
+        }
+        console.log(data);
+        setTopRes(data.slice(0, 4));
+        if (data.length >= 14) {
+            setRecommended(data.slice(14));
+            setMoreResults(data.slice(4, 14));
+        } else {
+            setRecommended([]);
+            setMoreResults(data.slice(4));
+        }
+        setLoaded(true);
+    };
     // const getFavourite = () => false;
     const makeGroup = (arr: Array<any>, n: number) =>
         arr.length % n === 0 ? arr : arr.concat(Array(n - (arr.length % n)).fill(null));
-
+        
     useEffect(() => {
         if (!search) return;
         console.log(search.trim().split(' ').length >= 5 ? 'semantic' : 'fuzzy');
-        const fetchData = async () => {
-            const data: Array<MovieProps> = [];
-            for (let page = 0; page < 2; page++) {
-                const res = await (await fetch(
-                    `${searchMsApiUrls()}search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page + 1}`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                          },
-                        body: JSON.stringify({
-                            userId: '660076dfcc09ff618602257f',
-                        }),
-                    }
-                )).json();
-                if (!res.results) return setNotFound(true);
-                data.push(...res.results);
-                if (!res.hasNext) break;
-            }
-            console.log(data);
-            setTopRes(data.slice(0, 4));
-            if (data.length >= 14) {
-                setRecommended(data.slice(14));
-                setMoreResults(data.slice(4, 14));
-            } else {
-                setRecommended([]);
-                setMoreResults(data.slice(4));
-            }
-            setLoaded(true);
-        };
-        fetchData();
+        fetchData(search);
         // const data = Array.from({ length: 10 }).map(() => dummyCardMovie());
         // here i will fetch recommended and other stuff probably
         const handleResize = () => {
@@ -183,7 +184,7 @@ export default function Search() {
     (
         <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
             <div className={classes.bg}></div>
-            <Filter />
+            <Filter fetchData={fetchData} />
             {/* top results part, needs more work */}
             <Stack>
                 <Text fw={600} fz={themeOptions.fontSize.xl}>

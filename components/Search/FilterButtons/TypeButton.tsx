@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { UnstyledButton, Menu, Group, MantineProvider } from '@mantine/core';
 import { IconChevronDown } from '@tabler/icons-react';
 import { createStyles } from '@mantine/styles';
@@ -83,15 +83,14 @@ const useStyles = createStyles(() => ({
     }
 }));
 
-export function TypeButton({ value, data }: { value: string, data: string[] }) {
+export function TypeButton({ value, data, selectedArray, setSelectedArray }: { value: string, data: string[], selectedArray: string[], setSelectedArray: Dispatch<SetStateAction<string[]>>}) {
     const [opened, setOpened] = useState(false);
     const [selected, setSelected] = useState(new Array(data.length).fill(false));
     const [visible, setVisible] = useState(false);
     const { classes } = useStyles();
-    const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
     useEffect(() => {
-        setSelectedItems(data.filter((_, i) => selected[i]))
+        setSelectedArray(data.filter((_, i) => selected[i]))
     }, [selected])
     
     useEffect(() => {
@@ -126,7 +125,7 @@ export function TypeButton({ value, data }: { value: string, data: string[] }) {
                 <div className={` ${classes.control} ${visible ? classes.visible : classes.hidden} `}>
                     <UnstyledButton className={classes.control} data-expanded={opened || undefined}>
                         <Group gap="xs" justify="space-between" style={{width: "90%"}} >
-                            <p className={classes.type}>{selectedItems.length > 0 ? selectedItems.join(",") : value}</p>
+                            <p className={classes.type}>{selectedArray.length > 0 ? selectedArray.join(",") : value}</p>
                         </Group>
                         <IconChevronDown color={themeOptions.color.smallBox} size="1rem" className={classes.icon} stroke={1.5} />
                     </UnstyledButton>

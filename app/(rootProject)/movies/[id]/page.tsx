@@ -94,7 +94,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
             ).json();
             setMovieData(res.result);
             const res1 = await (
-                await fetch(`http://localhost:5000/movies/link/${id}`, {
+                await fetch(`${url}/movies/link/${id}`, {
                     method: "GET",
                 })
             ).json();

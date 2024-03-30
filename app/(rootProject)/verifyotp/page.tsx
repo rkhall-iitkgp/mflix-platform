@@ -172,8 +172,8 @@ export default function Otp({ initialValues }: any) {
         <Text size="1.4rem" c={'white'}>
           An OTP has been sent to your email
         </Text>
-        {/* <Text size="1rem" style={{ color: '#9441D0', marginBottom: '1rem' }}>Resend OTP in {resendTime} seconds</Text> */}
-        {/* <a href="/login" style={{ color: '#9441D0' }}>Log In</a> */}
+        {/* <Text size="1rem" style={{ color: '#00664A', marginBottom: '1rem' }}>Resend OTP in {resendTime} seconds</Text> */}
+        {/* <a href="/login" style={{ color: '#00664A' }}>Log In</a> */}
         <Button
           disabled={resendTime > 0} // Disable button if resend timer is active
           onClick={handleResendOtp}
@@ -246,7 +246,7 @@ export default function Otp({ initialValues }: any) {
             marginTop: '2rem',
             width: '50%',
             height: '3rem',
-            backgroundColor: '#9441D0',
+            backgroundColor: '#00664A',
             borderRadius: '1rem',
             fontSize: '1rem',
             marginBottom: '1.5rem',

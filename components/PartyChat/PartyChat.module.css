@@ -1,281 +1,345 @@
 .container {
-  width: 35rem;
-  height: 100vh;
-  padding: 1rem;
-  background-color: #020202;
-  color: white;
-  display: flex;
-  flex-direction: column;
+    padding-top: 1rem;
+    width: 35rem;
+    height: 90vh;
+    /* background-color: #020202; */
+    background: #333333;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
 }
 
 .tabcontainer {
-  display: flex;
-  color: white;
+    display: flex;
+    color: white;
+    padding: 1rem 0 0;
+    background: linear-gradient(
+        149.93deg,
+        #580099 8.93%,
+        #00664A 50.35%,
+        #580099 84.24%
+    );
 }
 .tab {
-  width: 100%;
-  padding: 0.5rem 1rem;
-  text-align: center;
-  font-size: 1.3rem;
-  font-weight: 600;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  background: none;
-  border-bottom: 2px solid #444;
-  cursor: pointer;
-  color: white;
+    width: 100%;
+    padding: 0 1rem;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: none;
+    border-bottom: 2px solid #444;
+    cursor: pointer;
+    color: white;
 }
 .active {
-  width: 100%;
-  padding: 0.5rem 1rem;
-  text-align: center;
-  font-size: 1.3rem;
-  font-weight: 600;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  background: none;
-  border-bottom: 2px solid white;
-  cursor: pointer;
-  color: white;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: none;
+    border-bottom: 2px solid white;
+    cursor: pointer;
+    color: white;
 }
 
 .heading {
-  font-size: 2rem;
-  color: purple;
-  line-height: normal;
-  margin-bottom: 0.25rem;
-  margin-top: 0;
+    font-size: 2rem;
+    color: #6034df;
+    line-height: normal;
+    margin-bottom: 0.25rem;
+    margin-top: 0;
 }
 
 .paragraph {
-  font-size: '1.1rem';
-  line-height: normal;
-  font-weight: 600;
+    font-size: "1.1rem";
+    line-height: normal;
+    font-weight: 600;
 }
 
 .copy {
-  background: wheat;
-  padding: 0.25rem 1rem;
+    border: none;
+    background: none;
+    outline: none;
+    box-shadow: none;
+    padding: 0.25rem 1rem;
+    background: #444;
+    cursor: text;
+    color: #ddd;
 }
-
+.copyBtn {
+    margin-left: 1rem;
+    border: none;
+    background: none;
+    outline: none;
+    box-shadow: none;
+    color: white;
+    background: #6034df;
+    padding-inline: 1rem;
+    cursor: pointer;
+    border-radius: 1rem;
+}
 .controls,
 .invite,
 .section,
 .details {
-  border-bottom: 1px solid white;
-  padding-block: 1rem;
+    border-bottom: 1px solid white;
+    padding-block: 1rem;
 }
 
 /*  */
 .userlist {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 .user {
-  display: grid;
-  grid-template-columns: 2rem auto 5rem;
-  gap: 1rem;
-  align-content: center;
-  align-items: center;
+    display: grid;
+    grid-template-columns: 2rem auto 5rem;
+    gap: 1rem;
+    align-content: center;
+    align-items: center;
 }
 .profile {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  aspect-ratio: 1 / 1;
-  background-color: wheat;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    background-color: wheat;
 }
 .username {
-  margin: 0;
+    margin: 0;
 }
 
 .endparty {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.endparty button {
+    margin-left: 1rem;
+    border: none;
+    background: none;
+    outline: none;
+    box-shadow: none;
+    color: white;
+    background: linear-gradient(
+        149.93deg,
+        #580099 8.93%,
+        #00664A 50.35%,
+        #580099 84.24%
+    );
+    padding: 0.75rem;
+    font-weight: bold;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 1rem;
 }
 
 .chatcontainer {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  padding: 2rem;
-  gap: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 2rem;
+    gap: 1rem;
 }
 .inputsection {
-  display: flex;
-  padding-block: 1rem;
-  padding-inline: 1rem;
-  padding-block: 1rem;
-  border-radius: 0.5rem;
-  background: white;
-  gap: 1.5rem;
-  margin-top: 1rem;
+    display: flex;
+    padding-block: 1rem;
+    padding-inline: 1rem;
+    padding-block: 1rem;
+    border-radius: 0.5rem;
+    background: white;
+    gap: 1.5rem;
+    margin-top: 1rem;
 }
 .messageInput {
-  flex: 1;
-  border: none;
-  outline: none;
-  background-color: inherit;
+    flex: 1;
+    border: none;
+    outline: none;
+    background-color: inherit;
 }
 
 .chatcontainer p {
-  border-radius: 1.15rem;
-  line-height: 1.25;
-  padding: 0.5rem 0.875rem;
-  position: relative;
-  word-wrap: break-word;
-  margin: 0;
+    border-radius: 1.15rem;
+    line-height: 1.25;
+    padding: 0.5rem 0.875rem;
+    position: relative;
+    word-wrap: break-word;
+    margin: 0;
 }
 
 .chatcontainer p::before,
 .chatcontainer p::after {
-  bottom: -0.1rem;
-  content: '';
-  height: 1rem;
-  position: absolute;
+    bottom: -0.1rem;
+    content: "";
+    height: 1rem;
+    position: absolute;
 }
 
 .chatcontainer p.from_me {
-  align-self: flex-end;
-  background-color: #248bf5;
-  color: #fff;
+    align-self: flex-end;
+    background-color: #6034df;
+    color: #fff;
 }
 
 .chatcontainer p.from_me::before {
-  border-bottom-left-radius: 0.8rem 0.7rem;
-  border-right: 1rem solid #248bf5;
-  right: -0.35rem;
-  transform: translate(0, -0.1rem);
+    border-bottom-left-radius: 0.8rem 0.7rem;
+    border-right: 1rem solid #6034df;
+    right: -0.35rem;
+    transform: translate(0, -0.1rem);
 }
 
 .chatcontainer p.from_me::after {
-  background-color: black;
-  border-bottom-left-radius: 0.5rem;
-  right: -40px;
-  transform: translate(-30px, -2px);
-  width: 10px;
+    background-color: #333333;
+    border-bottom-left-radius: 0.5rem;
+    right: -40px;
+    transform: translate(-30px, -2px);
+    width: 10px;
 }
 
-.imessage [class^='from_'] {
-  margin: 0.5rem 0;
-  width: fit-content;
+.imessage [class^="from_"] {
+    margin: 0.5rem 0;
+    width: fit-content;
 }
 
 .chatcontainer p.from_me ~ .chatcontainer p.from_me {
-  margin: 0.25rem 0 0;
+    margin: 0.25rem 0 0;
 }
 
 .chatcontainer p.from_me ~ .chatcontainer p.from_me:not(:last-child) {
-  margin: 0.25rem 0 0;
+    margin: 0.25rem 0 0;
 }
 
 .chatcontainer p.from_me ~ .chatcontainer p.from_me:last-child {
-  margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .chatcontainer p.from_them {
-  align-items: flex-start;
-  background-color: #e5e5ea;
-  color: #000;
-  width: fit-content;
+    align-items: flex-start;
+    background-color: #bfbfbf;
+    color: #000;
+    width: fit-content;
 }
 
 .chatcontainer p.from_them:before {
-  border-bottom-right-radius: 0.8rem 0.7rem;
-  border-left: 1rem solid #e5e5ea;
-  left: -0.35rem;
-  transform: translate(0, -0.1rem);
+    border-bottom-right-radius: 0.8rem 0.7rem;
+    border-left: 1rem solid #bfbfbf;
+    left: -0.35rem;
+    transform: translate(0, -0.1rem);
 }
 
 .chatcontainer p.from_them::after {
-  background-color: black;
-  border-bottom-right-radius: 0.5rem;
-  left: 20px;
-  transform: translate(-30px, -2px);
-  width: 10px;
+    background-color: #333333;
+    border-bottom-right-radius: 0.5rem;
+    left: 20px;
+    transform: translate(-30px, -2px);
+    width: 10px;
 }
 
-.imessage p[class^='from_'].emoji {
-  background: none;
-  font-size: 2.5rem;
+.imessage p[class^="from_"].emoji {
+    background: none;
+    font-size: 2.5rem;
 }
 
-.imessage p[class^='from_'].emoji::before {
-  content: none;
+.imessage p[class^="from_"].emoji::before {
+    content: none;
 }
 
 .no-tail::before {
-  display: none;
+    display: none;
 }
 
 .margin-b_none {
-  margin-bottom: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 .margin-b_one {
-  margin-bottom: 1rem !important;
+    margin-bottom: 1rem !important;
 }
 
 .margin-t_one {
-  margin-top: 1rem !important;
+    margin-top: 1rem !important;
 }
 
 @media screen and (max-width: 800px) {
-  .imessage {
-    font-size: 1.05rem;
-    margin: 0 auto 1rem;
-    max-width: 600px;
-    padding: 0.25rem 0.875rem;
-  }
+    .imessage {
+        font-size: 1.05rem;
+        margin: 0 auto 1rem;
+        max-width: 600px;
+        padding: 0.25rem 0.875rem;
+    }
 
-  .imessage p {
-    margin: 0.5rem 0;
-  }
+    .imessage p {
+        margin: 0.5rem 0;
+    }
 }
 
 .from_me_container {
-  align-self: flex-end;
-  max-width: 75%;
-  display: flex;
-  flex-direction: column;
+    align-self: flex-end;
+    max-width: 75%;
+    display: flex;
+    flex-direction: column;
 }
 .from_them_container {
-  align-self: flex-start;
-  max-width: 75%;
-  display: flex;
-  flex-direction: column;
+    align-self: flex-start;
+    max-width: 75%;
+    display: flex;
+    flex-direction: column;
 }
 .from_me_time {
-  width: fit-content;
-  align-self: flex-end;
+    width: fit-content;
+    align-self: flex-end;
 }
-
 
 .notifmsgcontainer {
-  text-align: center;
-  position: relative;
-  z-index: 10;
-  background: #000;
+    text-align: center;
+    position: relative;
+    z-index: 20;
+    background: #333333;
 }
 .notifmsgcontainer::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  background-color: red;
-  top: 50%;
-  left: 0;
-  z-index: -10;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-color: red;
+    top: 50%;
+    left: 0;
+    z-index: -5;
 }
 .notifmsg {
-  text-align: center;
-  position: relative;
-  z-index: 10;
-  background: #000;
-  padding-inline: 1rem;
+    text-align: center;
+    position: relative;
+    z-index: 20;
+    background: #333333;
+    padding-inline: 1rem;
+}
+
+.chatsend {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    box-shadow: none;
+    border-radius: 50%;
+    background-color: #6034df;
+    color: white;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.setting {
+    padding: 1rem 1.5rem;
 }

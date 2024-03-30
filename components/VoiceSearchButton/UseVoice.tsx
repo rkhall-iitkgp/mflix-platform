@@ -54,19 +54,12 @@ const useVoice = (): {
 
   const listen = () => {
     if (!speech) return;
-
-    // if (!isListening) {
-    //   setIsListening(true);
     speech.start();
     setTimeout(() => {
       setIsListening(false);
       speech?.stop();
     }, 3000);
-    // } else {
-    //   setIsListening(false);
 
-    //   speech.stop();
-    // }
   };
 
   useEffect(() => {
@@ -75,6 +68,7 @@ const useVoice = (): {
     speech.onresult = (event) => {
       console.log(event.results[event.results.length - 1][0].transcript);
       setText(event.results[event.results.length - 1][0].transcript);
+      console.log("use state text: ",text)
       setIsListening(false);
     };
 

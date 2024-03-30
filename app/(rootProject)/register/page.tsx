@@ -125,7 +125,7 @@ export default function Register(props: any) {
     validate: {
       name: (val) => (!val ? 'Required' : null),
       dob: (val) => (!val ? 'Required' : null),
-      phone: (val) => (val.toString().length < 10 ? 'Invalid Phone No.' : null),
+      phone: (val) => (val.toString().length <= 10 ? 'Invalid Phone No.' : null),
       email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
       newPassword: (val) =>
         val.length <= 5 ? 'Password should include at least 6 characters' : null,
@@ -164,7 +164,7 @@ export default function Register(props: any) {
             <Text size="1.1rem" c={'white'}>
               Already have an account?
             </Text>
-            <a href="/login" style={{ color: '#9441D0' }}>
+            <a href="/login" style={{ color: '#00664A' }}>
               Log In
             </a>
           </Flex>
@@ -447,7 +447,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     marginTop: '1rem',
                     width: '50%',
                     height: '3rem',
-                    backgroundColor: '#9441D0',
+                    backgroundColor: '#00664A',
                     borderRadius: '1rem',
                     fontSize: '1rem',
                   }}

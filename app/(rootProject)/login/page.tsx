@@ -80,26 +80,26 @@ export default function Login() {
         $email: jsonData.account.email,
         $dob: jsonData.account.dob,
         $phone: jsonData.account.phone,
-        $subscriptionTierId: jsonData.account.subscriptionTier.tier._id,
-        $subscriptionTiername: jsonData.account.subscriptionTier.tier.name,
+        // $subscriptionTierId: jsonData.account?.subscriptionTier.tier._id,
+        // $subscriptionTiername: jsonData.account?.subscriptionTier.tier.name,
       });
       Mixpanel.track('Successful Login', {
         $name: jsonData.account.name,
         $email: jsonData.account.email,
         $dob: jsonData.account.dob,
         $phone: jsonData.account.phone,
-        $subscriptionTierId: jsonData.account.subscriptionTier.tier._id,
-        $subscriptionTiername: jsonData.account.subscriptionTier.tier.name,
+        // $subscriptionTierId: jsonData.account.subscriptionTier.tier._id,
+        // $subscriptionTiername: jsonData.account.subscriptionTier.tier.name,
       });
       Mixpanel.people.set({
         $name: jsonData.account.name,
         $email: jsonData.account.email,
         $dob: jsonData.account.dob,
         $phone: jsonData.account.phone,
-        $subscriptionTier: {
-          tierId: jsonData.account.subscriptionTier.tier._id,
-          $name: jsonData.account.subscriptionTier.tier.name,
-        },
+        // $subscriptionTier: {
+        //   tierId: jsonData.account.subscriptionTier.tier._id,
+        //   $name: jsonData.account.subscriptionTier.tier.name,
+        // },
       });
 
       useLoginStore.getState().updateUser(jsonData.account);
@@ -196,7 +196,7 @@ export default function Login() {
     ButtonStyles: {
       width: '70%',
       height: '3.5rem',
-      backgroundColor: '#9441D0',
+      backgroundColor: '#00664A',
       borderRadius: '1rem',
       fontSize: '1.5rem',
       fontWeight: 'normal',
@@ -326,7 +326,7 @@ export default function Login() {
             style={{
               width: '70%',
               height: '3rem',
-              backgroundColor: '#9441D0',
+              backgroundColor: '#00664A',
               borderRadius: '1rem',
               fontSize: '1.1rem',
               fontWeight: 'normal',

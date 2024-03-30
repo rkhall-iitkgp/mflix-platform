@@ -100,7 +100,7 @@ export default function ResetPassword() {
     ButtonStyles: {
       width: '70%',
       height: '3.5rem',
-      backgroundColor: '#9441D0',
+      backgroundColor: '#00664A',
       borderRadius: '1rem',
       fontSize: '1.5rem',
       fontWeight: 'normal',
@@ -256,7 +256,7 @@ export default function ResetPassword() {
                 style={{
                   width: '70%',
                   height: '3.5rem',
-                  backgroundColor: '#9441D0',
+                  backgroundColor: '#00664A',
                   borderRadius: '1rem',
                   fontSize: '1.5rem',
                   fontWeight: 'normal',

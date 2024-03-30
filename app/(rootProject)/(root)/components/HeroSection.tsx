@@ -7,8 +7,6 @@ import { useState, useEffect, useRef } from 'react';
 import BgImage from '@/assets/images/bg-home.jpeg';
 import { createStyles } from '@mantine/styles';
 import Poster from '@/assets/images/poster1.jpg';
-import Vector1 from '@/assets/images/vect-1.svg';
-import Vector2 from '@/assets/images/vect-2.svg';
 import noImage from '@/assets/images/no-image.jpg';
 import { ScrollToPlugin } from 'gsap/all';
 import { useMediaQuery } from '@mantine/hooks';
@@ -127,7 +125,7 @@ const HeroSection = () => {
         />
         <div className={classes.HeroImgOverlay}></div>
       </div>
-      <div className={cx(classes.hero)} style={{ gap: `${isTyping ? '0rem' : '4rem'}` }}>
+      <div className={cx(classes.hero)} style={{ gap: `${isTyping ? '0rem' : '4rem'}` , left:"-2%",}}>
         <div
           className={classes.leftSection}
           style={{ marginLeft: `${isTyping ? '0rem' : '0rem'}` }}
@@ -151,17 +149,19 @@ const HeroSection = () => {
           </p>
         </div>
         {isLoggedIn && history?.length > 0 && (
-          <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
+          <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}`, paddingBottom:"-2%", marginBottom:"92%", }}>
             <p
               className={classes.p}
               style={{
                 fontSize: isSmallScreen ? '1.5rem' : '2rem',
-                top: isSmallScreen ? '9%' : '8%',
+                top: isSmallScreen ? '6%' : '5%',
+                marginBottom: "-22%",
+                right:"16%",
               }}
             >
               Recent Watch History:
             </p>
-            <div className={classes.movies} style={{ width: isSmallScreen ? '18rem' : '25rem' }}>
+            <div className={classes.movies} style={{ width: isSmallScreen ? '18rem' : '25rem', marginTop:"-12%", paddingBottom:"2%"  }}>
               {history
                 ?.slice(-3)
                 .reverse()
@@ -169,22 +169,24 @@ const HeroSection = () => {
             </div>
           </div>
         )}
-        {!isLoggedIn && (
-          <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
+       
+        {!isLoggedIn && (<div style={{paddingTop:"0%", display:"flex", flexDirection:"column", left:"-2%"}}>
+          <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}`, left:"-2%", }}>
             <p
               className={classes.p}
               style={{
                 fontSize: isSmallScreen ? '1.8rem' : '2rem',
-                top: isSmallScreen ? '20vh' : '18vh',
+                top: isSmallScreen ? '9%' : '10%',
               }}
             >
               Trending:
             </p>
-            <div className={classes.movies} style={{ width: isSmallScreen ? '18rem' : '25rem' }}>
+            <div className={classes.movies} style={{ width: isSmallScreen ? '16rem' : '23rem' , paddingLeft:"1%"}}>
               {TrendingMovies?.slice(0, 3).map((data, index) => (
                 <Trending props={data} key={index} />
               ))}
             </div>
+          </div>
           </div>
         )}
         <div
@@ -194,10 +196,6 @@ const HeroSection = () => {
           style={{ display: `${!input ? 'none' : 'flex'}` }}
         >
           <div className={classes.flex} id="flex">
-            {/* <div className={classes.flex1}>
-              <Image src={Vector1} alt="vector" id="vec1" />
-              <Image src={Vector2} alt="vector" id="vec2" />
-            </div> */}
             <div
               className={cx(
                 classes.searchRightSection,
@@ -344,7 +342,7 @@ const useStyles = createStyles(() => ({
     overflow: 'hidden',
     flexDirection: 'column',
     gap: '0.8rem',
-    marginTop: '-2rem',
+    marginTop: '-6rem',
     minWidth: '30%',
   },
   searchRightSection: {
@@ -359,10 +357,12 @@ const useStyles = createStyles(() => ({
     transition: '0.3s ease',
   },
   movies: {
+    paddingTop: "1rem",
+    paddingBottom: "1rem",
     display: 'flex',
     flexDirection: 'column',
     position: 'absolute',
-    top: '28vh',
+    top: '14%',
     overflow: 'hidden',
     gap: '.6rem',
     transition: '0.5s ease',
@@ -377,6 +377,7 @@ const useStyles = createStyles(() => ({
     marginTop: '0.5rem',
   },
   movieCard: {
+    margin: "2rem",
     backgroundColor: '#D9D9D926',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     display: 'flex',

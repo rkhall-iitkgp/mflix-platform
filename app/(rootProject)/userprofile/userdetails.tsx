@@ -206,7 +206,8 @@ const UserDetails = ({ opened }: any) => {
 
     }
     console.log(state);
-    let res = await fetch(`${base_url}/user/details`, {
+    let res = await fetch(`${base_url}/user/details/`, {
+
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

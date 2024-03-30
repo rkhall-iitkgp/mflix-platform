@@ -124,10 +124,10 @@ export default function Otp({ initialValues }: any) {
     }
     //   setLoading(false);
     else {
-      toast.success("User registered successfully!",{
-        position:"top-center"
-      })
-      router.push('/userprofile')
+      // toast.success("User registered successfully!",{
+      //   position:"top-center"
+      // })
+      // router.push('/userprofile')
       console.log(jsonData.message);
       console.log(jsonData);
     }

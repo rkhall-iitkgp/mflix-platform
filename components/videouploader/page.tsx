@@ -9,7 +9,7 @@ const UploadVideo = () => {
 
   useEffect(() => {
     console.log('ready');
-    const ws = new WebSocket('ws://localhost:5000');
+    const ws = new WebSocket('ws://13.127.172.244:5000');
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       console.log('data', data);
@@ -36,7 +36,7 @@ const UploadVideo = () => {
     formData.append('video', file);
 
     try {
-      await axios.post('http://localhost:5000/upload', formData, {
+      await axios.post('http://13.127.172.244:5000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -59,7 +59,7 @@ const UploadVideo = () => {
   const handleUrlUpload = async () => {
     try {
       await axios.post(
-        'http://localhost:5000/upload-from-url',
+        'http://13.127.172.244:5000/upload-from-url',
         { videoUrl },
         {
           onUploadProgress: (progressEvent) => {

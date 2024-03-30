@@ -1,11 +1,15 @@
 'use client';
 
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import { DateInput } from '@mantine/dates';
 import '@mantine/dates/styles.css';
 import { createStyles } from '@mantine/styles';
+import { useRouter } from 'next/navigation'
+
 // import Link from 'next/link';
 import { NumberInput } from '@mantine/core';
 
@@ -26,17 +30,30 @@ import {
   useStyles,
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
-import Otp from '../verifyotp/page';
+import  Otp  from '../verifyotp/page';
 import searchMsApiUrls from '../api/searchMsApi';
 import { useState } from 'react';
+import useLoginStore from '@/Stores/LoginStore';
 
 export default function Register(props: any) {
+  // const router = useRouter()
   const [showOtp, setshowOtp] = useState(0);
+  
   const [formData, setFormData] = useState({});
+  const handleExistence = ()=>{
+    console.log("hehehe")
+   
+  }
+
+  //toastify
+ 
 
   // const router = useRouter();
+  const[exists, setExists] = useState(true);
+  
   const handleRegister = async (values: any) => {
-    setshowOtp(1);
+    
+    // setshowOtp(1);
     const base_url = searchMsApiUrls();
     // setUserData(values);
     console.log(values);
@@ -57,13 +74,26 @@ export default function Register(props: any) {
     });
     let jsonData = await res.json();
     if (!res.ok) {
-      console.log(jsonData.message);
+      console.log("User already exists");
+      setExists(true);
+      console.log(exists);
+      setshowOtp(0);
+      handleExistence();
+      toast.error("Email Id already exists!", {
+        position:"top-center"
+      });
+      
+
+    
       // router.push('/verifyotp')
     }
     //   setLoading(false);
     else {
       console.log(jsonData.message);
       console.log(jsonData);
+
+      setshowOtp(1)
+      // router.push('userprofile');
       // sessionStorage.setItem('sessionToken', jsonData.user.sessionToken);
       // sessionStorage.setItem('token', jsonData.user.token);
     }
@@ -111,7 +141,7 @@ export default function Register(props: any) {
 
   return (
     <>
-      {!showOtp ? (
+      {!showOtp && exists ? (
         <Flex
           style={{
             backgroundImage: "url('background.png')",
@@ -401,9 +431,17 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                 href="/verifyotp"
               >
                 <Button
-                  onClick={() => {
-                    console.log('clicked');
-                  }}
+                  // onClick={() => {
+
+                  //   // console.log('clicked');
+                  //   notifications.show({
+                  //     title: 'Default notification',
+                  //     message: 'Hey there, your code is awesome! 🤥',
+                  //   })
+
+
+                  // }}
+                  
                   type="submit"
                   style={{
                     marginTop: '1rem',
@@ -416,6 +454,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                 >
                   Sign Up
                 </Button>
+                
                 {/* </Link> */}
               </Anchor>
             </form>
@@ -424,6 +463,8 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
       ) : (
         <Otp initialValues={formData}></Otp>
       )}
+      <ToastContainer
+      style={{}}/> 
     </>
-  );
+  );  
 }

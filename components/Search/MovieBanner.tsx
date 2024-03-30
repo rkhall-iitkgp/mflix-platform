@@ -12,6 +12,8 @@ import noImage from '@/assets/images/no-image.jpg';
 import ImdbImg from '@/assets/icons/imdb.png';
 import TomatoImg from '@/assets/icons/tomato.png';
 import themeOptions from '@/utils/colors';
+// import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface MovieProps {
     _id: string;
@@ -25,6 +27,8 @@ interface MovieProps {
     countries: Array<string>;
     score: number;
 }
+
+
 
 const Loader: React.FC = () => (
   <Stack ml="6%" gap="xs" mr="lg" w="80%">
@@ -43,6 +47,11 @@ const Loader: React.FC = () => (
 );
 
 const MovieBanner: React.FC<MovieProps> = (props) => {
+
+    const router = useRouter();
+    function handleRedirect(){
+        router.push(`/movies/${_id}`);
+        }
     const {
         _id,
         genres,
@@ -66,6 +75,8 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
 
     return (
         <Group
+        
+        onClick={handleRedirect}
           p={0}
           ref={ref}
           styles={{
@@ -73,6 +84,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                 minWidth: '600px',
                 borderRadius: '20px',
                 transition: 'all 0.5s',
+                cursor:"pointer",
                 transform: hovered ? 'scale(1.02)' : 'scale(1)',
                 boxShadow: hovered ? '0 0 10px 0 rgba(256, 256, 256, 0.2)' : '14px 11px 6.699999809265137px 2px rgba(0, 0, 0, 0.47)',
             }

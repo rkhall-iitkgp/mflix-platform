@@ -1,8 +1,12 @@
+
 'use client';
 import { useState, useEffect } from 'react';
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
+import { ToastContainer, toast } from 'react-toastify';
 import { PinInput, darken } from '@mantine/core';
+import UserProfile from '../userprofile/page';
+
 import {
   TextInput,
   PasswordInput,
@@ -26,6 +30,7 @@ import { useRouter } from 'next/navigation';
 
 export default function Otp({ initialValues }: any) {
   const router = useRouter();
+  const[checkReg, setCheckReg]= useState(false);
   const [type, toggle] = useToggle(['login', 'register']);
   const [resendTime, setResendTime] = useState(60);
   const [otpValue, setOtpValue] = useState(initialValues?.otp || '');
@@ -41,6 +46,7 @@ export default function Otp({ initialValues }: any) {
   }, [resendTime]);
 
   const handleOtp = async () => {
+    // const router = useRouter();
     console.log(initialValues);
     const base_url = searchMsApiUrls();
     let res = await fetch(`${base_url}/auth/verifyOTP`, {
@@ -56,22 +62,33 @@ export default function Otp({ initialValues }: any) {
     let jsonData = await res.json();
     if (!res.ok) {
       console.log(jsonData.message);
-      // router.push('/verifyotp')
+     
       setOtpValue('');
     }
     //   setLoading(false);
     else {
       console.log(jsonData.message);
+      setCheckReg(true);
       console.log(jsonData);
+      toast.success("User Registered Successfully!", {
+        position:"top-center"
+      })
+      // router.push('/userprofile');
       if (initialValues.type == 'register') {
         useLoginStore.getState().updateUser(jsonData.account);
+        const jsonDataString = JSON.stringify(jsonData.account);
+        localStorage.setItem('user', jsonDataString);
+        const local = localStorage.getItem('user');
         const state = useLoginStore.getState();
         console.log(state);
-        // router.push('/userprogfile')
-      } else if (initialValues.type == 'forget') {
-        router.push('/login');
-      } else if (initialValues.type == 'change') {
-        router.push('/userprofile');
+        console.log(local);
+        router.push('/userprofile')
+      } 
+      // else if (initialValues.type == 'forget') {
+      //   router.push('/login');
+      // } 
+      else if (initialValues.type == 'change') {
+        router.push('/userprofile'); 
       }
     }
   };
@@ -100,6 +117,10 @@ export default function Otp({ initialValues }: any) {
     }
     //   setLoading(false);
     else {
+      toast.success("User registered successfully!",{
+        position:"top-center"
+      })
+      router.push('/userprofile')
       console.log(jsonData.message);
       console.log(jsonData);
     }
@@ -124,7 +145,7 @@ export default function Otp({ initialValues }: any) {
   });
 
   return (
-    <Flex
+    <> <Flex
       style={{
         backgroundImage: "url('background.png')",
         backgroundSize: '100% 100%',
@@ -233,6 +254,6 @@ export default function Otp({ initialValues }: any) {
 
                 </div> */}
       </Box>
-    </Flex>
+    </Flex> <ToastContainer/></>
   );
 }

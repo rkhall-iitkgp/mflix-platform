@@ -284,13 +284,12 @@ export default function Plan() {
                 if (result?.error) {
                     console.log(result?.error, 'error with response');
                 }
+                if (user._id) Mixpanel.identify(user?._id)
                 Mixpanel.track("New Payment", {
                     renewalType: renewal[time],
                     tierId: pricing[3 - selected]._id,
-                    userid: user._id,
-                    email: user.email,
+                    $email: user.email,
                     PaymentMethod: "Credit Card",
-
                 });
 
             } else {

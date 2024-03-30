@@ -746,16 +746,6 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
                         </div>
                     </div>
                 </div>
-                <div className={classes.modal}>
-                    <div className={classes.modalContent}>
-                        <button className={classes.button}>
-                            Create Room
-                        </button>
-                        <button className={classes.button}>
-                            Join Room
-                        </button>
-                    </div>
-                </div>
             </div>
         );
     },

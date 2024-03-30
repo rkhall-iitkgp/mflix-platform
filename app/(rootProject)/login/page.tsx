@@ -21,6 +21,7 @@ import useLoginStore from '@/Stores/LoginStore';
 import Image from 'next/image';
 import LeftArrowIcon from '@/assets/icons/leftArrow.svg'
 import { useRouter } from 'next/navigation'
+import Mixpanel from '@/components/Mixpanel';
 
 export default function Login() {
   const router = useRouter()
@@ -47,6 +48,33 @@ export default function Login() {
     } else {
       console.log('login successful');
       console.log(jsonData);
+      Mixpanel.identify(jsonData.account._id);
+      Mixpanel.register({
+        $name: jsonData.account.name,
+        $email: jsonData.account.email,
+        $dob: jsonData.account.dob,
+        $phone: jsonData.account.phone,
+        $subscriptionTierId: jsonData.account.subscriptionTier.tier._id,
+        $subscriptionTiername: jsonData.account.subscriptionTier.tier.name,
+      });
+      Mixpanel.track('Successful Login', {
+        $name: jsonData.account.name,
+        $email: jsonData.account.email,
+        $dob: jsonData.account.dob,
+        $phone: jsonData.account.phone,
+        $subscriptionTierId: jsonData.account.subscriptionTier.tier._id,
+        $subscriptionTiername: jsonData.account.subscriptionTier.tier.name,
+      });
+      Mixpanel.people.set({
+        $name: jsonData.account.name,
+        $email: jsonData.account.email,
+        $dob: jsonData.account.dob,
+        $phone: jsonData.account.phone,
+        $subscriptionTier: {
+          tierId: jsonData.account.subscriptionTier.tier._id,
+          $name: jsonData.account.subscriptionTier.tier.name,
+        },
+      });
       useLoginStore.getState().updateUser(jsonData.account);
       const jsonDataString = JSON.stringify(jsonData.account);
       localStorage.setItem('user', jsonDataString);

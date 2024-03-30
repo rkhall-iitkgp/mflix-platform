@@ -319,22 +319,58 @@ import { useState } from 'react';
 import History from './history';
 import Favorites from './favourites';
 import WatchList from './watchlist';
-// import { CIcon } from '@coreui/icons-react';
-// import { cilList, cilHistory } from '@coreui/icons';
-export default function UserProfile() {
-  const [opened, { toggle }] = useDisclosure();
-  const [page, setPage] = useState(1);
-  const handleLogout = () => {};
-  return (
-    <AppShell
-      header={{ height: 90 }}
-      navbar={{ width: '18%', breakpoint: 'sm', collapsed: { mobile: !opened } }}
-      aside={{ width: 0, breakpoint: 'md', collapsed: { desktop: false, mobile: true } }}
-      padding="md"
-      withBorder={false}
-    >
-      <AppShell.Header style={{ backgroundColor: 'black' }}>
-        {/* <Group h="100%" px="md">
+import useLoginStore from '@/Stores/LoginStore';
+import searchMsApiUrls from '../api/searchMsApi';
+import { useRouter } from "next/navigation";
+
+export function UserProfile() {
+    const [opened, { toggle }] = useDisclosure();
+    const [page, setPage] = useState(1);
+
+    //
+    const router = useRouter()
+
+    const handleLogout = async () => {
+        const base_url = searchMsApiUrls();
+
+        const state = useLoginStore.getState();
+        const values = {
+            "email": state.email,
+        }
+        let res = await fetch(`${base_url}/auth/logout`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                ...values,
+            }),
+        });
+
+        let jsonData = await res.json();
+        if (!res.ok) {
+            console.log(jsonData);
+        } else {
+            console.log(jsonData);
+            console.log('logout successful');
+            localStorage.clear();
+            useLoginStore.getState().clearState();
+            console.log(useLoginStore.getState().clearState());
+            router.push('/login')
+        }
+
+    }
+    return (
+        <AppShell
+            header={{ height: 90 }}
+            navbar={{ width: '18%', breakpoint: 'sm', collapsed: { mobile: !opened } }}
+            aside={{ width: 0, breakpoint: 'md', collapsed: { desktop: false, mobile: true } }}
+            padding="md"
+            withBorder={false}
+        >
+            <AppShell.Header style={{ backgroundColor: 'black' }}>
+                {/* <Group h="100%" px="md">
                     <MantineLogo size={30} />
                 </Group> */}
         <Group h="100%" px="md">

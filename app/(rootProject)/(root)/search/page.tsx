@@ -81,30 +81,23 @@ export default function Search() {
 
     const [recommended, setRecommended] = useState<Array<MovieProps>>([]);
     const [notFound, setNotFound] = useState<boolean>(false);
-    const [topRes, setTopRes] = useState<Array<MovieProps>>(initDetails(4));
+    const [topRes, setTopRes] = useState<Array<MovieProps>>();
     const [moreResults, setMoreResults] = useState<Array<MovieProps>>([]);
     const [page, setPage] = useState<number>(1);
     const [loaded, setLoaded] = useState<boolean>(false);
     const [hasNext, setHasNext] = useState(true);
-    const { ref, inViewport } = useInViewport();
 
-    // useEffect(() => {
-    //     console.log(inViewport);
-    //     if (inViewport) setPage(() => (page + 1));
-    //     console.log(page);
-    // }, [inViewport]);
     const nextPage = () => {
         if (hasNext) setPage(page+1);
     }
 
     useEffect(() => {
-        console.log(page);
         if (page !== 1) getData(page);
     }, [page]);
 
     const getData = async (page: number) => {
         const res = await (await fetch(
-            `${searchMsApiUrls()}search/${search.trim().split(' ').length >= 5 ? 'semantic' : 'fuzzy'}?query=${search}&page=${page}`,
+            `${searchMsApiUrls()}search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page}`,
             {
                 method: 'POST',
                 headers: {
@@ -131,7 +124,7 @@ export default function Search() {
             const data: Array<MovieProps> = [];
             for (let page = 0; page < 2; page++) {
                 const res = await (await fetch(
-                    `${searchMsApiUrls()}search/${search.trim().split(' ').length >= 5 ? 'semantic' : 'fuzzy'}?query=${search}&page=${page + 1}`,
+                    `${searchMsApiUrls()}search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page + 1}`,
                     {
                         method: 'POST',
                         headers: {
@@ -142,6 +135,7 @@ export default function Search() {
                         }),
                     }
                 )).json();
+                if (!res.results) return setNotFound(true);
                 data.push(...res.results);
                 if (!res.hasNext) break;
             }
@@ -178,7 +172,15 @@ export default function Search() {
         };
     }, []);
 
-    return (
+    return notFound ?
+    <Stack h="100vh">
+        <div className={classes.bg}></div>
+        <Center h="100%">
+            <Text fz={themeOptions.fontSize.xl} c={themeOptions.color.textColorNormal}>Not Found</Text>
+        </Center>
+    </Stack>
+    :
+    (
         <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
             <div className={classes.bg}></div>
             <Filter />
@@ -189,16 +191,20 @@ export default function Search() {
                     <Text span inherit c={themeOptions.color.textColorNormal}>{search}</Text>
                 </Text>
                 {/* <Skeleton visible={!loaded}> */}
+                { topRes ?
                     <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
-                        <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false}>
+                        <Group style={{ rowGap: '30px' }} grow gap="6vw" preventGrowOverflow={false} align="stretch">
                             <MovieBanner {...(topRes[0])} />
                             <MovieBanner {...(topRes[1])} />
                         </Group>
-                        <Group style={{ rowGap: '30px' }} grow gap="8%" preventGrowOverflow={false}>
+                        <Group style={{ rowGap: '30px' }} grow gap="6vw" preventGrowOverflow={false} align="stretch">
                             <MovieBanner {...(topRes[2])} />
                             <MovieBanner {...(topRes[3])} />
                         </Group>
                     </Stack>
+                :
+                    null
+                }
                 {/* </Skeleton> */}
             </Stack>
             <Space h="lg" />
@@ -238,7 +244,7 @@ export default function Search() {
                             {recommended?.map((data, index) => <MovieCard key={index} {...data} />)}
                             { hasNext ?
                             <MovieCardSpace>
-                                <Center ref={ref} h="100%">
+                                <Center h="100%">
                                     <Loader color="gray" type="dots" size={100} />
                                 </Center>
                             </MovieCardSpace>

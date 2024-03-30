@@ -104,7 +104,6 @@ const MovieCard: React.FC<MovieProps> = (props) => {
                             component={NextImage}
                             alt="imdb"
                             h={17}
-                            unoptimized
                             />
                             <Text fz={themeOptions.fontSize.xs}>{imdb.rating} / 10</Text>
                         </Group>
@@ -117,7 +116,6 @@ const MovieCard: React.FC<MovieProps> = (props) => {
                           component={NextImage}
                           alt="tomato"
                           h={17}
-                          unoptimized
                         />
                         <Text fz={themeOptions.fontSize.xs}>{tomatoes?.viewer?.meter ? tomatoes?.viewer?.meter : 75}%</Text>
                     </Group>

@@ -28,6 +28,7 @@ export default function MovieContent({movieData}) {
     // console.log(movieData);
     const id = movieData?._id;
     const state = useLoginStore.getState();
+    const [firstRender,setFirstRender] = useState(true); 
     // const user_id = state.userProfiles[0]._id
     if (state.userProfiles.length > 0) {
             var user_id = state.userProfiles[0]._id;
@@ -41,14 +42,22 @@ export default function MovieContent({movieData}) {
     const [watchList,setWatchList] = useState("Add to Watchlist");
     const [isFavourite,setIsFavourite] = useState(false);
 
+    useEffect(()=>{
+        setFirstRender(false);
+    },[])
+
     useEffect(() => {
-        if (checked) addToWatchList();
-        else removeFromWatchList();
+        if(!firstRender){
+            if (checked === true) addToWatchList();
+            else if(checked === false) removeFromWatchList();
+        }
     }, [checked]);
 
     useEffect(()=>{
-        if(isFavourite) addToFavourites();
-        else removeFromFavourites();
+        if(!firstRender){
+            if(isFavourite) addToFavourites();
+            else removeFromFavourites();
+        }
     },[isFavourite])
 
     const addToWatchList = async () => {
@@ -238,7 +247,7 @@ export default function MovieContent({movieData}) {
                     <Container>
                         <div style={{display:'flex',alignItems:'baseline',position: 'relative',width:'fit-content'}}>
                             <h1 className={classes.movieTitle}>{movieData?.title}</h1>
-                            <FaHeart className={classes.fullHeart} onClick={() => setIsFavourite(!isFavourite)}/>
+                            <FaHeart className={classes.fullHeart} onClick={() => !isFavourite}/>
                         </div>
                         <Flex className={classes.genreContainer}>
                             {movieData?.genres?.map((genre, i) =>  <p className={classes.genre}>{genre}</p>)}

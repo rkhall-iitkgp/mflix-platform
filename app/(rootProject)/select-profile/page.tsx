@@ -1,17 +1,52 @@
 'use client'
 // Import required modules
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import Image from 'next/image';
 import { createStyles } from '@mantine/styles';
+import { useMediaQuery } from '@mantine/hooks';
+import useLoginStore from '@/Stores/LoginStore';
+import searchMsApiUrls from '@/app/(rootProject)/api/searchMsApi';
 
 // Import icons
 import avatarLogo1 from '@/assets/icons/profile1.svg';
 import avatarLogo2 from '@/assets/icons/profile2.svg';
 import avatarLogo3 from '@/assets/icons/profile3.svg';
 import addMoreLogo from '@/assets/icons/add-more.svg';
+import themeOptions from '@/assets/themes/colors';
 
 // Define heading font size
 const headingFZ = '5vw';
+const url = searchMsApiUrls();
+
+// {
+//     "success": true,
+//     "message": "New user profile created successfully",
+//     "userProfile": {
+//         "name": "Adarsh",
+//         "_id": "6607f7d06e6818da985e8294",
+//         "moviesWatched": [],
+//         "watchList": [],
+//         "favoriteMovies": [],
+//         "savedFilters": [],
+//         "searchHistory": [],
+//         "__v": 0
+//     }
+// }
+
+const AddProfile = async()=>{
+    try{
+        const response = await fetch(`${url}/user/create`,{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "userName":"Profile" })
+        })
+        console.log(response);    
+    }catch(error){
+        console.log("Unable to connect:",error);
+    } 
+}
 
 // Define profile interface
 interface Profile {
@@ -21,72 +56,30 @@ interface Profile {
     image: string;
 }
 
-// Initial profiles
-const initialProfiles: Profile[] = [
-    {
-        id: 1,
-        caption: 'Profile1',
-        link: '/',
-        image: avatarLogo1,
-    },
-    {
-        id: 2,
-        caption: 'Profile2',
-        link: '/',
-        image: avatarLogo2,
-    },
-    {
-        id: 3,
-        caption: 'Profile3',
-        link: '/',
-        image: avatarLogo3,
-    },
-    {
-        id: 4,
-        caption: 'Add New',
-        link: 'null',
-        image: addMoreLogo,
-    },
-];
-
-// Define component styles
-const useStyles = createStyles(() => ({
-    containerStyle: {
-        display: 'flex',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        minWidth :'70vw',
-    },
-    headingStyle: {
-        padding: '2vw',
-        fontSize: '5vw',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    itemStyle: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        border: 'solid transparent',
-        transition: 'outline-color 0.3s',
-        outline: '2px solid transparent',
-    },
-    avatarStyle: {
-        width: '10vw',
-        height: '10vw',
-        marginBottom: '1rem',
-        transition: 'border-color 0.3s',
-        border: '2px solid transparent',
-        ':hover': {
-            opacity: 0.5,
-        },
-    },
-}));
+const ImageArray = [avatarLogo1,avatarLogo2,avatarLogo3];
  
 // Define functional component
 const SelectProfile: React.FC = () => {
+    //Getting user data from backend
+    const state = useLoginStore.getState();
+    const array = state.userProfiles;
+
+    //changing type of profile
+    const transformedArray = array.map((item, index) => ({
+        id: item._id || `${index}`,
+        caption: item.name || `Profile ${index+1}`,
+        link: '/',
+        image: ImageArray[Math.floor(Math.random()*3)],
+    }));
+    transformedArray.push({
+        id: transformedArray.length + 1,
+        caption: 'Add New',
+        link: 'null',
+        image: addMoreLogo,
+    });
+
     // State for profiles
-    const [profiles, setProfiles] = useState<Profile[]>(initialProfiles);
+    const [profiles, setProfiles] = useState<Profile[]>(transformedArray);
     // Get component styles
     const { classes } = useStyles();
     // Number of profiles per row
@@ -103,15 +96,17 @@ const SelectProfile: React.FC = () => {
 
     // Function to handle adding a new profile
     const handleAddProfile = () => {
-        const newProfileId = profiles.length + 1;
+        let newProfileData = AddProfile();
+        const newProfileId = newProfileData.userProfile._id || profiles.length + 1;
         const newProfile: Profile = {
             id: newProfileId,
-            caption: `Profile${newProfileId - 1}`,
+            caption: `Profile`,
             link: '/',
-            image: avatarLogo1, // Example image, replace with actual path
+            image: ImageArray[Math.floor(Math.random()*3)], 
         };
-
+        
         setProfiles([...profiles.slice(0, profiles.length - 1), newProfile, profiles[profiles.length - 1]]);
+        console.log(profiles)
     };
 
     // Function to render profiles
@@ -132,6 +127,8 @@ const SelectProfile: React.FC = () => {
         return profileRows;
     };
 
+    
+
     // Render component
     return (
         <div style={{ backgroundColor: '#140320', minHeight: '100vh', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
@@ -144,6 +141,41 @@ const SelectProfile: React.FC = () => {
         </div>
     );
 };
+
+// Define component styles
+const useStyles = createStyles(() => ({
+    containerStyle: {
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        minWidth :'70vw',
+    },
+    headingStyle: {
+        padding: '2vw',
+        fontSize: themeOptions.fontSize.xl,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    itemStyle: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        border: 'solid transparent',
+        transition: 'outline-color 0.3s',
+        outline: '2px solid transparent',
+    },
+    avatarStyle: {
+        width:   '15vw',
+        height:   '15vw',
+        marginBottom: '1rem',
+        transition: 'border-color 0.3s',
+        border: '2px solid transparent',
+        ':hover': {
+            opacity: 0.5,
+        },
+    },
+}));
+
 
 // Export component
 export default SelectProfile;

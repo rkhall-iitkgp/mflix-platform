@@ -21,8 +21,6 @@ import {
 
 import useLoginStore from '@/Stores/LoginStore';
 
-
-
 export default function Navbar() {
   const path = usePathname();
   const [input, setInput] = React.useState('');
@@ -52,6 +50,10 @@ export default function Navbar() {
     const user = localStorage.getItem('user');
     return !!user;
     // return true;
+  };
+  const handleLogout = () => {
+    sessionStorage.removeItem('accessToken');
+    window.location.href = '/login';
   };
 
   useEffect(() => {
@@ -364,65 +366,29 @@ export default function Navbar() {
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Genres</p>
                   <div className={classes.category}>
-                    <p>
-                      <Link href="/search?genre=Drama">Drama</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?genre=Comedy">Comedy</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?genre=Romance">Romance</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?genre=Crime">Crime</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?genre=Thriller">Thriller</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?genre=Action">Action</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?genre=Adventure">Adventure</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?genre=Documentary">Documentary</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?genre=Horror">Horror</Link>
-                    </p>
+                    <p><Link href="/search?genre=Drama">Drama</Link></p>
+                    <p><Link href="/search?genre=Comedy">Comedy</Link></p>
+                    <p><Link href="/search?genre=Romance">Romance</Link></p>
+                    <p><Link href="/search?genre=Crime">Crime</Link></p>
+                    <p><Link href="/search?genre=Thriller">Thriller</Link></p>
+                    <p><Link href="/search?genre=Action">Action</Link></p>
+                    <p><Link href="/search?genre=Adventure">Adventure</Link></p>
+                    <p><Link href="/search?genre=Documentary">Documentary</Link></p>
+                    <p><Link href="/search?genre=Horror">Horror</Link></p>
                   </div>
                 </div>
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Languages</p>
                   <div className={classes.category}>
-                  <p>
-                      <Link href="/search?language=English">English</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?language=Hindi">Hindi</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?language=French">French</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?language=Spanish">Spanish</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?language=German">German</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?language=Italian">Italian</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?language=Japanese">Japanese</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?language=Russian">Russian</Link>
-                    </p>
-                    <p>
-                      <Link href="/search?language=Mandarin">Mandarin</Link>
-                    </p>
+                    <p><Link href="/search?language=English">English</Link></p>
+                    <p><Link href="/search?language=Hindi">Hindi</Link></p>
+                    <p><Link href="/search?language=French">French</Link></p>
+                    <p><Link href="/search?language=Spanish">Spanish</Link></p>
+                    <p><Link href="/search?language=German">German</Link></p>
+                    <p><Link href="/search?language=Italian">Italian</Link></p>
+                    <p><Link href="/search?language=Japanese">Japanese</Link></p>
+                    <p><Link href="/search?language=Russian">Russian</Link></p>
+                    <p><Link href="/search?language=Mandarin">Mandarin</Link></p>
                   </div>
                 </div>
               </div>
@@ -451,7 +417,7 @@ export default function Navbar() {
                   <Menu.Item leftSection={<IconSettings style={{ width: '2rem', height: '2rem' }} />}>
                     <Link href="/userprofile" style={{ textDecoration: 'none', color: 'white', opacity: '0.8' }}>User Profile</Link>
                   </Menu.Item>
-                  <Menu.Item leftSection={<IconLogout style={{ width: '2rem', height: '2rem' }} />}>
+                  <Menu.Item leftSection={<IconLogout style={{ width: '2rem', height: '2rem' }} />} onClick={handleLogOut}>
                     Logout
                   </Menu.Item>
                 </Menu.Dropdown>

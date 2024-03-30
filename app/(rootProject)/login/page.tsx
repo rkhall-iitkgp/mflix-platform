@@ -1,7 +1,8 @@
 'use client';
 
 // hard code to variable remaining
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import { useForm } from '@mantine/form';
 import { createStyles } from '@mantine/styles';
 import {
@@ -45,9 +46,16 @@ export default function Login() {
     let jsonData = await res.json();
     if (!res.ok) {
       console.log(jsonData);
+      toast.error("Invalid Credentials!",{
+        position:"top-center"
+      })
     } else {
       console.log('login successful');
       console.log(jsonData);
+      toast.success("LogIn Successful!",{
+        position:"top-center"
+      })
+      router.push("/userprofile");
       Mixpanel.identify(jsonData.account._id);
       Mixpanel.register({
         $name: jsonData.account.name,
@@ -322,7 +330,7 @@ export default function Login() {
                         <GoogleButton radius="xl" size='lg' style={{ marginBottom: '1rem' }}>Google</GoogleButton>
                     </Box> */}
         </form>
-      </Box>
+      </Box><ToastContainer/>
     </Box>
   );
 }

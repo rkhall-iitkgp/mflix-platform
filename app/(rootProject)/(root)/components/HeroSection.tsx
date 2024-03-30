@@ -133,7 +133,7 @@ const HeroSection = () => {
           style={{ marginLeft: `${isTyping ? '0rem' : '0rem'}` }}
         >
           <h1 className={classes.heading} style={{ fontSize: isSmallScreen ? '3rem' : '3.5rem' }}>
-            Cool <br /> Animated Text
+            Find. <br /> Binge. Unwind. 
           </h1>
           <SearchBar
             onTyping={handleTyping}
@@ -383,7 +383,7 @@ const useStyles = createStyles(() => ({
     marginTop: '0.5rem',
   },
   movieCard: {
-    margin: "2rem",
+    // margin: "2rem",
     backgroundColor: '#D9D9D926',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     display: 'flex',

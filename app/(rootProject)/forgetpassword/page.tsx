@@ -18,10 +18,10 @@ import {
 import themeOptions from '../../../assets/themes/colors';
 import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
-import { Otp } from '../verifyotp/page';
+import Otp from '../verifyotp/page';
 import exp from 'constants';
 
-const ForgetPassword = (props: PaperProps) => {
+const ForgetPassword = (props: any) => {
   const [userData, setUserData] = useState(null);
   const [formData, setFormData] = useState({});
 
@@ -29,6 +29,7 @@ const ForgetPassword = (props: PaperProps) => {
     const base_url = searchMsApiUrls();
     setUserData(values);
     values.type = "forgot";
+
     setFormData(values);
     console.log(values);
     setshowOtp(1);

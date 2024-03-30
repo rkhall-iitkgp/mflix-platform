@@ -46,6 +46,15 @@ const useStyles = createStyles(() =>
             transition: 'opacity 0.3s ease-out, transform 0.3s ease-out', /* Adjust timing and easing as needed */
             pointerEvents: 'none', /* Prevent interaction while hidden */
         },
+        input: {
+            // "-moz-appearance": "textfield",
+            "::-webkit-outer-spin-button": {
+                "-webkit-appearance": "none"
+            },
+            "::-webkit-inner-spin-button": {
+                "-webkit-appearance": "none"
+            },
+        }
     })
 );
 
@@ -83,12 +92,12 @@ export function YearButton() {
                                 <span style={{ fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#ffffff' }}>Year:</span>
                                 <input
                                   style={{ width: '90%', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#9441d0', backgroundColor: '#140320', border: 'none', outline: 'none', borderRadius: '5px' }}
-                                  type="text"
+                                  type="number"
                                   value={selected}
                                   onChange={handleInputChange}
+                                  className={classes.input}
                                 />
                             </div>
-
                         </Group>
                     </UnstyledButton>
                 </div>

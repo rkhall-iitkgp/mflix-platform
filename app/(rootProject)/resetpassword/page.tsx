@@ -18,7 +18,7 @@ import {
 import themeOptions from '../../../assets/themes/colors';
 import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
-import { Otp } from '../verifyotp/page';
+import Otp from '../verifyotp/page';
 
 export default function ResetPassword() {
   const [userData, setUserData] = useState(null);
@@ -28,7 +28,7 @@ export default function ResetPassword() {
   const handleResetPassword = async (values: any) => {
     const base_url = searchMsApiUrls();
     setUserData(values);
-    values.type = "change";
+    values.type = 'change';
     setFormData(values);
     console.log(values);
 
@@ -127,7 +127,8 @@ export default function ResetPassword() {
     validate: {
       // email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
       password: (val) => (val.length < 8 ? 'Password should include at least 8 characters' : null),
-      newPassword: (val) => (val.length < 8 ? 'Password should include at least 8 characters' : null),
+      newPassword: (val) =>
+        val.length < 8 ? 'Password should include at least 8 characters' : null,
     },
   });
 
@@ -283,8 +284,6 @@ export default function ResetPassword() {
       ) : (
         <Otp initialValues={formData}></Otp>
       )}
-
-
     </>
   );
 }

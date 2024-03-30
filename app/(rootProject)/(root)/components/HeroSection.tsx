@@ -151,17 +151,19 @@ const HeroSection = () => {
           </p>
         </div>
         {isLoggedIn && history?.length > 0 && (
-          <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
+          <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}`, paddingBottom:"-2%", marginBottom:"92%", }}>
             <p
               className={classes.p}
               style={{
                 fontSize: isSmallScreen ? '1.5rem' : '2rem',
-                top: isSmallScreen ? '9%' : '8%',
+                top: isSmallScreen ? '6%' : '5%',
+                marginBottom: "-22%",
+                right:"10%",
               }}
             >
               Recent Watch History:
             </p>
-            <div className={classes.movies} style={{ width: isSmallScreen ? '18rem' : '25rem' }}>
+            <div className={classes.movies} style={{ width: isSmallScreen ? '18rem' : '25rem', marginTop:"-12%", paddingBottom:"2%"  }}>
               {history
                 ?.slice(-3)
                 .reverse()
@@ -169,22 +171,24 @@ const HeroSection = () => {
             </div>
           </div>
         )}
-        {!isLoggedIn && (
-          <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
+       
+        {!isLoggedIn && (<div style={{paddingTop:"0%", display:"flex", flexDirection:"column", left:"-2%"}}>
+          <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}`, left:"-2%", }}>
             <p
               className={classes.p}
               style={{
                 fontSize: isSmallScreen ? '1.8rem' : '2rem',
-                top: isSmallScreen ? '8%' : '9%',
+                top: isSmallScreen ? '9%' : '10%',
               }}
             >
               Trending:
             </p>
-            <div className={classes.movies} style={{ width: isSmallScreen ? '18rem' : '25rem' }}>
+            <div className={classes.movies} style={{ width: isSmallScreen ? '16rem' : '23rem' , paddingLeft:"1%"}}>
               {TrendingMovies?.slice(0, 3).map((data, index) => (
                 <Trending props={data} key={index} />
               ))}
             </div>
+          </div>
           </div>
         )}
         <div
@@ -344,7 +348,7 @@ const useStyles = createStyles(() => ({
     overflow: 'hidden',
     flexDirection: 'column',
     gap: '0.8rem',
-    marginTop: '-2rem',
+    marginTop: '-6rem',
     minWidth: '30%',
   },
   searchRightSection: {

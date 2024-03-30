@@ -53,7 +53,7 @@ export default function SearchBar() {
     };
     
     return (
-        <Menu opened={suggestions.length !== 0} offset={0} width='target' closeOnClickOutside={true}>
+        <Menu opened={suggestions.length !== 0} offset={0} width='target' trapFocus={false} closeOnClickOutside={true}>
             <Menu.Target>
                 <div style={styles.container}>
                     <label htmlFor="search" style={styles.searchLabel}>

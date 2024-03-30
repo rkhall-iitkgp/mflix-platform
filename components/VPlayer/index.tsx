@@ -18,11 +18,10 @@ import { useHover } from "@mantine/hooks";
 import usePlayerStore from "@/Stores/PlayerStore";
 import useForwardRef from "@/utils/useForwardRef";
 
-type Props = { ws: WebSocket };
-const videoSrc = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8";
+type Props = { ws: WebSocket; videoSrc: string; Mp4: boolean; tier: string };
 
 const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
-    ({ ws }: Props, ref) => {
+    ({ ws, videoSrc, Mp4, tier }: Props, ref) => {
         const loaderRef = useRef<HTMLDivElement>(null);
         const playerContainerRef = useRef<HTMLDivElement>(null);
         // const playerRef = useRef<HTMLVideoElement>(null);
@@ -36,7 +35,6 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
         const currTimeRef = useRef<HTMLDivElement>(null);
         const totalTimeRef = useRef<HTMLDivElement>(null);
         const playerRef = useForwardRef(ref);
-
         const [loading, setLoading] = useState<boolean>(false);
         const [fullscreen, setFullscreen] = useState<boolean>(false);
         const [isMute, setIsMute] = useState<boolean>(false);
@@ -203,10 +201,12 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
 
         // initialize player
         useEffect(() => {
-            if (playerRef && playerRef.current) {
-                if (Hls.isSupported()) {
+            console.log("Mp4", Mp4);
+            if (playerRef && playerRef.current && videoSrc) {
+                if (Hls.isSupported() && !Mp4) {
                     const hls = new Hls();
                     setHls(hls);
+                    console.log("videoSrc", videoSrc);
                     hls.loadSource(videoSrc);
                     hls.attachMedia(playerRef.current as HTMLMediaElement);
                     hls.on(Hls.Events.MANIFEST_PARSED, () => {
@@ -219,21 +219,26 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
                 } else if (
                     playerRef.current.canPlayType(
                         "application/vnd.apple.mpegurl",
-                    )
+                    ) &&
+                    !Mp4
                 ) {
+                    playerRef.current.src = videoSrc;
+                    playerRef.current.addEventListener("loadedmetadata", () => {
+                        playerRef.current!.play();
+                    });
+                } else {
+                    console.log("videoSrc", videoSrc);
                     playerRef.current.src = videoSrc;
                     playerRef.current.addEventListener("loadedmetadata", () => {
                         playerRef.current!.play();
                     });
                 }
             }
-        }, []);
+        }, [videoSrc, playerRef, Mp4]);
 
         // quality control
         useEffect(() => {
             if (hls) {
-                console.log("hls.levels", hls.levels);
-                setLevels(hls.levels);
             }
         }, [quality, hls]);
 

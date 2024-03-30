@@ -45,7 +45,7 @@ export default function Chatbot() {
         setInput('')
         inputRef.current.value = '';
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chatbot/message`, {
+            const response = await fetch(`${'https://971edtce1a.execute-api.ap-south-1.amazonaws.com'}/chatbot/message`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

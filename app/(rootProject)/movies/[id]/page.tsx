@@ -19,14 +19,16 @@ import Mixpanel from "@/components/Mixpanel";
 import usePlayerStore from "@/Stores/PlayerStore";
 import VideoPlayer from "@/components/VPlayer";
 import PartyChat from "@/components/PartyChat/PartyChat";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();
     const [loading, setLoading] = useState(true);
-    const [movieData, setMovieData] = useState({});
+    const [movieData, setMovieData] = useState<any>({});
     const [similarMoviesData, setSimilarMoviesData] = useState([]);
     const state = useLoginStore.getState();
-
+    const [videoSrc, setVideoSrc] = useState("");
+    const [Mp4, setMp4] = useState(false);
     const {
         activeChat,
         setUsername,
@@ -91,6 +93,22 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                 })
             ).json();
             setMovieData(res.result);
+            const res1 = await (
+                await fetch(`http://localhost:5000/movies/link/${id}`, {
+                    method: "GET",
+                })
+            ).json();
+            console.log("res1", res1);
+            if (res1.success === false) {
+                console.log("res1.message", res1.message);
+                toast.error(res1.message);
+                setMp4(true);
+                setVideoSrc(res1?.result);
+            } else {
+                setVideoSrc(res1?.result?.uploadurl?.vidsrc);
+                setMp4(false);
+            }
+
             Mixpanel.track("Look Movie Details", {
                 title: res.result.title,
                 genres: res.result.genres,
@@ -238,7 +256,13 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                 
             </Group> */}
             <div style={{ display: "flex", width: "100%" }}>
-                <VideoPlayer ref={playerRef} ws={ws} />
+                <VideoPlayer
+                    ref={playerRef}
+                    ws={ws}
+                    videoSrc={videoSrc}
+                    Mp4={Mp4}
+                    tier={movieData?.tier}
+                />
                 {activeChat && <PartyChat ws={ws} />}
             </div>
             {/* Movie Details */}
@@ -265,6 +289,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
             <Stack bg={themeOptions.color.black} style={{ zIndex: "20" }}>
                 <Footer />
             </Stack>
+            <ToastContainer />
         </Stack>
     );
 }

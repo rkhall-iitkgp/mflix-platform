@@ -125,7 +125,7 @@ const HeroSection = () => {
         />
         <div className={classes.HeroImgOverlay}></div>
       </div>
-      <div className={cx(classes.hero)} style={{ gap: `${isTyping ? '0rem' : '4rem'}` }}>
+      <div className={cx(classes.hero)} style={{ gap: `${isTyping ? '0rem' : '4rem'}` , left:"-2%",}}>
         <div
           className={classes.leftSection}
           style={{ marginLeft: `${isTyping ? '0rem' : '0rem'}` }}
@@ -156,7 +156,7 @@ const HeroSection = () => {
                 fontSize: isSmallScreen ? '1.5rem' : '2rem',
                 top: isSmallScreen ? '6%' : '5%',
                 marginBottom: "-22%",
-                right:"10%",
+                right:"16%",
               }}
             >
               Recent Watch History:

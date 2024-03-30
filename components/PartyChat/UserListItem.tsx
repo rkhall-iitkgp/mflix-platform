@@ -13,8 +13,10 @@ const UserListItem = ({ isCreator, user }: { user: IUser; isCreator: boolean }) 
       <button>host</button>
     ) : (
       <button
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
           console.log(user.clientId);
+          // ws.send(JSON.stringify({ type: 'kick_user', ...user }));
         }}
         className={style.action}
       >

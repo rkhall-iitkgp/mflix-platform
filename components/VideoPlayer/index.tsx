@@ -21,11 +21,12 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) => {
-  const { toggleChat } = usePlayerStore();
+  const { toggleChat, isPlaying, setIsPlaying, appendMessage, username } = usePlayerStore();
   const [src] = useState<string>('http://localhost:5000/videos/output.m3u8');
   const playerRef = useRef<HTMLVideoElement>(null);
   const [quality, setQuality] = useState<string>(defaultQuality);
-  const [isPlaying, setIsPlaying] = useState(false);
+  // const [isPlaying, setIsPlaying] = useState(false);
+
   const [hls, setHls] = useState<Hls>();
   const [mute, setMute] = useState(0);
   const { hovered, ref } = useHover();
@@ -37,13 +38,16 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
   const [showPopup, setShowPopup] = React.useState(false);
 
   const [levels, setLevels] = useState<any>([]); // State to store the available quality levels
+
   const togglePlay = () => {
     const videoPlayer = playerRef.current;
     if (videoPlayer) {
       if (videoPlayer.paused) {
-        videoPlayer.play();
+        // ws.send(JSON.stringify({ type: 'play_pause', isPlaying: videoPlayer.paused }));
         setIsPlaying(true);
+        videoPlayer.play();
       } else {
+        // ws.send(JSON.stringify({ type: 'play_pause', isPlaying: videoPlayer.paused }));
         videoPlayer.pause();
         setIsPlaying(false);
       }
@@ -95,6 +99,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
     if (!playerRef.current) return;
     playerRef.current.currentTime += 15;
   }
+
   function seekBackward() {
     if (!playerRef.current) return;
     playerRef.current.currentTime -= 15;
@@ -130,7 +135,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
       hls.loadSource(videoSrc);
       hls.attachMedia(video);
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        video.play();
+        // video.play();
       });
       hls.on(Hls.Events.LEVEL_SWITCHED, function (event, data) {
         const level = hls.levels[data.level];
@@ -141,7 +146,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = videoSrc;
       video.addEventListener('loadedmetadata', () => {
-        video.play();
+        // video.play();
       });
       const duration = document.getElementById('duration')!;
       video.addEventListener('timeupdate', () => {
@@ -158,6 +163,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
       listener = false;
       const progressBar = document.getElementById('progress-bar')!;
       const { width } = progressBar.getBoundingClientRect();
+
       const x = e.clientX - progressBar.getBoundingClientRect().left;
       let percentage = (x / width) * 100;
       if (percentage < 0) percentage = 0;
@@ -225,7 +231,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
     });
 
     document.addEventListener('keypress', (e) => {
-      console.log(e);
       if (e.code == 'KeyK' || e.code == 'Space') togglePlay();
       else if (e.code == 'KeyM') toggleMute();
       else if (e.code == 'KeyF') toggleFullscreen();
@@ -270,6 +275,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
       playerRef.current.volume = percentage / 100;
     });
   }, []);
+
   useEffect(() => {
     if (hls) {
       console.log('hls.levels', hls.levels);
@@ -277,7 +283,42 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
     }
   }, [quality, hls]);
 
+  useEffect(() => {
+    const videoPlayer = playerRef.current;
+
+    if (videoPlayer) {
+      if (isPlaying) {
+        videoPlayer.play();
+      } else {
+        videoPlayer.pause();
+      }
+    }
+  }, [isPlaying]);
+
+  // ws.onmessage = (event) => {
+  //   const data = JSON.parse(event.data);
+  //   switch (data.type) {
+  //     case 'emit_update_time':
+  //       console.log({ emit_update_time: data });
+  //       break;
+
+  //     case 'joined_room':
+  //       console.log({ joined_room: data });
+  //       appendMessage({ type: 'notification', text: `${data.username} joined the room` });
+  //       toggleChat(true);
+  //       if (username == data.creator) {
+  //         ws.send(
+  //           JSON.stringify({
+  //             type: 'update_time',
+  //             new_time: playerRef.current?.currentTime || 0,
+  //           })
+  //         );
+  //       }
+  //       break;
+  //   }
+  // };
   const { classes, cx } = useStyles();
+
   return (
     <div className={classes.videoContainer} id="video-player">
       <div className={classes.loaderContainer} ref={loader}>
@@ -295,7 +336,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
         <h2>Movie Title</h2>
         <div></div>
       </div>
-      <video id="video" controls={false} ref={playerRef} className={classes.video}></video>
+      <video
+        id="video"
+        controls={false}
+        ref={playerRef}
+        autoPlay={false}
+        className={classes.video}
+      ></video>
       <div className={classes.controlsContainer} id="controls-container">
         <div className={classes.progressContainer}>
           <p className={classes.durations} id="current-time">
@@ -326,6 +373,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
                 className={classes.icon}
                 style={{ scale: 1.2 }}
                 onClick={(e) => {
+                  e.preventDefault();
                   e.stopPropagation();
                   togglePlay();
                 }}
@@ -339,6 +387,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
                 className={classes.icon}
                 style={{ scale: 1.2 }}
                 onClick={(e) => {
+                  e.preventDefault();
                   e.stopPropagation();
                   togglePlay();
                 }}
@@ -393,7 +442,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ defaultQuality = 'auto' }) =>
           </div>
           <div className={cx(classes.flex, classes.gap)}>
             <button
-              onClick={toggleChat}
+              onClick={() => toggleChat(undefined)}
               className={cx(classes.partyWatch, classes.flex, classes.gap)}
             >
               <Image

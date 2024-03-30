@@ -97,15 +97,12 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-
-
-
 export default function MovieCard({ data }: { data: any }) {
   // console.log(data);
   const { classes, cx } = useStyles();
   const { hovered, ref } = useHover();
   return (
-    <Link href={`/movies/${data._id}`} style={{textDecoration:'none'}}>
+    <Link href={`/movies/${data._id}`} style={{ textDecoration: 'none' }}>
       <div className={cx(classes.containerStyles, hovered && classes.Hovered)} ref={ref}>
         {/* <div className={classes.heartContainerStyles}>
           <Image src={Heart} width={30} height={30} alt="fav" className={classes.heartImageStyles} />
@@ -128,7 +125,13 @@ export default function MovieCard({ data }: { data: any }) {
               <span className={classes.rating}>{data?.imdb.rating}/10</span>
             </div>
             <div className={classes.ratingItemStyles}>
-              <Image src={Tomato} alt="tomato" height={17} width={16} className={classes.tomatoImg} />
+              <Image
+                src={Tomato}
+                alt="tomato"
+                height={17}
+                width={16}
+                className={classes.tomatoImg}
+              />
               <span className={classes.tomatoScore}>{data?.tomatoes?.viewer.rating}/5</span>
             </div>
           </div>
@@ -141,7 +144,7 @@ export default function MovieCard({ data }: { data: any }) {
             ))}
           </div>
         </div>
-        </div>
+      </div>
     </Link>
   );
 }

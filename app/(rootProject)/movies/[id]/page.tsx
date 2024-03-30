@@ -26,7 +26,12 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     console.log(state)
     useEffect(()=>{
         const id = params.id;
-        const user_id = state.userProfiles[0]._id;
+        // const user_id = state.userProfiles[0]._id;
+        if (state.userProfiles.length > 0) {
+            var user_id = state.userProfiles[0]._id;
+        } else {
+            var user_id = null;
+        }
         const getMovieDetails = async () => {
             const res = await (await fetch (`${url}/movies/${id}`, {
                 method: "POST",

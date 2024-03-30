@@ -26,11 +26,11 @@ import {
   useStyles,
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
-import { Otp } from '../verifyotp/page';
+import Otp from '../verifyotp/page';
 import searchMsApiUrls from '../api/searchMsApi';
 import { useState } from 'react';
 
-export function Register(props: PaperProps) {
+export default function Register(props: any) {
   const [showOtp, setshowOtp] = useState(0);
   const [formData, setFormData] = useState({});
 
@@ -159,7 +159,6 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
               marginTop: '0.5rem',
             }}
           >
-        
             {/* <form style={{display:"flex", flexDirection:"column"}} onSubmit={form.onSubmit((values) => console.log(values))}> */}
             {/* <Otp></Otp> */}
             <form
@@ -255,7 +254,6 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                   alignItems: 'center',
                 }}
               >
-
                 <DateInput
                   required
                   label="Date of Birth"
@@ -402,7 +400,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                 }}
                 href="/verifyotp"
               >
-               <Button
+                <Button
                   onClick={() => {
                     console.log('clicked');
                   }}
@@ -420,7 +418,6 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                 </Button>
                 {/* </Link> */}
               </Anchor>
-
             </form>
           </Box>
         </Flex>
@@ -430,5 +427,3 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
     </>
   );
 }
-
-export default Register;

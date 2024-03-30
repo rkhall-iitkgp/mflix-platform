@@ -13,35 +13,7 @@ export default function WatchList() {
 
     const base_url = searchMsApiUrls();
 
-    const [movies, setMovies] = useState([
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-    ]);
+    const [movies, setMovies] = useState([]);
     useEffect(() => {
         const state = useLoginStore.getState();
         const user_id = state.userProfiles[0]._id;
@@ -91,11 +63,11 @@ export default function WatchList() {
         <div className={classes.WatchListContainer}>
             <div className={classes.WatchListText}><h1 style={{ color: "white" }}>Watch List</h1></div>
             {movies.length !== 0 ? (
-                movies.map(movie => (
+                movies.map((movie: any) => (
                     <MovieCard key={movie.id} data={movie} />
                 ))
             ) : (
-                <h1 style={{ color: themeOptions.color.button, margin: 'auto' }}>No History found</h1>
+                <h1 style={{ color: themeOptions.color.button, margin: 'auto' }}>No WatchList found</h1>
             )}
         </div>
     </>);

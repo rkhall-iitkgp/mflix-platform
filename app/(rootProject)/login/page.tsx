@@ -2,7 +2,7 @@
 
 // hard code to variable remaining
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { useForm } from '@mantine/form';
 import { createStyles } from '@mantine/styles';
 import {
@@ -46,14 +46,32 @@ export default function Login() {
     let jsonData = await res.json();
     if (!res.ok) {
       console.log(jsonData);
-      toast.error("Invalid Credentials!",{
-        position:"top-center"
+      toast.error("Invalid Credentials!", {
+        position: "top-center"
       })
     } else {
       console.log('login successful');
       console.log(jsonData);
-      toast.success("LogIn Successful!",{
-        position:"top-center"
+      const value = {
+        bill: "",
+        tier: {
+          description: "",
+          maxResolution: 0,
+          name: "Free",
+          partyWatch: false,
+          price: 0,
+          tier: "",
+          __v: 0,
+          _id: "",
+
+        },
+      }
+      if (!jsonData.account.subscriptionTier) {
+        jsonData.account.subscriptionTier = value;
+      }
+      console.log(jsonData.account);
+      toast.success("LogIn Successful!", {
+        position: "top-center"
       })
       router.push("/selectprofile");
       Mixpanel.identify(jsonData.account._id);
@@ -83,6 +101,7 @@ export default function Login() {
           $name: jsonData.account.subscriptionTier.tier.name,
         },
       });
+
       useLoginStore.getState().updateUser(jsonData.account);
       const jsonDataString = JSON.stringify(jsonData.account);
       localStorage.setItem('user', jsonDataString);
@@ -330,7 +349,7 @@ export default function Login() {
                         <GoogleButton radius="xl" size='lg' style={{ marginBottom: '1rem' }}>Google</GoogleButton>
                     </Box> */}
         </form>
-      </Box><ToastContainer/>
+      </Box><ToastContainer />
     </Box>
   );
 }

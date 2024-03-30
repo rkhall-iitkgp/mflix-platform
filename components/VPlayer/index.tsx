@@ -18,6 +18,7 @@ import { useHover } from "@mantine/hooks";
 import usePlayerStore from "@/Stores/PlayerStore";
 import useForwardRef from "@/utils/useForwardRef";
 import { createStyles } from "@mantine/styles";
+import useLoginStore from "@/Stores/LoginStore";
 
 type Props = { ws: WebSocket; videoSrc: string; Mp4: boolean; tier: string };
 
@@ -47,6 +48,9 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
         const [levels, setLevels] = useState<any>([]);
         const [quality, setQuality] = useState<string>("auto");
         const [playbackRate, setPlaybackRate] = useState(1);
+        const Usertier = useLoginStore(
+            (state) => state.subscriptionTier.tier.tier,
+        );
 
         const { hovered, ref: volContainerRef } = useHover();
         // Zustand states
@@ -218,6 +222,30 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
                         const level = hls.levels[data.level];
                         console.log(`Switched to level: ${level.height}p`);
                     });
+                    hls.on(Hls.Events.LEVELS_UPDATED, function (event, data) {
+                        console.log("data,Usertier", data, Usertier);
+                        if (Usertier === "free" || Usertier === "") {
+                            setLevels(
+                                data.levels.filter(
+                                    (level) => level.height <= 480,
+                                ),
+                            );
+                        } else if (Usertier === "basic") {
+                            setLevels(
+                                data.levels.filter(
+                                    (level) => level.height <= 720,
+                                ),
+                            );
+                        } else if (Usertier === "standard") {
+                            setLevels(
+                                data.levels.filter(
+                                    (level) => level.height <= 1080,
+                                ),
+                            );
+                        } else {
+                            setLevels(data.levels);
+                        }
+                    });
                 } else if (
                     playerRef.current.canPlayType(
                         "application/vnd.apple.mpegurl",
@@ -241,8 +269,24 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
         // quality control
         useEffect(() => {
             if (hls) {
+                console.log("Usertier", Usertier);
+                if (Usertier === "free" || Usertier === "") {
+                    setLevels(
+                        hls.levels.filter((level) => level.height <= 480),
+                    );
+                } else if (Usertier === "basic") {
+                    setLevels(
+                        hls.levels.filter((level) => level.height <= 720),
+                    );
+                } else if (Usertier === "standard") {
+                    setLevels(
+                        hls.levels.filter((level) => level.height <= 1080),
+                    );
+                } else {
+                    setLevels(hls.levels);
+                }
             }
-        }, [quality, hls]);
+        }, [quality, hls, hls?.levels, Usertier]);
 
         // player seek on slide
         useEffect(() => {

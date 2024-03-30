@@ -43,7 +43,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     } = usePlayerStore();
     const [ws, setWS] = useState<WebSocket | null>(null);
     const playerRef = useRef<HTMLVideoElement>(null);
-
+    const Usertier = useLoginStore((state) => state.subscriptionTier.tier.tier);
     const styles = createStyles(() => ({
         streaming: {
             width: "100%",
@@ -127,17 +127,32 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
             });
 
             if (user._id) {
-                Mixpanel.identify(user._id)
+                Mixpanel.identify(user._id);
                 Mixpanel.people.increment(user._id, "Total Movies Watched", 1);
                 Mixpanel.people.append(user._id, "Watch History", {
                     movie_title: res.result.title,
                     Timestamp: new Date().toISOString(),
                 });
-                Mixpanel.people.increment(user._id, incrementArray(res.result.genres, 'genre'))
-                Mixpanel.people.increment(user._id, incrementArray(res.result.languages, 'language'))
-                Mixpanel.people.increment(user._id, incrementArray(res.result.directors, 'director'))
-                Mixpanel.people.increment(user._id, incrementArray(res.result.writers, 'writer'))
-                Mixpanel.people.increment(user._id, incrementArray(res.result.cast, 'cast'))
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.genres, "genre"),
+                );
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.languages, "language"),
+                );
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.directors, "director"),
+                );
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.writers, "writer"),
+                );
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.cast, "cast"),
+                );
             }
 
             const similar_results_url = `${url}/search/fuzzy?semantic=${res.result.plot}`;
@@ -281,7 +296,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                     ws={ws}
                     videoSrc={videoSrc}
                     Mp4={Mp4}
-                    tier={movieData?.tier}
+                    tier={Usertier}
                 />
                 {activeChat && <PartyChat ws={ws} />}
             </div>

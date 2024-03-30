@@ -321,56 +321,55 @@ import Favorites from './favourites';
 import WatchList from './watchlist';
 import useLoginStore from '@/Stores/LoginStore';
 import searchMsApiUrls from '../api/searchMsApi';
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
-export function UserProfile() {
-    const [opened, { toggle }] = useDisclosure();
-    const [page, setPage] = useState(1);
+export default function UserProfile() {
+  const [opened, { toggle }] = useDisclosure();
+  const [page, setPage] = useState(1);
 
-    //
-    const router = useRouter()
+  //
+  const router = useRouter();
 
-    const handleLogout = async () => {
-        const base_url = searchMsApiUrls();
+  const handleLogout = async () => {
+    const base_url = searchMsApiUrls();
 
-        const state = useLoginStore.getState();
-        const values = {
-            "email": state.email,
-        }
-        let res = await fetch(`${base_url}/auth/logout`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                ...values,
-            }),
-        });
+    const state = useLoginStore.getState();
+    const values = {
+      email: state.email,
+    };
+    let res = await fetch(`${base_url}/auth/logout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        ...values,
+      }),
+    });
 
-        let jsonData = await res.json();
-        if (!res.ok) {
-            console.log(jsonData);
-        } else {
-            console.log(jsonData);
-            console.log('logout successful');
-            localStorage.clear();
-            useLoginStore.getState().clearState();
-            console.log(useLoginStore.getState().clearState());
-            router.push('/login')
-        }
-
+    let jsonData = await res.json();
+    if (!res.ok) {
+      console.log(jsonData);
+    } else {
+      console.log(jsonData);
+      console.log('logout successful');
+      localStorage.clear();
+      useLoginStore.getState().clearState();
+      console.log(useLoginStore.getState().clearState());
+      router.push('/login');
     }
-    return (
-        <AppShell
-            header={{ height: 90 }}
-            navbar={{ width: '18%', breakpoint: 'sm', collapsed: { mobile: !opened } }}
-            aside={{ width: 0, breakpoint: 'md', collapsed: { desktop: false, mobile: true } }}
-            padding="md"
-            withBorder={false}
-        >
-            <AppShell.Header style={{ backgroundColor: 'black' }}>
-                {/* <Group h="100%" px="md">
+  };
+  return (
+    <AppShell
+      header={{ height: 90 }}
+      navbar={{ width: '18%', breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      aside={{ width: 0, breakpoint: 'md', collapsed: { desktop: false, mobile: true } }}
+      padding="md"
+      withBorder={false}
+    >
+      <AppShell.Header style={{ backgroundColor: 'black' }}>
+        {/* <Group h="100%" px="md">
                     <MantineLogo size={30} />
                 </Group> */}
         <Group h="100%" px="md">
@@ -400,10 +399,10 @@ export function UserProfile() {
             style={{
               height: '2.8rem',
               backgroundColor: page == 1 ? '#29113B' : themeOptions.color.button,
-              borderTopLeftRadius: page == 1 ? '1.5rem' : null,
-              borderBottomLeftRadius: page == 1 ? '1.5rem' : null,
-              marginLeft: page == 1 ? '8%' : null,
-              paddingRight: page == 1 ? '17%' : null,
+              borderTopLeftRadius: page == 1 ? '1.5rem' : "",
+              borderBottomLeftRadius: page == 1 ? '1.5rem' : "",
+              marginLeft: page == 1 ? '8%' : "",
+              paddingRight: page == 1 ? '17%' : "",
               fontSize: themeOptions.fontSize.s,
             }}
             onClick={() => {
@@ -422,10 +421,10 @@ export function UserProfile() {
             style={{
               height: '2.8rem',
               backgroundColor: page == 2 ? '#29113B' : themeOptions.color.button,
-              borderTopLeftRadius: page == 2 ? '1.5rem' : null,
-              borderBottomLeftRadius: page == 2 ? '1.5rem' : null,
-              marginLeft: page == 2 ? '8%' : null,
-              paddingRight: page == 2 ? '17%' : null,
+              borderTopLeftRadius: page == 2 ? '1.5rem' : "",
+              borderBottomLeftRadius: page == 2 ? '1.5rem' : "",
+              marginLeft: page == 2 ? '8%' : "",
+              paddingRight: page == 2 ? '17%' : "",
               fontSize: themeOptions.fontSize.s,
             }}
             onClick={() => {
@@ -444,10 +443,10 @@ export function UserProfile() {
             style={{
               height: '2.8rem',
               backgroundColor: page == 3 ? '#29113B' : themeOptions.color.button,
-              borderTopLeftRadius: page == 3 ? '1.5rem' : null,
-              borderBottomLeftRadius: page == 3 ? '1.5rem' : null,
-              marginLeft: page == 3 ? '8%' : null,
-              paddingRight: page == 3 ? '17%' : null,
+              borderTopLeftRadius: page == 3 ? '1.5rem' : "",
+              borderBottomLeftRadius: page == 3 ? '1.5rem' : "",
+              marginLeft: page == 3 ? '8%' : "",
+              paddingRight: page == 3 ? '17%' : "",
               fontSize: themeOptions.fontSize.s,
             }}
             onClick={() => {
@@ -467,10 +466,10 @@ export function UserProfile() {
             style={{
               height: '2.8rem',
               backgroundColor: page == 4 ? '#29113B' : themeOptions.color.button,
-              borderTopLeftRadius: page == 4 ? '1.5rem' : null,
-              borderBottomLeftRadius: page == 4 ? '1.5rem' : null,
-              marginLeft: page == 4 ? '8%' : null,
-              paddingRight: page == 4 ? '17%' : null,
+              borderTopLeftRadius: page == 4 ? '1.5rem' : "",
+              borderBottomLeftRadius: page == 4 ? '1.5rem' : "",
+              marginLeft: page == 4 ? '8%' : "",
+              paddingRight: page == 4 ? '17%' : "",
               fontSize: themeOptions.fontSize.s,
             }}
             onClick={() => {

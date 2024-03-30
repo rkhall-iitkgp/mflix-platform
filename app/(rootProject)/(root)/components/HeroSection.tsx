@@ -174,9 +174,8 @@ const HeroSection = () => {
             <p
               className={classes.p}
               style={{
-                fontSize: isSmallScreen ? '1.5rem' : '2rem',
-                top: isSmallScreen ? '9%' : '8%',
-                margin: '0.5rem',
+                fontSize: isSmallScreen ? '1.8rem' : '2rem',
+                top: isSmallScreen ? '20vh' : '18vh',
               }}
             >
               Trending:
@@ -363,7 +362,7 @@ const useStyles = createStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
     position: 'absolute',
-    top: '12%',
+    top: '28vh',
     overflow: 'hidden',
     gap: '.6rem',
     transition: '0.5s ease',

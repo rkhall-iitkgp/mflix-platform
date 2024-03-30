@@ -5,6 +5,7 @@ import { createStyles } from '@mantine/styles';
 import MovieCard from "@/components/MovieDetails/MovieCards";
 import searchMsApiUrls from "../api/searchMsApi";
 import useLoginStore from "@/Stores/LoginStore";
+import themeOptions from "@/utils/colors";
 
 
 
@@ -89,12 +90,13 @@ export default function WatchList() {
     return (<>
         <div className={classes.WatchListContainer}>
             <div className={classes.WatchListText}><h1 style={{ color: "white" }}>Watch List</h1></div>
-            <div className={classes.WatchListCards}>
-                {movies.map(movie => (
-                    // <MovieCard
+            {movies.length !== 0 ? (
+                movies.map(movie => (
                     <MovieCard key={movie.id} data={movie} />
-                ))}
-            </div>
+                ))
+            ) : (
+                <h1 style={{ color: themeOptions.color.button, margin: 'auto' }}>No History found</h1>
+            )}
         </div>
     </>);
 }

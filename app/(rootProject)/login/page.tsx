@@ -1,7 +1,8 @@
 'use client';
 
 // hard code to variable remaining
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import { useForm } from '@mantine/form';
 import { createStyles } from '@mantine/styles';
 import {
@@ -45,35 +46,42 @@ export default function Login() {
     let jsonData = await res.json();
     if (!res.ok) {
       console.log(jsonData);
+      toast.error("Invalid Credentials!",{
+        position:"top-center"
+      })
     } else {
       console.log('login successful');
       console.log(jsonData);
+      toast.success("LogIn Successful!",{
+        position:"top-center"
+      })
+      router.push("/selectprofile");
       Mixpanel.identify(jsonData.account._id);
       Mixpanel.register({
         $name: jsonData.account.name,
         $email: jsonData.account.email,
         $dob: jsonData.account.dob,
         $phone: jsonData.account.phone,
-        $subscriptionTierId: jsonData.account.subscriptionTier.tier._id,
-        $subscriptionTiername: jsonData.account.subscriptionTier.tier.name,
+        // $subscriptionTierId: jsonData.account?.subscriptionTier.tier._id,
+        // $subscriptionTiername: jsonData.account?.subscriptionTier.tier.name,
       });
       Mixpanel.track('Successful Login', {
         $name: jsonData.account.name,
         $email: jsonData.account.email,
         $dob: jsonData.account.dob,
         $phone: jsonData.account.phone,
-        $subscriptionTierId: jsonData.account.subscriptionTier.tier._id,
-        $subscriptionTiername: jsonData.account.subscriptionTier.tier.name,
+        // $subscriptionTierId: jsonData.account.subscriptionTier.tier._id,
+        // $subscriptionTiername: jsonData.account.subscriptionTier.tier.name,
       });
       Mixpanel.people.set({
         $name: jsonData.account.name,
         $email: jsonData.account.email,
         $dob: jsonData.account.dob,
         $phone: jsonData.account.phone,
-        $subscriptionTier: {
-          tierId: jsonData.account.subscriptionTier.tier._id,
-          $name: jsonData.account.subscriptionTier.tier.name,
-        },
+        // $subscriptionTier: {
+        //   tierId: jsonData.account.subscriptionTier.tier._id,
+        //   $name: jsonData.account.subscriptionTier.tier.name,
+        // },
       });
       useLoginStore.getState().updateUser(jsonData.account);
       const jsonDataString = JSON.stringify(jsonData.account);
@@ -82,7 +90,7 @@ export default function Login() {
       const state = useLoginStore.getState();
       console.log(state);
       console.log(local);
-      router.push('/userprofile')
+      router.push('/selectprofile')
     }
 
     // if (!jsonData.account.userProfiles.length) {
@@ -322,7 +330,7 @@ export default function Login() {
                         <GoogleButton radius="xl" size='lg' style={{ marginBottom: '1rem' }}>Google</GoogleButton>
                     </Box> */}
         </form>
-      </Box>
+      </Box><ToastContainer/>
     </Box>
   );
 }

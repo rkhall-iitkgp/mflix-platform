@@ -7,6 +7,8 @@ import { createStyles } from '@mantine/styles';
 // import MovieCard from "../(root)/components/MovieCard";
 import MovieCard from "@/components/MovieDetails/MovieCards";
 import searchMsApiUrls from "../api/searchMsApi";
+import { theme } from "@/theme";
+import themeOptions from "@/utils/colors";
 const Favorites = () => {
     const base_url = searchMsApiUrls();
     const [movies, setMovies] = useState([
@@ -44,7 +46,7 @@ const Favorites = () => {
         console.log(user_id);
         fetch(`${base_url}/user/watchlist/${user_id}`)
             .then(response => response.json())
-            .then(data => { setMovies(data); console.log(data) })
+            .then(data => { setMovies(data); console.log(data); console.log(data.length) })
             .catch(error => console.error("Error fetching data:", error));
     }, []);
 
@@ -81,12 +83,23 @@ const Favorites = () => {
     return (<>
         <div className={classes.FavouritesContainer}>
             <div className={classes.FavouritesText}><h1 style={{ color: "white" }}>Favorites</h1></div>
-            <div className={classes.FavouritesCards}>
+
+            {/* <div className={classes.FavouritesCards}>
                 {movies.map(movie => (
                     // <MovieCard
                     <MovieCard key={movie.id} data={movie} />
                 ))}
 
+            </div> */}
+            <div className={classes.FavouritesCards}>
+
+                {movies.length !== 0 ? (
+                    movies.map(movie => (
+                        <MovieCard key={movie.id} data={movie} />
+                    ))
+                ) : (
+                    <h1 style={{ color: themeOptions.color.button, margin: 'auto' }}>No favourites found</h1>
+                )}
             </div>
         </div>
     </>);

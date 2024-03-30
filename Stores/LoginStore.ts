@@ -48,8 +48,6 @@ const useLoginStore = create<State & Action>((set) => ({
             tier: "",
             __v: 0,
             _id: "",
-
-
         }
     },
     updateUser: (newUser) => set(() => ({ ...newUser })),

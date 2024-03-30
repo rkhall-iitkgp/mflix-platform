@@ -1,12 +1,11 @@
 import React from 'react';
 import style from './PartyChat.module.css';
+import { Notification } from '@/Stores/PlayerStore';
 
-type Props = {};
-
-function NotifMsg({}: Props) {
+function NotifMsg({ text }: Notification) {
   return (
     <div className={style.notifmsgcontainer}>
-      <span className={style.notifmsg}>NotifMsg</span>
+      <span className={style.notifmsg}>{text}</span>
     </div>
   );
 }

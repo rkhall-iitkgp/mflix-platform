@@ -1,217 +1,236 @@
-'use client'
-// Import required modules
-import React, { useState ,useEffect } from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { createStyles } from '@mantine/styles';
+import { useLogger, useMediaQuery } from '@mantine/hooks';
 import useLoginStore from '@/Stores/LoginStore';
+import searchMsApiUrls from '@/app/(rootProject)/api/searchMsApi';
+import useUserStore from '@/Stores/UserStore';
 
-// Import icons
 import avatarLogo1 from '@/assets/icons/profile1.svg';
 import avatarLogo2 from '@/assets/icons/profile2.svg';
 import avatarLogo3 from '@/assets/icons/profile3.svg';
 import addMoreLogo from '@/assets/icons/add-more.svg';
-import themeOptions from '@/utils/colors';
-
-//User profile
-// {
-//     "_id": "66071dcf871b365691e6f506",
-//     "name": "Adarsh Tadiparthi",
-//     "email": "adarshtadiparthi30@gmail.com",
-//     "dob": "2005-07-30T00:00:00.000Z",
-//     "phone": 9390004880,
-//     "payments": [],
-//     "userProfiles": [
-//         {
-//             "_id": "66071dcf871b365691e6f507",
-//             "name": "Adarsh Tadiparthi",
-//             "moviesWatched": [],
-//             "watchList": [],
-//             "favoriteMovies": [],
-//             "savedFilters": [],
-//             "searchHistory": [],
-//             "__v": 0
-//         }
-//     ],
-//     "activeLogins": [
-//         "66071dd0871b365691e6f50a",
-//         "66071e17871b365691e6f51f"
-//     ],
-//     "subscriptionTier": {
-//         "bill": "",
-//         "tier": {
-//             "description": "",
-//             "maxResolution": 0,
-//             "name": "",
-//             "partyWatch": false,
-//             "price": 0,
-//             "tier": "",
-//             "__v": 0,
-//             "_id": ""
-//         }
-//     },
-//     "__v": 0
-// }
+import themeOptions from '@/assets/themes/colors';
+import { useRouter } from 'next/navigation';
 
 
-// Define profile interface
+const headingFZ = '5vw';
+const url = searchMsApiUrls();
+
 interface Profile {
-    id: number;
-    caption: string;
-    link: string;
-    image: string;
+  id: number;
+  caption: string;
+  link: string;
+  image: string;
+  index: number;
 }
 
-// Initial profiles
-const initialProfiles: Profile[] = [
-    {
-        id: 1,
-        caption: 'Profile1',
-        link: '/',
-        image: avatarLogo1,
-    },
-    {
-        id: 2,
-        caption: 'Profile2',
-        link: '/',
-        image: avatarLogo2,
-    },
-    {
-        id: 3,
-        caption: 'Profile3',
-        link: '/',
-        image: avatarLogo3,
-    },
-    {
-        id: 4,
-        caption: 'Add New',
-        link: 'null',
-        image: addMoreLogo,
-    },
-];
+// interface newProfile {
+//     activeUsr: string;
+// }
 
-const ImagesArray = [avatarLogo1,avatarLogo2,avatarLogo3];
+const ImageArray = [avatarLogo1, avatarLogo2, avatarLogo3];
 
-// Define component styles
-const useStyles = createStyles(() => ({
-    containerStyle: {
-        display: 'flex',
-
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        minWidth :'70vw',
-        maxWidth:'80vw',
-        margin:'0 auto',
-    },
-    headingStyle: {
-        margin: '2vw',
-        fontSize : themeOptions.fontSize.xl,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    itemStyle: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        border: 'solid transparent',
-        transition: 'outline-color 0.3s',
-        outline: '2px solid transparent',
-    },
-    avatarStyle: {
-        width: '15vw',
-        height: '15vw',
-        marginBottom: '1rem',
-        transition: 'border-color 0.3s',
-        border: '2px solid transparent',
-        ':hover': {
-            opacity: 0.5,
-        },
-    },
-}));
- 
-// Define functional component
 const SelectProfile: React.FC = () => {
-    // State for profiles
-    const [profiles, setProfiles] = useState<Profile[]>([]);
-    const state = useLoginStore.getState();
+  const [currentProfile, setCurrentProfile] = useState([]);
+  const [changedType, setChangedType] = useState([]);
+  const state = useUserStore.getState();
+  const router = useRouter();
 
-    useEffect(() => {
-        setProfiles(state.userProfiles);
-    }, []);
-    // Get component styles
-    const { classes } = useStyles();
-    // Number of profiles per row
-    const profilesPerRow = 5;
-    //Get user data
+  useEffect(() => {
+    const getActiveUsers = async () => {
+      const base_url = searchMsApiUrls();
+      const user_id = state._id;
 
-    console.log(state.userProfiles);
+      //   console.log(base_url);
+      let res = await fetch(`${base_url}/user/details`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
 
-    // Function to handle profile click
-    const handleProfileClick = (link?: string) => {
-        if (link === 'null') {
-            handleAddProfile();
-        } else if (link) {
-            window.location.href = link;
-        }
+      let jsonData = await res.json();
+      //   console.log('Hello', res.ok);
+      if (!res.ok) {
+        console.log(jsonData);
+      } else {
+        console.log(jsonData);
+        setCurrentProfile(jsonData.account.userProfiles);
+      }
+      console.log('userprofiles', jsonData.account.userProfiles);
     };
+    getActiveUsers();
+  }, []);   
 
-   // Function to handle adding a new profile
-const handleAddProfile = () => {
-    if (profiles.length < 5) {
-        const newProfileId = profiles.length + 1;
-        const newProfile: Profile = {
-            id: newProfileId,
-            caption: `Profile${newProfileId - 1}`,
-            link: '/',
-            image: ImagesArray[Math.floor(Math.random() * 3)], 
-        };
+  useEffect(() => {
+    ConvertType();
+  }, [currentProfile]);
 
-        setProfiles([...profiles.slice(0, profiles.length - 1), newProfile, profiles[profiles.length - 1]]);
+  const [length, setLength] = useState(0);
+
+  const AddProfile = async () => {
+    try {
+      const response = await fetch(`${url}/user/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ userName: `Profile ${currentProfile.length + 1}` }),
+      });
+      console.log(response);
+      return await response.json();
+    } catch (error) {
+      console.log('Unable to connect:', error);
+      return { ok: false };
     }
-    else if(profiles.length == 5) {
-        const newProfileId = profiles.length + 1;
-        const newProfile: Profile = {
-            id: newProfileId,
-            caption: `Profile${newProfileId - 1}`,
-            link: '/',
-            image: ImagesArray[Math.floor(Math.random() * 3)], 
-        };
-        const updatedInitialProfiles = profiles.slice(0, -1);
-        setProfiles([...updatedInitialProfiles , newProfile]);
+  };
+
+  const ConvertType = () => {
+    console.log('currentProfile', currentProfile);
+    const transformedArray = currentProfile.map((item, index) => {
+      console.log(item, index);
+      return {
+        id: item._id || `${index}`,
+        caption: item.name || `Profile ${index + 1}`,
+        link: '/',
+        image: ImageArray[0],
+        index:index,
+      };
+    });
+    transformedArray.push({
+      id: transformedArray.length + 1,
+      caption: 'Add New',
+      link: 'null',
+      image: addMoreLogo,
+      index: -1,
+    });
+    console.log('transforemedArray:', transformedArray);
+    setChangedType(transformedArray);
+    if(transformedArray.length == 6){
+        transformedArray.pop();
     }
-};
+  };
 
+  const { classes } = useStyles();
+  const profilesPerRow = 5;
+  const newProfile = {
+    _id: "",
+    name: "",
+    index: 0,
+  }
 
-// Function to render profiles
-const renderProfiles = () => {
-    const profileRows = [];
-    
-    for (let i = 0; i < profiles.length; i += profilesPerRow) {
-        profileRows.push(
-            <div className={classes.containerStyle} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }} key={i}>
-                {profiles.slice(i, i + profilesPerRow).map((profile, index) => (
-                    <div key={index} className={classes.itemStyle} onClick={() => handleProfileClick(profile.link)}>
-                        <Image className={classes.avatarStyle} src={profile.image} alt={profile.caption} />
-                        <span style={{ textAlign: 'center', fontSize: themeOptions.fontSize.l }}>{profile.caption}</span>
-                    </div>
-                ))}
-            </div>
+  const handleProfileClick = (profile:any) => {
+    if (profile.link === 'null') {
+      handleAddProfile();
+    } else if (profile.link) {
+        newProfile._id = profile.id
+        newProfile.name = profile.name
+        newProfile.index = profile.index 
+        state.updateUser(
+            newProfile,
         );
+        console.log(newProfile);
+        router.push('/');
+    }
+  };
+
+  const handleAddProfile = async () => {
+    if (currentProfile.length >= 5) {
+        console.log('Maximum number of profiles reached');
+        return;
+    }
+
+    let newProfileData = await AddProfile();
+    if (!newProfileData.success) {
+      console.log('addProfile error');
+      return;
+    }
+    console.log('New profile data', newProfileData);
+    setCurrentProfile(newProfileData.account.userProfiles);
+  };
+
+  const renderProfiles = () => {
+    const profileRows = [];
+    for (let i = 0; i < changedType.length; i += profilesPerRow) {
+      profileRows.push(
+        <div className={classes.containerStyle} key={i}>
+          {changedType.slice(i, i + profilesPerRow).map((profile, index) => (
+            <div
+              key={index}
+              className={classes.itemStyle}
+              onClick={() => handleProfileClick(profile)}
+            >
+              <Image
+                className={classes.avatarStyle}
+                src={profile.image}
+                alt={profile.caption}
+                width={150}
+                height={150}
+              />
+              <span style={{ textAlign: 'center', fontSize: '2vw' }}>{profile.caption}</span>
+            </div>
+          ))}
+        </div>
+      );
     }
     return profileRows;
-};
-    
-    // Render component
-    return (
-        <div style={{ backgroundColor: themeOptions.color.background, minHeight: '100vh', color: themeOptions.color.divider,padding:'10rem 0'}}>
-            <div>
-                <div className={classes.headingStyle}>
-                    Who's watching?
-                </div>
-                {renderProfiles()}
-            </div>
-        </div>
-    );
+  };
+
+  return (
+    <div
+      style={{
+        backgroundColor: '#140320',
+        minHeight: '100vh',
+        color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+      }}
+    >
+      <div>
+        <div className={classes.headingStyle}>Who's watching?</div>
+        {renderProfiles()}
+      </div>
+    </div>
+  );
 };
 
-// Export component
+const useStyles = createStyles(() => ({
+  containerStyle: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    minWidth: '70vw',
+  },
+  headingStyle: {
+    padding: '2vw',
+    fontSize: themeOptions.fontSize.xl,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  itemStyle: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    border: 'solid transparent',
+    transition: 'outline-color 0.3s',
+    outline: '2px solid transparent',
+  },
+  avatarStyle: {
+    width: '15vw',
+    height: '15vw',
+    marginBottom: '1rem',
+    transition: 'border-color 0.3s',
+    border: '2px solid transparent',
+    ':hover': {
+      opacity: 0.5,
+    },
+  },
+}));
+
 export default SelectProfile;

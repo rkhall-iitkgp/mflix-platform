@@ -13,35 +13,7 @@ export default function WatchList() {
 
     const base_url = searchMsApiUrls();
 
-    const [movies, setMovies] = useState([
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-        {
-            "id": "123"
-        },
-    ]);
+    const [movies, setMovies] = useState([]);
     useEffect(() => {
         const state = useLoginStore.getState();
         const user_id = state.userProfiles[0]._id;

@@ -37,6 +37,7 @@ export default function MovieContent({ movieData }: { movieData: any }) {
     // console.log(movieData);
     const id = movieData?._id;
     const state = useLoginStore.getState();
+    const [firstRender,setFirstRender] = useState(true); 
     // const user_id = state.userProfiles[0]._id
     if (state.userProfiles.length > 0) {
         var user_id = state.userProfiles[0]._id;
@@ -45,11 +46,11 @@ export default function MovieContent({ movieData }: { movieData: any }) {
     }
     const url = searchMsApiUrls();
     const [checked, setChecked] = useState(false);
-    const isSmallScreen = useMediaQuery("(max-width: 1200px)");
-    const isSmallerScreen = useMediaQuery("(max-width:1000px)");
-    const [watchList, setWatchList] = useState("Add to Watchlist");
-    const [isFavourite, setIsFavourite] = useState(false);
 
+    const isSmallScreen = useMediaQuery('(max-width: 1200px)');
+    const isSmallerScreen = useMediaQuery('(max-width:1000px)');
+    const [watchList,setWatchList] = useState("Add to Watchlist");
+    const [isFavourite,setIsFavourite] = useState(false);
     const addToWatchList = async () => {
         try {
             const response = await fetch(`${url}/user/watchlist/${user_id}`, {
@@ -137,6 +138,10 @@ export default function MovieContent({ movieData }: { movieData: any }) {
             );
         }
     };
+
+    useEffect(()=>{
+        setFirstRender(false);
+    },[])
 
     useEffect(() => {
         if (checked) addToWatchList();

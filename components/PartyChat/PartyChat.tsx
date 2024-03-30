@@ -3,7 +3,6 @@ import { useState } from 'react';
 import ChatTab from './ChatTab';
 import SettingsTab from './SettingsTab';
 import style from './PartyChat.module.css';
-import usePlayerStore from '@/Stores/PlayerStore';
 
 export default function PartyChat({ ws }: { ws: WebSocket }) {
   const [activeTab, setActiveTab] = useState(0);

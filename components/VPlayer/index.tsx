@@ -18,12 +18,13 @@ import { useHover } from "@mantine/hooks";
 import usePlayerStore from "@/Stores/PlayerStore";
 import useForwardRef from "@/utils/useForwardRef";
 import { createStyles } from "@mantine/styles";
+import Modal from "../Modal";
 
 type Props = { ws: WebSocket; videoSrc: string; Mp4: boolean; tier: string };
 
 const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
     ({ ws, videoSrc, Mp4, tier }: Props, ref) => {
-        const {classes} = useStyles();
+        const [show, setShow] = useState(false);
         const loaderRef = useRef<HTMLDivElement>(null);
         const playerContainerRef = useRef<HTMLDivElement>(null);
         // const playerRef = useRef<HTMLVideoElement>(null);
@@ -568,7 +569,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
                                 }}
                             >
                                 <button
-                                    onClick={() => toggleChat(undefined)}
+                                    onClick={() => setShow(!show)}
                                     className={style.partyWatch}
                                 >
                                     <Image
@@ -693,50 +694,9 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
                         </div>
                     </div>
                 </div>
-                <div className={classes.modal}>
-                    <div className={classes.modalContent}>
-                        <button className={classes.button}>
-                            Create Room
-                        </button>
-                        <button className={classes.button}>
-                            Join Room
-                        </button>
-                    </div>
-                </div>
+                {show && <Modal />}
             </div>
         );
     },
 );
 export default VideoPlayer;
-
-const useStyles = createStyles((theme) => ({
-    modal: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '100vw',
-      height: '100vh',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dark background
-      zIndex: 10, // Ensure modal is on top
-    },
-    modalContent: {
-      backgroundColor: '#212121', // Dark modal content
-    //   padding: theme.spacing(4),
-      borderRadius: 4,
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between', // Buttons on opposite sides
-    },
-    button: {
-    //   padding: theme.spacing(2),
-      backgroundColor: '#424242', // Button color
-      color: '#fff', // Button text color
-      border: 'none',
-      borderRadius: 4,
-      cursor: 'pointer',
-    },
-  }));
-  

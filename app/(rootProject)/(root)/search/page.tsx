@@ -120,7 +120,7 @@ export default function Search() {
     useEffect(() => {
         if (!notFound) setLoaded(false);
     }, [notFound])
-    
+
     useEffect(() => {
         if (searchParams.get("genre")) {
             fetchData(search!, {
@@ -174,7 +174,7 @@ export default function Search() {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            userId: "660076dfcc09ff618602257f",
+                            userId: user._id,
                             filters,
                         }),
                     },
@@ -222,7 +222,7 @@ export default function Search() {
                                 "Content-Type": "application/json",
                             },
                             body: JSON.stringify({
-                                userId: "660076dfcc09ff618602257f",
+                                userId: user._id,
                             }),
                         },
                     )
@@ -232,6 +232,7 @@ export default function Search() {
                 Mixpanel.track("Search Movie", { query: search });
                 if (user._id) {
                     Mixpanel.people.append(user._id, "Search History", {
+                    // @ts-ignore
                         Query: search,
                         Timestamp: new Date().toISOString(),
                     });

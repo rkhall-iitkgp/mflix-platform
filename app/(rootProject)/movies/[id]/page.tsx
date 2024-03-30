@@ -128,8 +128,8 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
 
             if (user._id) {
                 Mixpanel.identify(user._id);
-                Mixpanel.people.increment(user._id, "Total Movies Watched", 1);
-                Mixpanel.people.append(user._id, "Watch History", {
+                Mixpanel.people.increment("Total Movies Watched", 1);
+                Mixpanel.people.append("Watch History", {
                     movie_title: res.result.title,
                     Timestamp: new Date().toISOString(),
                 });
@@ -173,7 +173,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     }, []);
 
     useEffect(() => {
-        let socket = new WebSocket("ws://127.0.0.1:5000");
+        let socket = new WebSocket(`ws://${process.env.NEXT_PUBLIC_STREAMING_IP}`);
         setWS(socket);
 
         socket.onopen = () => {
@@ -288,7 +288,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
 
             {/* Streaming Section */}
             {/* <Group className={classes.streaming}>
-                
+
             </Group> */}
             <div style={{ display: "flex", width: "100%" }}>
                 <VideoPlayer

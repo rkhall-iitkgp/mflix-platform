@@ -236,8 +236,12 @@ const UserDetails = ({ opened }: any) => {
       email: state.email,
       phoneNo: state.phone,
       dob: state.dob.substring(0, 10),
+      plan: state.subscriptionTier.tier.name === '' ||
+state.subscriptionTier.tier.name === null ? 'Free' :
+state.subscriptionTier.tier.name,
+      
       // plan: userDetails.subscriptionTier.tier.name
-      plan: state.subscriptionTier.tier.name,
+      // plan: state.subscriptionTier.tier.name,
     };
     console.log(userDetails);
     setUserInfo(UserDetails);

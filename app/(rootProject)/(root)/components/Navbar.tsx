@@ -153,7 +153,6 @@ export default function Navbar() {
     },
     link: {
       padding: '1rem',
-      marginLeft: '1.5rem',
       marginRight: '1.5rem',
       textDecoration: 'none',
       fontSize: '1.25rem',
@@ -164,8 +163,8 @@ export default function Navbar() {
       alignItems: 'center',
     },
     premium: {
-      marginRight: '1.5rem',
       height: '2.3rem',
+      marginRight:'-2rem',
       width: '7rem',
       display: 'flex',
       transition: '0.3s',
@@ -212,7 +211,7 @@ export default function Navbar() {
       padding: '0',
       display: 'flex',
       height: '3.5rem',
-      width: '8rem',
+      width: '9rem',
       span: {
         marginTop: '0.3rem',
         fontSize: '1.2rem',
@@ -396,7 +395,7 @@ export default function Navbar() {
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Languages</p>
                   <div className={classes.category}>
-                  <p>
+                    <p>
                       <Link href="/search?language=English">English</Link>
                     </p>
                     <p>

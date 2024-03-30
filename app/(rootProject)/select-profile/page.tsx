@@ -3,15 +3,18 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { createStyles } from '@mantine/styles';
-import { useMediaQuery } from '@mantine/hooks';
+import { useLogger, useMediaQuery } from '@mantine/hooks';
 import useLoginStore from '@/Stores/LoginStore';
 import searchMsApiUrls from '@/app/(rootProject)/api/searchMsApi';
+import useUserStore from '@/Stores/UserStore';
 
 import avatarLogo1 from '@/assets/icons/profile1.svg';
 import avatarLogo2 from '@/assets/icons/profile2.svg';
 import avatarLogo3 from '@/assets/icons/profile3.svg';
 import addMoreLogo from '@/assets/icons/add-more.svg';
 import themeOptions from '@/assets/themes/colors';
+import { useRouter } from 'next/navigation';
+
 
 const headingFZ = '5vw';
 const url = searchMsApiUrls();
@@ -21,14 +24,20 @@ interface Profile {
   caption: string;
   link: string;
   image: string;
+  index: number;
 }
+
+// interface newProfile {
+//     activeUsr: string;
+// }
 
 const ImageArray = [avatarLogo1, avatarLogo2, avatarLogo3];
 
 const SelectProfile: React.FC = () => {
   const [currentProfile, setCurrentProfile] = useState([]);
   const [changedType, setChangedType] = useState([]);
-  const state = useLoginStore.getState();
+  const state = useUserStore.getState();
+  const router = useRouter();
 
   useEffect(() => {
     const getActiveUsers = async () => {
@@ -55,7 +64,7 @@ const SelectProfile: React.FC = () => {
       console.log('userprofiles', jsonData.account.userProfiles);
     };
     getActiveUsers();
-  }, []);
+  }, []);   
 
   useEffect(() => {
     ConvertType();
@@ -90,6 +99,7 @@ const SelectProfile: React.FC = () => {
         caption: item.name || `Profile ${index + 1}`,
         link: '/',
         image: ImageArray[0],
+        index:index,
       };
     });
     transformedArray.push({
@@ -97,6 +107,7 @@ const SelectProfile: React.FC = () => {
       caption: 'Add New',
       link: 'null',
       image: addMoreLogo,
+      index: -1,
     });
     console.log('transforemedArray:', transformedArray);
     setChangedType(transformedArray);
@@ -107,13 +118,24 @@ const SelectProfile: React.FC = () => {
 
   const { classes } = useStyles();
   const profilesPerRow = 5;
+  const newProfile = {
+    _id: "",
+    name: "",
+    index: 0,
+  }
 
-  const handleProfileClick = (link?: string) => {
-    if (link === 'null') {
+  const handleProfileClick = (profile:any) => {
+    if (profile.link === 'null') {
       handleAddProfile();
-    } else if (link) {
-    
-      window.location.href = link;
+    } else if (profile.link) {
+        newProfile._id = profile.id
+        newProfile.name = profile.name
+        newProfile.index = profile.index 
+        state.updateUser(
+            newProfile,
+        );
+        console.log(newProfile);
+        router.push('/');
     }
   };
 
@@ -141,7 +163,7 @@ const SelectProfile: React.FC = () => {
             <div
               key={index}
               className={classes.itemStyle}
-              onClick={() => handleProfileClick(profile.link)}
+              onClick={() => handleProfileClick(profile)}
             >
               <Image
                 className={classes.avatarStyle}

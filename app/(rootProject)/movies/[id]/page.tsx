@@ -14,6 +14,7 @@ import MovieContent from '@/components/MovieDetails/MovieContent';
 import VideoPlayer from '@/components/VideoPlayer';
 import { useEffect , useState } from 'react';
 import useLoginStore from '@/Stores/LoginStore';
+import useUserStore from '@/Stores/UserStore';
 import Movies from '@/assets/icons/movies.svg';
 import Section from '@/app/(rootProject)/(root)/components/Section';
 
@@ -23,7 +24,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     const [movieData,setMovieData] = useState({});
     const [similarMoviesData,setSimilarMoviesData] = useState([]);
     const state = useLoginStore.getState();
-    console.log(state)
+    // console.log(state)
     useEffect(()=>{
         const id = params.id;
         // const user_id = state.userProfiles[0]._id;

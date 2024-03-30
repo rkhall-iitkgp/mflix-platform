@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Trending from './components/Trending';
-import HeroSection from './components/HeroSection';
+import HeroSection from '@/app/(rootProject)/(root)/components/HeroSection'
 import Trend from '@/assets/icons/trends.svg';
 import MyListIcon from '@/assets/icons/my-list.svg';
 import AwardIcon from '@/assets/icons/award.svg';
@@ -33,8 +33,12 @@ export default function Home() {
   const [TrendingMovies, setTrendingMovies] = useState<any[]>([]);
   const [Award, setAward] = useState<any[]>([]);
   const [MyList, setMyList] = useState<any[]>([]);
-  const id = useLoginStore((state) => state._id);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   useEffect(() => {
+    const userLoggedIn = checkLoginStatus();
+    setIsLoggedIn(userLoggedIn);
+
     fetch(
       process.env.NEXT_PUBLIC_BASE_URL +
         '/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=movie',
@@ -68,16 +72,22 @@ export default function Home() {
 
     return () => {};
   }, []);
-  useEffect(() => {
-    if (id) {
-      fetch(process.env.NEXT_PUBLIC_BASE_URL + '/user/watchlist/' + id, { method: 'POST' })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log('data', data);
-          setMyList(data.results);
-        });
-    }
-  }, [id]);
+  // useEffect(() => {
+  //   if (id) {
+  //     fetch(process.env.NEXT_PUBLIC_BASE_URL + '/user/watchlist/' + id, { method: 'POST' })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log('data', data);
+  //         setMyList(data.results);
+  //       });
+  //   }
+  // }, [id]);
+
+  const checkLoginStatus = () => {
+    const user = localStorage.getItem('user');
+    if(user) return true;
+    return false;
+  };
 
   return (
     <>
@@ -88,7 +98,8 @@ export default function Home() {
         <div className={classes.backgroundOverlay}></div>
         <Section title={'Trending'} image={Trend} movieData={TrendingMovies || []} />
         <Section title={'Award Winniing Films'} image={AwardIcon} movieData={Award || []} />
-        {id && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
+        {isLoggedIn && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
+        {/* {id && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />} */}
       </div>
     </>
   );

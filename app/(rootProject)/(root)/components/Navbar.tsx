@@ -21,8 +21,6 @@ import {
 
 import useLoginStore from '@/Stores/LoginStore';
 
-
-
 export default function Navbar() {
   const path = usePathname();
   const [input, setInput] = React.useState('');

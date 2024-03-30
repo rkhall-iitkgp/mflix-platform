@@ -70,7 +70,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
           ref={ref}
           styles={{
             root: {
-                minWidth: '400px',
+                minWidth: '600px',
                 borderRadius: '20px',
                 transition: 'all 0.5s',
                 transform: hovered ? 'scale(1.02)' : 'scale(1)',
@@ -108,8 +108,8 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                     {loading ?
                     <Loader />
                     :
-                    <Stack ml="6%" gap="xs" mr="lg">
-                        <Text fz={themeOptions.fontSize.l}>{title}</Text>
+                    <Stack ml="3vw" gap="xs" mr="lg">
+                        <Text fz={themeOptions.fontSize.l} w="max(25vw, 400px)">{title}</Text>
                         <Group gap="6%" w="90%" grow preventGrowOverflow={false}>
                             {genres?.map((e, i) =>
                                 <Paper
@@ -131,7 +131,6 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                                   component={NextImage}
                                   alt="imdb"
                                   h={17}
-                                  unoptimized
                                 />
                                 <Text fz={themeOptions.fontSize.xs}>{imdb.rating} / 10</Text>
                             </Group>
@@ -141,7 +140,6 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                                   component={NextImage}
                                   alt="tomato"
                                   h={17}
-                                  unoptimized
                                 />
                                 <Text fz={themeOptions.fontSize.xs}>
                                     {tomatoes?.viewer?.meter ? tomatoes?.viewer?.meter : 75}%

@@ -40,13 +40,34 @@ export default function Home() {
     setIsLoggedIn(userLoggedIn);
 
     fetch(
-      'https://971edtce1a.execute-api.ap-south-1.amazonaws.com/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=',
+      process.env.NEXT_PUBLIC_BASE_URL +
+        '/search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=movie',
       { method: 'POST' }
     )
       .then((res) => res.json())
       .then((data) => {
         console.log('data', data);
         setTrendingMovies(data.results);
+      });
+
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/movies/awards', { method: 'GET' })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data', data);
+        const newdata = data.results.filter((item: any) => item.awards.wins > 0);
+        console.log('newdata', newdata);
+        const newdatawithawards = newdata.map((item: any) => {
+          return {
+            ...item,
+            award: item.awards.wins,
+            text: item.awards.text,
+          };
+        });
+        console.log('newdatawithawards', newdatawithawards);
+        const sortedData = newdatawithawards.sort((a: any, b: any) => a.award - b.award);
+        console.log('sortedData', sortedData);
+
+        setAward(sortedData);
       });
 
     return () => {};
@@ -78,6 +99,7 @@ export default function Home() {
         <Section title={'Trending'} image={Trend} movieData={TrendingMovies || []} />
         <Section title={'Award Winniing Films'} image={AwardIcon} movieData={Award || []} />
         {isLoggedIn && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
+        {/* {id && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />} */}
       </div>
     </>
   );

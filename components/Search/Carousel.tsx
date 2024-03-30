@@ -45,7 +45,7 @@ const Carousel: React.FC<CarouselProps> = ({ children, nextPage }) => {
     return (
         <Group align="center" wrap="nowrap" ref={ref} maw="calc(100vw - 10vw)">
             <ScrollArea viewportRef={viewport} styles={{ scrollbar: { display: 'none', width: 'none' } }}>
-                <Group wrap="nowrap" gap="4rem" align="flex-start">
+                <Group wrap="nowrap" gap="2rem" align="flex-start">
                     {children}
                 </Group>
             </ScrollArea>

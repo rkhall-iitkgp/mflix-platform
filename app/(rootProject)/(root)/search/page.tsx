@@ -88,27 +88,31 @@ export default function Search() {
     const [page, setPage] = useState<number>(1);
     const [loaded, setLoaded] = useState<boolean>(false);
     const [hasNext, setHasNext] = useState(true);
+    const [filters, setFilters] = useState<any>({});
     const nextPage = () => {
         if (hasNext) setPage(page+1);
         console.log(page);
     }
 
     useEffect(() => {
-        if (searchParams.get("genre")) {
-            fetchData(search!, {
-                genres: [searchParams.get("genre")!.charAt(0).toUpperCase() + searchParams.get("genre")!.slice(1)],
-            });
-        }
-        else if (searchParams.get("language")) {
-            fetchData(search!, {
-                languages: [searchParams.get("language")!.charAt(0).toUpperCase() + searchParams.get("language")!.slice(1)],
-            });
-        }
-    }, [searchParams])
-
-    useEffect(() => {
         if (page >= 2) getData(page);
     }, [page]);
+
+    useEffect(() => {
+        if (!notFound) setLoaded(false);
+    }, [notFound])
+    // useEffect(() => {
+    //     if (searchParams.get("genre")) {
+    //         fetchData(search!, {
+    //             genres: [searchParams.get("genre")!.charAt(0).toUpperCase() + searchParams.get("genre")!.slice(1)],
+    //         });
+    //     }
+    //     else if (searchParams.get("language")) {
+    //         fetchData(search!, {
+    //             languages: [searchParams.get("language")!.charAt(0).toUpperCase() + searchParams.get("language")!.slice(1)],
+    //         });
+    //     }
+    // }, [searchParams])
 
     const getData = async (page: number) => {
         const res = await (await fetch(
@@ -120,6 +124,7 @@ export default function Search() {
                   },
                 body: JSON.stringify({
                     userId: useLoginStore.getState()._id,
+                    filters
                 }),
             }
         )).json();
@@ -131,6 +136,49 @@ export default function Search() {
     // const getFavourite = () => false;
     const makeGroup = (arr: Array<any>, n: number) =>
         arr.length % n === 0 ? arr : arr.concat(Array(n - (arr.length % n)).fill(null));
+
+    const fetchData = async (search: string, filters: any = {}) => {
+        setLoaded(false);
+        setFilters(filters);
+        const data: Array<MovieProps> = [];
+        for (let page = 0; page < 2; page++) {
+            const res = await (await fetch(
+                `${searchMsApiUrls()}search/${search.trim().split(' ').length >= 5 ? 'semantic' : 'fuzzy'}?query=${search}&page=${page + 1}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                      },
+                    body: JSON.stringify({
+                        userId: '660076dfcc09ff618602257f',
+                        filters
+                    }),
+                }
+            )).json();
+            if (!res.results) return setNotFound(true);
+            data.push(...res.results);
+            if (!res.hasNext) break;
+        }
+        setNotFound(false);
+        console.log("data", data);
+        if (data.length <= 4) {
+            setTopRes(data)
+            setRecommended([]);
+            setMoreResults([]);
+        }
+        else {
+            setTopRes(data.slice(0, 4));
+            if (data.length >= 14) {
+                setRecommended(data.slice(14));
+                setMoreResults(data.slice(4, 14));
+            } else {
+                setRecommended([]);
+                setMoreResults(data.slice(4));
+            }
+        }
+        console.log('here');
+        setLoaded((prev) => true);
+    };
 
     useEffect(() => {
         if (!search) return;
@@ -193,9 +241,9 @@ export default function Search() {
     }, []);
 
     return notFound ?
-    <Stack h="100vh" c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
+    <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
 		<div className={classes.bg}></div>
-		<Filter />
+		<Filter fetchData={fetchData}/>
         <NotFound search={search} />
     </Stack>
     :
@@ -219,10 +267,10 @@ export default function Search() {
                 :
                 <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
                     <Group style={{ rowGap: '30px' }} grow gap="6vw" preventGrowOverflow={false} align="stretch">
-                        <MovieBannerSkeleton />
-                        <MovieBannerSkeleton />
-                        <MovieBannerSkeleton />
-                        <MovieBannerSkeleton />
+                        <MovieBannerSkeleton single={single} />
+                        <MovieBannerSkeleton single={single} />
+                        <MovieBannerSkeleton single={single} />
+                        <MovieBannerSkeleton single={single} />
                     </Group>
                 </Stack>
                 }

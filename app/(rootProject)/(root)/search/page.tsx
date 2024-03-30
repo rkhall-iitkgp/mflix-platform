@@ -125,7 +125,7 @@ export default function Search() {
                       },
                     body: JSON.stringify({
                         userId: '660076dfcc09ff618602257f',
-                        filters: JSON.stringify(filters),
+                        filters
                     }),
                 }
             )).json();
@@ -133,7 +133,7 @@ export default function Search() {
             data.push(...res.results);
             if (!res.hasNext) break;
         }
-        console.log(data);
+        console.log("data", data);
         setTopRes(data.slice(0, 4));
         if (data.length >= 14) {
             setRecommended(data.slice(14));

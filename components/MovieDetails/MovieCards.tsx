@@ -6,6 +6,7 @@ import Tomato from '@/assets/icons/tomato.png';
 import { createStyles } from '@mantine/styles';
 import { useHover } from '@mantine/hooks';
 import themeOptions from '@/utils/colors';
+import Link from 'next/link';
 
 const useStyles = createStyles(() => ({
   containerStyles: {
@@ -101,41 +102,49 @@ export default function MovieCard({ data }: { data: any }) {
   const { classes, cx } = useStyles();
   const { hovered, ref } = useHover();
   return (
-    <div className={cx(classes.containerStyles, hovered && classes.Hovered)} ref={ref}>
-      {/* <div className={classes.heartContainerStyles}>
+    <Link href={`/movies/${data?._id}`}>
+      <div className={cx(classes.containerStyles, hovered && classes.Hovered)} ref={ref}>
+        {/* <div className={classes.heartContainerStyles}>
         <Image src={Heart} width={30} height={30} alt="fav" className={classes.heartImageStyles} />
       </div> */}
-      <Image
-        src={data?.poster || '/background.png'}
-        alt="poster"
-        width={250}
-        height={370}
-        className={classes.posterStyles}
-      />
-      <div style={{ padding: '10px' }}>
-        <span className={classes.countryStyles}>
-          {data?.countries[0]},{data?.released?.substr(0, 4) || 2023}
-        </span>
-        <h3 className={classes.titleStyles}>{data?.title}</h3>
-        <div className={classes.ratingContainerStyles}>
-          <div className={classes.ratingItemStyles}>
-            <Image src={Imdb} width={35} height={17} alt="imdb" className={classes.img} />
-            <span className={classes.rating}>{data?.imdb.rating}/10</span>
+        <Image
+          src={data?.poster || '/background.png'}
+          alt="poster"
+          width={250}
+          height={370}
+          className={classes.posterStyles}
+        />
+        <div style={{ padding: '10px' }}>
+          <span className={classes.countryStyles}>
+            {data?.countries[0]},{data?.released?.substr(0, 4) || 2023}
+          </span>
+          <h3 className={classes.titleStyles}>{data?.title}</h3>
+          <div className={classes.ratingContainerStyles}>
+            <div className={classes.ratingItemStyles}>
+              <Image src={Imdb} width={35} height={17} alt="imdb" className={classes.img} />
+              <span className={classes.rating}>{data?.imdb.rating}/10</span>
+            </div>
+            <div className={classes.ratingItemStyles}>
+              <Image
+                src={Tomato}
+                alt="tomato"
+                height={17}
+                width={16}
+                className={classes.tomatoImg}
+              />
+              <span className={classes.tomatoScore}>{data?.tomatoes?.viewer.rating}/5</span>
+            </div>
           </div>
-          <div className={classes.ratingItemStyles}>
-            <Image src={Tomato} alt="tomato" height={17} width={16} className={classes.tomatoImg} />
-            <span className={classes.tomatoScore}>{data?.tomatoes?.viewer.rating}/5</span>
+          <div className={classes.genreStyles}>
+            {data?.genres?.map((genre: any, i: number) => (
+              <>
+                <span>{genre}</span>
+                {i !== data?.genres.length - 1 && <span>, </span>}
+              </>
+            ))}
           </div>
-        </div>
-        <div className={classes.genreStyles}>
-          {data?.genres?.map((genre: any, i: number) => (
-            <>
-              <span>{genre}</span>
-              {i !== data?.genres.length - 1 && <span>, </span>}
-            </>
-          ))}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

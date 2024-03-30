@@ -46,25 +46,25 @@ export default function Home() {
         setTrendingMovies(data.results);
       });
 
-    // fetch(process.env.NEXT_PUBLIC_BASE_URL + '/movies/awards', { method: 'GET' })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log('data', data);
-    //     const newdata = data.result.filter((item: any) => item.awards.wins > 0);
-    //     console.log('newdata', newdata);
-    //     const newdatawithawards = newdata.map((item: any) => {
-    //       return {
-    //         ...item,
-    //         award: item.awards.wins,
-    //         text: item.awards.text,
-    //       };
-    //     });
-    //     console.log('newdatawithawards', newdatawithawards);
-    //     const sortedData = newdatawithawards.sort((a: any, b: any) => a.award - b.award);
-    //     console.log('sortedData', sortedData);
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/movies/awards', { method: 'GET' })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data', data);
+        const newdata = data.results.filter((item: any) => item.awards.wins > 0);
+        console.log('newdata', newdata);
+        const newdatawithawards = newdata.map((item: any) => {
+          return {
+            ...item,
+            award: item.awards.wins,
+            text: item.awards.text,
+          };
+        });
+        console.log('newdatawithawards', newdatawithawards);
+        const sortedData = newdatawithawards.sort((a: any, b: any) => a.award - b.award);
+        console.log('sortedData', sortedData);
 
-    //     setAward(sortedData);
-    //   });
+        setAward(sortedData);
+      });
 
     return () => {};
   }, []);

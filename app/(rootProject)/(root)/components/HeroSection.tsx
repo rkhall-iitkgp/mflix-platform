@@ -13,6 +13,7 @@ import { memo } from 'react';
 import { ScrollToPlugin } from 'gsap/all';
 import { useMediaQuery } from '@mantine/hooks';
 import { em } from '@mantine/core';
+import useLoginStore from '@/Stores/LoginStore';
 gsap.registerPlugin(ScrollToPlugin);
 const HeroSection = () => {
   console.log('rendered');
@@ -20,8 +21,10 @@ const HeroSection = () => {
   const [input, setInput] = React.useState('' as string);
   const [showSearchSection, setShowSearchSection] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [searchHistory, setSearchHistory] = useState([]);
   const flexRef = useRef(null);
   const isMobile = useMediaQuery(`(max-width: ${1250}px)`);
+  const id = useLoginStore((state) => state._id);
   console.log(flexRef);
   useEffect(() => {
     const tl = gsap.timeline({ paused: true });
@@ -46,6 +49,16 @@ const HeroSection = () => {
       tl.kill();
     };
   }, [isTyping]);
+  useEffect(() => {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + '/user/history/' + id, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data', data);
+        setSearchHistory(data);
+      });
+  }, [id]);
   const handleTyping = (typing: string) => {
     console.log('func called');
     setIsTyping(typing !== '');
@@ -85,11 +98,12 @@ const HeroSection = () => {
           </p>
         </div>
         <div className={classes.rightSection} style={{ display: `${input ? 'none' : 'flex'}` }}>
-          <p className={classes.p}>Recent Searches:</p>
+          <p className={classes.p}>Recently Watched:</p>
           <div className={classes.movies}>
-            <MovieCard />
-            <MovieCard />
-            <MovieCard />
+            {searchHistory.map((movie: any) => (
+              <MovieCard movie={movie.movie} />
+            ))}
+            {searchHistory.length === 0 && <p>No recent Watch History</p>}
           </div>
         </div>
         <div
@@ -124,15 +138,21 @@ const HeroSection = () => {
   );
 };
 
-const MovieCard = () => {
+const MovieCard = ({ movie }: { movie: any }) => {
   const { classes, cx } = useStyles();
+  console.log('movie', movie);
   return (
     <div className={cx(classes.movieCard)}>
-      <Image src={Poster} alt="poster" style={{ height: '5.25rem', width: '3.7rem' }} />
+      <Image
+        src={movie?.poster || Poster}
+        // fill
+        alt="poster"
+        style={{ height: '5.25rem', width: '3.7rem' }}
+      />
       <div className={classes.cardDescription}>
-        <h2 className={classes.movieTitle}>{'movie.title'}</h2>
-        <div className={classes.movieGenre}>{'movie.genre'}</div>
-        <span className={classes.movieYear}>Year</span>
+        <h2 className={classes.movieTitle}>{movie?.title || 'Title'}</h2>
+        <div className={classes.movieGenre}>{movie?.genre || 'Genre'}</div>
+        <span className={classes.movieYear}>{movie?.year || 'Year'}</span>
       </div>
     </div>
   );

@@ -359,6 +359,8 @@ const useStyles = createStyles(() => ({
     transition: '0.3s ease',
   },
   movies: {
+    paddingTop: "1rem",
+    paddingBottom: "1rem",
     display: 'flex',
     flexDirection: 'column',
     position: 'absolute',
@@ -377,6 +379,7 @@ const useStyles = createStyles(() => ({
     marginTop: '0.5rem',
   },
   movieCard: {
+    margin: "2rem",
     backgroundColor: '#D9D9D926',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     display: 'flex',

@@ -26,6 +26,11 @@ export default withBundleAnalyzer({
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: '*.amazonaws.com',
+        port: '',
+      },
     ],
   },
 });

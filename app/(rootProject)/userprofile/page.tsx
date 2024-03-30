@@ -320,6 +320,7 @@ import History from './history';
 import Favorites from './favourites';
 import WatchList from './watchlist';
 import useLoginStore from '@/Stores/LoginStore';
+import useUserStore from '@/Stores/UserStore';
 import searchMsApiUrls from '../api/searchMsApi';
 import { useRouter } from 'next/navigation';
 
@@ -356,6 +357,7 @@ export default function UserProfile() {
       console.log('logout successful');
       localStorage.clear();
       useLoginStore.getState().clearState();
+      useUserStore.getState().clearState();
       console.log(useLoginStore.getState().clearState());
       router.push('/login');
     }

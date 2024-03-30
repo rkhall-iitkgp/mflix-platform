@@ -125,7 +125,7 @@ export default function Register(props: any) {
     validate: {
       name: (val) => (!val ? 'Required' : null),
       dob: (val) => (!val ? 'Required' : null),
-      phone: (val) => (val.toString().length < 10 ? 'Invalid Phone No.' : null),
+      phone: (val) => (val.toString().length <= 10 ? 'Invalid Phone No.' : null),
       email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
       newPassword: (val) =>
         val.length <= 5 ? 'Password should include at least 6 characters' : null,

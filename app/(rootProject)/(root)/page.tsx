@@ -90,7 +90,7 @@ export default function Home() {
         <div className={classes.background}></div>
         <div className={classes.backgroundOverlay}></div>
         <Section title={'Trending'} image={Trend} movieData={TrendingMovies || []} />
-        <Section title={'Award Winniing Films'} image={AwardIcon} movieData={Award || []} />
+        <Section title={'Award Winning Films'} image={AwardIcon} movieData={Award || []} />
         {isLoggedIn && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
       </div>
     </>

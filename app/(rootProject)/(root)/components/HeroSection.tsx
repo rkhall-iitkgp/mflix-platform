@@ -7,8 +7,6 @@ import { useState, useEffect, useRef } from 'react';
 import BgImage from '@/assets/images/bg-home.jpeg';
 import { createStyles } from '@mantine/styles';
 import Poster from '@/assets/images/poster1.jpg';
-import Vector1 from '@/assets/images/vect-1.svg';
-import Vector2 from '@/assets/images/vect-2.svg';
 import noImage from '@/assets/images/no-image.jpg';
 import { ScrollToPlugin } from 'gsap/all';
 import { useMediaQuery } from '@mantine/hooks';
@@ -127,7 +125,7 @@ const HeroSection = () => {
         />
         <div className={classes.HeroImgOverlay}></div>
       </div>
-      <div className={cx(classes.hero)} style={{ gap: `${isTyping ? '0rem' : '4rem'}` }}>
+      <div className={cx(classes.hero)} style={{ gap: `${isTyping ? '0rem' : '4rem'}` , left:"-2%",}}>
         <div
           className={classes.leftSection}
           style={{ marginLeft: `${isTyping ? '0rem' : '0rem'}` }}
@@ -158,7 +156,7 @@ const HeroSection = () => {
                 fontSize: isSmallScreen ? '1.5rem' : '2rem',
                 top: isSmallScreen ? '6%' : '5%',
                 marginBottom: "-22%",
-                right:"10%",
+                right:"16%",
               }}
             >
               Recent Watch History:
@@ -198,10 +196,6 @@ const HeroSection = () => {
           style={{ display: `${!input ? 'none' : 'flex'}` }}
         >
           <div className={classes.flex} id="flex">
-            {/* <div className={classes.flex1}>
-              <Image src={Vector1} alt="vector" id="vec1" />
-              <Image src={Vector2} alt="vector" id="vec2" />
-            </div> */}
             <div
               className={cx(
                 classes.searchRightSection,

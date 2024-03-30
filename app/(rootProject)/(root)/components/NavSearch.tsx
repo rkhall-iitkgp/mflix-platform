@@ -12,9 +12,12 @@ import { useEventListener } from '@mantine/hooks'
 import { TbChairDirector } from 'react-icons/tb';
 import { IoPeople } from 'react-icons/io5';
 import { MdMovie } from 'react-icons/md';
+import themeOptions from '@/utils/colors'
+
 import { FaMicrophone } from 'react-icons/fa6';
 import { useVoice } from '@/components/VoiceSearchButton/UseVoice';
 import { useRouter } from 'next/router';
+
 export default function SearchBar() {
     const [suggestions, setSuggestions] = useState<Array<any>>([]);
     const [input, setInput] = useState<string>('');
@@ -100,7 +103,7 @@ export default function SearchBar() {
       </button>
                 </div>
             </Menu.Target>
-            <Menu.Dropdown>
+            <Menu.Dropdown bg={themeOptions.color.categories}>
                 {suggestions.map((item, index) => (
                     <Menu.Item leftSection={iconMap[item.highlight.path]} key={index} component='a' href={`/search?query=${item.highlight.text}`}>
                         {item.highlight.text}

@@ -92,12 +92,12 @@ export default function Search() {
 
     useEffect(() => {
         if (searchParams.get("genre")) {
-            fetchData(search, {
+            fetchData(search!, {
                 genres: [searchParams.get("genre")!.charAt(0).toUpperCase() + searchParams.get("genre")!.slice(1)],
             });
         }
         else if (searchParams.get("language")) {
-            fetchData(search, {
+            fetchData(search!, {
                 languages: [searchParams.get("language")!.charAt(0).toUpperCase() + searchParams.get("language")!.slice(1)],
             });
         }

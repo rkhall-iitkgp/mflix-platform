@@ -5,7 +5,7 @@ import ListCard from '@/components/ListMovies/index';
 import rArrow from '@/assets/icons/rarrow.svg';
 import { createStyles } from '@mantine/styles';
 
-export default function Trending({similarMoviesData}) {
+export default function Trending({similarMoviesData}: {similarMoviesData: any}) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [showLeftArrow, setShowFirstArrow] = useState(false);
     const [vis, setVis] = useState(false);
@@ -60,7 +60,7 @@ export default function Trending({similarMoviesData}) {
         <section className={classes.sectionStyles}>
             <div ref={scrollRef} className={classes.containerStyles}>
                 <div className={classes.movieDiv}>
-                    <ListCard />
+                    <ListCard movieData={[]} />
                 </div>
                 
                     <Image

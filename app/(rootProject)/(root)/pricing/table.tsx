@@ -23,7 +23,7 @@ const SubscriptionTable = ({ cardPlan }: any) => {
         },
         TableThRestStyles: {
 
-            textAlign: 'center !important', width: '15%', fontSize: '1.1rem '
+            textAlign: 'center', width: '15%', fontSize: '1.1rem '
         },
         FeatureStyles: {
             textAlign: 'left', fontSize: "1.1rem"
@@ -79,10 +79,10 @@ const SubscriptionTable = ({ cardPlan }: any) => {
                 <thead>
                     <TableTr >
                         <TableTh className={classes.TableThFirstStyles}>What You will get</TableTh>
-                        <TableTh className={classes.TableThRestStyles}>Free</TableTh>
-                        <TableTh className={classes.TableThRestStyles}>Basic</TableTh>
-                        <TableTh className={classes.TableThRestStyles}>Premium</TableTh>
-                        <TableTh className={classes.TableThRestStyles}>Family</TableTh>
+                        <TableTh className={classes.TableThRestStyles} style={{textAlign:"center"}}>Free</TableTh>
+                        <TableTh className={classes.TableThRestStyles} style={{textAlign:"center"}} >Basic</TableTh>
+                        <TableTh className={classes.TableThRestStyles} style={{textAlign:"center"}} >Premium</TableTh>
+                        <TableTh className={classes.TableThRestStyles} style={{textAlign:"center"}} >Family</TableTh>
                     </TableTr>
                 </thead>
                 <tbody>

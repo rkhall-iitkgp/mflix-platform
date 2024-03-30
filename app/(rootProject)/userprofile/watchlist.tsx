@@ -92,7 +92,7 @@ export default function WatchList() {
             <div className={classes.WatchListCards}>
                 {movies.map(movie => (
                     // <MovieCard
-                    <MovieCard key={movie.id} movie={movie} />
+                    <MovieCard key={movie.id} data={movie} />
                 ))}
             </div>
         </div>

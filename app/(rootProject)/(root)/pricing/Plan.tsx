@@ -235,7 +235,7 @@ export default function Plan() {
                             onClick={() => handleCardPlan(index)}
                             className={cardPlan[index] ? classes.PlanCardStylesClicked : classes.PlanCardStyles}
                         >
-                            <Box className={classes.PlanNameStyles}>
+                            <Box >
                                 <Text style={{ fontSize: '1.8rem', textAlign: 'center'}} size="xl" fw={700}>
                                     {name}
                                 </Text>

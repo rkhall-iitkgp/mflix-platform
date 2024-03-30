@@ -39,39 +39,25 @@ export default function Otp({ initialValues }: any) {
       return () => clearTimeout(timer); // Cleanup function to clear the timer on unmount or state change
     }
   }, [resendTime]);
-        console.log(initialValues)
-        const base_url = searchMsApiUrls();
-        let res = await fetch(`${base_url}/auth/verifyOTP`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                ...initialValues,
-            }),
-            credentials: 'include'
-        })
-        let jsonData = await res.json();
-        if (!res.ok) {
-            console.log(jsonData.message);
-            // router.push('/verifyotp')
-            setOtpValue("");
-        }
-        //   setLoading(false);
-        else {
-            console.log(jsonData.message);
-            console.log(jsonData)
-            if (initialValues.type == 'register') {
-                useLoginStore.getState().updateUser(jsonData.account);
-                const state = useLoginStore.getState();
-                console.log(state);
-                router.push('/userprofile');
-            } else if (initialValues.type == 'forgot') {
-                router.push('/login')
-            } else if (initialValues.type == 'change') {
-                router.push('/userprofile');
-            }
-        }
+
+  const handleOtp = async () => {
+    console.log(initialValues);
+    const base_url = searchMsApiUrls();
+    let res = await fetch(`${base_url}/auth/verifyOTP`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...initialValues,
+      }),
+      credentials: 'include',
+    });
+    let jsonData = await res.json();
+    if (!res.ok) {
+      console.log(jsonData.message);
+      // router.push('/verifyotp')
+      setOtpValue('');
     }
     //   setLoading(false);
     else {

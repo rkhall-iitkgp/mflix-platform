@@ -109,7 +109,7 @@ export default function Login() {
       const state = useLoginStore.getState();
       console.log(state);
       console.log(local);
-      router.push('/select-profile')
+      router.push('/selectprofile')
     }
 
     // if (!jsonData.account.userProfiles.length) {

@@ -20,7 +20,7 @@ const page = () => {
   const playerRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    let socket = new WebSocket('ws://127.0.0.1:5000');
+    let socket = new WebSocket('ws://971edtce1a.execute-api.ap-south-1.amazonaws.com');
     setWS(socket);
 
     socket.onopen = () => {

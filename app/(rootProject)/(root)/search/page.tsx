@@ -174,7 +174,7 @@ export default function Search() {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            userId: "660076dfcc09ff618602257f",
+                            userId: user._id,
                             filters,
                         }),
                     },
@@ -222,7 +222,7 @@ export default function Search() {
                                 "Content-Type": "application/json",
                             },
                             body: JSON.stringify({
-                                userId: "660076dfcc09ff618602257f",
+                                userId: user._id,
                             }),
                         },
                     )

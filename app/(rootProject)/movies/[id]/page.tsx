@@ -43,7 +43,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     } = usePlayerStore();
     const [ws, setWS] = useState<WebSocket | null>(null);
     const playerRef = useRef<HTMLVideoElement>(null);
-
+    const Usertier = useLoginStore((state) => state.subscriptionTier.tier.tier);
     const styles = createStyles(() => ({
         streaming: {
             width: "100%",
@@ -296,7 +296,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                     ws={ws}
                     videoSrc={videoSrc}
                     Mp4={Mp4}
-                    tier={movieData?.tier}
+                    tier={Usertier}
                 />
                 {activeChat && <PartyChat ws={ws} />}
             </div>

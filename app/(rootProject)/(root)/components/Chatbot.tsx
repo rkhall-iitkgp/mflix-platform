@@ -6,6 +6,8 @@ import { createStyles } from '@mantine/styles'
 import SendIcon from '@/assets/icons/send.svg'
 import DownIcon from '@/assets/icons/down.svg'
 import { useRef } from 'react'
+import { KeyboardEvent } from 'react';
+
 
 export default function Chatbot() {
     const { classes, cx } = styles();
@@ -16,11 +18,11 @@ export default function Chatbot() {
         type: 'sent' | 'received'
     }[]>([]);
 
-    const inputRef = useRef(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     React.useEffect(() => {
         const input = inputRef.current;
         if (input) {
-          const handleKeyPress = (event) => {
+          const handleKeyPress = (event:KeyboardEvent<HTMLInputElement>) => {
             if (event.key === 'Enter' && input.value.trim() !== '') {
               sendMessage();
               event.preventDefault(); // Prevent default form submission

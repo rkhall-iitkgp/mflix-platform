@@ -22,7 +22,6 @@ import searchMsApiUrls from '../api/searchMsApi';
 import useLoginStore from '@/Stores/LoginStore';
 import Image from 'next/image';
 import LeftArrowIcon from '@/assets/icons/leftArrow.svg';
-import { useRouter } from 'next/navigation'
 
 export default function Login() {
   const router = useRouter()

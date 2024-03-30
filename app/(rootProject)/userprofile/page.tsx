@@ -5,13 +5,11 @@
 // import Image from 'next/image';
 // import { Drawer } from '@mantine/core';
 
-
 // import profileIcon from '@/assets/icons/profile.svg';
 // import tabletIcon from '@/assets/icons/tablet.svg';
 // import laptopIcon from '@/assets/icons/laptop.svg';
 // import editIcon from '@/assets/icons/editProfile.svg';
 // import saveIcon from '@/assets/icons/save.svg';
-
 
 // type UserInfo = {
 //     name: string;
@@ -133,7 +131,6 @@
 //         gap: '3vw',
 
 //     },
-
 
 //     userInfoItem: {
 //         display: 'flex',
@@ -270,9 +267,6 @@
 //                     </div>
 //                 </div>
 
-
-
-
 //                 <div className={classes.childStyle}>
 //                     {/* Inner div for user profiles */}
 //                     <div className={classes.flexContainer}>
@@ -307,121 +301,202 @@
 // }
 
 // export default UserProfile;
-"use client"
+'use client';
 import { AppShell, Box, Burger, Container, Divider, Group, Skeleton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 // import { MantineLogo } from '@mantinex/mantine-logo';
 import Navbar from '../(root)/components/Navbar';
 import UserDetails from './userdetails';
 import { Button } from '@mantine/core';
-import { FaHistory } from "react-icons/fa";
-import { CgProfile } from "react-icons/cg";
-import { MdOutlinePlaylistAdd } from "react-icons/md";
+import { FaHistory } from 'react-icons/fa';
+import { CgProfile } from 'react-icons/cg';
+import { MdOutlinePlaylistAdd } from 'react-icons/md';
 import themeOptions from '@/utils/colors';
-import { FaRegHeart } from "react-icons/fa";
-import { GoPencil } from "react-icons/go";
-import { CiPower } from "react-icons/ci";
+import { FaRegHeart } from 'react-icons/fa';
+import { GoPencil } from 'react-icons/go';
+import { CiPower } from 'react-icons/ci';
 import { useState } from 'react';
 import History from './history';
 import Favorites from './favourites';
 import WatchList from './watchlist';
 // import { CIcon } from '@coreui/icons-react';
 // import { cilList, cilHistory } from '@coreui/icons';
-export function UserProfile() {
-    const [opened, { toggle }] = useDisclosure();
-    const [page, setPage] = useState(1);
-    const handleLogout = () => {
-
-    }
-    return (
-        <AppShell
-            header={{ height: 90 }}
-            navbar={{ width: '18%', breakpoint: 'sm', collapsed: { mobile: !opened } }}
-            aside={{ width: 0, breakpoint: 'md', collapsed: { desktop: false, mobile: true } }}
-            padding="md"
-            withBorder={false}
-        >
-            <AppShell.Header style={{ backgroundColor: 'black' }}>
-                {/* <Group h="100%" px="md">
+export default function UserProfile() {
+  const [opened, { toggle }] = useDisclosure();
+  const [page, setPage] = useState(1);
+  const handleLogout = () => {};
+  return (
+    <AppShell
+      header={{ height: 90 }}
+      navbar={{ width: '18%', breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      aside={{ width: 0, breakpoint: 'md', collapsed: { desktop: false, mobile: true } }}
+      padding="md"
+      withBorder={false}
+    >
+      <AppShell.Header style={{ backgroundColor: 'black' }}>
+        {/* <Group h="100%" px="md">
                     <MantineLogo size={30} />
                 </Group> */}
-                <Group h="100%" px="md">
-                    <Navbar />
-                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" style={{ color: 'white', marginTop: '2rem' }} />
-                </Group>
-
-            </AppShell.Header>
-            <AppShell.Navbar style={{
-                backgroundColor: themeOptions.color.button
-                , display: 'flex', flexDirection: 'column', justifyContent: 'space-between'
-            }}>
-                <Box style={{ display: 'flex', flexDirection: 'column', padding: "20px", paddingRight: "0" }}>
-                    <Button variant="filled" style={{
-                        height: '2.8rem'
-                        , backgroundColor: page == 1 ? '#29113B' : themeOptions.color.button,
-                        borderTopLeftRadius: page == 1 ? '1.5rem' : null,
-                        borderBottomLeftRadius: page == 1 ? '1.5rem' : null,
-                        marginLeft: page == 1 ? '8%' : null,
-                        paddingRight: page == 1 ? '17%' : null,
-                        fontSize: themeOptions.fontSize.s
-                    }} onClick={() => { setPage(1) }} > <CgProfile color='white' style={{ marginRight: '0.5rem', fontSize: themeOptions.fontSize.s }} />Profile</Button>
-                    <Button variant="filled" style={{
-                        height: '2.8rem'
-                        , backgroundColor: page == 2 ? '#29113B' : themeOptions.color.button,
-                        borderTopLeftRadius: page == 2 ? '1.5rem' : null,
-                        borderBottomLeftRadius: page == 2 ? '1.5rem' : null,
-                        marginLeft: page == 2 ? '8%' : null,
-                        paddingRight: page == 2 ? '17%' : null,
-                        fontSize: themeOptions.fontSize.s
-                    }} onClick={() => { setPage(2) }}> <FaHistory color='white' style={{ marginRight: '0.4rem', fontSize: themeOptions.fontSize.s }} />History</Button>
-                    <Button variant="filled" style={{
-                        height: '2.8rem'
-                        , backgroundColor: page == 3 ? '#29113B' : themeOptions.color.button,
-                        borderTopLeftRadius: page == 3 ? '1.5rem' : null,
-                        borderBottomLeftRadius: page == 3 ? '1.5rem' : null,
-                        marginLeft: page == 3 ? '8%' : null,
-                        paddingRight: page == 3 ? '17%' : null,
-                        fontSize: themeOptions.fontSize.s
-                    }} onClick={() => { setPage(3) }}> <FaRegHeart color='white' fontSize={themeOptions.fontSize.s} style={{ marginRight: '0.4rem', fontSize: themeOptions.fontSize.s }} />Favorites</Button>
-                    <Button variant="filled" style={{
-                        height: '2.8rem'
-                        , backgroundColor: page == 4 ? '#29113B' : themeOptions.color.button,
-                        borderTopLeftRadius: page == 4 ? '1.5rem' : null,
-                        borderBottomLeftRadius: page == 4 ? '1.5rem' : null,
-                        marginLeft: page == 4 ? '8%' : null,
-                        paddingRight: page == 4 ? '17%' : null,
-                        fontSize: themeOptions.fontSize.s
-                    }} onClick={() => { setPage(4) }} > <MdOutlinePlaylistAdd color='white' fontSize={themeOptions.fontSize.s} style={{ marginRight: '0.4rem', fontSize: themeOptions.fontSize.s }} /> Watchlist</Button>
-                </Box>
-                <Box style={{ display: 'flex', flexDirection: 'column' }}>
-                    <Divider style={{ width: '70%', margin: 'auto' }}></Divider>
-                    <Button variant="filled" style={{
-                        height: '2.8rem'
-                        , backgroundColor: themeOptions.color.button,
-                        fontSize: themeOptions.fontSize.s
-                    }} ><GoPencil style={{ marginRight: '0.5rem', fontSize: themeOptions.fontSize.s }} /><a href="/resetpassword" style={{ color: 'inherit', textDecoration: 'none' }}>Reset Password</a> </Button>
-                    <Button variant="filled" style={{
-                        height: '2.8rem'
-                        , backgroundColor: themeOptions.color.button,
-                        fontSize: themeOptions.fontSize.s
-                    }} onClick={() => { handleLogout() }}  ><CiPower style={{ marginRight: '0.5rem', fontSize: themeOptions.fontSize.s }} />Log out</Button>
-                </Box>
-            </AppShell.Navbar>
-            <AppShell.Main>
-                <Box style={{ height: '100%', width: '100%', marginTop: '-1.2rem' }}>
-                    {
-                        page === 1 ? <UserDetails /> :
-                            page === 2 ? <History /> :
-                                page === 3 ? <Favorites /> :
-                                    page === 4 ? <WatchList /> :
-                                        null
-                    }
-                    {/* {page === 1 ? <UserDetails></UserDetails> : (page === 2 ? <History></History> : null)} */}
-                </Box>
-            </AppShell.Main>
-            {/* <AppShell.Aside p="md">Aside</AppShell.Aside> */}
-            {/* <AppShell.Footer p="md">Footer</AppShell.Footer> */}
-        </AppShell>
-    );
+        <Group h="100%" px="md">
+          <Navbar />
+          <Burger
+            opened={opened}
+            onClick={toggle}
+            hiddenFrom="sm"
+            size="sm"
+            style={{ color: 'white', marginTop: '2rem' }}
+          />
+        </Group>
+      </AppShell.Header>
+      <AppShell.Navbar
+        style={{
+          backgroundColor: themeOptions.color.button,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Box
+          style={{ display: 'flex', flexDirection: 'column', padding: '20px', paddingRight: '0' }}
+        >
+          <Button
+            variant="filled"
+            style={{
+              height: '2.8rem',
+              backgroundColor: page == 1 ? '#29113B' : themeOptions.color.button,
+              borderTopLeftRadius: page == 1 ? '1.5rem' : null,
+              borderBottomLeftRadius: page == 1 ? '1.5rem' : null,
+              marginLeft: page == 1 ? '8%' : null,
+              paddingRight: page == 1 ? '17%' : null,
+              fontSize: themeOptions.fontSize.s,
+            }}
+            onClick={() => {
+              setPage(1);
+            }}
+          >
+            {' '}
+            <CgProfile
+              color="white"
+              style={{ marginRight: '0.5rem', fontSize: themeOptions.fontSize.s }}
+            />
+            Profile
+          </Button>
+          <Button
+            variant="filled"
+            style={{
+              height: '2.8rem',
+              backgroundColor: page == 2 ? '#29113B' : themeOptions.color.button,
+              borderTopLeftRadius: page == 2 ? '1.5rem' : null,
+              borderBottomLeftRadius: page == 2 ? '1.5rem' : null,
+              marginLeft: page == 2 ? '8%' : null,
+              paddingRight: page == 2 ? '17%' : null,
+              fontSize: themeOptions.fontSize.s,
+            }}
+            onClick={() => {
+              setPage(2);
+            }}
+          >
+            {' '}
+            <FaHistory
+              color="white"
+              style={{ marginRight: '0.4rem', fontSize: themeOptions.fontSize.s }}
+            />
+            History
+          </Button>
+          <Button
+            variant="filled"
+            style={{
+              height: '2.8rem',
+              backgroundColor: page == 3 ? '#29113B' : themeOptions.color.button,
+              borderTopLeftRadius: page == 3 ? '1.5rem' : null,
+              borderBottomLeftRadius: page == 3 ? '1.5rem' : null,
+              marginLeft: page == 3 ? '8%' : null,
+              paddingRight: page == 3 ? '17%' : null,
+              fontSize: themeOptions.fontSize.s,
+            }}
+            onClick={() => {
+              setPage(3);
+            }}
+          >
+            {' '}
+            <FaRegHeart
+              color="white"
+              fontSize={themeOptions.fontSize.s}
+              style={{ marginRight: '0.4rem', fontSize: themeOptions.fontSize.s }}
+            />
+            Favorites
+          </Button>
+          <Button
+            variant="filled"
+            style={{
+              height: '2.8rem',
+              backgroundColor: page == 4 ? '#29113B' : themeOptions.color.button,
+              borderTopLeftRadius: page == 4 ? '1.5rem' : null,
+              borderBottomLeftRadius: page == 4 ? '1.5rem' : null,
+              marginLeft: page == 4 ? '8%' : null,
+              paddingRight: page == 4 ? '17%' : null,
+              fontSize: themeOptions.fontSize.s,
+            }}
+            onClick={() => {
+              setPage(4);
+            }}
+          >
+            {' '}
+            <MdOutlinePlaylistAdd
+              color="white"
+              fontSize={themeOptions.fontSize.s}
+              style={{ marginRight: '0.4rem', fontSize: themeOptions.fontSize.s }}
+            />{' '}
+            Watchlist
+          </Button>
+        </Box>
+        <Box style={{ display: 'flex', flexDirection: 'column' }}>
+          <Divider style={{ width: '70%', margin: 'auto' }}></Divider>
+          <Button
+            variant="filled"
+            style={{
+              height: '2.8rem',
+              backgroundColor: themeOptions.color.button,
+              fontSize: themeOptions.fontSize.s,
+            }}
+          >
+            <GoPencil style={{ marginRight: '0.5rem', fontSize: themeOptions.fontSize.s }} />
+            <a href="/resetpassword" style={{ color: 'inherit', textDecoration: 'none' }}>
+              Reset Password
+            </a>{' '}
+          </Button>
+          <Button
+            variant="filled"
+            style={{
+              height: '2.8rem',
+              backgroundColor: themeOptions.color.button,
+              fontSize: themeOptions.fontSize.s,
+            }}
+            onClick={() => {
+              handleLogout();
+            }}
+          >
+            <CiPower style={{ marginRight: '0.5rem', fontSize: themeOptions.fontSize.s }} />
+            Log out
+          </Button>
+        </Box>
+      </AppShell.Navbar>
+      <AppShell.Main>
+        <Box style={{ height: '100%', width: '100%', marginTop: '-1.2rem' }}>
+          {page === 1 ? (
+            <UserDetails />
+          ) : page === 2 ? (
+            <History />
+          ) : page === 3 ? (
+            <Favorites />
+          ) : page === 4 ? (
+            <WatchList />
+          ) : null}
+          {/* {page === 1 ? <UserDetails></UserDetails> : (page === 2 ? <History></History> : null)} */}
+        </Box>
+      </AppShell.Main>
+      {/* <AppShell.Aside p="md">Aside</AppShell.Aside> */}
+      {/* <AppShell.Footer p="md">Footer</AppShell.Footer> */}
+    </AppShell>
+  );
 }
-export default UserProfile;

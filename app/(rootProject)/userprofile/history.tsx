@@ -1,9 +1,7 @@
-
 import React from 'react'
 import { useState, useEffect } from 'react';
 import MovieBanner from './Movie-banner';
 import useUserStore from '@/Stores/UserStore';
-
 const History = () => {
   const [movies, setMovies] = useState([]);
   const getHistory = async () => {
@@ -48,5 +46,4 @@ const History = () => {
     </div>
   )
 }
-
 export default History;

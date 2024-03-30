@@ -8,11 +8,14 @@ export default function RootLayout({ children }: { children: any }) {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
-
-    const userDetailsStirng = localStorage.getItem('user')
-    if (userDetailsStirng) {
-      const userDetails = JSON.parse(userDetailsStirng);
-      useLoginStore.getState().updateUser(userDetails);
+    const userDetailsString = localStorage.getItem('user');
+    if (userDetailsString) {
+      try {
+        const userDetails = JSON.parse(userDetailsString);
+        useLoginStore.getState().updateUser(userDetails);
+      } catch (error) {
+        console.error('Error parsing user details:', error);
+      }
     }
   }, []);
   if (!isMounted) return null;

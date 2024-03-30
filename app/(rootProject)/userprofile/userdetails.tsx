@@ -5,7 +5,8 @@ import { createStyles } from '@mantine/styles';
 import Image from 'next/image';
 import { Button, Drawer } from '@mantine/core';
 import { FaCamera } from 'react-icons/fa';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import profileIcon from '@/assets/icons/profile.svg';
 import tabletIcon from '@/assets/icons/tablet.svg';
 import laptopIcon from '@/assets/icons/laptop.svg';
@@ -15,13 +16,15 @@ import themeOptions from '@/utils/colors';
 import { MdDelete } from 'react-icons/md';
 import useLoginStore from '@/Stores/LoginStore';
 import { useRouter } from 'next/navigation'
+import uIcon from '@/assets/icons/profile1.svg'
+const userIcon = uIcon;
 
 const icon = profileIcon;
 
 type UserInfo = {
   name: string;
   email: string;
-  phoneNo: number;
+  phone: number;
   dob: string;
   plan: string;
 };
@@ -29,7 +32,7 @@ type UserInfo = {
 const initialUserInfo: UserInfo = {
   name: 'John Doe',
   email: 'john@example.com',
-  phoneNo: 1234567890,
+  phone: 1234567890,
   dob: '01/01/1990',
   plan: 'Basic',
 };
@@ -164,6 +167,7 @@ const useStyles = createStyles(() => ({
 }));
 import searchMsApiUrls from '../api/searchMsApi';
 import { Tooltip } from '@mantine/core';
+import { userInfo } from 'os';
 
 const UserDetails = ({ opened }: any) => {
   const router = useRouter()
@@ -175,11 +179,12 @@ const UserDetails = ({ opened }: any) => {
   const [lastValidValues, setLastValidValues] = useState<UserInfo>(initialUserInfo);
   const [manageProfile, setManageProfile] = useState(0);
   const [manageDevice, setManageDevice] = useState(0);
-  const state = useLoginStore.getState();
   const [userDetails, setUserDetails] = useState({});
   const [activeLogins, setActiveLogins] = useState<{ _id: string, loginTime: string }[]>([]);
   const [profiles, setProfiles] = useState<{ name: string; _id: string }[]>([]);
   const [flag1, setFlag1] = useState(true);
+  const state = useLoginStore.getState();
+  const [details, setDetails] = useState(useLoginStore.getState());
 
 
 
@@ -190,7 +195,7 @@ const UserDetails = ({ opened }: any) => {
     // const UserDetails: UserInfo = {
     //     name: state.name,
     //     email: state.email,
-    //     phoneNo: state.phone,
+    //     phone: state.phone,
     //     dob: state.dob.substring(0, 10),
     //     plan: "Basic"
     // };
@@ -202,6 +207,7 @@ const UserDetails = ({ opened }: any) => {
     }
     console.log(state);
     let res = await fetch(`${base_url}/user/details/`, {
+
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -231,15 +237,14 @@ const UserDetails = ({ opened }: any) => {
   }, []);
 
   const getUserDetails = () => {
+    const state = details
     const UserDetails: UserInfo = {
       name: state.name,
       email: state.email,
-      phoneNo: state.phone,
+      phone: state.phone,
       dob: state.dob.substring(0, 10),
-      plan: state.subscriptionTier.tier.name === '' ||
-state.subscriptionTier.tier.name === null ? 'Free' :
-state.subscriptionTier.tier.name,
-      
+      plan: (!state.subscriptionTier || !state.subscriptionTier.tier.name || !state.subscriptionTier.tier.name) ? 'Free' : state.subscriptionTier.tier.name,
+
       // plan: userDetails.subscriptionTier.tier.name
       // plan: state.subscriptionTier.tier.name,
     };
@@ -250,7 +255,10 @@ state.subscriptionTier.tier.name,
 
   useEffect(() => {
     getUserDetails();
-  }, [state]);
+  }, []);
+  useEffect(() => {
+    console.log(userInfo, "Hi", state.subscriptionTier)
+  }, [userInfo]);
 
   const handleEditClick = () => {
     setEditMode(!editMode);
@@ -261,7 +269,41 @@ state.subscriptionTier.tier.name,
   const toggleManageDevice = () => {
     setManageDevice((prevState) => (prevState === 0 ? 1 : 0));
   };
+  const updateDetails = async () => {
+    const data = userInfo;
+    console.log(userInfo);
+    let res = await fetch(`${process.env.NEXT_PUBLIC_URL}/user/details`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        ...data,
+      }),
+    });
 
+    let jsonData = await res.json();
+    if (!res.ok) {
+      console.log(jsonData);
+      toast.error("Unable to edit details!", {
+        position: "top-center"
+      })
+    } else {
+      toast.success("Saved Successfully!", {
+        position: "top-center"
+      })
+      console.log(jsonData);
+      useLoginStore.getState().updateUser(jsonData.account);
+      setDetails(useLoginStore.getState());
+      const jsonDataString = JSON.stringify(jsonData.account);
+      console.log(jsonDataString);
+      if (jsonDataString !== undefined) {
+        localStorage.setItem('user', jsonDataString);
+      }
+    }
+
+  }
   const handleSaveClick = () => {
     let nameValid = true;
     let phoneValid = true;
@@ -273,7 +315,7 @@ state.subscriptionTier.tier.name,
       setNameError('');
     }
 
-    if (!/^\d{10}$/.test(userInfo.phoneNo.toString())) {
+    if (!/^\d{10}$/.test(userInfo.phone.toString())) {
       setPhoneError('Phone number must be 10 digits long and contain only numbers');
       phoneValid = false;
     } else {
@@ -282,7 +324,9 @@ state.subscriptionTier.tier.name,
 
     if (nameValid && phoneValid) {
       setEditMode(false);
-      setLastValidValues({ ...userInfo }); // Update lastValidValues when input is valid
+      setLastValidValues({ ...userInfo });
+      updateDetails(); // Update lastValidValues when input is valid
+
     } else {
       console.log('Input error');
       setUserInfo(lastValidValues); // Revert to last valid values on invalid input
@@ -297,7 +341,7 @@ state.subscriptionTier.tier.name,
 
     if (key === 'name') {
       setNameError('');
-    } else if (key === 'phoneNo') {
+    } else if (key === 'phone') {
       setPhoneError('');
     }
   };
@@ -397,13 +441,17 @@ state.subscriptionTier.tier.name,
             overflow: 'hidden',
             border: '0.2rem solid white',
             position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}
         >
-          <Image src="" alt="Profile" width={150} height={150} />{' '}
+          <Image src={uIcon} alt="Profile" width={180} height={180} />{' '}
           {/* Replace src with actual image URL */}
           {/* Camera Icon */}
         </div>
-        <div
+        {/* <div
           style={{
             position: 'relative',
             left: '45%',
@@ -424,7 +472,7 @@ state.subscriptionTier.tier.name,
           >
             <FaCamera style={{ color: 'white' }} />
           </div>
-        </div>
+        </div> */}
       </div>
       <div
         style={{
@@ -482,12 +530,12 @@ state.subscriptionTier.tier.name,
               }}
             >
               <div style={{ color: 'white', fontWeight: 'bold' }}>{key}:</div>
-              {editMode && (key === 'name' || key === 'phoneNo') ? (
+              {editMode && (key === 'name' || key === 'phone') ? (
                 <>
                   {key === 'name' && nameError && (
                     <div style={{ color: 'red', alignContent: 'right' }}>{nameError}</div>
                   )}
-                  {key === 'phoneNo' && phoneError && (
+                  {key === 'phone' && phoneError && (
                     <div style={{ color: 'red' }}>{phoneError}</div>
                   )}
                   <input
@@ -495,7 +543,7 @@ state.subscriptionTier.tier.name,
                     value={value}
                     onChange={(event) => handleChange(event, key)}
                     onFocus={() => handleFieldFocus(key)}
-                    className={`${classes.userInfoInput} ${editMode && (key === 'name' || key === 'phoneNo') ? classes.editableInput : ''}`}
+                    className={`${classes.userInfoInput} ${editMode && (key === 'name' || key === 'phone') ? classes.editableInput : ''}`}
                   />
                 </>
               ) : (
@@ -549,7 +597,7 @@ state.subscriptionTier.tier.name,
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-
+                width: '100%'
               }}
             >
               {/*profile container*/}
@@ -683,6 +731,7 @@ state.subscriptionTier.tier.name,
           </button>
         </div>
       </div>
+      <ToastContainer style={{ zIndex: "9999999" }} />
     </div >
   );
 };

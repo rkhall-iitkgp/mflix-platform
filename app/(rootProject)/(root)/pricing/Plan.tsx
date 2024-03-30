@@ -184,12 +184,13 @@ export default function Plan() {
     const [isAccordion, setIsAccordion] = useState(false);
     const [pricing, setPricing] = useState<any>([{}])
     const [renewal, setRenewal] = useState(["MONTHLY", "QUATERLY", "ANNUALLY"]);
+    const [multiplier, setMultiplier] = useState([1, 4, 12]);
 
-    const [details, setDetails] = useState([[
+    const [details, setDetails] = useState([
         ['Basic', 0],
         ['Premium', 0],
         ['Family', 0,]
-    ]]);
+    ]);
     const handleToggleAccordion = () => {
         setIsAccordion(!isAccordion);
     };
@@ -342,7 +343,7 @@ export default function Plan() {
                                 </Text>
                             </Box>
                             <Box className={classes.PriceStyles}>
-                                <h1>${price}/</h1>
+                                <h1>${(price as number) * multiplier[time]}/</h1>
                                 <h3 style={{ marginTop: '2rem' }} >{planInner[0] ? 'month' : planInner[1] ? 'quarter' : 'year'}</h3>
                             </Box>
                             <Box className={classes.SubscriptionDetailsStyles}>

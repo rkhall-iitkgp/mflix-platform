@@ -71,7 +71,7 @@ const useStyles = createStyles(() =>
     button: {
         backgroundColor: themeOptions.color.smallBox,
         color: '#fff',
-        padding: '0 10px',
+        padding: '5px 10px',
         borderRadius: '5px',
         border: 'none',
         width: '5rem',

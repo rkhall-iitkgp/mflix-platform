@@ -84,7 +84,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                         width: '100%',
                         borderRadius: '20px',
                         boxShadow: '2px 5px 8px 2px rgba(50, 41, 54, 0.87) inset',
-                        background: 'linear-gradient(0deg, rgba(112, 17, 182, 0.05), rgba(112, 17, 182, 0.05)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
+                        background: 'linear-gradient(0deg, rgba(0, 102, 74,0.05), rgba(0, 102, 74, 0.05)), linear-gradient(321.23deg, rgba(0, 102, 74, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
                     },
                 }}
                 pt="xl"

@@ -8,11 +8,19 @@ import { useState, useEffect } from 'react'
 import searchMsApiUrls from '@/app/api/searchMsApi';
 import { Menu } from '@mantine/core'
 import { useEventListener } from '@mantine/hooks'
-
+import { TbChairDirector } from 'react-icons/tb';
+import { IoPeople } from 'react-icons/io5';
+import { MdMovie } from 'react-icons/md';
 
 export default function SearchBar() {
-    const [suggestions, setSuggestions] = useState<string[]>([]);
+    const [suggestions, setSuggestions] = useState<Array<any>>([]);
     const [input, setInput] = useState<string>('');
+
+    const iconMap = {
+        'title': <MdMovie />,
+        'directors': <TbChairDirector />,
+        'cast': <IoPeople />,
+    }
     
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -28,9 +36,7 @@ export default function SearchBar() {
             const response = await fetch(`${searchMsApiUrls()}search/autocomplete?query=${query}`);
             if (response.ok) {
                 const data = await response.json();
-                // Assuming 'result' is the key containing the array of suggestions
-                const suggestions = data.result.map((item: { title: string }) => item.title);
-                console.log(suggestions);
+                const suggestions = data.result;
                 setSuggestions(suggestions);
             } else {
                 setSuggestions([]);
@@ -48,7 +54,7 @@ export default function SearchBar() {
     };
     
     return (
-        <Menu opened={suggestions.length !== 0} offset={0} width='target' trapFocus={false} closeOnClickOutside={true}>
+        <Menu opened={suggestions.length !== 0} offset={0} width='target' closeOnClickOutside={true}>
             <Menu.Target>
                 <div style={styles.container}>
                     <label htmlFor="search" style={styles.searchLabel}>
@@ -70,8 +76,8 @@ export default function SearchBar() {
             </Menu.Target>
             <Menu.Dropdown>
                 {suggestions.map((item, index) => (
-                    <Menu.Item key={index} component='a' href={`/search?query=${item}`}>
-                        {item}
+                    <Menu.Item leftSection={iconMap[item.highlight.path]} key={index} component='a' href={`/search?query=${item.highlight.text}`}>
+                        {item.highlight.text}
                     </Menu.Item>
             ))}
             </Menu.Dropdown>

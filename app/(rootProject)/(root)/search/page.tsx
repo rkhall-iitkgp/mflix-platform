@@ -1,18 +1,20 @@
 'use client';
 
-import { Group, Stack, Text, Space, Loader, Center, Skeletot, List, Textarea } from '@mantine/core';
+import { Group, Stack, Text, Space, Loader, Center, Skeleton, List, Textarea, Button, UnstyledButton } from '@mantine/core';
 import { createStyles } from '@mantine/styles';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { MovieCardSpace, MovieCard } from '@/components/Search/MovieCard';
 // import MovieCard from '../components/MovieCard'
-import MovieBanner from '@/components/Search/MovieBanner';
+import NotFound from '@/components/Search/NotFound';
+import MovieBanner, { MovieBannerSkeleton } from '@/components/Search/MovieBanner';
 import Carousel from '@/components/Search/Carousel';
 import themeOptions from '@/utils/colors';
 import Filter from '@/components/Search/Filter';
 import searchMsApiUrls from '@/app/api/searchMsApi';
 import noImage from '@/assets/images/no-image.jpg';
 import { useMediaQuery } from '@mantine/hooks';
+import useLoginStore from '@/Stores/LoginStore';
 
 interface MovieProps {
     _id: string;
@@ -53,7 +55,7 @@ const dummyCardMovie = () => ({
     _id: 'ABCDEF123456',
     genres: ['horror', 'thriller', 'action'],
     runtime: 85,
-    poster: noImage,
+    poster: '',
     title: 'Movie',
     released: '"2010-03-10T00:00:00.000Z',
     countries: ['USA'],
@@ -81,7 +83,7 @@ export default function Search() {
 
     const [recommended, setRecommended] = useState<Array<MovieProps>>([]);
     const [notFound, setNotFound] = useState<boolean>(false);
-    const [topRes, setTopRes] = useState<Array<MovieProps>>();
+    const [topRes, setTopRes] = useState<Array<MovieProps>>(initDetails(4));
     const [moreResults, setMoreResults] = useState<Array<MovieProps>>([]);
     const [page, setPage] = useState<number>(1);
     const [loaded, setLoaded] = useState<boolean>(false);
@@ -89,22 +91,23 @@ export default function Search() {
 
     const nextPage = () => {
         if (hasNext) setPage(page+1);
+        console.log(page);
     }
 
     useEffect(() => {
-        if (page !== 1) getData(page);
+        if (page >= 2) getData(page);
     }, [page]);
 
     const getData = async (page: number) => {
         const res = await (await fetch(
-            `${searchMsApiUrls()}search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page}`,
+            `${searchMsApiUrls()}search/${search.trim().split(' ').length >= 5 ? 'semantic' : 'fuzzy'}?query=${search}&page=${page}`,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                   },
                 body: JSON.stringify({
-                    userId: '660076dfcc09ff618602257f',
+                    userId: useLoginStore.getState()._id,
                 }),
             }
         )).json();
@@ -122,9 +125,9 @@ export default function Search() {
         console.log(search.trim().split(' ').length >= 5 ? 'semantic' : 'fuzzy');
         const fetchData = async () => {
             const data: Array<MovieProps> = [];
-            for (let page = 0; page < 2; page++) {
+            for (let index = 0; index < 2; index++) {
                 const res = await (await fetch(
-                    `${searchMsApiUrls()}search/fuzzy?${search.trim().split(' ').length >= 5 ? 'semantic' : 'query'}=${search}&page=${page + 1}`,
+                    `${searchMsApiUrls()}search/${search.trim().split(' ').length >= 5 ? 'semantic' : 'fuzzy'}?query=${search}&page=${index + 1}`,
                     {
                         method: 'POST',
                         headers: {
@@ -135,12 +138,11 @@ export default function Search() {
                         }),
                     }
                 )).json();
-                console.log(res);
                 if (!res.results) return setNotFound(true);
                 data.push(...res.results);
+                setPage(index + 1)
                 if (!res.hasNext) break;
             }
-            console.log(data);
             if (data.length <= 4) {
                 setTopRes(data)
             }
@@ -180,25 +182,9 @@ export default function Search() {
 
     return notFound ?
     <Stack h="100vh" c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
-        <div className={classes.bg}></div>
-        <Filter />
-        <Stack>
-            <Text fz={themeOptions.fontSize.xl} fw={600}>
-                Hmm, we didn't find anything for : {' '}
-                <Text span inherit c={themeOptions.color.textColorNormal}>{search}</Text>
-            </Text>
-            <List withPadding fz={themeOptions.fontSize.md}>
-                <List.Item>Check for typos and spelling errors</List.Item>
-                <List.Item>Try more general keywords</List.Item>
-                <List.Item>The movie that you’re searching for might be removed from our site</List.Item>
-            </List>
-            <Text>
-                If you didn’t find what you were looking for, send us some 
-                <Text span inherit c={themeOptions.color.smallBox}> feedback </Text>
-                to help improve our site
-            </Text>
-            <Textarea placeholder={"Enter your comments here..."} />
-        </Stack>
+		<div className={classes.bg}></div>
+		<Filter />
+        <NotFound search={search} />
     </Stack>
     :
     (
@@ -212,14 +198,21 @@ export default function Search() {
                     <Text span inherit c={themeOptions.color.textColorNormal}>{search}</Text>
                 </Text>
                 {/* <Skeleton visible={!loaded}> */}
-                { topRes ?
+                { loaded ?
                     <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
                         <Group style={{ rowGap: '30px' }} grow gap="6vw" preventGrowOverflow={false} align="stretch">
-                            {topRes.map((e, i) => <MovieBanner single={single} {...e} />)}
+                            {topRes.map((e, i) => <MovieBanner key={i} single={single} {...e} />)}
                         </Group>
                     </Stack>
                 :
-                    null
+                <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
+                    <Group style={{ rowGap: '30px' }} grow gap="6vw" preventGrowOverflow={false} align="stretch">
+                        <MovieBannerSkeleton />
+                        <MovieBannerSkeleton />
+                        <MovieBannerSkeleton />
+                        <MovieBannerSkeleton />
+                    </Group>
+                </Stack>
                 }
                 {/* </Skeleton> */}
             </Stack>

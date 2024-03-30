@@ -26,7 +26,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
-import { Otp } from '../verifyotp/page';
+import Otp from '../verifyotp/page';
 import searchMsApiUrls from '../api/searchMsApi';
 import { useState } from 'react';
 

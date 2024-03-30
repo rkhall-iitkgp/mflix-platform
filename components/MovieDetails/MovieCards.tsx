@@ -7,7 +7,6 @@ import Tomato from '@/assets/icons/tomato.png';
 import { createStyles } from '@mantine/styles';
 import { useHover } from '@mantine/hooks';
 import themeOptions from '@/utils/colors';
-import Link from 'next/link';
 
 const useStyles = createStyles(() => ({
   containerStyles: {

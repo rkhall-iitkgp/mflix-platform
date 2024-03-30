@@ -18,7 +18,7 @@ import {
 import themeOptions from '../../../assets/themes/colors';
 import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
-import { Otp } from '../verifyotp/page';
+import Otp from '../verifyotp/page';
 import exp from 'constants';
 
 const ForgetPassword = (props: any) => {

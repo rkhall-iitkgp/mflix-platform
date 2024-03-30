@@ -215,7 +215,7 @@ const HeroSection = () => {
   );
 };
 
-const MovieCard = ({ props }) => {
+const MovieCard = ({ props }: { props: any }) => {
   const { classes, cx } = useStyles();
 
   return (
@@ -230,7 +230,7 @@ const MovieCard = ({ props }) => {
   );
 };
 
-const Trending = ({ props }) => {
+const Trending = ({ props }: { props: any }) => {
   const { classes, cx } = useStyles();
   const [src, setSrc] = useState<string | StaticImageData>(props.poster);
   return (
@@ -252,7 +252,7 @@ const Trending = ({ props }) => {
   );
 };
 
-const SearchResultCard = ({ props }) => {
+const SearchResultCard = ({ props }: { props: any }) => {
   const { classes, cx } = useStyles();
   return (
     <div className={cx(classes.searchCard)}>

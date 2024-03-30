@@ -26,6 +26,7 @@ type State = {
 }
 type Action = {
     updateUser: (newUser: Partial<State>) => void;
+    clearState: () => void;
 }
 const useLoginStore = create<State & Action>((set) => ({
     _id: "",
@@ -52,6 +53,7 @@ const useLoginStore = create<State & Action>((set) => ({
         }
     },
     updateUser: (newUser) => set(() => ({ ...newUser })),
+    clearState: () => set({}),
 
 }))
 export default useLoginStore;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Grid, Rating } from '@mantine/core';
 import Image from 'next/image';
 import { createStyles } from '@mantine/styles';
@@ -15,6 +15,7 @@ import Deleteicon from '@/assets/delete.svg'
 import Listicon from '@/assets/list.svg'
 import { languages, types, countries, genres } from './filterOptions';
 import { useSearchParams } from 'next/navigation';
+import searchMsApiUrls from '@/app/api/searchMsApi';
 const useStyles = createStyles(() =>
 //const child = getRef('child');
 
@@ -52,7 +53,6 @@ const useStyles = createStyles(() =>
         height: 'fit-content',
         display: 'flex',
         alignItems: 'center',
-        cursor: 'pointer',
         transform: 'translateY(0)', // Move down to its original position
         transition: 'transform 0.5s ease-out, backround 0.5 ease-out',
         zIndex: 200,
@@ -74,9 +74,30 @@ const useStyles = createStyles(() =>
         padding: '0 10px',
         borderRadius: '5px',
         border: 'none',
+        width: '5rem',
+        alignSelf: "flex-end",
         cursor: 'pointer',
         "&:hover": {
             opacity: 0.7
+        }
+    },
+    saveFilters: {
+        backgroundColor: "transparent",
+        color: themeOptions.color.smallBox,
+        border: `1px solid ${themeOptions.color.smallBox}`,
+        borderRadius: "3px"
+    },
+    filterNameInput: {
+        background: "transparent",
+        outline: "none",
+        border: "none",
+        width: "6rem",
+        borderBottom: "1px solid grey"
+    },
+    savedFilter: {
+        cursor: "default",
+        "&:hover": {
+            opacity: 0.8
         }
     }
 })
@@ -87,6 +108,8 @@ export default function Filter({ fetchData }: { fetchData(searchTerm: string, fi
     // const [isToggled, setIsToggled] = useState(false);
     const searchParams = useSearchParams();
     const search = searchParams.get('query');
+    const [filterInput, setFilterInput] = useState<string>("");
+    const [filters, setFilters] = useState<any[]>([]);
 
     const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -101,12 +124,46 @@ export default function Filter({ fetchData }: { fetchData(searchTerm: string, fi
             genres: selectedGenres,
             type: selectedTypes.length === 1 ? selectedTypes[0] : "",
             rating: {
-                low: selectedRatings.map(rating => parseInt(rating.substring(0, 1)))[0],
+                low: selectedRatings.length > 0 ? selectedRatings.map(rating => parseInt(rating.substring(0, 1)))[0] : 0,
                 high: 10
             }
         };
-        await fetchData(search, body);
+        await fetchData(search ? search : "", body);
     }
+    // Fetch saved filters
+    async function fetchSavedFilters() {
+        const response = await fetch(`${searchMsApiUrls()}user/filter/6601d20081bc9671ef4364ee`).then(res => res.json());
+        const filters = response.filters;
+        console.log(filters)
+        if (!filters) return;
+        setFilters(filters);
+    }
+
+    async function saveFilter() {
+        if (!filterInput) return;
+        const response = await fetch(`${searchMsApiUrls()}user/filter/6601d20081bc9671ef4364ee`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: filterInput, filters: { languages: selectedLanguages, countries: selectedCountries, genres: selectedGenres, types: selectedTypes, ratings: selectedRatings } }),
+        }).then(res => res.json())
+        if (!response.status) return;
+        setFilters(response.user.savedFilters);
+        setFilterInput("");
+    }
+
+    async function deleteFilter(name: string) {
+        const response = await fetch(`${searchMsApiUrls()}user/filter/6601d20081bc9671ef4364ee?name=${name}`, {
+            method: 'DELETE'
+        }).then(res => res.json())
+        if (!response.status) return;
+        setFilters(response.user.savedFilters);
+    }
+    
+    useEffect(() => {
+        fetchSavedFilters();
+    }, []) // Add fetchSavedFilters as a dependency
 
     // const handleToggle = async () => {
     //     setIsToggled((prev) => !prev);
@@ -152,8 +209,6 @@ export default function Filter({ fetchData }: { fetchData(searchTerm: string, fi
                         <Grid.Col span={3}>
                             <TypeButton value='Rating' data={Data["Rating"]} selectedArray={selectedRatings} setSelectedArray={setSelectedRatings} />
                         </Grid.Col>
-
-
                         {/* <Grid.Col span={3}>
                                 <RatingButton />
                             </Grid.Col> */}
@@ -165,20 +220,26 @@ export default function Filter({ fetchData }: { fetchData(searchTerm: string, fi
                         <Grid.Col span={3}>
                         </Grid.Col>
                         <Grid.Col span={3} style={{ display: 'flex', justifyContent: "flex-end", alignItems: "center", gap: '6px' }}>
-                            <button className={classes.button} onClick={() => fetchResults()} >Apply</button>
-                            <Image src={Createicon} alt="" />
+                            <input type="text" placeholder='Filter Name' className={classes.filterNameInput} value={filterInput} onChange={(e) => setFilterInput(e.target.value)} />
+                            {/* <Image src={Createicon} alt="" onClick={saveFilter} /> */}
+                            <button onClick={saveFilter} className={classes.saveFilters}>Save</button>
                             <Image src={Listicon} alt="" onClick={toggleDropdown} />
                             {showDropdown && (
                                 <div style={{ position: 'absolute', top: '100%', right: 0, backgroundColor: '#333', zIndex: 999, borderRadius: '5px', padding: '5px' }}>
                                     <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-                                        <li>
-                                            Filter 1
-                                            <Image src={Deleteicon} alt="Delete" style={{ paddingTop: '10px', paddingLeft: '4px' }} onClick={() => handleDelete('Filter 1')} />
-                                        </li>
-                                        <li>
-                                            Filter 2
-                                            <Image src={Deleteicon} alt="Delete" style={{ paddingTop: '10px', paddingLeft: '4px' }} onClick={() => handleDelete('Filter 2')} />
-                                        </li>
+                                        {filters ? filters.map((filter, key) => (
+                                            <li key={key} className={classes.savedFilter} onClick={e => {
+                                                console.log(filter.countries)
+                                                setSelectedCountries(filter.filters.countries)
+                                                setSelectedGenres(filter.filters.genres)
+                                                setSelectedLanguages(filter.filters.languages)
+                                                setSelectedRatings(filter.filters.ratings)
+                                                setSelectedTypes(filter.filters.types)
+                                            }}>
+                                                {filter.name}
+                                                <Image src={Deleteicon} alt="Delete" style={{ paddingTop: '10px', paddingLeft: '4px' }} onClick={() => deleteFilter(filter.name)} />
+                                            </li>
+                                        )) : <li>No saved Filters</li> }
                                         {/* Add more filters as needed */}
                                     </ul>
                                 </div>
@@ -186,6 +247,7 @@ export default function Filter({ fetchData }: { fetchData(searchTerm: string, fi
                         </Grid.Col>
                     </Grid>
                 </div>
+                    <button className={classes.button} onClick={() => fetchResults()} >Apply</button>
 
             </div>
 

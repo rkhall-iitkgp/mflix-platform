@@ -21,7 +21,6 @@ export default function SearchBar() {
             }
         }
     };
-    const ref = useEventListener('click', handleKeyPress);
 
     const fetchAutocompleteSuggestions = async (query: string) => {
         try {

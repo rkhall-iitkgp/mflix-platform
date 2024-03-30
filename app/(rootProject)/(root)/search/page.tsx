@@ -1,8 +1,7 @@
 'use client';
 
-import { Group, Stack, Text, Space, Loader, Center, Skeleton } from '@mantine/core';
+import { Group, Stack, Text, Space, Loader, Center, Skeletot, List, Textarea } from '@mantine/core';
 import { createStyles } from '@mantine/styles';
-import { useInViewport } from '@mantine/hooks';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { MovieCardSpace, MovieCard } from '@/components/Search/MovieCard';
@@ -13,7 +12,7 @@ import themeOptions from '@/utils/colors';
 import Filter from '@/components/Search/Filter';
 import searchMsApiUrls from '@/app/api/searchMsApi';
 import noImage from '@/assets/images/no-image.jpg';
-import { Grid } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks';
 
 interface MovieProps {
     _id: string;
@@ -78,6 +77,7 @@ export default function Search() {
     const { classes } = useStyles();
     const [elementsPerRow, setElementsPerRow] = useState<number>(4);
     const [justify, setJustify] = useState<'space-between' | 'space-evenly'>('space-between');
+    const single = useMediaQuery('(max-width: 1520px)')
 
     const [recommended, setRecommended] = useState<Array<MovieProps>>([]);
     const [notFound, setNotFound] = useState<boolean>(false);
@@ -135,18 +135,24 @@ export default function Search() {
                         }),
                     }
                 )).json();
+                console.log(res);
                 if (!res.results) return setNotFound(true);
                 data.push(...res.results);
                 if (!res.hasNext) break;
             }
             console.log(data);
-            setTopRes(data.slice(0, 4));
-            if (data.length >= 14) {
-                setRecommended(data.slice(14));
-                setMoreResults(data.slice(4, 14));
-            } else {
-                setRecommended([]);
-                setMoreResults(data.slice(4));
+            if (data.length <= 4) {
+                setTopRes(data)
+            }
+            else {
+                setTopRes(data.slice(0, 4));
+                if (data.length >= 14) {
+                    setRecommended(data.slice(14));
+                    setMoreResults(data.slice(4, 14));
+                } else {
+                    setRecommended([]);
+                    setMoreResults(data.slice(4));
+                }
             }
             setLoaded(true);
         };
@@ -173,11 +179,26 @@ export default function Search() {
     }, []);
 
     return notFound ?
-    <Stack h="100vh">
+    <Stack h="100vh" c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
         <div className={classes.bg}></div>
-        <Center h="100%">
-            <Text fz={themeOptions.fontSize.xl} c={themeOptions.color.textColorNormal}>Not Found</Text>
-        </Center>
+        <Filter />
+        <Stack>
+            <Text fz={themeOptions.fontSize.xl} fw={600}>
+                Hmm, we didn't find anything for : {' '}
+                <Text span inherit c={themeOptions.color.textColorNormal}>{search}</Text>
+            </Text>
+            <List withPadding fz={themeOptions.fontSize.md}>
+                <List.Item>Check for typos and spelling errors</List.Item>
+                <List.Item>Try more general keywords</List.Item>
+                <List.Item>The movie that you’re searching for might be removed from our site</List.Item>
+            </List>
+            <Text>
+                If you didn’t find what you were looking for, send us some 
+                <Text span inherit c={themeOptions.color.smallBox}> feedback </Text>
+                to help improve our site
+            </Text>
+            <Textarea placeholder={"Enter your comments here..."} />
+        </Stack>
     </Stack>
     :
     (
@@ -194,12 +215,7 @@ export default function Search() {
                 { topRes ?
                     <Stack justify="space-evenly" style={{ rowGap: '2rem' }}>
                         <Group style={{ rowGap: '30px' }} grow gap="6vw" preventGrowOverflow={false} align="stretch">
-                            <MovieBanner {...(topRes[0])} />
-                            <MovieBanner {...(topRes[1])} />
-                        </Group>
-                        <Group style={{ rowGap: '30px' }} grow gap="6vw" preventGrowOverflow={false} align="stretch">
-                            <MovieBanner {...(topRes[2])} />
-                            <MovieBanner {...(topRes[3])} />
+                            {topRes.map((e, i) => <MovieBanner single={single} {...e} />)}
                         </Group>
                     </Stack>
                 :

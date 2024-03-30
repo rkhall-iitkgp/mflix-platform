@@ -24,6 +24,7 @@ interface MovieProps {
     tomatoes: any;
     countries: Array<string>;
     score: number;
+    single?: boolean;
 }
 
 const Loader: React.FC = () => (
@@ -53,6 +54,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
         imdb,
         tomatoes,
         countries,
+        single
     } = props;
     const [loading, setLoading] = useState(true);
     const [src, setSrc] = useState<string | StaticImageData>(poster);
@@ -68,6 +70,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
         <Group
           p={0}
           ref={ref}
+          maw = {single ? "90vw" : "42vw"}
           styles={{
             root: {
                 minWidth: '600px',
@@ -132,7 +135,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                                   alt="imdb"
                                   h={17}
                                 />
-                                <Text fz={themeOptions.fontSize.xs}>{imdb.rating} / 10</Text>
+                                <Text fz={themeOptions.fontSize.xs}>{imdb?.rating ? imdb.rating : 6} / 10</Text>
                             </Group>
                             <Group gap={themeOptions.fontSize.xs}>
                                 <Image

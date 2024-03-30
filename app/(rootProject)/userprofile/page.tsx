@@ -337,7 +337,7 @@ export default function UserProfile() {
     const values = {
       email: state.email,
     };
-    let res = await fetch(`${base_url}/auth/logout`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

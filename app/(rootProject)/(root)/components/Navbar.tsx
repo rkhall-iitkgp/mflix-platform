@@ -41,7 +41,7 @@ export default function Navbar() {
     const base_url = searchMsApiUrls();
     const user_id = state._id;
     console.log(base_url);
-    let res = await fetch(`${base_url}/user/details`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/details`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -59,11 +59,11 @@ export default function Navbar() {
   };
   // }, []);
 
-  useEffect(()=>{
-   getActiveUsers() 
+  useEffect(() => {
+    getActiveUsers()
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log("Current Profile", currentProfile)
   }, [currentProfile])
 
@@ -109,7 +109,7 @@ export default function Navbar() {
     };
     const base_url = searchMsApiUrls();
     const token = sessionStorage.getItem('accessToken');
-    await fetch(`${base_url}/auth/logout`, {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -311,9 +311,9 @@ export default function Navbar() {
         cursor: 'pointer',
       },
     },
-    logout:{
-      '&hover':{
-        background:'black'
+    logout: {
+      '&hover': {
+        background: 'black'
       }
     }
 
@@ -444,10 +444,10 @@ export default function Navbar() {
                         {profile.name}
                       </Menu.Item>)
                   })} */}
-                  <Menu.Item className={classes.logout} leftSection={<IconSettings style={{ width: '2rem', height: '2rem', color:'black', opacity:'0.8' }} />}>
+                  <Menu.Item className={classes.logout} leftSection={<IconSettings style={{ width: '2rem', height: '2rem', color: 'black', opacity: '0.8' }} />}>
                     <Link href="/userprofile" style={{ textDecoration: 'none', color: 'black', opacity: '0.8' }}>User Profile</Link>
                   </Menu.Item>
-                  <Menu.Item style={{color:'black', opacity:'0.8'}} leftSection={<IconLogout style={{ width: '2rem', height: '2rem', color:'black', opacity:'0.8' }} />} onClick={handleLogOut}>
+                  <Menu.Item style={{ color: 'black', opacity: '0.8' }} leftSection={<IconLogout style={{ width: '2rem', height: '2rem', color: 'black', opacity: '0.8' }} />} onClick={handleLogOut}>
                     Logout
                   </Menu.Item>
                 </Menu.Dropdown>

@@ -329,7 +329,7 @@ export default function Navbar() {
       >
         {/* Logo */}
         <div className={classes.logoDiv}>
-          <img src="/logo.svg" alt="Logo" className={classes.logo} />
+          <Link href="/"><img src="/logo.svg" alt="Logo" className={classes.logo} /></Link>
         </div>
 
         {/* Links */}

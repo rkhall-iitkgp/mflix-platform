@@ -75,7 +75,7 @@ export default function Otp({ initialValues }: any) {
         position:"top-center"
       })
       // router.push('/userprofile');
-      Mixpanel.track('User Register', {
+      Mixpanel.track('User Sign Up', {
         name: jsonData.account.name,
         email: jsonData.account.email,
         dob: jsonData.account.dob,

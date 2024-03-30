@@ -46,13 +46,16 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                   'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({a: 1, b: 'Textual content'})
-              });
-              const similarMovies = await res2.json();
-              setSimilarMoviesData(similarMovies.results);
-            //   console.log(similarMovies.results);
+            });
+                const similarMovies = await res2.json(); 
+                const filteredSimilarMovies = similarMovies.results.filter(
+                (movie: any) => movie._id !== res.result._id
+            );
+            setSimilarMoviesData(filteredSimilarMovies);
         }   
         getMovieDetails(); 
     },[])
+
 
     const styles = createStyles(() => ({
         streaming: {

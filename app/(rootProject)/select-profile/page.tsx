@@ -135,7 +135,8 @@ const SelectProfile: React.FC = () => {
     const state = useLoginStore.getState();
 
     useEffect(() => {
-        setProfiles(state.userProfiles);
+        setProfiles(profiles);
+        // setProfiles(state.userProfiles);
     }, []);
     // Get component styles
     const { classes } = useStyles();

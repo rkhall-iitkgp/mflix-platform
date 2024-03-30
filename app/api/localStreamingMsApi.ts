@@ -1,5 +1,5 @@
 const localStreamingMsApiUrl = () => {
-  return 'ws://localhost:5000';
+  return 'ws://971edtce1a.execute-api.ap-south-1.amazonaws.com';
 };
 
 export default localStreamingMsApiUrl;

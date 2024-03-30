@@ -17,6 +17,7 @@ export default function Modal() {
                     <button>Join Room</button>
                 </div>
             </div>
+            <button>Submit</button>
         </div>
     )
 }

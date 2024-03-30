@@ -93,7 +93,7 @@ export function RatingButton() {
                                 <span style={{ fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#ffffff' }}>Rating:</span>
                                 <div style={{ display: 'flex', gap: '5%', paddingLeft: '20px', paddingTop: '6px' }}>
                                     <input
-                                        style={{ width: '50%', height: '20px', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#9441d0', backgroundColor: '#140320', outline: 'none', borderRadius: '5px', }}
+                                        style={{ width: '50%', height: '20px', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#00664A', backgroundColor: '#140320', outline: 'none', borderRadius: '5px', }}
                                         type="number"
                                         min={0}
                                         max={10}
@@ -102,7 +102,7 @@ export function RatingButton() {
                                         onChange={handleFirstInputChange}
                                     />
                                     <input
-                                        style={{ width: '50%', height: '20px', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#9441d0', backgroundColor: '#140320', outline: 'none', borderRadius: '5px' }}
+                                        style={{ width: '50%', height: '20px', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#00664A', backgroundColor: '#140320', outline: 'none', borderRadius: '5px' }}
                                         type="number"
                                         min={0}
                                         max={10}

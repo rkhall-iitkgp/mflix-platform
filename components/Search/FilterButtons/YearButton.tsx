@@ -91,7 +91,7 @@ export function YearButton() {
                             <div style={{ display: 'flex', alignItems: 'start' }}>
                                 <span style={{ fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#ffffff' }}>Year:</span>
                                 <input
-                                  style={{ width: '90%', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#9441d0', backgroundColor: '#140320', border: 'none', outline: 'none', borderRadius: '5px' }}
+                                  style={{ width: '90%', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#00664A', backgroundColor: '#140320', border: 'none', outline: 'none', borderRadius: '5px' }}
                                   type="number"
                                   value={selected}
                                   onChange={handleInputChange}

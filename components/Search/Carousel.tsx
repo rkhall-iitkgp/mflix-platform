@@ -39,7 +39,7 @@ const Carousel: React.FC<CarouselProps> = ({ children, nextPage }) => {
     }, [children]); // Call handleScroll whenever children change
 
     useEffect(() => {
-        if (!showRightButton) nextPage()
+        if (!showRightButton && nextPage) nextPage()
     }, [showRightButton])
 
     return (

@@ -4,7 +4,7 @@ import '@mantine/core/styles.css';
 import React, { useEffect } from 'react';
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import './global.css';
-
+import 'react-toastify/dist/ReactToastify.css';
 export const metadata = {
   title: 'Mantine Next.js template',
   description: 'I am using Mantine with Next.js!',

@@ -19,14 +19,18 @@ import Mixpanel from "@/components/Mixpanel";
 import usePlayerStore from "@/Stores/PlayerStore";
 import VideoPlayer from "@/components/VPlayer";
 import PartyChat from "@/components/PartyChat/PartyChat";
+import { ToastContainer, toast } from "react-toastify";
+import { incrementArray } from "@/utils/mixpanelutils";
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();
+    const user = useLoginStore.getState();
     const [loading, setLoading] = useState(true);
-    const [movieData, setMovieData] = useState({});
+    const [movieData, setMovieData] = useState<any>({});
     const [similarMoviesData, setSimilarMoviesData] = useState([]);
     const state = useLoginStore.getState();
-
+    const [videoSrc, setVideoSrc] = useState("");
+    const [Mp4, setMp4] = useState(false);
     const {
         activeChat,
         setUsername,
@@ -91,7 +95,26 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                 })
             ).json();
             setMovieData(res.result);
-            Mixpanel.track("Look Movie Details", {
+            const res1 = await (
+                await fetch(
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/movies/link/${id}`,
+                    {
+                        method: "GET",
+                    },
+                )
+            ).json();
+            console.log("res1", res1);
+            if (res1.success === false) {
+                console.log("res1.message", res1.message);
+                toast.error(res1.message);
+                setMp4(true);
+                setVideoSrc(res1?.result);
+            } else {
+                setVideoSrc(res1?.result?.uploadurl?.vidsrc);
+                setMp4(false);
+            }
+
+            Mixpanel.track("Search Movie Details", {
                 title: res.result.title,
                 genres: res.result.genres,
                 cast: res.result.cast,
@@ -102,6 +125,36 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                 year: res.result.year,
                 tier: res.result.tier,
             });
+
+            if (user._id) {
+                Mixpanel.identify(user._id);
+                Mixpanel.people.increment(user._id, "Total Movies Watched", 1);
+                Mixpanel.people.append(user._id, "Watch History", {
+                    movie_title: res.result.title,
+                    Timestamp: new Date().toISOString(),
+                });
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.genres, "genre"),
+                );
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.languages, "language"),
+                );
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.directors, "director"),
+                );
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.writers, "writer"),
+                );
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.cast, "cast"),
+                );
+            }
+
             const similar_results_url = `${url}/search/fuzzy?semantic=${res.result.plot}`;
             // console.log(final_url)
             const res2 = await fetch(similar_results_url, {
@@ -238,7 +291,13 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                 
             </Group> */}
             <div style={{ display: "flex", width: "100%" }}>
-                <VideoPlayer ref={playerRef} ws={ws} />
+                <VideoPlayer
+                    ref={playerRef}
+                    ws={ws}
+                    videoSrc={videoSrc}
+                    Mp4={Mp4}
+                    tier={movieData?.tier}
+                />
                 {activeChat && <PartyChat ws={ws} />}
             </div>
             {/* Movie Details */}
@@ -265,6 +324,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
             <Stack bg={themeOptions.color.black} style={{ zIndex: "20" }}>
                 <Footer />
             </Stack>
+            <ToastContainer />
         </Stack>
     );
 }

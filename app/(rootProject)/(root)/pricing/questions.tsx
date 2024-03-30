@@ -24,7 +24,7 @@ function Questions() {
             justifyContent: 'center',
             alignItems: 'center',
             width: '80vw',
-           border: '1px solid #7012b6',
+           border: '1px solid #00664A',
            padding: '0 ',
            '&:hover': {
             backgroundColor: 'transparent',
@@ -35,7 +35,7 @@ function Questions() {
             display: 'flex',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            border: '1.5px solid #7012b6',
+            border: '1.5px solid #00664A',
             width: '95%',
             padding: '1rem',
             color: theme.white,

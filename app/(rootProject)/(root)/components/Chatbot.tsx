@@ -8,7 +8,7 @@ import DownIcon from '@/assets/icons/down.svg'
 import { useRef } from 'react'
 import { KeyboardEvent } from 'react';
 import Link from 'next/link'
-
+import themeOptions from '@/utils/colors'
 export default function Chatbot() {
     const { classes, cx } = styles();
     const [show, setShow] = React.useState(false);
@@ -45,7 +45,7 @@ export default function Chatbot() {
         setInput('')
         inputRef.current.value = '';
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chatbot/message`, {
+            const response = await fetch(`${'https://971edtce1a.execute-api.ap-south-1.amazonaws.com'}/chatbot/message`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ export default function Chatbot() {
             const searchUrl = `/search?query=${encodeURIComponent(movieTitle)}`;
             
             // linkMessage = `<a id="searchLink" href="${searchUrl}" ">find more about "${titleMatch[1]}"</a>`;
-            linkMessage = `<a href="${searchUrl}" target="_blank">find more about "${titleMatch[1]}"</a>`;
+            linkMessage = `<button style="border-radius: 0.5rem; background-color: #6034DF; color: white; padding: 0.5rem; margin: 0.5rem 0.5rem 0.5rem 0; border: none; cursor: pointer;" onclick="window.open('${searchUrl}', '_blank')">Search ${titleMatch[1]}</button>`;
         }
         const formattedMessage = (data.message as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
       
@@ -136,7 +136,7 @@ const styles = createStyles((theme) => ({
     },
     chatbotHeader: {
         padding: "1rem",
-        background: "linear-gradient(149.93deg, #580099 8.93%, #9441D0 50.35%, #580099 84.24%)",
+        background: "linear-gradient(149.93deg, #580099 8.93%, #00664A 50.35%, #580099 84.24%)",
         justifyContent: "space-between !important",
         p: {
             margin: 0,
@@ -145,6 +145,22 @@ const styles = createStyles((theme) => ({
             margin: 0,
         }
     },
+    premium: {
+        marginRight: '1.5rem',
+        height: '2.3rem',
+        width: '7rem',
+        display: 'flex',
+        transition: '0.3s',
+        alignItems: 'center',
+        '&:hover': {
+          background: themeOptions.color.button,
+          cursor: 'pointer',
+        },
+        border: '2px solid',
+        borderRadius: '8px',
+        borderColor: themeOptions.color.smallBox,
+        color: themeOptions.color.smallBox,
+      },
     messageInput: {
         borderTop: "1px solid #ADADAD",
     },

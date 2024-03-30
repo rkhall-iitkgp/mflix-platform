@@ -164,7 +164,7 @@ export default function Register(props: any) {
             <Text size="1.1rem" c={'white'}>
               Already have an account?
             </Text>
-            <a href="/login" style={{ color: '#9441D0' }}>
+            <a href="/login" style={{ color: '#00664A' }}>
               Log In
             </a>
           </Flex>
@@ -447,7 +447,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                     marginTop: '1rem',
                     width: '50%',
                     height: '3rem',
-                    backgroundColor: '#9441D0',
+                    backgroundColor: '#00664A',
                     borderRadius: '1rem',
                     fontSize: '1rem',
                   }}

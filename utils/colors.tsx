@@ -1,14 +1,14 @@
 const themeOptions = {
     color: {
-        button: '#7011B6',
+        button: '#00664A',
         divider: '#FFFFFF',
         largeBox: '#BFBFBF',
-        smallBox: '#9341D0',
-        textColorNormal: '#9441D0',
+        smallBox: '#77C895',
+        textColorNormal: '#77C895',
         insideTextColor: '#828282',
         normalTextColor: '#FFFFFF',
         dimmed: '#9CA3AF',
-        background: '#0B0212',
+        background: '#000D12',
         black:'rgba(0,0,0)',
         categories:'#0A0315'
     },

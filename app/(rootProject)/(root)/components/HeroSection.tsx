@@ -175,7 +175,7 @@ const HeroSection = () => {
               className={classes.p}
               style={{
                 fontSize: isSmallScreen ? '1.8rem' : '2rem',
-                top: isSmallScreen ? '20vh' : '18vh',
+                top: isSmallScreen ? '8%' : '9%',
               }}
             >
               Trending:
@@ -359,10 +359,12 @@ const useStyles = createStyles(() => ({
     transition: '0.3s ease',
   },
   movies: {
+    paddingTop: "1rem",
+    paddingBottom: "1rem",
     display: 'flex',
     flexDirection: 'column',
     position: 'absolute',
-    top: '28vh',
+    top: '14%',
     overflow: 'hidden',
     gap: '.6rem',
     transition: '0.5s ease',
@@ -377,6 +379,7 @@ const useStyles = createStyles(() => ({
     marginTop: '0.5rem',
   },
   movieCard: {
+    margin: "2rem",
     backgroundColor: '#D9D9D926',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     display: 'flex',

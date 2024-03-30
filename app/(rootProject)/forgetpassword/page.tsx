@@ -8,9 +8,9 @@ import {
   TextInput,
   PasswordInput,
   Text,
-  PaperProps,
+  // PaperProps,
   Button,
-  Divider,
+  // Divider,
   Flex,
   Box,
 } from '@mantine/core';
@@ -19,7 +19,8 @@ import themeOptions from '../../../assets/themes/colors';
 import { useState } from 'react';
 import searchMsApiUrls from '../api/searchMsApi';
 import Otp from '../verifyotp/page';
-import exp from 'constants';
+// import exp from 'constants';
+import Mixpanel from '@/components/Mixpanel';
 
 const ForgetPassword = (props: any) => {
   const [userData, setUserData] = useState(null);
@@ -43,6 +44,7 @@ const ForgetPassword = (props: any) => {
       }),
     });
     let jsonData = await res.json();
+    Mixpanel.track('Forgot Password', {});
     if (!res.ok) {
       console.log(jsonData.message);
       // router.push('/verifyotp')

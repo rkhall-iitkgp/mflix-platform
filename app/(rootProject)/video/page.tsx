@@ -20,7 +20,9 @@ const page = () => {
     const playerRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
-        let socket = new WebSocket(`ws://${process.env.NEXT_PUBLIC_STREAMING_IP}`);
+        let socket = new WebSocket(
+            `ws://${process.env.NEXT_PUBLIC_STREAMING_IP}`,
+        );
         setWS(socket);
 
         socket.onopen = () => {
@@ -151,9 +153,14 @@ const page = () => {
                     Join Room
                 </button>
             </div>
-
             <div style={{ display: "flex", width: "100%" }}>
-                <VideoPlayer ref={playerRef} ws={ws} />
+                <VideoPlayer
+                    ref={playerRef}
+                    ws={ws}
+                    Mp4={false}
+                    tier={""}
+                    videoSrc={""}
+                />
                 {activeChat && <PartyChat ws={ws} />}
             </div>
         </div>

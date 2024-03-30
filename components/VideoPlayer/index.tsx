@@ -748,14 +748,14 @@ const useStyles = createStyles(() => ({
   },
   modalContent: {
     backgroundColor: '#212121', // Dark modal content
-    padding: theme.spacing(4),
+    // padding: theme.spacing(4),
     borderRadius: 4,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between', // Buttons on opposite sides
   },
   button: {
-    padding: theme.spacing(2),
+    // padding: theme.spacing(2),
     backgroundColor: '#424242', // Button color
     color: '#fff', // Button text color
     border: 'none',

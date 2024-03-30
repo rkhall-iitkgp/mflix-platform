@@ -22,28 +22,30 @@ export default function Chatbot() {
     React.useEffect(() => {
         const input = inputRef.current;
         if (input) {
-          const handleKeyPress = (event:KeyboardEvent<HTMLInputElement>) => {
+          const handleKeyPress = (event: KeyboardEvent) =>  {
             if (event.key === 'Enter' && input.value.trim() !== '') {
               sendMessage();
               event.preventDefault(); // Prevent default form submission
             }
           };
-    
-          input.addEventListener('keypress', handleKeyPress);
-    
+
+          // @ts-ignore
+            input.addEventListener('keypress', handleKeyPress);
+
           // Cleanup function to remove the event listener on unmount
-          return () => input.removeEventListener('keypress', handleKeyPress);
+          // @ts-ignore
+            return () => input.removeEventListener('keypress', handleKeyPress);
         }
-      }, [sendMessage]); 
+      }, [sendMessage]);
 
     React.useEffect(() => {
         document.getElementById("messages")?.scrollTo(0, document.getElementById("messages")?.scrollHeight!);
     }, [messages])
-   
+
     async function sendMessage() {
         setMessages(messages => [...messages, { message: input, type: 'sent' }])
         setInput('')
-        inputRef.current.value = '';
+        if (inputRef.current) inputRef.current.value = '';
         try {
             const response = await fetch(`${'https://971edtce1a.execute-api.ap-south-1.amazonaws.com'}/chatbot/message`, {
                 method: 'POST',
@@ -60,26 +62,26 @@ export default function Chatbot() {
         if (titleMatch) {
             const movieTitle = titleMatch[1];
             const searchUrl = `/search?query=${encodeURIComponent(movieTitle)}`;
-            
+
             // linkMessage = `<a id="searchLink" href="${searchUrl}" ">find more about "${titleMatch[1]}"</a>`;
             linkMessage = `<button style="border-radius: 0.5rem; background-color: #6034DF; color: white; padding: 0.5rem; margin: 0.5rem 0.5rem 0.5rem 0; border: none; cursor: pointer;" onclick="window.open('${searchUrl}', '_blank')">Search ${titleMatch[1]}</button>`;
         }
         const formattedMessage = (data.message as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-      
+
         // Add a line break between the formatted message and link message
         const finalMessage = `${formattedMessage}<br>${linkMessage}`;
             console.log("link: ",linkMessage)
             console.log("final Message: ",finalMessage)
             // setMessages(messages => [...messages, { message: data.message, type: 'received' }])
             setMessages(messages => [...messages, { message: finalMessage, type: 'received' }])
-           
+
             // setMessages(messages => [...messages, { message: (data.message as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'), type: 'received' }])
         } catch (error) {
             console.log("error: ",error)
             setMessages(messages => [...messages, { message: 'Sorry, I am not able to process your request at the moment.', type: 'received' }])
         }
     }
-    
+
 
     return (
         <Container className={classes.chatbot}>

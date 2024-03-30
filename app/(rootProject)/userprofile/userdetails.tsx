@@ -200,10 +200,13 @@ const UserDetails = ({ opened }: any) => {
     //     plan: "Basic"
     // };
     // setUserInfo(UserDetails);
-    const user_id = state._id;
-    if (!user_id) {
-      router.push('/login');
-
+    try {
+      const user_id = state._id;
+      if (!user_id) {
+        router.push('/login');
+      }
+    } catch (error) {
+      console.error('Error occurred while processing user ID:', error);
     }
     console.log(state);
     let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/details/`, {

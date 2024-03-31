@@ -418,7 +418,7 @@ export default function UserProfile() {
             />
             Profile
           </Button>
-          <Button
+          {/* <Button
             variant="filled"
             style={{
               height: '2.8rem',
@@ -439,7 +439,7 @@ export default function UserProfile() {
               style={{ marginRight: '0.4rem', fontSize: themeOptions.fontSize.s }}
             />
             History
-          </Button>
+          </Button> */}
           <Button
             variant="filled"
             style={{
@@ -522,8 +522,6 @@ export default function UserProfile() {
         <Box style={{ height: '100%', width: '100%', marginTop: '-1.2rem' }}>
           {page === 1 ? (
             <UserDetails />
-          ) : page === 2 ? (
-            <History />
           ) : page === 3 ? (
             <Favorites />
           ) : page === 4 ? (

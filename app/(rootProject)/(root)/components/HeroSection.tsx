@@ -13,6 +13,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import searchMsApiUrls from '../../api/searchMsApi';
 import themeOptions from '@/utils/colors';
 import { UnstyledButton } from '@mantine/core';
+import Link from 'next/link';
 gsap.registerPlugin(ScrollToPlugin);
 const HeroSection = () => {
   console.log('rendered');
@@ -142,10 +143,8 @@ const HeroSection = () => {
             }}
             // isTyping={isTyping}
           />
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni est dolores iure natus
-            laboriosam fugit laudantium facilis. Molestiae consectetur explicabo quibusdam esse
-            iusto atque iste quos qui, officiis obcaecati voluptatibus!
+          <p style={{fontSize:themeOptions.fontSize.md,margin:0}}>
+          Discover a world of entertainment with our streaming service. Watch movies, TV shows, and more, anytime, anywhere.Get started for <Link href='/pricing' style={{color:themeOptions.color.button}}>free</Link>
           </p>
         </div>
         {isLoggedIn && history?.length > 0 && (

@@ -43,7 +43,7 @@ export default function SearchBar() {
             setIsListening(false);
           }, 5000);
         }
-      }; 
+      };
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             if (input.length > 2) {
@@ -106,7 +106,7 @@ export default function SearchBar() {
             </Menu.Target>
             <Menu.Dropdown bg={themeOptions.color.categories}>
                 {suggestions.map((item, index) => (
-                    <Menu.Item leftSection={iconMap[item.highlight.path]} key={index} component='a' href={`/search?query=${item.highlight.text}`}>
+                    <Menu.Item leftSection={iconMap[item.highlight.path as "title" | "directors" | "cast"]} key={index} component='a' href={`/search?query=${item.highlight.text}`}>
                         {item.highlight.text}
                     </Menu.Item>
             ))}

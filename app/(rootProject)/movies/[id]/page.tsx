@@ -20,9 +20,11 @@ import usePlayerStore from "@/Stores/PlayerStore";
 import VideoPlayer from "@/components/VPlayer";
 import PartyChat from "@/components/PartyChat/PartyChat";
 import { ToastContainer, toast } from "react-toastify";
+import { incrementArray } from "@/utils/mixpanelutils";
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();
+    const user = useLoginStore.getState();
     const [loading, setLoading] = useState(true);
     const [movieData, setMovieData] = useState<any>({});
     const [similarMoviesData, setSimilarMoviesData] = useState([]);
@@ -41,7 +43,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     } = usePlayerStore();
     const [ws, setWS] = useState<WebSocket | null>(null);
     const playerRef = useRef<HTMLVideoElement>(null);
-
+    const Usertier = useLoginStore((state) => state.subscriptionTier.tier.tier);
     const styles = createStyles(() => ({
         streaming: {
             width: "100%",
@@ -94,9 +96,12 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
             ).json();
             setMovieData(res.result);
             const res1 = await (
-                await fetch(`http://localhost:5000/movies/link/${id}`, {
-                    method: "GET",
-                })
+                await fetch(
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/movies/link/${id}`,
+                    {
+                        method: "GET",
+                    },
+                )
             ).json();
             console.log("res1", res1);
             if (res1.success === false) {
@@ -109,7 +114,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                 setMp4(false);
             }
 
-            Mixpanel.track("Look Movie Details", {
+            Mixpanel.track("Search Movie Details", {
                 title: res.result.title,
                 genres: res.result.genres,
                 cast: res.result.cast,
@@ -120,6 +125,36 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                 year: res.result.year,
                 tier: res.result.tier,
             });
+
+            if (user._id) {
+                Mixpanel.identify(user._id);
+                Mixpanel.people.increment("Total Movies Watched", 1);
+                Mixpanel.people.append("Watch History", {
+                    movie_title: res.result.title,
+                    Timestamp: new Date().toISOString(),
+                });
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.genres, "genre"),
+                );
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.languages, "language"),
+                );
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.directors, "director"),
+                );
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.writers, "writer"),
+                );
+                Mixpanel.people.increment(
+                    user._id,
+                    incrementArray(res.result.cast, "cast"),
+                );
+            }
+
             const similar_results_url = `${url}/search/fuzzy?semantic=${res.result.plot}`;
             // console.log(final_url)
             const res2 = await fetch(similar_results_url, {
@@ -138,7 +173,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     }, []);
 
     useEffect(() => {
-        let socket = new WebSocket("ws://127.0.0.1:5000");
+        let socket = new WebSocket(`ws://${process.env.NEXT_PUBLIC_STREAMING_IP}`);
         setWS(socket);
 
         socket.onopen = () => {
@@ -253,7 +288,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
 
             {/* Streaming Section */}
             {/* <Group className={classes.streaming}>
-                
+
             </Group> */}
             <div style={{ display: "flex", width: "100%" }}>
                 <VideoPlayer
@@ -261,7 +296,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                     ws={ws}
                     videoSrc={videoSrc}
                     Mp4={Mp4}
-                    tier={movieData?.tier}
+                    tier={Usertier}
                 />
                 {activeChat && <PartyChat ws={ws} />}
             </div>

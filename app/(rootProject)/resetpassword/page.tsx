@@ -32,7 +32,7 @@ export default function ResetPassword() {
     setFormData(values);
     console.log(values);
 
-    let res = await fetch(`${base_url}/auth/sendOTP`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/sendOTP`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -4,7 +4,7 @@
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { DateInput } from '@mantine/dates';
 import '@mantine/dates/styles.css';
 import { createStyles } from '@mantine/styles';
@@ -30,7 +30,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { GoogleButton } from '../login/GoogleButton';
-import  Otp  from '../verifyotp/page';
+import Otp from '../verifyotp/page';
 import searchMsApiUrls from '../api/searchMsApi';
 import { useState } from 'react';
 import useLoginStore from '@/Stores/LoginStore';
@@ -38,21 +38,21 @@ import useLoginStore from '@/Stores/LoginStore';
 export default function Register(props: any) {
   // const router = useRouter()
   const [showOtp, setshowOtp] = useState(0);
-  
+
   const [formData, setFormData] = useState({});
-  const handleExistence = ()=>{
+  const handleExistence = () => {
     console.log("hehehe")
-   
+
   }
 
   //toastify
- 
+
 
   // const router = useRouter();
-  const[exists, setExists] = useState(true);
-  
+  const [exists, setExists] = useState(true);
+
   const handleRegister = async (values: any) => {
-    
+
     // setshowOtp(1);
     const base_url = searchMsApiUrls();
     // setUserData(values);
@@ -63,7 +63,7 @@ export default function Register(props: any) {
       type: 'register',
     };
     console.log(userData);
-    let res = await fetch(`${base_url}/auth/sendOTP`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/sendOTP`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -80,11 +80,11 @@ export default function Register(props: any) {
       setshowOtp(0);
       handleExistence();
       toast.error("Email Id already exists!", {
-        position:"top-center"
+        position: "top-center"
       });
-      
 
-    
+
+
       // router.push('/verifyotp')
     }
     //   setLoading(false);
@@ -441,7 +441,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
 
 
                   // }}
-                  
+
                   type="submit"
                   style={{
                     marginTop: '1rem',
@@ -454,7 +454,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                 >
                   Sign Up
                 </Button>
-                
+
                 {/* </Link> */}
               </Anchor>
             </form>
@@ -464,7 +464,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
         <Otp initialValues={formData}></Otp>
       )}
       <ToastContainer
-      style={{}}/> 
+        style={{}} />
     </>
-  );  
+  );
 }

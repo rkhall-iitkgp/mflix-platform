@@ -16,7 +16,7 @@ const Favorites = () => {
         const state = useLoginStore.getState();
         const user_id = state.userProfiles[0]._id;
         console.log(user_id);
-        fetch(`${base_url}/user/watchlist/${user_id}`)
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/watchlist/${user_id}`)
             .then(response => response.json())
             .then(data => { setMovies(data); console.log(data); console.log(data.length) })
             .catch(error => console.error("Error fetching data:", error));

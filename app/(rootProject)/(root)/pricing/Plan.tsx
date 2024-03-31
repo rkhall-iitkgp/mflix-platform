@@ -24,11 +24,13 @@ import { List } from '@mantine/core';
 import { SlArrowRight } from "react-icons/sl";
 import useLoginStore from '@/Stores/LoginStore';
 import { IconPoint, IconPointFilled } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation'
 
 
 
 
 export default function Plan() {
+    const router = useRouter()
     const useStyles = createStyles(() => ({
         OuterBoxStyles: {
             fontFamily: 'Poppins, cursive', // Applying Poppins font
@@ -284,17 +286,19 @@ export default function Plan() {
                 if (result?.error) {
                     console.log(result?.error, 'error with response');
                 }
+                if (user._id) Mixpanel.identify(user?._id)
                 Mixpanel.track("New Payment", {
                     renewalType: renewal[time],
                     tierId: pricing[3 - selected]._id,
-                    userid: user._id,
-                    email: user.email,
+                    $email: user.email,
                     PaymentMethod: "Credit Card",
-
                 });
 
             } else {
                 // Handle error response
+                if (response.status === 401) {
+                    router.push('/login');
+                }
                 console.error('Error:');
             }
         } else {

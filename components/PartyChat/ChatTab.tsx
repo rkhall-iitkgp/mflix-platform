@@ -9,7 +9,7 @@ import { Container } from "@mantine/core";
 // import { ws } from '@/Stores/WSStore';
 import SendIcon from "@/assets/icons/send.svg";
 
-const ChatTab = ({ ws }: { ws: WebSocket }) => {
+const ChatTab = ({ ws }: { ws: WebSocket | null }) => {
     const { messageChain, username, setChatFocus, isChatFocused } =
         usePlayerStore();
     const messageRef = useRef<HTMLInputElement>(null);

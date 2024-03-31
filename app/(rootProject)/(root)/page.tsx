@@ -89,7 +89,7 @@ export default function Home() {
 
     const getData = async (page: number) => {
         const res = await (await fetch(
-            `${searchMsApiUrls()}search/fuzzy?query=&start=2015&end=2023&low=8&high=10&language=&country=&genre=&type=&page=${page}`,
+            `${searchMsApiUrls()}search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=&page=${page}`,
             {
                 method: 'POST',
                 headers: {

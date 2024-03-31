@@ -109,7 +109,7 @@ const MovieCard: React.FC<MovieProps> = (props) => {
             :
             <>
                 <Text fz={themeOptions.fontSize.xs} c={themeOptions.color.dimmed} mt="xs" mb="xs">
-                    {countries[0]}, {released ? released.substr(0, 4) : 2011} - Current
+                    {countries?.length ? countries[0] : "Dominican Republic"}, {released ? released.substr(0, 4) : 2011} - Current
                 </Text>
 
                 <Text fz={themeOptions.fontSize.s} fw={500}>

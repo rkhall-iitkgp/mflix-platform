@@ -376,15 +376,15 @@ export default function Navbar() {
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Genres</p>
                   <div className={classes.category}>
-                    <p><Link href="/search?genre=Drama">Drama</Link></p>
-                    <p><Link href="/search?genre=Comedy">Comedy</Link></p>
-                    <p><Link href="/search?genre=Romance">Romance</Link></p>
-                    <p><Link href="/search?genre=Crime">Crime</Link></p>
-                    <p><Link href="/search?genre=Thriller">Thriller</Link></p>
-                    <p><Link href="/search?genre=Action">Action</Link></p>
-                    <p><Link href="/search?genre=Adventure">Adventure</Link></p>
-                    <p><Link href="/search?genre=Documentary">Documentary</Link></p>
-                    <p><Link href="/search?genre=Horror">Horror</Link></p>
+                    <p><a href="/search?genre=Drama">Drama</a></p>
+                    <p><a href="/search?genre=Comedy">Comedy</a></p>
+                    <p><a href="/search?genre=Romance">Romance</a></p>
+                    <p><a href="/search?genre=Crime">Crime</a></p>
+                    <p><a href="/search?genre=Thriller">Thriller</a></p>
+                    <p><a href="/search?genre=Action">Action</a></p>
+                    <p><a href="/search?genre=Adventure">Adventure</a></p>
+                    <p><a href="/search?genre=Documentary">Documentary</a></p>
+                    <p><a href="/search?genre=Horror">Horror</a></p>
                   </div>
                 </div>
                 <div className={classes.inside}>

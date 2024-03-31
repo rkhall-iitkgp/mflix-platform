@@ -21,7 +21,7 @@ import { createStyles } from "@mantine/styles";
 import useLoginStore from "@/Stores/LoginStore";
 
 import { useRouter } from "next/navigation";
-type Props = { ws: WebSocket; videoSrc: string; Mp4: boolean; tier: string };
+type Props = { ws: WebSocket | null; videoSrc: string; Mp4: boolean; tier: string };
 
 const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
     ({ ws, videoSrc, Mp4, tier }: Props, ref) => {

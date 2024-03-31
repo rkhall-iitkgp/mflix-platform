@@ -384,46 +384,46 @@ export default function Navbar() {
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Genres</p>
                   <div className={classes.category}>
-                    <p><Link href="/search?genre=Drama">Drama</Link></p>
-                    <p><Link href="/search?genre=Comedy">Comedy</Link></p>
-                    <p><Link href="/search?genre=Romance">Romance</Link></p>
-                    <p><Link href="/search?genre=Crime">Crime</Link></p>
-                    <p><Link href="/search?genre=Thriller">Thriller</Link></p>
-                    <p><Link href="/search?genre=Action">Action</Link></p>
-                    <p><Link href="/search?genre=Adventure">Adventure</Link></p>
-                    <p><Link href="/search?genre=Documentary">Documentary</Link></p>
-                    <p><Link href="/search?genre=Horror">Horror</Link></p>
+                    <p><a href="/search?genre=Drama">Drama</a></p>
+                    <p><a href="/search?genre=Comedy">Comedy</a></p>
+                    <p><a href="/search?genre=Romance">Romance</a></p>
+                    <p><a href="/search?genre=Crime">Crime</a></p>
+                    <p><a href="/search?genre=Thriller">Thriller</a></p>
+                    <p><a href="/search?genre=Action">Action</a></p>
+                    <p><a href="/search?genre=Adventure">Adventure</a></p>
+                    <p><a href="/search?genre=Documentary">Documentary</a></p>
+                    <p><a href="/search?genre=Horror">Horror</a></p>
                   </div>
                 </div>
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Languages</p>
                   <div className={classes.category}>
                     <p>
-                      <Link href="/search?language=English">English</Link>
+                      <a href="/search?language=English">English</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Hindi">Hindi</Link>
+                      <a href="/search?language=Hindi">Hindi</a>
                     </p>
                     <p>
-                      <Link href="/search?language=French">French</Link>
+                      <a href="/search?language=French">French</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Spanish">Spanish</Link>
+                      <a href="/search?language=Spanish">Spanish</a>
                     </p>
                     <p>
-                      <Link href="/search?language=German">German</Link>
+                      <a href="/search?language=German">German</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Italian">Italian</Link>
+                      <a href="/search?language=Italian">Italian</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Japanese">Japanese</Link>
+                      <a href="/search?language=Japanese">Japanese</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Russian">Russian</Link>
+                      <a href="/search?language=Russian">Russian</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Mandarin">Mandarin</Link>
+                      <a href="/search?language=Mandarin">Mandarin</a>
                     </p>
                   </div>
                 </div>

@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { Center, Loader, Text, Group, Stack } from '@mantine/core';
+import Image from 'next/image';
 import Trending from './components/Trending';
 import HeroSection from '@/app/(rootProject)/(root)/components/HeroSection'
 import Trend from '@/assets/icons/trends.svg';
@@ -12,6 +14,9 @@ import { createStyles } from '@mantine/styles';
 import themeOptions from '@/utils/colors';
 import useLoginStore from '@/Stores/LoginStore';
 import useUserStore from '@/Stores/UserStore';
+import Carousel from '@/components/Search/Carousel';
+import { MovieCard, MovieCardSpace } from '@/components/Search/MovieCard';
+import { IoTrendingUp } from "react-icons/io5";
 
 export default function Home() {
   const newState = useUserStore.getState();
@@ -81,18 +86,117 @@ export default function Home() {
     if(user) return true;
     return false;
   };
+  const [trending, setTrending] = useState<Array<any>>([]);
+  const [page, setPage] = useState<number>(0);
+  const [hasNext, setHasNext] = useState(true);
 
-  return (
-    <>
-      <HeroSection />
-      {/* <ListMovies /> */}
-      <div>
-        <div className={classes.background}></div>
-        <div className={classes.backgroundOverlay}></div>
-        {TrendingMovies.length > 0 && <Section title={'Trending'} image={Trend} movieData={TrendingMovies || []} />}
-        <Section title={'Award Winning Films'} image={AwardIcon} movieData={Award || []} />
-        {MyList.length> 0 && isLoggedIn && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
-      </div>
-    </>
-  );
+    const nextPage = () => {
+        if (hasNext) setPage(page + 1);
+        console.log(page);
+    }
+
+    useEffect(() => {
+        if (page >= 2) getData(page);
+    }, [page]);
+
+    const getData = async (page: number) => {
+        const res = await (await fetch(
+            `https://971edtce1a.execute-api.ap-south-1.amazonaws.com/search/fuzzy?query=&page=${page}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    filters: {
+                        year: {
+                            start: 2015,
+                            end: 2016,
+                        },
+                        rating: {
+                            low: 8,
+                            high: 10,
+                        }
+                    }
+                }),
+            }
+        )).json();
+        setTrending(trending.concat(res.results));
+        if (!res.hasNext) setHasNext(false);
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await (await fetch(
+                `https://971edtce1a.execute-api.ap-south-1.amazonaws.com/search/fuzzy?query=&page=1`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        filters: {
+                            year: {
+                                start: 2015,
+                                end: 2016,
+                            },
+                            rating: {
+                                low: 8,
+                                high: 10,
+                            }
+                        }
+                    }),
+                }
+            )).json();
+            setTrending(res.results);
+            setPage(1)
+        }
+        fetchData()
+    }, [])
+
+    return (
+        <>
+            <HeroSection />
+            {/* <ListMovies /> */}
+            <div>
+                <div className={classes.background}></div>
+                <div className={classes.backgroundOverlay}></div>
+                <Stack style={{ paddingLeft: '5%', paddingRight: '5%' }}>
+
+                    <Group>
+                        <Text fz={themeOptions.fontSize.xl}>Trending</Text>
+                        <IoTrendingUp color={themeOptions.color.textColorNormal} size={60} />
+                    </Group>
+                    {trending.length ?
+                        <Carousel nextPage={nextPage}>
+                            {trending.map((data, index) => <MovieCard key={index} {...data} />)}
+                            {hasNext ?
+                                <MovieCardSpace>
+                                    <Center h="100%">
+                                        <Loader color="gray" type="dots" size={100} />
+                                    </Center>
+                                </MovieCardSpace>
+                                :
+                                null
+                            }
+                        </Carousel>
+                        :
+                        null
+                    }
+                    <Group>
+                        <Text fz={themeOptions.fontSize.xl}>Award Winning Films</Text>
+                        <Image src={AwardIcon} alt="icon" />
+                    </Group>
+                    {Award.length ?
+                        <Carousel>
+                            {Award.map((data, index) => <MovieCard key={index} {...data} />)}
+                        </Carousel>
+                        :
+                        null
+                    }
+                </Stack>
+                {isLoggedIn && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
+            </div>
+        </>
+    );
 }

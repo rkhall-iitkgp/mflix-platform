@@ -18,7 +18,7 @@ export default function MovieBanner() {
                     margin: '0.5rem  0.5rem',
                   minWidth: '600px',
                   borderRadius: '20px',
-                  background: 'linear-gradient(0deg, rgba(112, 17, 182, 0.05), rgba(112, 17, 182, 0.05)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
+                  background: 'linear-gradient(0deg, rgba(0, 102, 74, 0.05),rgba(0, 102, 74, 0.05)), linear-gradient(321.23deg, rgba(0, 102, 74, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
               },
           }}
           pt="md"

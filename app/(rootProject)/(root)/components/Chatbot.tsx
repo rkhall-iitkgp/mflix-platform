@@ -1,7 +1,7 @@
 import { Container, Group, Stack } from '@mantine/core'
 import Image from 'next/image'
 import React from 'react'
-import Bot from '@/assets/images/bot.png'
+import Bot from '@/assets/images/chatbot.png'
 import { createStyles } from '@mantine/styles'
 import SendIcon from '@/assets/icons/send.svg'
 import DownIcon from '@/assets/icons/down.svg'
@@ -64,7 +64,7 @@ export default function Chatbot() {
             const searchUrl = `/search?query=${encodeURIComponent(movieTitle)}`;
 
             // linkMessage = `<a id="searchLink" href="${searchUrl}" ">find more about "${titleMatch[1]}"</a>`;
-            linkMessage = `<button style="border-radius: 0.5rem; background-color: #6034DF; color: white; padding: 0.5rem; margin: 0.5rem 0.5rem 0.5rem 0; border: none; cursor: pointer;" onclick="window.open('${searchUrl}', '_blank')">Search ${titleMatch[1]}</button>`;
+            linkMessage = `<button style="border-radius: 0.5rem; background-color: ${themeOptions.color.button}; color: white; padding: 0.5rem; margin: 0.5rem 0.5rem 0.5rem 0; border: none; cursor: pointer;" onclick="window.open('${searchUrl}', '_blank')">Search ${titleMatch[1]}</button>`;
         }
         const formattedMessage = (data.message as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
@@ -138,7 +138,7 @@ const styles = createStyles((theme) => ({
     },
     chatbotHeader: {
         padding: "1rem",
-        background: "linear-gradient(149.93deg, #580099 8.93%, #00664A 50.35%, #580099 84.24%)",
+        background: themeOptions.color.button,
         justifyContent: "space-between !important",
         p: {
             margin: 0,
@@ -183,7 +183,7 @@ const styles = createStyles((theme) => ({
     sendIcon: {
         // padding: "0.7rem",
         borderRadius: '50%',
-        backgroundColor: "#6034DF",
+        backgroundColor: "#00664A",
         color: "white",
         width: "3rem",
         height: "3rem",
@@ -209,7 +209,7 @@ const styles = createStyles((theme) => ({
     },
     sent: {
         alignSelf: "flex-end",
-        backgroundColor: "#6034DF",
+        backgroundColor: "#00664A",
         padding: "0.5rem",
         borderRadius: "5px",
         lineHeight: "1",

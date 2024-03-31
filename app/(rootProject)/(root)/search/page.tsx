@@ -62,9 +62,8 @@ const useStyles = createStyles(() => ({
         "&:hover": {
             transform: "scale(1.1)", // Adjust as needed
         },
-    }
+    },
 }));
-
 
 const dummyCardMovie = () => ({
     _id: "ABCDEF123456",
@@ -119,25 +118,26 @@ export default function Search() {
 
     useEffect(() => {
         if (!notFound) setLoaded(false);
-    }, [notFound])
 
-    useEffect(() => {
-        if (searchParams.get("genre")) {
-            fetchData(search!, {
-                genres: [searchParams.get("genre")!.charAt(0).toUpperCase() + searchParams.get("genre")!.slice(1)],
-            });
-        }
-        else if (searchParams.get("language")) {
-            fetchData(search!, {
-                languages: [searchParams.get("language")!.charAt(0).toUpperCase() + searchParams.get("language")!.slice(1)],
-            });
-        }
-    }, [searchParams])
+    }, [notFound])
+    
+    // useEffect(() => {
+    //     if (searchParams.get("genre")) {
+    //         fetchData(search!, {
+    //             genres: [searchParams.get("genre")!.charAt(0).toUpperCase() + searchParams.get("genre")!.slice(1)],
+    //         });
+    //     }
+    //     else if (searchParams.get("language")) {
+    //         fetchData(search!, {
+    //             languages: [searchParams.get("language")!.charAt(0).toUpperCase() + searchParams.get("language")!.slice(1)],
+    //         });
+    //     }
+    // }, [searchParams])
 
     const getData = async (page: number) => {
         const res = await (
             await fetch(
-                `${searchMsApiUrls()}search/${search && search.trim().split(" ").length >= 5 ? "semantic" : "fuzzy"}?query=${search}&page=${page}`,
+                `${searchMsApiUrls()}search/${search ? (search.trim().split(" ").length >= 5 ? "semantic" : "fuzzy") : "fuzzy"}?query=${search}&page=${page}`,
                 {
                     method: "POST",
                     headers: {
@@ -147,6 +147,7 @@ export default function Search() {
                         userId: useLoginStore.getState()._id,
                         filters,
                     }),
+                    credentials: "include",
                 },
             )
         ).json();
@@ -177,6 +178,7 @@ export default function Search() {
                             userId: user._id,
                             filters,
                         }),
+                        credentials: "include",
                     },
                 )
             ).json();
@@ -200,22 +202,26 @@ export default function Search() {
                 setMoreResults(data.slice(4));
             }
         }
-        console.log('here');
+        console.log("here");
         setLoaded(true);
         console.log(loaded);
     };
 
     useEffect(() => {
-        if (!search) return;
-        console.log(
-            search.trim().split(" ").length >= 5 ? "semantic" : "fuzzy",
-        );
         const fetchData = async () => {
+            console.log('here');
             const data: Array<MovieProps> = [];
+            console.log('filters', {
+                genres: [searchParams.get("genre")],
+                languages: [searchParams.get("language")],
+            });
             for (let index = 0; index < 2; index++) {
+
+                const url=`${searchMsApiUrls()}search/${search ? (search.trim().split(" ").length >= 5 ? "semantic" : "fuzzy") : "fuzzy"}?query=${search ? search : ''}&page=${index + 1}`
+                console.log("url: ",url)
                 const res = await (
                     await fetch(
-                        `${searchMsApiUrls()}search/${search.trim().split(" ").length >= 5 ? "semantic" : "fuzzy"}?query=${search}&page=${index + 1}`,
+                        `${searchMsApiUrls()}search/${search ? (search.trim().split(" ").length >= 5 ? "semantic" : "fuzzy") : "fuzzy"}?query=${search ? search : ''}&page=${index + 1}`,
                         {
                             method: "POST",
                             headers: {
@@ -223,16 +229,22 @@ export default function Search() {
                             },
                             body: JSON.stringify({
                                 userId: user._id,
+                                filters: search ? null : {
+                                    genres: [searchParams.get("genre")],
+                                    languages: [searchParams.get("language")],
+                                }
                             }),
+                            credentials: "include",
                         },
                     )
                 ).json();
+                console.log(res);
                 if (!res.results) return setNotFound(true);
                 data.push(...res.results);
                 Mixpanel.track("Search Movie", { query: search });
                 if (user._id) {
                     Mixpanel.people.append(user._id, "Search History", {
-                    // @ts-ignore
+                        // @ts-ignore
                         Query: search,
                         Timestamp: new Date().toISOString(),
                     });

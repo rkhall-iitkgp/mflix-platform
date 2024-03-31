@@ -50,7 +50,7 @@ const MovieBannerSkeleton: React.FC<{ single?: boolean }> = ({ single }) => (
                     width: '100%',
                     borderRadius: '20px',
                     boxShadow: '2px 5px 8px 2px rgba(50, 41, 54, 0.87) inset',
-                    background: 'linear-gradient(0deg, rgba(112, 17, 182, 0.05), rgba(112, 17, 182, 0.05)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
+                    background: 'linear-gradient(0deg, rgba(0, 107, 74, 0.05), rgba(0,107,74, 0.05)), linear-gradient(321.23deg, rgba(0,107,74, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
                 },
             }}
             pt="xl"
@@ -139,7 +139,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                         width: '100%',
                         borderRadius: '20px',
                         boxShadow: '2px 5px 8px 2px rgba(50, 41, 54, 0.87) inset',
-                        background: 'linear-gradient(0deg, rgba(112, 17, 182, 0.05), rgba(112, 17, 182, 0.05)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
+                        background: 'linear-gradient(0deg, #001E2B, #001E2B),linear-gradient(321.23deg, rgba(0, 30, 43, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)',
                     },
                 }}
                 pt="xl"
@@ -163,7 +163,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                     <Stack ml="3vw" gap="xs" mr="lg">
                         <Text fz={themeOptions.fontSize.l} w="max(25vw, 400px)">{title}</Text>
                         <Group gap="6%" w="90%" grow preventGrowOverflow={false}>
-                            {genres?.map((e, i) =>
+                            {(genres ? genres : ['Comedy']).map((e, i) =>
                                 <Paper
                                     key={i}
                                     bg={themeOptions.color.button}

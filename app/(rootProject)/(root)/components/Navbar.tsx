@@ -169,14 +169,14 @@ export default function Navbar() {
       marginRight: '0.5rem',
     },
     logo: {
-      height: '2rem',
-      marginLeft: '1rem',
-      marginRight: '3rem',
+      height: '3rem',
+      // marginLeft: '1rem',
+      // marginRight: '3rem',
     },
     logoDiv: {
       display: 'flex',
       alignItems: 'center',
-      padding: '1rem',
+      // padding: '1rem',
     },
     activeLink: {
       fontWeight: 'bold',
@@ -318,8 +318,8 @@ export default function Navbar() {
       },
     },
     logout: {
-      '&hover': {
-        background: 'black'
+      '&:hover': {
+        background: '#011A25'
       }
     }
 
@@ -334,9 +334,11 @@ export default function Navbar() {
         style={{ zIndex: '220' }}
       >
         {/* Logo */}
-        <div className={classes.logoDiv}>
-          <img src="/logo.svg" alt="Logo" className={classes.logo} />
-        </div>
+        <Link href='/'>
+          <div className={classes.logoDiv}>
+            <img src="/logo.png" alt="Logo" className={classes.logo} />
+          </div>
+        </Link>
 
         {/* Links */}
         <ul className={classes.links}>
@@ -382,46 +384,46 @@ export default function Navbar() {
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Genres</p>
                   <div className={classes.category}>
-                    <p><Link href="/search?genre=Drama">Drama</Link></p>
-                    <p><Link href="/search?genre=Comedy">Comedy</Link></p>
-                    <p><Link href="/search?genre=Romance">Romance</Link></p>
-                    <p><Link href="/search?genre=Crime">Crime</Link></p>
-                    <p><Link href="/search?genre=Thriller">Thriller</Link></p>
-                    <p><Link href="/search?genre=Action">Action</Link></p>
-                    <p><Link href="/search?genre=Adventure">Adventure</Link></p>
-                    <p><Link href="/search?genre=Documentary">Documentary</Link></p>
-                    <p><Link href="/search?genre=Horror">Horror</Link></p>
+                    <p><a href="/search?genre=Drama">Drama</a></p>
+                    <p><a href="/search?genre=Comedy">Comedy</a></p>
+                    <p><a href="/search?genre=Romance">Romance</a></p>
+                    <p><a href="/search?genre=Crime">Crime</a></p>
+                    <p><a href="/search?genre=Thriller">Thriller</a></p>
+                    <p><a href="/search?genre=Action">Action</a></p>
+                    <p><a href="/search?genre=Adventure">Adventure</a></p>
+                    <p><a href="/search?genre=Documentary">Documentary</a></p>
+                    <p><a href="/search?genre=Horror">Horror</a></p>
                   </div>
                 </div>
                 <div className={classes.inside}>
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Languages</p>
                   <div className={classes.category}>
                     <p>
-                      <Link href="/search?language=English">English</Link>
+                      <a href="/search?language=English">English</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Hindi">Hindi</Link>
+                      <a href="/search?language=Hindi">Hindi</a>
                     </p>
                     <p>
-                      <Link href="/search?language=French">French</Link>
+                      <a href="/search?language=French">French</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Spanish">Spanish</Link>
+                      <a href="/search?language=Spanish">Spanish</a>
                     </p>
                     <p>
-                      <Link href="/search?language=German">German</Link>
+                      <a href="/search?language=German">German</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Italian">Italian</Link>
+                      <a href="/search?language=Italian">Italian</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Japanese">Japanese</Link>
+                      <a href="/search?language=Japanese">Japanese</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Russian">Russian</Link>
+                      <a href="/search?language=Russian">Russian</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Mandarin">Mandarin</Link>
+                      <a href="/search?language=Mandarin">Mandarin</a>
                     </p>
                   </div>
                 </div>
@@ -434,12 +436,12 @@ export default function Navbar() {
                 Login
               </Link>
             ) : (
-              <Menu trigger="hover" openDelay={100} closeDelay={50} >
+              <Menu trigger="hover" openDelay={100} closeDelay={300} >
                 <Menu.Target>
                   <Button bg={'none'} size={'20'} mr={25} mt={3} style={{ fontWeight: '400' }} className={classes.profile}>Profile</Button>
                 </Menu.Target>
 
-                <Menu.Dropdown bg={'white'} style={{ borderRadius: '1rem', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+                <Menu.Dropdown bg={themeOptions.color.categories} style={{ borderRadius: '1rem', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
                   {/* {currentProfile.map((profile, i) => {
                     console.log("profile", profile)
                     return (
@@ -450,10 +452,10 @@ export default function Navbar() {
                         {profile.name}
                       </Menu.Item>)
                   })} */}
-                  <Menu.Item className={classes.logout} leftSection={<IconSettings style={{ width: '2rem', height: '2rem', color: 'black', opacity: '0.8' }} />}>
-                    <Link href="/userprofile" style={{ textDecoration: 'none', color: 'black', opacity: '0.8' }}>User Profile</Link>
+                  <Menu.Item className={classes.logout} leftSection={<IconSettings style={{ width: '2rem', height: '2rem', color: 'white', opacity: '0.8' }} />}>
+                    <Link href="/userprofile" style={{ textDecoration: 'none', color: 'white', opacity: '0.8' }}>User Profile</Link>
                   </Menu.Item>
-                  <Menu.Item style={{ color: 'black', opacity: '0.8' }} leftSection={<IconLogout style={{ width: '2rem', height: '2rem', color: 'black', opacity: '0.8' }} />} onClick={() => { handleLogout() }}>
+                  <Menu.Item className={classes.logout} style={{ color: 'white', opacity: '0.8' }} leftSection={<IconLogout style={{ width: '2rem', height: '2rem', color: 'white', opacity: '0.8' }} />} onClick={() => { handleLogout() }}>
                     Logout
                   </Menu.Item>
                 </Menu.Dropdown>

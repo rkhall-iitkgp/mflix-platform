@@ -1,0 +1,98 @@
+.modalContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000a;
+    backdrop-filter: blur(4px);
+    z-index: 1500;
+    color: white;
+}
+
+.modal {
+    padding: 2rem;
+    background-color: #000d12;
+    border-radius: 1rem;
+    position: relative;
+    width: 40rem;
+}
+.close {
+    background: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    aspect-ratio: 1 / 1;
+    transform: translate(50%, -50%);
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+.modal h1 {
+    margin: 0;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-direction: column;
+}
+.modalContainer button {
+    cursor: pointer;
+}
+
+.container button,
+.container input {
+    background: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+.container .create {
+    padding: 0.5rem 1.5rem;
+    font-weight: bold;
+    border-radius: 0.5rem;
+    background-color: #00664a;
+    color: white;
+}
+.container span {
+    font-weight: bold;
+}
+.join {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.container .input {
+    background-color: #efefef;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.container .joinbtn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    color: #00664a;
+    font-weight: bold;
+    background-color: #00664b21;
+}
+
+.container .joinbtn:hover {
+    background-color: #00664b3b;
+    transition: all 0.2s ease;
+
+}

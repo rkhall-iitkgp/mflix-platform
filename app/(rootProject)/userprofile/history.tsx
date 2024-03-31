@@ -9,7 +9,7 @@ const History = () => {
     const state = useUserStore.getState();
     console.log(state);
     const user_id = state._id;
-    console.log("hi");
+    // console.log("hi");
     console.log(user_id);
     let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/history/${user_id}`, {
       method: 'GET',

@@ -66,7 +66,7 @@ export default function SearchBar({ input, setInput, onTyping, onSearch }: { inp
         <FaMicrophone
         className={classes.mic}
           style={{
-            backgroundColor: listeningFront ? '#7011B6' : 'transparent',
+            backgroundColor: listeningFront ? '#00664A' : 'transparent',
           }}
           size={24}
         />

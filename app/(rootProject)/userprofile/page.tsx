@@ -370,7 +370,7 @@ export default function UserProfile() {
       padding="md"
       withBorder={false}
     >
-      <AppShell.Header style={{ backgroundColor: 'black' }}>
+      <AppShell.Header style={{ backgroundColor: themeOptions.color.background }}>
         {/* <Group h="100%" px="md">
                     <MantineLogo size={30} />
                 </Group> */}
@@ -400,7 +400,7 @@ export default function UserProfile() {
             variant="filled"
             style={{
               height: '2.8rem',
-              backgroundColor: page == 1 ? '#29113B' : themeOptions.color.button,
+              backgroundColor: page == 1 ? themeOptions.color.background : themeOptions.color.button,
               borderTopLeftRadius: page == 1 ? '1.5rem' : "",
               borderBottomLeftRadius: page == 1 ? '1.5rem' : "",
               marginLeft: page == 1 ? '8%' : "",
@@ -418,11 +418,11 @@ export default function UserProfile() {
             />
             Profile
           </Button>
-          <Button
+          {/* <Button
             variant="filled"
             style={{
               height: '2.8rem',
-              backgroundColor: page == 2 ? '#29113B' : themeOptions.color.button,
+              backgroundColor: page == 2 ? themeOptions.color.background : themeOptions.color.button,
               borderTopLeftRadius: page == 2 ? '1.5rem' : "",
               borderBottomLeftRadius: page == 2 ? '1.5rem' : "",
               marginLeft: page == 2 ? '8%' : "",
@@ -439,12 +439,12 @@ export default function UserProfile() {
               style={{ marginRight: '0.4rem', fontSize: themeOptions.fontSize.s }}
             />
             History
-          </Button>
+          </Button> */}
           <Button
             variant="filled"
             style={{
               height: '2.8rem',
-              backgroundColor: page == 3 ? '#29113B' : themeOptions.color.button,
+              backgroundColor: page == 3 ? themeOptions.color.background : themeOptions.color.button,
               borderTopLeftRadius: page == 3 ? '1.5rem' : "",
               borderBottomLeftRadius: page == 3 ? '1.5rem' : "",
               marginLeft: page == 3 ? '8%' : "",
@@ -467,7 +467,7 @@ export default function UserProfile() {
             variant="filled"
             style={{
               height: '2.8rem',
-              backgroundColor: page == 4 ? '#29113B' : themeOptions.color.button,
+              backgroundColor: page == 4 ? themeOptions.color.background : themeOptions.color.button,
               borderTopLeftRadius: page == 4 ? '1.5rem' : "",
               borderBottomLeftRadius: page == 4 ? '1.5rem' : "",
               marginLeft: page == 4 ? '8%' : "",
@@ -522,8 +522,6 @@ export default function UserProfile() {
         <Box style={{ height: '100%', width: '100%', marginTop: '-1.2rem' }}>
           {page === 1 ? (
             <UserDetails />
-          ) : page === 2 ? (
-            <History />
           ) : page === 3 ? (
             <Favorites />
           ) : page === 4 ? (

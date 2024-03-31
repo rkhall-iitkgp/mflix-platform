@@ -6,15 +6,15 @@ import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import './global.css';
 import 'react-toastify/dist/ReactToastify.css';
 export const metadata = {
-  title: 'Mantine Next.js template',
-  description: 'I am using Mantine with Next.js!',
+  title: 'Mflix',
+  description: 'Discover endless entertainment possibilities with Mflix, your go-to destination for all things streaming!',
 };
 export default function RootLayout({ children }: { children: any }) {
   return (
     <html lang="en">
       <head>
         <ColorSchemeScript />
-        <link rel="shortcut icon" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
           rel="stylesheet"

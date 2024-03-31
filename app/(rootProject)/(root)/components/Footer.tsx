@@ -201,7 +201,7 @@ function Footer() {
         {/* Logo Section */}
         <div className={classes.logoDivStyle}>
           <Link href="/" className={classes.logoStylesText}>
-            <Image src={'/logo.svg'} alt="Logo" width={100} height={100} />
+            <Image src={'/logo.png'} alt="Logo" width={100} height={100} />
           </Link>
         </div>
 

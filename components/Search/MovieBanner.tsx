@@ -163,7 +163,7 @@ const MovieBanner: React.FC<MovieProps> = (props) => {
                     <Stack ml="3vw" gap="xs" mr="lg">
                         <Text fz={themeOptions.fontSize.l} w="max(25vw, 400px)">{title}</Text>
                         <Group gap="6%" w="90%" grow preventGrowOverflow={false}>
-                            {genres?.map((e, i) =>
+                            {(genres ? genres : ['Comedy']).map((e, i) =>
                                 <Paper
                                     key={i}
                                     bg={themeOptions.color.button}

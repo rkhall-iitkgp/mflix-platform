@@ -34,6 +34,7 @@ export default function PartyWatchModal({
                         onClick={(e) => {
                             e.preventDefault();
                             handleCreate();
+                            setOpenModal(false);
                         }}
                         className={style.create}
                     >
@@ -49,9 +50,11 @@ export default function PartyWatchModal({
                         />
                         <button
                             onClick={(e) => {
+                                if (!codeRef.current) return;
                                 e.preventDefault();
-                                codeRef.current &&
-                                    handleJoin(codeRef.current.value);
+                                console.log(codeRef.current.value);
+                                handleJoin(codeRef.current.value);
+                                setOpenModal(false);
                             }}
                             className={style.joinbtn}
                         >

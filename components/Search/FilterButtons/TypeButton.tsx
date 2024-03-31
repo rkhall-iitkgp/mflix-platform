@@ -19,7 +19,7 @@ const useStyles = createStyles(() => ({
         boxSizing: 'border-box',
         borderRadius: 'var(--mantine-radius-md)', // Use radius from themeOptions
         border: `1px solid ${themeOptions.color.insideTextColor}`, // Use divider color from themeOptions
-        backgroundColor: '#140320', // Use largeBox color from themeOptions
+        backgroundColor: themeOptions.color.background, // Use largeBox color from themeOptions
         width: '100%',
         overflow: 'hidden',
         display: 'flex',

@@ -32,5 +32,6 @@ export default withBundleAnalyzer({
         port: '',
       },
     ],
+    domains: ['971edtce1a.execute-api.ap-south-1.amazonaws.com'],
   },
 });

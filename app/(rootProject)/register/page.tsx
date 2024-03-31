@@ -102,7 +102,7 @@ export default function Register(props: any) {
         container: {
             padding: "1rem",
             position: "relative",
-            background: "linear-gradient(to right, red, purple)",
+            background: "linear-gradient(to right, red, #77C895)",
             zIndex: 0,
         },
     }));
@@ -146,7 +146,7 @@ export default function Register(props: any) {
             {!showOtp && exists ? (
                 <Flex
                     style={{
-                        backgroundImage: "url('background.png')",
+                        backgroundImage: "url('/bg-home.png')",
                         backgroundSize: "100% 100%",
                         backgroundRepeat: "no-repeat",
                         // border:"10px solid yellow",
@@ -240,7 +240,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                         input: {
                                             background: "transparent",
                                             color: "white",
-                                            borderColor: "purple",
+                                            borderColor: "#77C895",
                                         },
                                     }}
                                 />{" "}
@@ -273,7 +273,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                         input: {
                                             background: "transparent",
                                             color: "white",
-                                            borderColor: "purple",
+                                            borderColor: "#77C895",
                                         },
                                     }}
                                 />
@@ -329,7 +329,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                         input: {
                                             background: "transparent",
                                             color: "white",
-                                            borderColor: "purple",
+                                            borderColor: "#77C895",
                                         },
                                     }}
                                 />
@@ -360,7 +360,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                         input: {
                                             background: "transparent",
                                             color: "white",
-                                            borderColor: "purple",
+                                            borderColor: "#77C895",
                                         },
                                     }}
                                 />
@@ -400,7 +400,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                     input: {
                                         background: "transparent",
                                         color: "white",
-                                        borderColor: "purple",
+                                        borderColor: "#77C895",
                                     },
                                 }}
                             />
@@ -439,7 +439,7 @@ linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0, 0, 0, 0) 67.9
                                     input: {
                                         background: "transparent",
                                         color: "white",
-                                        borderColor: "purple",
+                                        borderColor: "#77C895",
                                     },
                                 }}
                             />

@@ -4,7 +4,7 @@ import Image, { StaticImageData } from 'next/image';
 import React from 'react';
 import { gsap } from 'gsap';
 import { useState, useEffect, useRef } from 'react';
-import BgImage from '@/assets/images/bg-home.jpeg';
+import BgImage from '@/assets/images/bg-home.png';
 import { createStyles } from '@mantine/styles';
 import Poster from '@/assets/images/poster1.jpg';
 import noImage from '@/assets/images/no-image.jpg';
@@ -78,7 +78,7 @@ const HeroSection = () => {
   }, [isTyping]);
 
   const handleTyping = (typing: string) => {
-    console.log('func called');
+    // console.log('func called');
     setIsTyping(typing !== '');
     console.log(isTyping);
     setInput(typing);
@@ -273,7 +273,7 @@ const useStyles = createStyles(() => ({
     top: 0,
     width: '100%',
     height: '100vh',
-    background: 'linear-gradient(45deg, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 0) 60%)',
+    // background: 'linear-gradient(45deg, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 0) 60%)',
   },
   bgContainer: {
     position: 'absolute',
@@ -284,7 +284,7 @@ const useStyles = createStyles(() => ({
     overflow: 'hidden',
   },
   bgImage: {
-    opacity: 0.25,
+    opacity: 0.7,
   },
   searchContainer: {
     display: 'flex',

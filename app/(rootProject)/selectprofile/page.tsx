@@ -70,59 +70,59 @@ const SelectProfile: React.FC = () => {
         ConvertType();
     }, [currentProfile]);
 
-    const [length, setLength] = useState(0);
+  const [length, setLength] = useState(0);
 
-    const AddProfile = async () => {
-        try {
-            const response = await fetch(`${url}/user/create`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include',
-                body: JSON.stringify({userName: `Profile ${currentProfile.length + 1}`}),
-            });
-            console.log(response);
-            return await response.json();
-        } catch (error) {
-            console.log('Unable to connect:', error);
-            return {ok: false};
-        }
-    };
-
-    const ConvertType = () => {
-        console.log('currentProfile', currentProfile);
-        const transformedArray = currentProfile.map((item, index) => {
-            console.log(item, index);
-            return {
-                _id: item._id || `${index}`,
-                caption: item.name || `Profile ${index + 1}`,
-                link: '/',
-                image: ImageArray[0],
-                index: index,
-            } as Profile;
-        });
-        transformedArray.push({
-            _id: transformedArray.length + 1,
-            caption: 'Add New',
-            link: 'null',
-            image: addMoreLogo,
-            index: -1,
-        } as Profile);
-        console.log('transforemedArray:', transformedArray);
-        setChangedType(transformedArray);
-        if (transformedArray.length == 6) {
-            transformedArray.pop();
-        }
-    };
-
-    const {classes} = useStyles();
-    const profilesPerRow = 5;
-    const newProfile = {
-        _id: "",
-        name: "",
-        index: 0,
+  const AddProfile = async () => {
+    try {
+      const response = await fetch(`${url}/user/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ userName: `Profile ${currentProfile.length + 1}` }),
+      });
+      console.log(response);
+      return await response.json();
+    } catch (error) {
+      console.log('Unable to connect:', error);
+      return { ok: false };
     }
+  };
+
+  const ConvertType = () => {
+    console.log('currentProfile', currentProfile);
+    const transformedArray = currentProfile.map((item, index) => {
+      console.log(item, index);
+      return {
+        id: item._id || `${index}`,
+        caption: item.name || `Profile ${index + 1}`,
+        link: '/',
+        image: ImageArray[0],
+        index:index,
+      };
+    });
+    transformedArray.push({
+      id: transformedArray.length + 1,
+      caption: 'Add New',
+      link: 'null',
+      image: addMoreLogo,
+      index: -1,
+    });
+    console.log('transforemedArray:', transformedArray);
+    setChangedType(transformedArray);
+    if(transformedArray.length == 6){
+        transformedArray.pop();
+    }
+  };
+
+  const { classes } = useStyles();
+  const profilesPerRow = 5;
+  const newProfile = {
+    _id: "",
+    name: "",
+    index: 0,
+  }
 
     const handleProfileClick = (profile: any) => {
         if (profile.link === 'null') {
@@ -200,8 +200,8 @@ const SelectProfile: React.FC = () => {
                 {renderProfiles()}
             </div>
         </div>
-    );
-};
+      );
+  }
 
 const useStyles = createStyles(() => ({
     containerStyle: {

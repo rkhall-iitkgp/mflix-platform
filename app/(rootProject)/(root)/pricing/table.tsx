@@ -32,15 +32,18 @@ const SubscriptionTable = ({ cardPlan }: any) => {
             textAlign: 'center'
         },
         BasicPlanStyles: {
-            textAlign: 'center', background: cardPlan[0] === false ? 'none' : 'linear-gradient(0deg, rgba(112, 17, 182, 0.15), rgba(112, 17, 182, 0.15)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)'
+            textAlign: 'center', background: cardPlan[0] === false ? 'none' : 'linear-gradient(0deg, rgba(0,102,54,0.15), rgba(0,102,54,0.15)), linear-gradient(321.23deg, rgba(0,102,54,0.2)  5.98%, rgba(0, 0, 0, 0) 66.28%)'
+
 
         },
         PremiumPlanStyles: {
-            textAlign: 'center', background: cardPlan[1] === false ? 'none' : 'linear-gradient(0deg, rgba(112, 17, 182, 0.15), rgba(112, 17, 182, 0.15)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)'
+            textAlign: 'center', background: cardPlan[1] === false ? 'none' : 'linear-gradient(0deg, rgba(0,102,54,0.15), rgba(0,102,54,0.15)), linear-gradient(321.23deg, rgba(0,102,54,0.2)  5.98%, rgba(0, 0, 0, 0) 66.28%)'
+
 
         },
         FamilyPlanStyles: {
-            textAlign: 'center', background: cardPlan[2] === false ? 'none' : 'linear-gradient(0deg, rgba(112, 17, 182, 0.15), rgba(112, 17, 182, 0.15)), linear-gradient(321.23deg, rgba(112, 17, 182, 0.2) 5.98%, rgba(0, 0, 0, 0) 66.28%)'
+            textAlign: 'center', background: cardPlan[2] === false ? 'none' : 'linear-gradient(0deg, rgba(0,102,54,0.15), rgba(0,102,54,0.15)), linear-gradient(321.23deg, rgba(0,102,54,0.2)  5.98%, rgba(0, 0, 0, 0) 66.28%)'
+
 
         }
     }));

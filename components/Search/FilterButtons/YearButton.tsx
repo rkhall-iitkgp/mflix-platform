@@ -15,7 +15,7 @@ const useStyles = createStyles(() =>
             boxSizing: 'border-box',
             borderRadius: 'var(--mantine-radius-md)', // Use radius from themeOptions
             border: `1px solid ${themeOptions.color.insideTextColor}`, // Use divider color from themeOptions
-            backgroundColor: '#140320', // Use largeBox color from themeOptions
+            backgroundColor: themeOptions.color.background, // Use largeBox color from themeOptions
             width: '90%',
             display: 'flex',
             justifyContent: 'space-between',
@@ -91,7 +91,7 @@ export function YearButton() {
                             <div style={{ display: 'flex', alignItems: 'start' }}>
                                 <span style={{ fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#ffffff' }}>Year:</span>
                                 <input
-                                  style={{ width: '90%', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#00664A', backgroundColor: '#140320', border: 'none', outline: 'none', borderRadius: '5px' }}
+                                  style={{ width: '90%', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#00664A', backgroundColor: '#000D12', border: 'none', outline: 'none', borderRadius: '5px' }}
                                   type="number"
                                   value={selected}
                                   onChange={handleInputChange}

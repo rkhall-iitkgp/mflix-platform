@@ -103,7 +103,7 @@ export default function Plan() {
             flexDirection: 'column',
             borderRadius: '15px',
             // backgroundColor:"white",
-            background: "linear-gradient(45deg, rgba(43,10,53,1) 5%, rgba(143,60,205,0.7) 100%, rgba(43,10,53,1) 10%)",
+            background: "linear-gradient(45deg, #014331 5%, #0D8766 100%, #022B1F 10%)",
             border: '1.5px solid white',
             padding: '1rem',
             // backdropFilter:"blur(100px)",
@@ -123,7 +123,7 @@ export default function Plan() {
             borderRadius: '15px',
             // backgroundColor:"white",
             // background: "linear-gradient(45deg, rgba(43,10,53,1) 10%, rgba(143,60,205,1) 80%, rgba(43,10,53,1) 95%)",
-            background: 'linear-gradient(45deg, rgba(43,10,53,1) 5%, rgba(143,60,205,0.7) 88%, rgba(43,10,53,1) 10%)',
+            background: 'linear-gradient(45deg, #014331 5%, #0D8766 88%, #022B1F 10%)',
             border: '1.5px solid white',
             boxShadow: '10px 10px 25px rgba(150, 150, 255, 0.5)',
 

@@ -370,7 +370,7 @@ export default function UserProfile() {
       padding="md"
       withBorder={false}
     >
-      <AppShell.Header style={{ backgroundColor: 'black' }}>
+      <AppShell.Header style={{ backgroundColor: themeOptions.color.background }}>
         {/* <Group h="100%" px="md">
                     <MantineLogo size={30} />
                 </Group> */}
@@ -400,7 +400,7 @@ export default function UserProfile() {
             variant="filled"
             style={{
               height: '2.8rem',
-              backgroundColor: page == 1 ? '#29113B' : themeOptions.color.button,
+              backgroundColor: page == 1 ? themeOptions.color.background : themeOptions.color.button,
               borderTopLeftRadius: page == 1 ? '1.5rem' : "",
               borderBottomLeftRadius: page == 1 ? '1.5rem' : "",
               marginLeft: page == 1 ? '8%' : "",
@@ -422,7 +422,7 @@ export default function UserProfile() {
             variant="filled"
             style={{
               height: '2.8rem',
-              backgroundColor: page == 2 ? '#29113B' : themeOptions.color.button,
+              backgroundColor: page == 2 ? themeOptions.color.background : themeOptions.color.button,
               borderTopLeftRadius: page == 2 ? '1.5rem' : "",
               borderBottomLeftRadius: page == 2 ? '1.5rem' : "",
               marginLeft: page == 2 ? '8%' : "",
@@ -444,7 +444,7 @@ export default function UserProfile() {
             variant="filled"
             style={{
               height: '2.8rem',
-              backgroundColor: page == 3 ? '#29113B' : themeOptions.color.button,
+              backgroundColor: page == 3 ? themeOptions.color.background : themeOptions.color.button,
               borderTopLeftRadius: page == 3 ? '1.5rem' : "",
               borderBottomLeftRadius: page == 3 ? '1.5rem' : "",
               marginLeft: page == 3 ? '8%' : "",
@@ -467,7 +467,7 @@ export default function UserProfile() {
             variant="filled"
             style={{
               height: '2.8rem',
-              backgroundColor: page == 4 ? '#29113B' : themeOptions.color.button,
+              backgroundColor: page == 4 ? themeOptions.color.background : themeOptions.color.button,
               borderTopLeftRadius: page == 4 ? '1.5rem' : "",
               borderBottomLeftRadius: page == 4 ? '1.5rem' : "",
               marginLeft: page == 4 ? '8%' : "",

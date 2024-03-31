@@ -16,9 +16,9 @@
     padding: 1rem 0 0;
     background: linear-gradient(
         149.93deg,
-        #580099 8.93%,
+        #00664A 8.93%,
         #00664A 50.35%,
-        #580099 84.24%
+        #00664A 84.24%
     );
 }
 .tab {
@@ -52,7 +52,7 @@
 
 .heading {
     font-size: 2rem;
-    color: #6034df;
+    color: #00664A;
     line-height: normal;
     margin-bottom: 0.25rem;
     margin-top: 0;
@@ -81,7 +81,7 @@
     outline: none;
     box-shadow: none;
     color: white;
-    background: #6034df;
+    background: #00664A;
     padding-inline: 1rem;
     cursor: pointer;
     border-radius: 1rem;
@@ -133,9 +133,9 @@
     color: white;
     background: linear-gradient(
         149.93deg,
-        #580099 8.93%,
+        #00664A 8.93%,
         #00664A 50.35%,
-        #580099 84.24%
+        #00664A 84.24%
     );
     padding: 0.75rem;
     font-weight: bold;
@@ -188,13 +188,13 @@
 
 .chatcontainer p.from_me {
     align-self: flex-end;
-    background-color: #6034df;
+    background-color: #00664A;
     color: #fff;
 }
 
 .chatcontainer p.from_me::before {
     border-bottom-left-radius: 0.8rem 0.7rem;
-    border-right: 1rem solid #6034df;
+    border-right: 1rem solid #00664A;
     right: -0.35rem;
     transform: translate(0, -0.1rem);
 }

@@ -163,14 +163,14 @@ export default function Navbar() {
       marginRight: '0.5rem',
     },
     logo: {
-      height: '2rem',
-      marginLeft: '1rem',
-      marginRight: '3rem',
+      height: '3rem',
+      // marginLeft: '1rem',
+      // marginRight: '3rem',
     },
     logoDiv: {
       display: 'flex',
       alignItems: 'center',
-      padding: '1rem',
+      // padding: '1rem',
     },
     activeLink: {
       fontWeight: 'bold',
@@ -328,9 +328,11 @@ export default function Navbar() {
         style={{ zIndex: '220' }}
       >
         {/* Logo */}
-        <div className={classes.logoDiv}>
-          <img src="/logo.svg" alt="Logo" className={classes.logo} />
-        </div>
+        <Link href='/'>
+          <div className={classes.logoDiv}>
+            <img src="/logo.png" alt="Logo" className={classes.logo} />
+          </div>
+        </Link>
 
         {/* Links */}
         <ul className={classes.links}>

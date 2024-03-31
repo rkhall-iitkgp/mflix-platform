@@ -48,7 +48,7 @@ const SettingsTab = () => {
                             setAllowedControls(e.currentTarget.checked);
                         }}
                         labelPosition="left"
-                        color="#6034df"
+                        color="#00664A"
                         label="Anyone can pause video"
                     />
                 </div>

@@ -27,5 +27,6 @@ export default withBundleAnalyzer({
         pathname: '/**',
       },
     ],
+    domains: ['971edtce1a.execute-api.ap-south-1.amazonaws.com'],
   },
 });

@@ -147,7 +147,7 @@ export default function Login() {
   const useStyles = createStyles(() => ({
     OuterBoxStyles: {
       fontFamily: 'Poppins, cursive', // Applying Poppins font
-      backgroundImage: "url('background.png')",
+      backgroundImage: "url('/bg-home.png')",
       backgroundSize: '100% 100%',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',

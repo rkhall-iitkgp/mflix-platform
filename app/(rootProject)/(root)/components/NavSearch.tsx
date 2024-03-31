@@ -96,7 +96,8 @@ export default function SearchBar() {
         <FaMicrophone
         className={classes.mic}
           style={{
-            backgroundColor: listeningFront ? '#7011B6' : 'transparent',
+            backgroundColor: listeningFront ? '#00664A' : 'transparent',
+            color: listeningFront ? '#FFFF':'rgb(156, 163, 175)'
           }}
           size={24}
         />
@@ -144,7 +145,6 @@ const useStyles = createStyles(() => ({
       mic: {
         width: '1.5rem',
         height: '1.5rem',
-        color: 'rgb(156, 163, 175)',
         marginRight: '0.5rem',
         padding: '0.125rem',
         borderRadius: '50%',

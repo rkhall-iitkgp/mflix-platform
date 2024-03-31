@@ -676,7 +676,7 @@ const useStyles = createStyles(() => ({
     width: '50px',
     height: '50px',
     border: '5px solid #f3f3f3',
-    borderTop: '5px solid #7011b6',
+    borderTop: '5px solid #00664A',
     borderRadius: '50%',
     animation: `${spin} 0.5s linear infinite`,
   },

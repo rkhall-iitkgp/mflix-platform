@@ -185,7 +185,7 @@ const SelectProfile: React.FC = () => {
   return (
     <div
       style={{
-        backgroundColor: '#140320',
+        backgroundColor: '#000D12',
         minHeight: '100vh',
         color: 'white',
         display: 'flex',

@@ -89,9 +89,9 @@ export default function Home() {
       <div>
         <div className={classes.background}></div>
         <div className={classes.backgroundOverlay}></div>
-        <Section title={'Trending'} image={Trend} movieData={TrendingMovies || []} />
+        {TrendingMovies.length > 0 && <Section title={'Trending'} image={Trend} movieData={TrendingMovies || []} />}
         <Section title={'Award Winning Films'} image={AwardIcon} movieData={Award || []} />
-        {isLoggedIn && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
+        {MyList.length> 0 && isLoggedIn && <Section title={'My List'} image={MyListIcon} movieData={MyList || []} />}
       </div>
     </>
   );

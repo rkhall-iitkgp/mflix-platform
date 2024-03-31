@@ -8,7 +8,7 @@ import { createStyles } from "@mantine/styles";
 import Footer from "../../(root)/components/Footer";
 import Navbar from "../../(root)/components/Navbar";
 import searchMsApiUrls from "../../api/searchMsApi";
-import BgImage from "@/assets/images/bg-home.jpeg";
+import BgImage from "@/assets/images/bg-home.png";
 import MovieContent from "@/components/MovieDetails/MovieContent";
 // import { ScrollArea } from '@mantine/core'
 import { useEffect, useRef, useState } from "react";

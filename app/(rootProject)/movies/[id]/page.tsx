@@ -21,6 +21,9 @@ import VideoPlayer from "@/components/VPlayer";
 import PartyChat from "@/components/PartyChat/PartyChat";
 import { ToastContainer, toast } from "react-toastify";
 import { incrementArray } from "@/utils/mixpanelutils";
+import PartyWatchModal from "@/components/PartyWatchModal";
+
+const WS_URL = `ws://${process.env.NEXT_PUBLIC_STREAMING_IP}`;
 
 export default function MovieDetails({ params }: { params: { id: string } }) {
     const url = searchMsApiUrls();
@@ -39,11 +42,13 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
         username,
         setIsPlaying,
         setHost,
+        openModal,
         setRoom,
     } = usePlayerStore();
     const [ws, setWS] = useState<WebSocket | null>(null);
     const playerRef = useRef<HTMLVideoElement>(null);
     const Usertier = useLoginStore((state) => state.subscriptionTier.tier.tier);
+
     const styles = createStyles(() => ({
         streaming: {
             width: "100%",
@@ -74,6 +79,113 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
     }));
 
     const { classes } = styles();
+
+    const connectWebSocket = () => {
+        const websocket = new WebSocket(WS_URL);
+        websocket.onopen = () => console.log("WebSocket Connected");
+        websocket.onclose = () => console.log("WebSocket Disconnected");
+        websocket.onerror = (error) => console.log("WebSocket Error: ", error);
+        websocket.onmessage = (event: any) => {
+            const data = JSON.parse(event.data);
+            switch (data.type) {
+                case "room_created":
+                    console.log({ room_created: data });
+                    alert(`Room created. Code: ${data.roomCode}`);
+                    toggleChat(true);
+                    setHost(true);
+                    setRoom(data.roomCode);
+                    appendMessage({
+                        type: "notification",
+                        text: `Room has been created`,
+                    });
+                    break;
+
+                case "joined_room":
+                    console.log({ joined_room: data });
+                    appendMessage({
+                        type: "notification",
+                        text: `${data.username} joined the room`,
+                    });
+                    setHost(data.creator.username == username);
+                    toggleChat(true);
+                    setRoom(data.roomCode);
+                    break;
+
+                case "play_pause":
+                    console.log({ play_pause: data });
+                    setIsPlaying(data.isPlaying);
+                    appendMessage({
+                        type: "notification",
+                        text: `${data.isPlaying ? "played" : "paused"} the videos`,
+                    });
+                    break;
+
+                case "seek":
+                    console.log(data.seekTime);
+                    console.log(playerRef);
+                    if (playerRef.current)
+                        playerRef.current.currentTime = data.seekTime;
+                    break;
+
+                case "incoming_message":
+                    console.log({ incoming_message: data });
+                    appendMessage({
+                        text: data.content.text,
+                        type: "incoming_message",
+                        username: data.content.username,
+                    });
+                    break;
+
+                case "outgoing_message":
+                    console.log({ outgoing_message: data });
+                    appendMessage({
+                        text: data.content.text,
+                        type: "outgoing_message",
+                    });
+                    break;
+
+                //   case 'sync_timestamp':
+                //     console.log({ sync_timestamp: data });
+                //     setCurrentTime(data.timestamp);
+                //     break;
+
+                case "error":
+                    alert(data.message);
+                    break;
+            }
+        };
+
+        setWS(websocket);
+        return websocket;
+    };
+
+    const createRoom = () => {
+        if (!user.name) return;
+        const websocket = ws || connectWebSocket();
+        websocket.onopen = () => {
+            websocket.send(
+                JSON.stringify({
+                    type: "create_room",
+                    username: user.name,
+                }),
+            );
+        };
+    };
+
+    const joinRoom = (code: string) => {
+        if (!user.name) return;
+        const websocket = ws || connectWebSocket();
+        websocket.onopen = () => {
+            websocket.send(
+                JSON.stringify({
+                    type: "join_room",
+                    username: user.name,
+                    roomCode: code,
+                }),
+            );
+            console.log("join room");
+        };
+    };
 
     useEffect(() => {
         const id = params.id;
@@ -173,97 +285,94 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
         getMovieDetails();
     }, []);
 
+    // Socket
     useEffect(() => {
-        let socket = new WebSocket(
-            `ws://${process.env.NEXT_PUBLIC_STREAMING_IP}`,
-        );
-        setWS(socket);
+        if (ws) {
+            ws.onopen = () => {
+                console.log("WebSocket connected");
+            };
 
-        socket.onopen = () => {
-            console.log("WebSocket connected");
-        };
+            ws.onclose = () => {
+                console.log("WebSocket disconnected");
+            };
 
-        socket.onclose = () => {
-            console.log("WebSocket disconnected");
-        };
+            ws.onmessage = (event: any) => {
+                const data = JSON.parse(event.data);
+                switch (data.type) {
+                    case "room_created":
+                        console.log({ room_created: data });
+                        alert(`Room created. Code: ${data.roomCode}`);
+                        toggleChat(true);
+                        setHost(true);
+                        setRoom(data.roomCode);
+                        appendMessage({
+                            type: "notification",
+                            text: `Room has been created`,
+                        });
+                        break;
 
-        socket.onmessage = (event: any) => {
-            const data = JSON.parse(event.data);
-            switch (data.type) {
-                case "room_created":
-                    console.log({ room_created: data });
-                    alert(`Room created. Code: ${data.roomCode}`);
-                    toggleChat(true);
-                    setHost(true);
-                    setRoom(data.roomCode);
-                    console.log(activeChat);
-                    appendMessage({
-                        type: "notification",
-                        text: `Room has been created`,
-                    });
-                    break;
+                    case "joined_room":
+                        console.log({ joined_room: data });
+                        toggleChat(true);
+                        setHost(data.creator.username == username);
+                        setRoom(data.roomCode);
+                        appendMessage({
+                            type: "notification",
+                            text: `${data.username} joined the room`,
+                        });
+                        break;
 
-                case "joined_room":
-                    console.log({ joined_room: data });
-                    appendMessage({
-                        type: "notification",
-                        text: `${data.username} joined the room`,
-                    });
-                    setHost(data.creator.username == username);
-                    toggleChat(true);
-                    setRoom(data.roomCode);
-                    break;
+                    case "play_pause":
+                        console.log({ play_pause: data });
+                        setIsPlaying(data.isPlaying);
+                        appendMessage({
+                            type: "notification",
+                            text: `${data.isPlaying ? "played" : "paused"} the videos`,
+                        });
+                        break;
 
-                case "play_pause":
-                    console.log({ play_pause: data });
-                    setIsPlaying(data.isPlaying);
-                    appendMessage({
-                        type: "notification",
-                        text: `${data.isPlaying ? "played" : "paused"} the videos`,
-                    });
-                    break;
+                    case "seek":
+                        console.log(data.seekTime);
+                        console.log(playerRef);
+                        if (playerRef.current)
+                            playerRef.current.currentTime = data.seekTime;
+                        break;
 
-                case "seek":
-                    console.log(data.seekTime);
-                    console.log(playerRef);
-                    if (playerRef.current)
-                        playerRef.current.currentTime = data.seekTime;
-                    break;
+                    case "incoming_message":
+                        console.log({ incoming_message: data });
+                        appendMessage({
+                            text: data.content.text,
+                            type: "incoming_message",
+                            username: data.content.username,
+                        });
+                        break;
 
-                case "incoming_message":
-                    console.log({ incoming_message: data });
-                    appendMessage({
-                        text: data.content.text,
-                        type: "incoming_message",
-                        username: data.content.username,
-                    });
-                    break;
+                    case "outgoing_message":
+                        console.log({ outgoing_message: data });
+                        appendMessage({
+                            text: data.content.text,
+                            type: "outgoing_message",
+                        });
+                        break;
 
-                case "outgoing_message":
-                    console.log({ outgoing_message: data });
-                    appendMessage({
-                        text: data.content.text,
-                        type: "outgoing_message",
-                    });
-                    break;
+                    //   case 'sync_timestamp':
+                    //     console.log({ sync_timestamp: data });
+                    //     setCurrentTime(data.timestamp);
+                    //     break;
 
-                //   case 'sync_timestamp':
-                //     console.log({ sync_timestamp: data });
-                //     setCurrentTime(data.timestamp);
-                //     break;
-
-                case "error":
-                    alert(data.message);
-                    break;
+                    case "error":
+                        alert(data.message);
+                        break;
+                }
+            };
+        }
+        return () => {
+            if (ws) {
+                ws.close();
+                setWS(null);
             }
         };
-        return () => {
-            socket.close();
-            setWS(null);
-        };
     }, []);
-
-    if (!ws) return;
 
     return (
         <Stack
@@ -283,25 +392,28 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                     className={classes.bgImage}
                 />
             </div>
-
             {/* Navbar */}
             <div>
                 <Navbar />
             </div>
-
             {/* Streaming Section */}
             {/* <Group className={classes.streaming}>
-
             </Group> */}
+            {openModal && (
+                <PartyWatchModal
+                    handleCreate={createRoom}
+                    handleJoin={joinRoom}
+                />
+            )}
             <div style={{ display: "flex", width: "100%" }}>
                 <VideoPlayer
                     ref={playerRef}
-                    ws={ws}
+                    ws={ws || null}
                     videoSrc={videoSrc}
                     Mp4={Mp4}
-                    tier={Usertier}
+                    // tier={Usertier}
                 />
-                {activeChat && <PartyChat ws={ws} />}
+                {activeChat && <PartyChat ws={ws || null} />}
             </div>
             {/* Movie Details */}
             <div

@@ -20,14 +20,17 @@ import useForwardRef from "@/utils/useForwardRef";
 import { createStyles } from "@mantine/styles";
 import useLoginStore from "@/Stores/LoginStore";
 
-type Props = { ws: WebSocket; videoSrc: string; Mp4: boolean; tier: string };
+type Props = {
+    ws: WebSocket | null;
+    videoSrc: string;
+    Mp4: boolean;
+    tier?: string;
+};
 
 const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
     ({ ws, videoSrc, Mp4, tier }: Props, ref) => {
-        const {classes} = useStyles();
         const loaderRef = useRef<HTMLDivElement>(null);
         const playerContainerRef = useRef<HTMLDivElement>(null);
-        // const playerRef = useRef<HTMLVideoElement>(null);
         const progressBarRef = useRef<HTMLDivElement>(null);
         const progressRef = useRef<HTMLDivElement>(null);
         const dotRef = useRef<HTMLDivElement>(null);
@@ -66,6 +69,8 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
             appendMessage,
             isHost,
             room,
+            setOpenModal,
+            openModal,
         } = usePlayerStore();
 
         const seekPlayerToLocation = (e: any) => {
@@ -81,6 +86,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
                 progressRef.current.style.width = `${percentage}%`;
                 playerRef.current!.currentTime =
                     (percentage / 100) * playerRef.current!.duration;
+                if (!ws) return;
                 ws.send(
                     JSON.stringify({
                         type: "seek",
@@ -109,6 +115,7 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
                 if (!isHost && !allowedControls) return;
                 if (isHost || allowedControls || !room) {
                     setIsPlaying(state);
+                    if (!ws) return;
                     ws.send(
                         JSON.stringify({
                             type: "play_pause",
@@ -145,7 +152,8 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
             if (!playerRef.current) return;
             playerRef.current.currentTime += 15;
             storeSetCurrentTime(playerRef.current!.currentTime);
-            ws!.send(
+            if (!ws) return;
+            ws.send(
                 JSON.stringify({
                     type: "seek",
                     username,
@@ -295,13 +303,14 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
             };
 
             const mouseUp = () => {
-                if (ws)
+                if (ws) {
                     ws.send(
                         JSON.stringify({
                             type: "seek",
                             seekTime: playerRef.current.currentTime,
                         }),
                     );
+                }
                 setSeeking(false);
             };
 
@@ -612,7 +621,12 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
                                 }}
                             >
                                 <button
-                                    onClick={() => toggleChat(undefined)}
+                                    onClick={() => {
+                                        if (!room) {
+                                            setOpenModal(!openModal);
+                                            return;
+                                        } else toggleChat(undefined);
+                                    }}
                                     className={style.partyWatch}
                                 >
                                     <Image
@@ -742,35 +756,3 @@ const VideoPlayer = forwardRef<HTMLVideoElement, Props>(
     },
 );
 export default VideoPlayer;
-
-const useStyles = createStyles((theme) => ({
-    modal: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '100vw',
-      height: '100vh',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dark background
-      zIndex: 10, // Ensure modal is on top
-    },
-    modalContent: {
-      backgroundColor: '#212121', // Dark modal content
-    //   padding: theme.spacing(4),
-      borderRadius: 4,
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between', // Buttons on opposite sides
-    },
-    button: {
-    //   padding: theme.spacing(2),
-      backgroundColor: '#424242', // Button color
-      color: '#fff', // Button text color
-      border: 'none',
-      borderRadius: 4,
-      cursor: 'pointer',
-    },
-  }));
-  

@@ -18,7 +18,7 @@ export default function MovieBanner() {
           }}
           styles={{
             root: {
-                borderImageSource: 'linear-gradient(166.93deg, #B586D8 3.24%, rgba(143, 72, 196, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(112, 17, 182, 0.09) 67.95%)',
+                borderImageSource: 'linear-gradient(166.93deg, #B586D8 3.24%, rgba(143, 72, 196, 0) 96.43%), linear-gradient(317.92deg, rgba(255, 255, 255, 0.6) 1.48%, rgba(0,102,54,0.0) 67.95%)',
                 borderImageSlice: '1',
                 borderImageWidth: '1',
                 borderImageOutset: '0',

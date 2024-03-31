@@ -15,7 +15,7 @@ const useStyles = createStyles(() =>
         boxSizing: 'border-box',
         borderRadius: 'var(--mantine-radius-md)', // Use radius from themeOptions
         border: `1px solid ${themeOptions.color.insideTextColor}`, // Use divider color from themeOptions
-        backgroundColor: '#140320', // Use largeBox color from themeOptions
+        backgroundColor: themeOptions.color.button, // Use largeBox color from themeOptions
         width: '90%',
         display: 'flex',
         justifyContent: 'space-between',
@@ -93,7 +93,7 @@ export function RatingButton() {
                                 <span style={{ fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#ffffff' }}>Rating:</span>
                                 <div style={{ display: 'flex', gap: '5%', paddingLeft: '20px', paddingTop: '6px' }}>
                                     <input
-                                        style={{ width: '50%', height: '20px', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#00664A', backgroundColor: '#140320', outline: 'none', borderRadius: '5px', }}
+                                        style={{ width: '50%', height: '20px', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#00664A', backgroundColor: themeOptions.color.button, outline: 'none', borderRadius: '5px', }}
                                         type="number"
                                         min={0}
                                         max={10}
@@ -102,7 +102,7 @@ export function RatingButton() {
                                         onChange={handleFirstInputChange}
                                     />
                                     <input
-                                        style={{ width: '50%', height: '20px', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#00664A', backgroundColor: '#140320', outline: 'none', borderRadius: '5px' }}
+                                        style={{ width: '50%', height: '20px', fontSize: '18px', fontWeight: '400', lineHeight: '30px', letterSpacing: '0em', textAlign: 'left', color: '#00664A', backgroundColor: themeOptions.color.button, outline: 'none', borderRadius: '5px' }}
                                         type="number"
                                         min={0}
                                         max={10}

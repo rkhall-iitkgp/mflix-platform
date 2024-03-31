@@ -1,30 +1,30 @@
-'use client';
+"use client";
 
-import React, {useState, useEffect} from 'react';
-import Image from 'next/image';
-import {createStyles} from '@mantine/styles';
-import {useLogger, useMediaQuery} from '@mantine/hooks';
-import useLoginStore from '@/Stores/LoginStore';
-import searchMsApiUrls from '@/app/(rootProject)/api/searchMsApi';
-import useUserStore from '@/Stores/UserStore';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { createStyles } from "@mantine/styles";
+import { useLogger, useMediaQuery } from "@mantine/hooks";
+import useLoginStore from "@/Stores/LoginStore";
+import searchMsApiUrls from "@/app/(rootProject)/api/searchMsApi";
+import useUserStore from "@/Stores/UserStore";
 
-import avatarLogo1 from '@/assets/icons/profile1.svg';
-import avatarLogo2 from '@/assets/icons/profile2.svg';
-import avatarLogo3 from '@/assets/icons/profile3.svg';
-import addMoreLogo from '@/assets/icons/add-more.svg';
-import themeOptions from '@/assets/themes/colors';
-import {useRouter} from 'next/navigation';
+import avatarLogo1 from "@/assets/icons/profile1.svg";
+import avatarLogo2 from "@/assets/icons/profile2.svg";
+import avatarLogo3 from "@/assets/icons/profile3.svg";
+import addMoreLogo from "@/assets/icons/add-more.svg";
+import themeOptions from "@/assets/themes/colors";
+import { useRouter } from "next/navigation";
 
-const headingFZ = '5vw';
+const headingFZ = "5vw";
 const url = searchMsApiUrls();
 
 interface Profile {
-    _id: number
-    name: string | undefined
-    caption: string
-    link: string
-    image: string
-    index: number
+    _id?: string | number;
+    name?: string | undefined;
+    caption: string;
+    link: string;
+    image: string;
+    index: number;
 }
 
 // interface newProfile {
@@ -46,11 +46,11 @@ const SelectProfile: React.FC = () => {
 
             //   console.log(base_url);
             let res = await fetch(`${base_url}/user/details`, {
-                method: 'GET',
+                method: "GET",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
-                credentials: 'include',
+                credentials: "include",
             });
 
             let jsonData = await res.json();
@@ -61,7 +61,7 @@ const SelectProfile: React.FC = () => {
                 console.log(jsonData);
                 setCurrentProfile(jsonData.account.userProfiles);
             }
-            console.log('userprofiles', jsonData.account.userProfiles);
+            console.log("userprofiles", jsonData.account.userProfiles);
         };
         getActiveUsers();
     }, []);
@@ -75,82 +75,82 @@ const SelectProfile: React.FC = () => {
     const AddProfile = async () => {
         try {
             const response = await fetch(`${url}/user/create`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
-                credentials: 'include',
-                body: JSON.stringify({userName: `Profile ${currentProfile.length + 1}`}),
+                credentials: "include",
+                body: JSON.stringify({
+                    userName: `Profile ${currentProfile.length + 1}`,
+                }),
             });
             console.log(response);
             return await response.json();
         } catch (error) {
-            console.log('Unable to connect:', error);
-            return {ok: false};
+            console.log("Unable to connect:", error);
+            return { ok: false };
         }
     };
 
     const ConvertType = () => {
-        console.log('currentProfile', currentProfile);
+        console.log("currentProfile", currentProfile);
         const transformedArray = currentProfile.map((item, index) => {
             console.log(item, index);
             return {
-                _id: item._id || `${index}`,
+                id: item._id || `${index}`,
                 caption: item.name || `Profile ${index + 1}`,
-                link: '/',
+                link: "/",
                 image: ImageArray[0],
                 index: index,
-            } as Profile;
+            };
         });
         transformedArray.push({
-            _id: transformedArray.length + 1,
-            caption: 'Add New',
-            link: 'null',
+            id: transformedArray.length + 1,
+            caption: "Add New",
+            link: "null",
             image: addMoreLogo,
             index: -1,
-        } as Profile);
-        console.log('transforemedArray:', transformedArray);
+        });
+        console.log("transforemedArray:", transformedArray);
         setChangedType(transformedArray);
         if (transformedArray.length == 6) {
             transformedArray.pop();
         }
     };
 
-    const {classes} = useStyles();
+    const { classes } = useStyles();
     const profilesPerRow = 5;
     const newProfile = {
         _id: "",
         name: "",
         index: 0,
-    }
+    };
 
     const handleProfileClick = (profile: any) => {
-        if (profile.link === 'null') {
+        if (profile.link === "null") {
             handleAddProfile();
         } else if (profile.link) {
-            newProfile._id = profile.id
-            newProfile.name = profile.name
-            newProfile.index = profile.index
-            state.updateUser(
-                newProfile,
-            );
+            newProfile._id = profile.id;
+            newProfile.name = profile.name;
+            newProfile.index = profile.index;
+            state.updateUser(newProfile);
             console.log(newProfile);
-            router.push('/');
+            router.push("/");
         }
     };
 
     const handleAddProfile = async () => {
         if (currentProfile.length >= 5) {
-            console.log('Maximum number of profiles reached');
+            console.log("Maximum number of profiles reached");
             return;
         }
 
         let newProfileData = await AddProfile();
         if (!newProfileData.success) {
-            console.log('addProfile error');
+            console.log("addProfile error");
             return;
         }
-        console.log('New profile data', newProfileData);
+        console.log("New profile data", newProfileData);
         setCurrentProfile(newProfileData.account.userProfiles);
     };
 
@@ -159,26 +159,32 @@ const SelectProfile: React.FC = () => {
         for (let i = 0; i < changedType.length; i += profilesPerRow) {
             profileRows.push(
                 <div className={classes.containerStyle} key={i}>
-                    {changedType.slice(i, i + profilesPerRow).map((profile, index) => (
-                        <div
-                            key={index}
-                            className={classes.itemStyle}
-                            onClick={() => handleProfileClick(profile)}
-                        >
-                            <Image
-                                className={classes.avatarStyle}
-                                src={profile.image}
-                                alt={profile.caption}
-                                width={150}
-                                height={150}
-                            />
-                            <span style={{
-                                textAlign: 'center',
-                                fontSize: '2vw'
-                            }}>{profile.caption}</span>
-                        </div>
-                    ))}
-                </div>
+                    {changedType
+                        .slice(i, i + profilesPerRow)
+                        .map((profile, index) => (
+                            <div
+                                key={index}
+                                className={classes.itemStyle}
+                                onClick={() => handleProfileClick(profile)}
+                            >
+                                <Image
+                                    className={classes.avatarStyle}
+                                    src={profile.image}
+                                    alt={profile.caption}
+                                    width={150}
+                                    height={150}
+                                />
+                                <span
+                                    style={{
+                                        textAlign: "center",
+                                        fontSize: "2vw",
+                                    }}
+                                >
+                                    {profile.caption}
+                                </span>
+                            </div>
+                        ))}
+                </div>,
             );
         }
         return profileRows;
@@ -187,12 +193,12 @@ const SelectProfile: React.FC = () => {
     return (
         <div
             style={{
-                backgroundColor: '#140320',
-                minHeight: '100vh',
-                color: 'white',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-around',
+                backgroundColor: "#140320",
+                minHeight: "100vh",
+                color: "white",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
             }}
         >
             <div>
@@ -205,32 +211,32 @@ const SelectProfile: React.FC = () => {
 
 const useStyles = createStyles(() => ({
     containerStyle: {
-        display: 'flex',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        minWidth: '70vw',
+        display: "flex",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        minWidth: "70vw",
     },
     headingStyle: {
-        padding: '2vw',
+        padding: "2vw",
         fontSize: themeOptions.fontSize.xl,
-        fontWeight: 'bold',
-        textAlign: 'center',
+        fontWeight: "bold",
+        textAlign: "center",
     },
     itemStyle: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        border: 'solid transparent',
-        transition: 'outline-color 0.3s',
-        outline: '2px solid transparent',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        border: "solid transparent",
+        transition: "outline-color 0.3s",
+        outline: "2px solid transparent",
     },
     avatarStyle: {
-        width: '15vw',
-        height: '15vw',
-        marginBottom: '1rem',
-        transition: 'border-color 0.3s',
-        border: '2px solid transparent',
-        ':hover': {
+        width: "15vw",
+        height: "15vw",
+        marginBottom: "1rem",
+        transition: "border-color 0.3s",
+        border: "2px solid transparent",
+        ":hover": {
             opacity: 0.5,
         },
     },

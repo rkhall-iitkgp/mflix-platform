@@ -4,7 +4,7 @@ import ChatTab from "./ChatTab";
 import SettingsTab from "./SettingsTab";
 import style from "./PartyChat.module.css";
 
-export default function PartyChat({ ws }: { ws: WebSocket }) {
+export default function PartyChat({ ws }: { ws: WebSocket | null }) {
     const [activeTab, setActiveTab] = useState(0);
 
     return (
@@ -23,7 +23,7 @@ export default function PartyChat({ ws }: { ws: WebSocket }) {
                     Settings
                 </button>
             </div>
-            {activeTab == 0 ? <ChatTab ws={ws} /> : <SettingsTab />}
+            {activeTab == 0 ? <ChatTab ws={ws || null} /> : <SettingsTab />}
         </div>
     );
 }

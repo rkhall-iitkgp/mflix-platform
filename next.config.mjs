@@ -31,6 +31,11 @@ export default withBundleAnalyzer({
         hostname: '*.amazonaws.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: '971edtce1a.execute-api.ap-south-1.amazonaws.com',
+      }
     ],
+    domains: ['971edtce1a.execute-api.ap-south-1.amazonaws.com'],
   },
 });

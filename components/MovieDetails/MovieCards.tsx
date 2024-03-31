@@ -101,19 +101,27 @@ export default function MovieCard({ data }: { data: any }) {
   // console.log(data);
   const { classes, cx } = useStyles();
   const { hovered, ref } = useHover();
+  console.log(data)
   return (
     <Link href={`/movies/${data._id}`} style={{ textDecoration: 'none' }}>
       <div className={cx(classes.containerStyles, hovered && classes.Hovered)} ref={ref}>
         {/* <div className={classes.heartContainerStyles}>
           <Image src={Heart} width={30} height={30} alt="fav" className={classes.heartImageStyles} />
         </div> */}
-        <Image
-          src={data?.poster || '/background.png'}
+        {data.poster ? <Image
+          src={data?.poster}
           alt="poster"
           width={250}
           height={370}
           className={classes.posterStyles}
-        />
+        /> : <Image
+        src={'/bg-home.png'}
+        alt="poster"
+        width={250}
+        height={370}
+        className={classes.posterStyles}
+      />}
+        
         <div style={{ padding: '10px' }}>
           <span className={classes.countryStyles}>
             {data?.countries?.[0]},{data?.released?.substr(0, 4) || 2023}
@@ -124,7 +132,7 @@ export default function MovieCard({ data }: { data: any }) {
               <Image src={Imdb} width={35} height={17} alt="imdb" className={classes.img} />
               <span className={classes.rating}>{data?.imdb?.rating}/10</span>
             </div>
-            <div className={classes.ratingItemStyles}>
+            {data?.tomatoes?.viewer.meter? <div className={classes.ratingItemStyles}>
               <Image
                 src={Tomato}
                 alt="tomato"
@@ -132,8 +140,9 @@ export default function MovieCard({ data }: { data: any }) {
                 width={16}
                 className={classes.tomatoImg}
               />
-              <span className={classes.tomatoScore}>{data?.tomatoes?.viewer?.rating}/5</span>
-            </div>
+              <span className={classes.tomatoScore}>{data?.tomatoes?.viewer.meter}%</span>
+            </div>: <></>}
+            
           </div>
           <div className={classes.genreStyles}>
             {data?.genres?.map((genre: any, i: number) => (

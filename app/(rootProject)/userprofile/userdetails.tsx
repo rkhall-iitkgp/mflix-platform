@@ -549,7 +549,7 @@ const UserDetails = ({ opened }: any) => {
                     >
                         {" "}
                         {/* user info item*/}
-                        <h2 style={{ color: "#7011B6" }}>User Information</h2>
+                        <h2 style={{ color: "#00664A" }}>User Information</h2>
                         {editMode ? (
                             <Image
                                 src={saveIcon}
@@ -658,7 +658,7 @@ const UserDetails = ({ opened }: any) => {
                             paddingRight: "4%",
                         }}
                     >
-                        <h2 style={{ color: "#7011B6", textAlign: "left" }}>
+                        <h2 style={{ color: "#00664A", textAlign: "left" }}>
                             Your Profiles
                         </h2>
                         <div
@@ -766,7 +766,7 @@ const UserDetails = ({ opened }: any) => {
                                 paddingLeft: "1vw",
                             }}
                         >
-                            <h2 style={{ color: "#7011B6", textAlign: "left" }}>
+                            <h2 style={{ color: "#00664A", textAlign: "left" }}>
                                 User Signed-in Info
                             </h2>
                         </div>

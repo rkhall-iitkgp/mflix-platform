@@ -242,13 +242,13 @@ export default function Search() {
                 if (!res.results) return setNotFound(true);
                 data.push(...res.results);
                 Mixpanel.track("Search Movie", { query: search });
-                if (user._id) {
-                    Mixpanel.people.append(user._id, "Search History", {
-                        // @ts-ignore
-                        Query: search,
-                        Timestamp: new Date().toISOString(),
-                    });
-                }
+                // if (user._id) {
+                //     Mixpanel.people.append(user._id, "Search History", {
+                //         // @ts-ignore
+                //         Query: search,
+                //         Timestamp: new Date().toISOString(),
+                //     });
+                // }
                 setPage(index + 1);
                 if (!res.hasNext) break;
             }

@@ -62,9 +62,8 @@ const useStyles = createStyles(() => ({
         "&:hover": {
             transform: "scale(1.1)", // Adjust as needed
         },
-    }
+    },
 }));
-
 
 const dummyCardMovie = () => ({
     _id: "ABCDEF123456",
@@ -119,6 +118,7 @@ export default function Search() {
 
     useEffect(() => {
         if (!notFound) setLoaded(false);
+
     }, [notFound])
     
     // useEffect(() => {
@@ -147,6 +147,7 @@ export default function Search() {
                         userId: useLoginStore.getState()._id,
                         filters,
                     }),
+                    credentials: "include",
                 },
             )
         ).json();
@@ -177,6 +178,7 @@ export default function Search() {
                             userId: user._id,
                             filters,
                         }),
+                        credentials: "include",
                     },
                 )
             ).json();
@@ -200,7 +202,7 @@ export default function Search() {
                 setMoreResults(data.slice(4));
             }
         }
-        console.log('here');
+        console.log("here");
         setLoaded(true);
         console.log(loaded);
     };
@@ -232,6 +234,7 @@ export default function Search() {
                                     languages: [searchParams.get("language")],
                                 }
                             }),
+                            credentials: "include",
                         },
                     )
                 ).json();
@@ -241,7 +244,7 @@ export default function Search() {
                 Mixpanel.track("Search Movie", { query: search });
                 if (user._id) {
                     Mixpanel.people.append(user._id, "Search History", {
-                    // @ts-ignore
+                        // @ts-ignore
                         Query: search,
                         Timestamp: new Date().toISOString(),
                     });

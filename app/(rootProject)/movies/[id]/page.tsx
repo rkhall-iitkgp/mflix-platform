@@ -212,10 +212,11 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                     `${process.env.NEXT_PUBLIC_BACKEND_URL}/movies/link/${id}`,
                     {
                         method: "GET",
+                        credentials: "include",
                     },
                 )
             ).json();
-            console.log("res1", res1);
+            console.log("res11", res1);
             if (res1.success === false) {
                 console.log("res1.message", res1.message);
                 toast.error(res1.message);

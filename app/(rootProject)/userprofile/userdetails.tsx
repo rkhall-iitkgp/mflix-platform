@@ -200,13 +200,16 @@ const UserDetails = ({ opened }: any) => {
     //     plan: "Basic"
     // };
     // setUserInfo(UserDetails);
-    const user_id = state._id;
-    if (!user_id) {
-      router.push('/login');
-
+    try {
+      const user_id = state._id;
+      if (!user_id) {
+        router.push('/login');
+      }
+    } catch (error) {
+      console.error('Error occurred while processing user ID:', error);
     }
     console.log(state);
-    let res = await fetch(`${base_url}/user/details/`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/details/`, {
 
       method: 'GET',
       headers: {
@@ -272,7 +275,7 @@ const UserDetails = ({ opened }: any) => {
   const updateDetails = async () => {
     const data = userInfo;
     console.log(userInfo);
-    let res = await fetch(`${process.env.NEXT_PUBLIC_URL}/user/details`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/details`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -359,7 +362,7 @@ const UserDetails = ({ opened }: any) => {
     const values = {
       loginId: activeLogins[id]._id,
     };
-    let res = await fetch(`${base_url}/auth/removeActiveLogin`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/removeActiveLogin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -390,7 +393,7 @@ const UserDetails = ({ opened }: any) => {
     const values = {
       userId: profiles[id]._id,
     };
-    let res = await fetch(`${base_url}/user/delete`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/delete`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -623,7 +626,7 @@ const UserDetails = ({ opened }: any) => {
                     </div>
                   </div>
                   <div style={{ paddingRight: '1vw' }}>
-                    {manageProfile ? (
+                    {manageProfile && activeLogins.length > 1 ? (
                       <MdDelete
                         style={{ color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}
                         onClick={() => {
@@ -636,7 +639,7 @@ const UserDetails = ({ opened }: any) => {
               ))}
             </div>
           </div>
-          <button
+          {profiles.length > 1 ? <button
             style={{
               borderRadius: '0.8rem',
               color: 'white',
@@ -650,7 +653,7 @@ const UserDetails = ({ opened }: any) => {
             }}
           >
             Manage Profile
-          </button>
+          </button> : null}
         </div>
 
         <div
@@ -700,7 +703,7 @@ const UserDetails = ({ opened }: any) => {
                     {/* <div style={{ color: 'white' }}>
                                         </div> */}
                     <div style={{ paddingRight: '1vw' }}>
-                      {manageDevice ? (
+                      {manageDevice && activeLogins.length > 1 ? (
                         <MdDelete
                           style={{ color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}
                           onClick={() => {
@@ -714,7 +717,7 @@ const UserDetails = ({ opened }: any) => {
               ))}
             </div>
           </div>
-          <button
+          {activeLogins.length > 1 ? <button
             style={{
               borderRadius: '0.8rem',
               color: 'white',
@@ -728,7 +731,7 @@ const UserDetails = ({ opened }: any) => {
             }}
           >
             Manage Devices
-          </button>
+          </button> : null}
         </div>
       </div>
       <ToastContainer style={{ zIndex: "9999999" }} />

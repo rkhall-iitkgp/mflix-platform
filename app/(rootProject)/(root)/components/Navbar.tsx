@@ -14,14 +14,17 @@ import searchMsApiUrls from '../../api/searchMsApi';
 import { IoIosArrowDown } from "react-icons/io";
 import IconUserCircle from "@/assets/icons/profile.svg"
 import { useHover, useMediaQuery } from '@mantine/hooks';
+import { useRouter } from 'next/navigation';
 import {
   IconSettings,
   IconLogout,
 } from '@tabler/icons-react';
 
 import useLoginStore from '@/Stores/LoginStore';
+import useUserStore from '@/Stores/UserStore';
 
 export default function Navbar() {
+  const router = useRouter();
   const path = usePathname();
   const [input, setInput] = React.useState('');
   const isSmallScreen = useMediaQuery('(max-width: 1300px)');
@@ -41,7 +44,7 @@ export default function Navbar() {
     const base_url = searchMsApiUrls();
     const user_id = state._id;
     console.log(base_url);
-    let res = await fetch(`${base_url}/user/details`, {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/details`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -59,11 +62,11 @@ export default function Navbar() {
   };
   // }, []);
 
-  useEffect(()=>{
-   getActiveUsers() 
+  useEffect(() => {
+    getActiveUsers()
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log("Current Profile", currentProfile)
   }, [currentProfile])
 
@@ -80,10 +83,7 @@ export default function Navbar() {
     return !!user;
     // return true;
   };
-  const handleLogout = () => {
-    sessionStorage.removeItem('accessToken');
-    window.location.href = '/login';
-  };
+
 
   useEffect(() => {
     setIsLoggedIn(checkLoginStatus()); // Update isLoggedIn state when component mounts
@@ -103,30 +103,36 @@ export default function Navbar() {
     };
   }, [prevScrollPos]);
 
-  const handleLogOut = async () => {
-    const values = {
-      flag: 1,
-    };
+  const handleLogout = async () => {
     const base_url = searchMsApiUrls();
-    const token = sessionStorage.getItem('accessToken');
-    await fetch(`${base_url}/auth/logout`, {
+
+    const state = useLoginStore.getState();
+    const values = {
+      email: state.email,
+    };
+    let res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
+      credentials: 'include',
       body: JSON.stringify({
         ...values,
       }),
-    }).then(async (res) => {
-      let jsonData = await res.json();
-      if (!res.ok) {
-        console.log(jsonData);
-      } else {
-        sessionStorage.removeItem('accessToken');
-        console.log('Logout successful');
-      }
     });
+
+    let jsonData = await res.json();
+    if (!res.ok) {
+      console.log(jsonData);
+    } else {
+      console.log(jsonData);
+      console.log('logout successful');
+      localStorage.clear();
+      useLoginStore.getState().clearState();
+      useUserStore.getState().clearState();
+      console.log(useLoginStore.getState().clearState());
+      router.push('/login');
+    }
   };
 
   const useStyles = createStyles(() => ({
@@ -311,9 +317,9 @@ export default function Navbar() {
         cursor: 'pointer',
       },
     },
-    logout:{
-      '&hover':{
-        background:'black'
+    logout: {
+      '&hover': {
+        background: 'black'
       }
     }
 
@@ -444,10 +450,10 @@ export default function Navbar() {
                         {profile.name}
                       </Menu.Item>)
                   })} */}
-                  <Menu.Item className={classes.logout} leftSection={<IconSettings style={{ width: '2rem', height: '2rem', color:'black', opacity:'0.8' }} />}>
+                  <Menu.Item className={classes.logout} leftSection={<IconSettings style={{ width: '2rem', height: '2rem', color: 'black', opacity: '0.8' }} />}>
                     <Link href="/userprofile" style={{ textDecoration: 'none', color: 'black', opacity: '0.8' }}>User Profile</Link>
                   </Menu.Item>
-                  <Menu.Item style={{color:'black', opacity:'0.8'}} leftSection={<IconLogout style={{ width: '2rem', height: '2rem', color:'black', opacity:'0.8' }} />} onClick={handleLogOut}>
+                  <Menu.Item style={{ color: 'black', opacity: '0.8' }} leftSection={<IconLogout style={{ width: '2rem', height: '2rem', color: 'black', opacity: '0.8' }} />} onClick={() => { handleLogout() }}>
                     Logout
                   </Menu.Item>
                 </Menu.Dropdown>

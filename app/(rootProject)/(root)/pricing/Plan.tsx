@@ -24,11 +24,13 @@ import { List } from '@mantine/core';
 import { SlArrowRight } from "react-icons/sl";
 import useLoginStore from '@/Stores/LoginStore';
 import { IconPoint, IconPointFilled } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation'
 
 
 
 
 export default function Plan() {
+    const router = useRouter()
     const useStyles = createStyles(() => ({
         OuterBoxStyles: {
             fontFamily: 'Poppins, cursive', // Applying Poppins font
@@ -294,6 +296,9 @@ export default function Plan() {
 
             } else {
                 // Handle error response
+                if (response.status === 401) {
+                    router.push('/login');
+                }
                 console.error('Error:');
             }
         } else {

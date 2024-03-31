@@ -411,7 +411,7 @@ export default function MovieDetails({ params }: { params: { id: string } }) {
                     ws={ws || null}
                     videoSrc={videoSrc}
                     Mp4={Mp4}
-                    // tier={Usertier}
+                    tier={Usertier}
                 />
                 {activeChat && <PartyChat ws={ws || null} />}
             </div>

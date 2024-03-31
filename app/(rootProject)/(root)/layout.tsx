@@ -8,7 +8,6 @@ import Search from './search/page'
 import SearchBar from './components/NavSearch'
 import { useState } from 'react'
 import Chatbot from './components/Chatbot'
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [semanticSearchResults, setSemanticSearchResults] = useState<any[]>([]);
   const [fuzzySearchResults, setFuzzySearchResults] = useState<any[]>([]);

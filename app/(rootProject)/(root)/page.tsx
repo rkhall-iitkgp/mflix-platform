@@ -89,12 +89,24 @@ export default function Home() {
 
     const getData = async (page: number) => {
         const res = await (await fetch(
-            `${searchMsApiUrls()}search/fuzzy?query=&start=2015&end=2016&low=8&high=10&language=&country=&genre=&type=&page=${page}`,
+            `${searchMsApiUrls()}search/fuzzy?query=&page=${page}`,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({
+                    filters: {
+                        year: {
+                            start: 2015,
+                            end: 2016,
+                        },
+                        rating: {
+                            low: 8,
+                            high: 10,
+                        }
+                    }
+                }),
             }
         )).json();
         setTrending(trending.concat(res.results));
@@ -104,12 +116,24 @@ export default function Home() {
     useEffect(() => {
         const fetchData = async () => {
             const res = await (await fetch(
-                `${searchMsApiUrls()}search/fuzzy?query=&start=2015&end=2023&low=8&high=10&language=&country=&genre=&type=&page=1`,
+                `${searchMsApiUrls()}search/fuzzy?query=&page=1`,
                 {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
+                    body: JSON.stringify({
+                        filters: {
+                            year: {
+                                start: 2015,
+                                end: 2016,
+                            },
+                            rating: {
+                                low: 8,
+                                high: 10,
+                            }
+                        }
+                    }),
                 }
             )).json();
             setTrending(res.results);
@@ -125,7 +149,7 @@ export default function Home() {
             <div>
                 <div className={classes.background}></div>
                 <div className={classes.backgroundOverlay}></div>
-                <Stack c={themeOptions.color.normalTextColor} style={{ paddingLeft: '5%', paddingRight: '5%' }} mt="6rem">
+                <Stack style={{ paddingLeft: '5%', paddingRight: '5%' }}>
 
                     <Group>
                         <Text fz={themeOptions.fontSize.xl}>Trending</Text>

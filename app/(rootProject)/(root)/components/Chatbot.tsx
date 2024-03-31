@@ -1,7 +1,7 @@
 import { Container, Group, Stack } from '@mantine/core'
 import Image from 'next/image'
 import React from 'react'
-import Bot from '@/assets/images/bot.png'
+import Bot from '@/assets/images/chatbot.png'
 import { createStyles } from '@mantine/styles'
 import SendIcon from '@/assets/icons/send.svg'
 import DownIcon from '@/assets/icons/down.svg'
@@ -183,7 +183,7 @@ const styles = createStyles((theme) => ({
     sendIcon: {
         // padding: "0.7rem",
         borderRadius: '50%',
-        backgroundColor: "#6034DF",
+        backgroundColor: "#00664A",
         color: "white",
         width: "3rem",
         height: "3rem",
@@ -209,7 +209,7 @@ const styles = createStyles((theme) => ({
     },
     sent: {
         alignSelf: "flex-end",
-        backgroundColor: "#6034DF",
+        backgroundColor: "#00664A",
         padding: "0.5rem",
         borderRadius: "5px",
         lineHeight: "1",

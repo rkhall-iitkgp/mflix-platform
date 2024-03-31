@@ -391,31 +391,31 @@ export default function Navbar() {
                   <p style={{ margin: '1rem', marginTop: '0', marginLeft: '0.5rem' }}>Languages</p>
                   <div className={classes.category}>
                     <p>
-                      <Link href="/search?language=English">English</Link>
+                      <a href="/search?language=English">English</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Hindi">Hindi</Link>
+                      <a href="/search?language=Hindi">Hindi</a>
                     </p>
                     <p>
-                      <Link href="/search?language=French">French</Link>
+                      <a href="/search?language=French">French</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Spanish">Spanish</Link>
+                      <a href="/search?language=Spanish">Spanish</a>
                     </p>
                     <p>
-                      <Link href="/search?language=German">German</Link>
+                      <a href="/search?language=German">German</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Italian">Italian</Link>
+                      <a href="/search?language=Italian">Italian</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Japanese">Japanese</Link>
+                      <a href="/search?language=Japanese">Japanese</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Russian">Russian</Link>
+                      <a href="/search?language=Russian">Russian</a>
                     </p>
                     <p>
-                      <Link href="/search?language=Mandarin">Mandarin</Link>
+                      <a href="/search?language=Mandarin">Mandarin</a>
                     </p>
                   </div>
                 </div>

@@ -318,8 +318,8 @@ export default function Navbar() {
       },
     },
     logout: {
-      '&hover': {
-        background: 'black'
+      '&:hover': {
+        background: '#011A25'
       }
     }
 
@@ -436,12 +436,12 @@ export default function Navbar() {
                 Login
               </Link>
             ) : (
-              <Menu trigger="hover" openDelay={100} closeDelay={50} >
+              <Menu trigger="hover" openDelay={100} closeDelay={300} >
                 <Menu.Target>
                   <Button bg={'none'} size={'20'} mr={25} mt={3} style={{ fontWeight: '400' }} className={classes.profile}>Profile</Button>
                 </Menu.Target>
 
-                <Menu.Dropdown bg={'white'} style={{ borderRadius: '1rem', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+                <Menu.Dropdown bg={themeOptions.color.categories} style={{ borderRadius: '1rem', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
                   {/* {currentProfile.map((profile, i) => {
                     console.log("profile", profile)
                     return (
@@ -452,10 +452,10 @@ export default function Navbar() {
                         {profile.name}
                       </Menu.Item>)
                   })} */}
-                  <Menu.Item className={classes.logout} leftSection={<IconSettings style={{ width: '2rem', height: '2rem', color: 'black', opacity: '0.8' }} />}>
-                    <Link href="/userprofile" style={{ textDecoration: 'none', color: 'black', opacity: '0.8' }}>User Profile</Link>
+                  <Menu.Item className={classes.logout} leftSection={<IconSettings style={{ width: '2rem', height: '2rem', color: 'white', opacity: '0.8' }} />}>
+                    <Link href="/userprofile" style={{ textDecoration: 'none', color: 'white', opacity: '0.8' }}>User Profile</Link>
                   </Menu.Item>
-                  <Menu.Item style={{ color: 'black', opacity: '0.8' }} leftSection={<IconLogout style={{ width: '2rem', height: '2rem', color: 'black', opacity: '0.8' }} />} onClick={() => { handleLogout() }}>
+                  <Menu.Item className={classes.logout} style={{ color: 'white', opacity: '0.8' }} leftSection={<IconLogout style={{ width: '2rem', height: '2rem', color: 'white', opacity: '0.8' }} />} onClick={() => { handleLogout() }}>
                     Logout
                   </Menu.Item>
                 </Menu.Dropdown>
